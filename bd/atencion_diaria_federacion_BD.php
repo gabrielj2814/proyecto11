@@ -278,28 +278,6 @@ function guardarAtencionDiaria($POST){
     if($POST["tipo_formulario"]==="2"){
         if($POST["id_informe"]=="false"){
             $fecha_software=date_futbolJoven();
-            $fecha_sesion_actual=NULL;
-            if($POST["sesion_actual"]==="1"){
-                $fecha_sesion_actual="'".$POST["actual_fecha_reposo_deportivo"]."'";
-                // ()? "'".$POST["fecha_de_alta"]."'": "NULL"; 
-            }
-            elseif ($POST["sesion_actual"]==="7"){
-                $fecha_sesion_actual="'".$POST["actual_fecha_reposo_total"]."'";
-            }
-            else{
-                $fecha_sesion_actual="NULL";
-            }
-            $fecha_sesion_siguiente=NULL;
-            if($POST["sesion_siguiente"]==="1"){
-                $fecha_sesion_siguiente="'".$POST["siguiente_fecha_reposo_deportivo"]."'";
-                // ()? "'".$POST["fecha_de_alta"]."'": "NULL"; 
-            }
-            elseif ($POST["sesion_siguiente"]==="7"){
-                $fecha_sesion_siguiente="'".$POST["siguiente_fecha_reposo_total"]."'";
-            }
-            else{
-                $fecha_sesion_siguiente="NULL";
-            }
             $idinforme_medico="";
             if($POST["idinforme_medico"]==="0"){
                 $idinforme_medico="NULL";
@@ -316,20 +294,20 @@ function guardarAtencionDiaria($POST){
                 $observaion_general="NULL";
             }
             // asistencia_atencion_diaria asistencia_control
-            $SQL="INSERT INTO atencion_diaria(
+            $SQL="INSERT INTO atencion_diaria_federacion(
                 idfichaJugador,
                 tipo_atencion_atencion_diaria,
                 fecha_atencion_diaria,
 
-                recomendacion_sesion_actual_atencion_diaria,
-                fecha_recomendacion_sesion_actual_atencion_diaria,
-                recomendacion_sesion_siguiente_atencion_diaria,
-                fecha_recomendacion_sesion_siguiente_atencion_diairai,
-                observacion_general  ,
+                observacion_general ,
                 numero_sesion,
                 porcentaje_recuperacion,
                 idinforme_medico,
                 asistencia_atencion_diaria,
+
+                fecha_estimada_de_alta,
+                estado_jugador,
+                indicaciones,
 
                 fecha_software,
                 nombre_usuario_software
@@ -338,15 +316,15 @@ function guardarAtencionDiaria($POST){
                 ".$POST["tipo_tipo_atencion_formulario"].",
                 '".$POST["fecha_atencion_diaria"]."',
 
-                ".$POST["sesion_actual"].",
-                ".$fecha_sesion_actual.",
-                ".$POST["sesion_siguiente"].",
-                ".$fecha_sesion_siguiente.",
                 ".$observaion_general.",
                 ".$POST["numero_sesiones"].",
                 ".$POST["porcentaje_recuperacion"].",
                 ".$idinforme_medico.",
                 ".$POST["asistencia_control"].",
+
+                '".$POST["fecha_alta"]."',
+                ".$POST["estado_jugador"].",
+                '".$POST["indicaciones"]."',
 
                 '".$fecha_software."',
                 '".$POST["nombre_usuario_software"]."'
@@ -361,28 +339,6 @@ function guardarAtencionDiaria($POST){
         }
         else{
             $fecha_software=date_futbolJoven();
-            $fecha_sesion_actual=NULL;
-            if($POST["sesion_actual"]==="1"){
-                $fecha_sesion_actual="'".$POST["actual_fecha_reposo_deportivo"]."'";
-                // ()? "'".$POST["fecha_de_alta"]."'": "NULL"; 
-            }
-            elseif ($POST["sesion_actual"]==="7"){
-                $fecha_sesion_actual="'".$POST["actual_fecha_reposo_total"]."'";
-            }
-            else{
-                $fecha_sesion_actual="NULL";
-            }
-            $fecha_sesion_siguiente=NULL;
-            if($POST["sesion_siguiente"]==="1"){
-                $fecha_sesion_siguiente="'".$POST["siguiente_fecha_reposo_deportivo"]."'";
-                // ()? "'".$POST["fecha_de_alta"]."'": "NULL"; 
-            }
-            elseif ($POST["sesion_siguiente"]==="7"){
-                $fecha_sesion_siguiente="'".$POST["siguiente_fecha_reposo_total"]."'";
-            }
-            else{
-                $fecha_sesion_siguiente="NULL";
-            }
             if($POST["idinforme_medico"]==="0"){
                 $idinforme_medico="NULL";
             }
@@ -401,15 +357,12 @@ function guardarAtencionDiaria($POST){
             $SQL="UPDATE atencion_diaria SET
                 fecha_atencion_diaria='".$POST["fecha_atencion_diaria"]."',
                 tipo_atencion_atencion_diaria=".$POST["tipo_tipo_atencion_formulario"].",
-                recomendacion_sesion_actual_atencion_diaria=".$POST["sesion_actual"].",
-                fecha_recomendacion_sesion_actual_atencion_diaria=".$fecha_sesion_actual.",
-                recomendacion_sesion_siguiente_atencion_diaria=".$POST["sesion_siguiente"].",
-                fecha_recomendacion_sesion_siguiente_atencion_diairai=".$fecha_sesion_siguiente.",
                 observacion_general=".$observaion_general.",
                 numero_sesion=".$POST["numero_sesiones"].",
                 porcentaje_recuperacion=".$POST["porcentaje_recuperacion"].",
                 idinforme_medico=".$idinforme_medico.",
                 asistencia_atencion_diaria=".$POST["asistencia_control"].",
+
 
                 fecha_software='".$fecha_software."',
                 nombre_usuario_software='".$POST["nombre_usuario_software"]."'
@@ -417,12 +370,8 @@ function guardarAtencionDiaria($POST){
                 WHERE idatencion_diaria_federacion=".$POST["id_atencion_diaria"].";";
             $link->query($SQL);
             $link->close();
-            eliminarAtencionDiariaExamenes($POST);
-            eliminarAtencionDiariaTratamiento($POST);
             eliminarAtencionDiariaTrabajoReadaptador($POST);
-            eliminarAtencionDiariaAltaDeportiva($POST);
-            eliminarAtencionDiariaRecomendacionAlta($POST);
-            eliminarAtencionDiariaLesiones($POST);
+            eliminarRecomendacion($POST);
             return $POST["id_atencion_diaria"];
         }
     }

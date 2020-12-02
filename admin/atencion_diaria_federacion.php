@@ -2414,7 +2414,7 @@ var html_atencion_control_sesion={
             <div class="cuerpo_tarjerta" id="contenedor_trabajo_readaptador" style="overflow: auto;overflow-x: hidden;"></div>\
         </div>\
         <div style="box-sizing: border-box;width: 53%;height: 377px;float: left;margin-left: 1%;">\
-            <div style="font-size: 12px;margin-bottom: 5px;">Detalle trabamiento readaptador / Obseravación</div>\
+            <div style="font-size: 12px;margin-bottom: 5px;">Detalle tratamiento readaptador / Obseravación</div>\
             <textarea type="text" style="width:100%;height: 323px;background:#fff;text-align:left;border:2px solid #d2d2d2;resize:none" class=" " id="observaciones_generales" name="observaciones_generales"></textarea>\
         </div>\
         <div class="tarjeta" style="height: 290px;margin-left: 3%;background: #fff0;width: 22%;float: left;">\
@@ -2466,7 +2466,7 @@ var html_atencion_control_sesion={
                 <input readonly="" style="box-sizing:border-box;width:50%;height:30px;border:2px solid;background-color:#fff;" type="text" class="" id="fecha_alta" name="fecha_alta">\
             </div>\
         </div>\
-        <div style="width:97%;height:250px;margin-top:35px;margin-left: 1.5%;box-sizing: border-box;">\
+        <div style="width:95%;height:250px;margin-top:35px;margin-left: 2%;box-sizing: border-box;">\
             <textarea id="indicaciones" name="indicaciones" style="width:100%;height:100%;border-radius: 0px 0px 5px 5px;resize: none;box-sizing: border-box;border: 2px solid #d2d2d2;"></textarea>\
         </div>\
         <div class="row-fluid">\
@@ -5069,6 +5069,7 @@ async function formularioControl(tipo){
     // await consultarTratamientos() ; 
     await consultarTrabajoReadaptador() ; 
     await consultarContextosIncidentes() ; 
+    
     // porcentaje_recuperacion
     $("#contenedor_flex_segmento_izquierdo_formulario").css("align-content","flex-start") ; 
     $("#contenedor_flex_segmento_izquierdo_formulario").append(html_atencion_control_sesion.parte_2) ; 
@@ -5086,69 +5087,9 @@ async function formularioControl(tipo){
         let option='<option value="'+contador_1+'">'+contador_1+'%</option>' ; 
         $("#porcentaje_recuperacion").append(option) ; 
     }
-    $("#actual_fecha_reposo_deportivo").datetimepicker({
-            language:  'es',
-            format: 'yyyy-mm-dd',
-            //startDate: '2014-12-01',
-            weekStart: 1,
-            todayBtn:  1,
-            autoclose: 1,
-            todayHighlight: 1,
-            startView: 2,
-            minView: 2,
-            forceParse: 0,
-            autoclose: true,
-            useCurrent: false
-    });  
-    $("#actual_fecha_reposo_deportivo").datetimepicker('setDate', new Date() );
-    $("#actual_fecha_reposo_total").datetimepicker({
-            language:  'es',
-            format: 'yyyy-mm-dd',
-            //startDate: '2014-12-01',
-            weekStart: 1,
-            todayBtn:  1,
-            autoclose: 1,
-            todayHighlight: 1,
-            startView: 2,
-            minView: 2,
-            forceParse: 0,
-            autoclose: true,
-            useCurrent: false
-    });  
-    $("#actual_fecha_reposo_total").datetimepicker('setDate', new Date() );
-        // siguiente_fecha_reposo_deportivo
-    $("#siguiente_fecha_reposo_deportivo").datetimepicker({
-            language:  'es',
-            format: 'yyyy-mm-dd',
-            //startDate: '2014-12-01',
-            weekStart: 1,
-            todayBtn:  1,
-            autoclose: 1,
-            todayHighlight: 1,
-            startView: 2,
-            minView: 2,
-            forceParse: 0,
-            autoclose: true,
-            useCurrent: false
-    });  
-    $("#siguiente_fecha_reposo_deportivo").datetimepicker('setDate', new Date() );
-    $("#siguiente_fecha_reposo_total").datetimepicker({
-            language:  'es',
-            format: 'yyyy-mm-dd',
-            //startDate: '2014-12-01',
-            weekStart: 1,
-            todayBtn:  1,
-            autoclose: 1,
-            todayHighlight: 1,
-            startView: 2,
-            minView: 2,
-            forceParse: 0,
-            autoclose: true,
-            useCurrent: false
-    });  
-    $("#siguiente_fecha_reposo_total").datetimepicker('setDate', new Date() );
     fechaAltaMedicaHoy();
-
+    fechaRecomendacionReposoTotalHoy();
+    fechaRecomendacionReposoDepotivoHoy();
     $("#sesion_actual_1").prop("checked",true) ; 
     $("#sesion_siguiente_1").prop("checked",true) ; 
     mostrarFechaReposoDeportivaSiguiente() ; 
@@ -5783,23 +5724,7 @@ function validarFormularioControl(){
     if(estado_select_numero_sesiones && estado_select_porcentaje_recuperacion){
         estado_select=true ; 
     }
-
-    let array_checkbox_tratamiento_aplicado_atencion_diaria = $('input[name="array_checkbox_tratamiento_aplicado_atencion_diaria[]"]:checked').map(function(){ 
-        return this.value; 
-    }).get();
-    let estado_tratamiento_aplicado=false ; 
-    if(array_checkbox_tratamiento_aplicado_atencion_diaria.length>0){
-        estado_tratamiento_aplicado=true ; 
-    }
-    let array_checkbox_trabajo_readaptador_atencion_diaria = $('input[name="array_checkbox_trabajo_readaptador_atencion_diaria[]"]:checked').map(function(){ 
-        return this.value; 
-    }).get();
-    let estado_tratamiento_trabajo_redaptor=false ; 
-    if(array_checkbox_trabajo_readaptador_atencion_diaria.length>0){
-        estado_tratamiento_trabajo_redaptor=true ; 
-    }
-    let estado_observaciones_generales=validarCamposVacios2("observaciones_generales") ; 
-    if(estado_select && estado_tratamiento_trabajo_redaptor && estado_tratamiento_aplicado){
+    if(estado_select){
         $("#boton_agregar_infrome").prop("disabled",false) ; 
     }
     else{
@@ -5982,18 +5907,6 @@ function enviarDatos(){
     }
     if(tipo_atencion_formulario==="2"){
         // alert("enviar datos control")
-        const estado_checkbox_tratamiento=validarCheckBoxs("checkbox_tratamiento_aplicado_atencion_diaria_","idtratamiento_aplicado",lista_tratamiento_aplicado) ; 
-        const estado_checkbox_trabajo_readaptador=validarCheckBoxs("checkbox_trabajo_readaptador_atencion_diaria_","idtrabajo_readatador",lista_trabajo_readaptador) ; 
-        if(estado_checkbox_tratamiento && estado_checkbox_trabajo_readaptador){
-            let contador1=0 ; 
-            while(contador1<datos_formulario.length){
-                if(datos_formulario[contador1].name==="array_checkbox_tratamiento_aplicado_atencion_diaria[]"){
-                    if(datos_formulario[contador1].value==="0"){
-                        datos_formulario.splice(contador1,1) ; 
-                    }
-                }
-                contador1++ ; 
-            }
             let contador2=0 ; 
             while(contador2<datos_formulario.length){
                 if(datos_formulario[contador2].name==="array_checkbox_trabajo_readaptador_atencion_diaria[]"){
@@ -6029,7 +5942,6 @@ function enviarDatos(){
                     // alert("errorXXXXX");
                 }, timeout: 10000 // sets timeout to 3 seconds
             });
-        }
     }
     if(tipo_atencion_formulario==="3"){
         // alert("enviar datos medica")
