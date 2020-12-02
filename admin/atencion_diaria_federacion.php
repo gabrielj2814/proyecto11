@@ -1091,6 +1091,49 @@ else{
                             padding-left: 5px;
                         }
                     </style>
+                    <style>
+                        /* Tooltip container */
+                        .tooltip-customized {
+                            position: relative;
+                            display: inline-block;
+                        }
+
+                        /* Tooltip text */
+                        .tooltip-customized .tooltiptext {
+                        visibility: hidden;
+                        width: 120px;
+                        background-color: black;
+                        color: #fff;
+                        text-align: center;
+                        padding: 5px 5px;
+                        border-radius: 6px;
+                        
+                        /* Position the tooltip text - see examples below! */
+                        position: absolute;
+                        z-index: 1;
+
+                        /* /Top/ */
+                        bottom: 100%;
+                        left: 50%;
+                        margin-left: -60px; /* Use half of the width (120/2 = 60), to center the tooltip */  
+                        }
+
+                        /* Show the tooltip text when you mouse over the tooltip container */
+                        .tooltip-customized:hover .tooltiptext {
+                        visibility: visible;
+                        }
+
+                        .tooltip-customized .tooltiptext::after {
+                        content: " ";
+                        position: absolute;
+                        top: 100%; /* At the bottom of the tooltip */
+                        left: 50%;
+                        margin-left: -5px;
+                        border-width: 5px;
+                        border-style: solid;
+                        border-color: black transparent transparent transparent;
+                        }
+                    </style>
         <script type="text/javascript">
             var imagen_cargando = new Image();
             imagen_cargando.src = "../config/cargando_final_2.gif";
@@ -1644,7 +1687,7 @@ app.controller("controlador_1",['$scope',function($scope){
                                         <div style="width:100%;height:100%;display:flex;flex-direction:column;flex-wrap:wrap;justify-content:felx-start;align-items:center;">
                                             <div id="contendor_imagen_jugador" style="overflow: hidden;width:140px;height:140px;border-radius:100px;background:#eee;border: 2px solid #cdcdcd;"></div>
                                             <div style="font-size: 1.2em;margin-top: 10px;width:80%;background:#eee;text-align:center;font-weight:bold;color:#404040;">
-                                                <span id="nombre_jugador_formulario_new">Gabriel Valera</span><br><!--nombre jugador-->
+                                                <span id="nombre_jugador_formulario_new" style="text-transform: Capitalize">Gabriel Valera</span><br><!--nombre jugador-->
                                                 <!-- <span id="serie_jugador_formulario_new">SUB-20</span> -->
                                             </div>
 
@@ -4015,7 +4058,7 @@ function buscarJugador(){
 function colorEstadoAtencionDiariaJugador(estado){
 
     if(estado===1){
-        return "background-color:green;color:#fff;";
+        return "background-color:#99ff99;color:#;";
     }
     else if(estado===2){
         return "background-color:#ffa502;color:#111;";
@@ -4081,7 +4124,7 @@ function crearFilasTabla(datos){
             <td style="text-align:left;" onClick="verAtencionDiaria('+numero_fila+');">\
             <div style="display:block;float: left;margin-right: 5px;border:2px solid #404040;border-radius: 100px;width:22px;height:22px;"><img style="border-radius: 100px;width:100%;height:100%" src="./foto_jugadores/'+atencion_diaria.idfichaJugador+'.png?idasas='+new Date().getTime()+'"" style="width:100%;height:100%;"/></div>\
                 <div style="max-width:151px;margin-top: 3px;">\
-                    <p class="ellipsis-text">\
+                    <p class="ellipsis-text" style="text-transform: Capitalize">\
                         '+atencion_diaria.nombre+' '+atencion_diaria.apellido1+' '+atencion_diaria.apellido2+'\
                     </p>  \
                 </div>\
@@ -4114,8 +4157,9 @@ function crearFilasTabla(datos){
                     </p>  \
                 </div>\
             </td>\
-            <td style="text-align: center;" onClick="verAtencionDiaria('+numero_fila+');">\
-                <div style="max-width:119px">\
+            <td style="text-align: center;" class="tooltip-customized" onClick="verAtencionDiaria('+numero_fila+');">\
+                <span class="tooltiptext">'+listaEstadoJugador[parseInt(atencion_diaria.estado_jugador)]+'</span>\
+                <div style="max-width:119px;width: 100px;">\
                     <p class="ellipsis-text" style="'+colorEstadoAtencionDiariaJugador(parseInt(atencion_diaria.estado_jugador))+'font-size:10px;">\
                     '+listaEstadoJugador[parseInt(atencion_diaria.estado_jugador)]+'\
                     </p>  \
@@ -4169,7 +4213,6 @@ function formatoRut(rut_sin_formato){
     }
     return rut_con_formato;
 }
-
 
 function obtenerMesFechaIncidente(fecha){
     let lista_meses=[
@@ -4238,16 +4281,9 @@ function insertarFilasTabla(filas){
     })
 }
 
-
-
-
-
-
 function closeModal_pdf(){
     $("#descargarPDF").modal('hide');
 }
-
-
 
 function descargarPDFTodoLoConsultado(){
     // console.log(window.busqueda_respuesta_servidor);
@@ -4405,6 +4441,7 @@ function mostrarJugadorEditar(atencion_diaria,serie){
     // $("#serie_jugador_formulario_new").text(serie_jugador)
     //capturar id ficha jugador
     window.id_ficha_jugador=atencion_diaria.idfichaJugador ;
+    $("#jugador").val(window.id_ficha_jugador+"_0");
     //insertar foto del jugador 
     $("#contendor_imagen_jugador").html('<img style="border-radius: 100px;width:100%;height:100%;" id="imagen_jugador_'+atencion_diaria.idfichaJugador+'" src="./foto_jugadores/'+atencion_diaria.idfichaJugador+'.png"/>');
     //inserto input select tipo de atencion pero esta vacio
