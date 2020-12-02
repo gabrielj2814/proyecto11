@@ -1962,18 +1962,6 @@ var html_atencion_nuevo_incidente={
                 <span>Se recomienda</span>\
             </div>\
             <div class="cuerpo_tarjerta" style="overflow: auto;overflow-x: hidden;height: 325px;">\
-                <!--\
-                <div style="width:100%;height:22px;display:flex;flex-direction:row;text-align:center;">\
-                    <label style="width:50%;height:100%;display:inline;" for="radio_actual">\
-                        <div style="color:#404040;width:100%;height:100%;/*background:red;*/" id="texto_radio_actual">actual</div>\
-                        <input type="radio" style="display:none;" id="radio_actual" name="sesion" onchange="sesion_radio()"/>\
-                    </label>\
-                    <label style="width:50%;height:100%;display:inline;" for="radio_seguiente">\
-                        <div style="color:#404040;width:100%;height:100%;/*background:green;*/" id="texto_radio_seguiente">siguiente</div>\
-                        <input type="radio" style="display:none;" id="radio_seguiente" name="sesion" onchange="sesion_radio()"/>\
-                    </label>\
-                </div>\
-                -->\
                 <div style="width:100%;height:auto;display:block;padding-top:15px;" id="contenedor_radios_sesion">\
                 </div>\
             </div>\
@@ -2416,58 +2404,70 @@ var html_sesion={
     '
 };
 
-var html_atencion_control={
+var html_atencion_control_sesion={
     parte_1:'\
     <div style="width:100%;">\
-        <div class="tarjeta " style="margin-left: 2%;background: #fff0;">\
-            <div class="cabezera_tarjeta cabezera_tarjeta_gris">\
-                <span>*Tratamiento realizado</span>\
-            </div>\
-            <div class="cuerpo_tarjerta" id="contenedor_tratamiento" style="overflow: auto;overflow-x: hidden;"></div>\
-        </div>\
-        <div class="tarjeta " style="margin-left: 1%;background: #fff0;">\
+        <div class="tarjeta " style="margin-left: 1%;background: #fff0;height: 377px;float: left;">\
             <div class="cabezera_tarjeta cabezera_tarjeta_gris">\
                 <span>*Trabajo con readaptador</span>\
             </div>\
             <div class="cuerpo_tarjerta" id="contenedor_trabajo_readaptador" style="overflow: auto;overflow-x: hidden;"></div>\
         </div>\
-        <div class="tarjeta" style="height: 290px;margin-left: 1%;background: #fff0;">\
-            <div class="cabezera_tarjeta cabezera_tarjeta_roja">\
-                <span>*Recomendaciones Alta médica</span>\
+        <div style="box-sizing: border-box;width: 53%;height: 377px;float: left;margin-left: 1%;">\
+            <div style="font-size: 12px;margin-bottom: 5px;">Detalle trabamiento readaptador / Obseravación</div>\
+            <textarea type="text" style="width:100%;height: 323px;background:#fff;text-align:left;border:2px solid #d2d2d2;resize:none" class=" " id="observaciones_generales" name="observaciones_generales"></textarea>\
+        </div>\
+        <div class="tarjeta" style="height: 290px;margin-left: 3%;background: #fff0;width: 22%;float: left;">\
+            <div class="cabezera_tarjeta cabezera_tarjeta_roja" >\
+                <span>Se recomienda</span>\
             </div>\
-            <div class="cuerpo_tarjerta" style="height: 250px;">\
-                <div style="width:100%;height:22px;display:flex;flex-direction:row;text-align:center;">\
-                    <label style="width:50%;height:100%;display:inline;" for="radio_actual">\
-                        <div style="color:#404040;width:100%;height:100%;/*background:red;*/" id="texto_radio_actual">actual</div>\
-                        <input type="radio" style="display:none;" id="radio_actual" name="sesion" onchange="sesion_radio()"/>\
-                    </label>\
-                    <label style="width:50%;height:100%;display:inline;" for="radio_seguiente">\
-                        <div style="color:#404040;width:100%;height:100%;/*background:green;*/" id="texto_radio_seguiente">siguiente</div>\
-                        <input type="radio" style="display:none;" id="radio_seguiente" name="sesion" onchange="sesion_radio()"/>\
-                    </label>\
-                </div>\
-                <div style="width: 100%;height: 228px;display: block;overflow: scroll;" id="contenedor_radios_sesion">\
+            <div class="cuerpo_tarjerta" style="overflow: auto;overflow-x: hidden;height: 325px;">\
+                <div style="width:100%;height:auto;display:block;padding-top:15px;" id="contenedor_radios_sesion">\
                 </div>\
             </div>\
         </div>\
-        <div style="background:#eee;width:32%;height: 285px;display: inline-block;margin-left: 1%;margin-right: 2%;overflow: auto;">\
-                <div style="width: 80%;margin-left: 10%;margin-right: 10%;display:flex;margin-bottom:10px">\
-                    <a class="btn btn-md btn-primary green-a" style="width: 50%;height: 20px;background:#df4f4f;border:2px solid #555;padding-bottom: 2px;">\
-                        <div>\
-                            <p class="ellipsis-text" style="font-weight: normal;">*% de recuperación</p>\
-                        </div>\
-                    </a>\
-                    <select style="width:50%; height: 30px;background:#fff;border:2px solid" class="" id="porcentaje_recuperacion" name="porcentaje_recuperacion" onchange="validarFormulario()">\
-                    </select>\
-                </div>\
-                <div class="tarjeta_cuerpo_leciones" style="width:100%;display:block;height: 235px;">\
-                    <div class="cabezera_tarjeta cabezera_tarjeta_gris">\
-                        <span>Observación general</span>\
+    </div>\
+        <div style="box-sizing:border-box;width:100%;clear: both;display:inline-flex;flex-wrap:wrap;flex-direction:row;">\
+            <div style="width: 97%;margin-top: 35px;margin-left: 2%;box-sizing: border-box;color: #555;font-weight: bold;font-size: 13px;">ACTUALIZACIÓN DEL ESTADO DEL JUGADOR</div>\
+            <div style="width: 25%;margin-left: 2%;display:flex;margin-bottom:10px">\
+                <a class="btn btn-md btn-primary green-a" style="width: 50%;height: 20px;background:#df4f4f;border:2px solid #555;padding-bottom: 2px;">\
+                    <div>\
+                        <p class="ellipsis-text" style="font-weight: normal;">% de recuperación</p>\
                     </div>\
-                    <div style="width:100%;height:200px;overflow: auto;overflow-x: hidden;">\
-                        <textarea id="observaciones_generales" name="observaciones_generales" onKeyup="validarFormulario()" onKedown="validarFormulario()" style="width:96%;height:95%;border-radius: 0px 0px 5px 5px;resize: none;margin:0;"></textarea>\
+                </a>\
+                <select style="width:50%; height: 30px;background:#fff;border:2px solid" class="" id="porcentaje_recuperacion" name="porcentaje_recuperacion" onchange="validarFormulario()">\
+                </select>\
+            </div>\
+            <div style="width: 25%;margin-left: 5%;display:flex;margin-bottom:10px">\
+                <a class="btn btn-md btn-primary green-a" style="width: 50%;height: 20px;background:#df4f4f;border:2px solid #555;padding-bottom: 2px;">\
+                    <div>\
+                        <p class="ellipsis-text" style="font-weight: normal;">Estado</p>\
                     </div>\
-                </div>\
+                </a>\
+                <select style="width:45%;background:#fff;border:2px solid;margin:0" class="" id="estado_jugador" name="estado_jugador">\
+                    <option value="0">Seleccione</option>\
+                    <option value="1">Apto para jugar</option>\
+                    <option value="2">Apto para entrenar</option>\
+                    <option value="3">En reintegro deportivo</option>\
+                    <option value="4">En rehabilitación kinésica</option>\
+                    <option value="5">En espera de revisión médica</option>\
+                    <option value="6">En espera de resultado de examenes</option>\
+                    <option value="7">En post operatorio</option>\
+                    <option value="8">En espera de cirugia</option>\
+                    <option value="9">En reposo</option>\
+                </select>\
+            </div>\
+            <div style="width: 35%;margin-left: 5%;display:flex;margin-bottom:10px">\
+                <a class="btn btn-md btn-primary green-a" style="width: 50%;height: 20px;background:#df4f4f;border:2px solid #555;padding-bottom: 2px;">\
+                    <div>\
+                        <p class="ellipsis-text" style="font-weight: normal;">Fecha estimada para el alta medica</p>\
+                    </div>\
+                </a>\
+                <input readonly="" style="box-sizing:border-box;width:50%;height:30px;border:2px solid;background-color:#fff;" type="text" class="" id="fecha_alta" name="fecha_alta">\
+            </div>\
+        </div>\
+        <div style="width:97%;height:250px;margin-top:35px;margin-left: 1.5%;box-sizing: border-box;">\
+            <textarea id="indicaciones" name="indicaciones" style="width:100%;height:100%;border-radius: 0px 0px 5px 5px;resize: none;box-sizing: border-box;border: 2px solid #d2d2d2;"></textarea>\
         </div>\
         <div class="row-fluid">\
             <div class="span12"  style=" margin-top: 20px;">\
@@ -2475,8 +2475,7 @@ var html_atencion_control={
                     <button type="button" ng-disabled="" disabled="disabled" class="boton_guardar_informe" onClick="mostrarModalFormularioEnviarDatos();" id="boton_agregar_infrome"><i class="icon-save"></i> GUARDAR INFORME</button>\
                 </center>\
             </div>\
-        </div>\
-    </div>',
+        </div>',
     parte_2:'\
         <div style="margin-right:2.5%;width:29.96%;display:flex;margin-bottom:10px">\
             <a class="btn btn-md btn-primary green-a" style="width: 50%;height: 20px;background:#404040">\
@@ -2495,11 +2494,13 @@ var html_atencion_control={
             </a>\
             <select style="width:50%; height: 30px;background:#fff;border:2px solid" class="" id="asistencia_control" name="asistencia_control" onchange="validarFormulario()">\
                 <option value="1">Presente</option>\
-                <option value="0">Inasistente</option>\
+                <option value="0">Ausente</option>\
+                <option value="2">No avisa</option>\
+                <option value="3">Avisa</option>\
             </select>\
         </div>\
-        <div style="margin-right:2.5%;width:100%;display:flex;margin-bottom:10px">\
-            <a class="btn btn-md btn-primary green-a" style="width: 14%;height: 20px;background:#404040">\
+        <div style="margin-right:2.5%;width:95%;display:flex;margin-bottom:10px">\
+            <a class="btn btn-md btn-primary green-a" style="width: 14.5%;height: 20px;background:#404040">\
                 <div>\
                     <p class="ellipsis-text" style="font-weight: normal;">Diagnostico</p>\
                 </div>\
@@ -5065,15 +5066,15 @@ async function formularioNuevoIncidente(tipo){
 }
 
 async function formularioControl(tipo){
-    await consultarTratamientos() ; 
+    // await consultarTratamientos() ; 
     await consultarTrabajoReadaptador() ; 
     await consultarContextosIncidentes() ; 
     // porcentaje_recuperacion
     $("#contenedor_flex_segmento_izquierdo_formulario").css("align-content","flex-start") ; 
-    $("#contenedor_flex_segmento_izquierdo_formulario").append(html_atencion_control.parte_2) ; 
-    $("#segmento_inferior_formulario").html(html_atencion_control.parte_1) ; 
+    $("#contenedor_flex_segmento_izquierdo_formulario").append(html_atencion_control_sesion.parte_2) ; 
+    $("#segmento_inferior_formulario").html(html_atencion_control_sesion.parte_1) ; 
     $("#radio_actual").prop("checked",true) ; 
-    $("#contenedor_radios_sesion").html(html_sesion.actual+html_sesion.siguiente) ; 
+    $("#contenedor_radios_sesion").html(html_sesion.recomendaciones_1) ; 
     $("#numero_sesiones").empty() ; 
     $("#numero_sesiones").append('<option value="0">Seleccione</option>') ; 
     for(let contador_0=1;contador_0<=150;contador_0++){ 
@@ -5146,6 +5147,7 @@ async function formularioControl(tipo){
             useCurrent: false
     });  
     $("#siguiente_fecha_reposo_total").datetimepicker('setDate', new Date() );
+    fechaAltaMedicaHoy();
 
     $("#sesion_actual_1").prop("checked",true) ; 
     $("#sesion_siguiente_1").prop("checked",true) ; 
@@ -5172,6 +5174,24 @@ async function formularioControl(tipo){
             mostarDatosTipoFormulario(tipo,window.busqueda_respuesta_servidor[index_array_atencion_diaria]) ; 
         },1000)
     }
+}
+
+function fechaAltaMedicaHoy(){
+    $("#fecha_alta").datetimepicker({
+            language:  'es',
+            format: 'yyyy-mm-dd',
+            //startDate: '2014-12-01',
+            weekStart: 1,
+            todayBtn:  1,
+            autoclose: 1,
+            todayHighlight: 1,
+            startView: 2,
+            minView: 2,
+            forceParse: 0,
+            autoclose: true,
+            useCurrent: false
+    });  
+    $("#fecha_alta").datetimepicker('setDate', new Date() );
 }
 
 function formularioMedica(tipo){
