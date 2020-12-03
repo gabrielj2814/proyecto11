@@ -2526,8 +2526,8 @@ var html_atencion_sesion_readaptador={
             </div>\
             <div class="cuerpo_tarjerta" id="contenedor_tratamiento" style="overflow: auto;overflow-x: hidden;"></div>\
         </div>\
-        <div style="box-sizing: border-box;width: 63.5%;height: 377px;float: left;margin-left: 5%;">\
-            <div style="font-size: 12px;margin-bottom: 5px;">Detalle tratamiento realizado / Obseravación</div>\
+        <div style="box-sizing: border-box;width: 64.5%;height: 377px;float: left;margin-left: 5%;">\
+            <div style="font-size: 12px;margin-bottom: 5px;">Detalle tratamiento realizados / Evolución del jugador / Observaciones</div>\
             <textarea type="text" style="width:100%;height: 323px;background:#fff;text-align:left;border:2px solid #d2d2d2;resize:none" class=" " id="observaciones_generales" name="observaciones_generales"></textarea>\
         </div>\
     </div>\
