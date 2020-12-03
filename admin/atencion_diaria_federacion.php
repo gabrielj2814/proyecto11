@@ -2527,7 +2527,7 @@ var html_atencion_control_medico={
             <div style="font-size: 12px;margin-bottom: 5px;">Observaciones / Indicaciones / Evolución del jugador</div>\
             <textarea type="text" style="width:100%;height: 323px;background:#fff;text-align:left;border:2px solid #d2d2d2;resize:none" class=" " id="observacion" name="observacion"></textarea>\
         </div>\
-        <div class="tarjeta" style="height: 290px;margin-left: 3%;background: #fff0;width: 22%;float: left;">\
+        <div class="tarjeta" style="height: 290px;margin-left: 3%;background: #fff0;width: 21%;float: left;">\
             <div class="cabezera_tarjeta cabezera_tarjeta_roja" >\
                 <span>Se recomienda</span>\
             </div>\
