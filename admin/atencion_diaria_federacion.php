@@ -4569,15 +4569,114 @@ function mostarDatosTipoFormulario(tipo,atencion_diaria){
         case "3":mostrarDatosFormularioMedica(atencion_diaria);break; 
         case "4":mostrarDatosFormularioDeportiva(atencion_diaria);break;
         case "5":mostrarDatosFormularioNuevaAtencion(atencion_diaria);break; 
-        // case "6":formularioControlMedico(tipo);break; 
-        // case "7":formularioSesionReadaptador(tipo);break; 
+        case "6":mostrarDatosFormularioControlMedico(atencion_diaria);break; 
+        // case "7":formularioSesionReadaptador(atencion_diaria);break; 
     }
+}
+
+function mostrarDatosFormularioControlMedico(atencion_diaria){
+    $("#examen_fisico").val(atencion_diaria.examen_fisico);
+    $("#estado_jugador").val(atencion_diaria.estado_jugador);
+    $("#fecha_atencion").val(atencion_diaria.fecha_atencion_diaria);
+    $("#observacion").val(atencion_diaria.observacion);
+    $("#asistencia_control").val(atencion_diaria.asistencia_atencion_diaria) ; 
+    $("#fecha_alta").val(atencion_diaria.fecha_estimada_de_alta);
+    $("#indicaciones").val(atencion_diaria.indicaciones);
+    // insertando los valores de recomendacion
+    for(let recomendacion of atencion_diaria.recomendaciones){
+        if(recomendacion.recomendacion_numero==="1"){
+            $("#reposo_deportivo").val(recomendacion.fecha_recomendacion);
+        }
+        else if(recomendacion.recomendacion_numero==="2"){
+            $("#reposo_total").val(recomendacion.fecha_recomendacion);
+        }
+        $("#recomendacion_"+recomendacion.recomendacion_numero).prop("checked",true);
+    }
+    $("#numero_sesiones").val(atencion_diaria.numero_sesion) ; 
+    $("#porcentaje_recuperacion").val(atencion_diaria.porcentaje_recuperacion) ; 
+    if(atencion_diaria.trabajo_readaptor.length===lista_trabajo_readaptador.length-1){
+        $("#checkbox_trabajo_readaptador_atencion_diaria_0").prop("checked",true) ; 
+    }
+    for(let contador3=0;contador3<atencion_diaria.trabajo_readaptor.length;contador3++){
+        if(document.getElementById('checkbox_trabajo_readaptador_atencion_diaria_'+atencion_diaria.trabajo_readaptor[contador3].trabajo_readaptador_atencion_diaria)){
+            $('#checkbox_trabajo_readaptador_atencion_diaria_'+atencion_diaria.trabajo_readaptor[contador3].trabajo_readaptador_atencion_diaria).prop("checked",true)   ; 
+        }
+    }
+    $("#idinforme_medico").empty() ; 
+    $("#idinforme_medico").append("<option value='0'>Seleccione</option>") ; 
+    let lista_option_dignostico=[] ; 
+    for(let contador4=0;contador4<atencion_diaria.informes_medicos.length;contador4++){
+        let inform_medico=atencion_diaria.informes_medicos[contador4] ; 
+        let option="<option value='"+inform_medico.idinforme_medico+"'>"+inform_medico.diagnostico+"</option>" ; 
+        $("#idinforme_medico").append(option) ; 
+    }
+    if(atencion_diaria.idinforme_medico!==null){
+        $("#infon_diagnostico").empty() ; 
+        $("#idinforme_medico").val(atencion_diaria.idinforme_medico) ; 
+        let informe=atencion_diaria.informes_medicos.filter(informe_medico=> informe_medico.idinforme_medico===atencion_diaria.idinforme_medico) ; 
+        let lista_meses=[
+            "Enero",
+            "Febrero",
+            "Marzo",
+            "Abril",
+            "Mayo",
+            "Junio",
+            "Julio",
+            "Agosto",
+            "Septiembre",
+            "Octubre",
+            "Noviembre",
+            "Diciembre"
+        ] ; 
+
+        let dia_semana=[
+            "Domingo",
+            "Lunes",
+            "Martes",
+            "Miercoles",
+            "Jueves",
+            "Viernes",
+            "Sabado"
+        ] ; 
+        let ano=informe[0].agregado_fecha_lesion.split("-")[0] ; 
+        let mes=informe[0].agregado_fecha_lesion.split("-")[1] ; 
+        let dia=informe[0].agregado_fecha_lesion.split("-")[2] ; 
+        let fecha_lesion=new Date() ; 
+        fecha_lesion.setDate(parseInt(dia)) ; 
+        fecha_lesion.setMonth(parseInt(mes)-1) ; 
+        fecha_lesion.setFullYear(parseInt(ano)) ; 
+
+        let fecha_lesion_diaria_modificada=dia_semana[fecha_lesion.getDay()]+' '+fecha_lesion.getDate()+' de '+lista_meses[fecha_lesion.getMonth()]+' '+fecha_lesion.getFullYear(); 
+
+        let array_contexto=[
+            "Partido Oficial",
+            "Partido Amistoso",
+            "Entrenamiento",
+            "Otro"
+        ] ; 
+
+        let html_info_diagnostico='\
+            <div style="display:block;box-sizing: border-box;margin-bottom: 10px;"><span style="font-weight: bold;">Examenes realizados:</span> '+informe[0].agregado_examenes_realizados+'</div>\
+            <div style="display:block;box-sizing: border-box;margin-bottom: 10px;"><span style="font-weight: bold;">Fecha de lesion:</span> '+fecha_lesion_diaria_modificada+' </div>\
+            <div style="display:block;box-sizing: border-box;margin-bottom: 10px;"><span style="font-weight: bold;">Contexto:</span> '+array_contexto[parseInt(informe[0].contexto)]+'</div>\
+            <div style="display:block;box-sizing: border-box;margin-bottom: 10px;"><span style="font-weight: bold;">Zona afectada:</span> '+informe[0].agregado_zona_afectada+' </div>\
+            <div style="display:block;box-sizing: border-box;margin-bottom: 10px;"><span style="font-weight: bold;">Recidiva:</span> '+((informe[0].agregado_recidiva==="1")?"Si":"No")+' </div>\
+        '; 
+        $("#infon_diagnostico").html(html_info_diagnostico) ; 
+        $("#infon_diagnostico").css("display","block") ; 
+    }
+    else{
+        $("#infon_diagnostico").css("display","none") ; 
+    }
+
+    $("#boton_agregar_infrome").prop("disabled",false);
+    $("#formulario_modal_atencion_new").show() ; 
 }
 
 function mostrarDatosFormularioNuevaAtencion(atencion_diaria){
     console.log(atencion_diaria);
     $("#estado_jugador").val(atencion_diaria.estado_jugador);
-    $("#examen_fisico").val(atencion_diaria.examen_fisico)
+    $("#examen_fisico").val(atencion_diaria.examen_fisico);
     $("#indicaciones").val(atencion_diaria.indicaciones);
     $("#plan").val(atencion_diaria.plan_atencion_diaria);
     $("#diagnostico").val(atencion_diaria.diagnostico_atencion_diaria);
@@ -5082,7 +5181,7 @@ async function formularioNuevaAtencion(tipo){
         },1000) ; 
     }
 }
-function formularioControlMedico(tpo){
+function formularioControlMedico(tipo){
     // alert("formulario control medico");
 
     $("#contenedor_flex_segmento_izquierdo_formulario").css("align-content","flex-start") ; 
@@ -5123,13 +5222,13 @@ function formularioControlMedico(tpo){
         $("#idinforme_medico").append(option) ; 
     }
     $("#boton_agregar_infrome").prop("disabled",true) ; 
-    // if(window.id_informe){
-    //     setTimeout(()=>{
-    //         mostarDatosTipoFormulario(tipo,window.busqueda_respuesta_servidor[index_array_atencion_diaria]) ; 
-    //     },1000)
-    // }
+    if(window.id_informe){
+        setTimeout(()=>{
+            mostarDatosTipoFormulario(tipo,window.busqueda_respuesta_servidor[index_array_atencion_diaria]) ; 
+        },1000)
+    }
 }
-function formularioSesionReadaptador(tpo){
+function formularioSesionReadaptador(tipo){
     alert("formulario sesion readaptador");
 }
 
