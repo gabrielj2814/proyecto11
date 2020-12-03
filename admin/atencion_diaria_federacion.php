@@ -4922,7 +4922,7 @@ function mostrarInformeMedico(id){
             "Entrenamiento",
             "Otro"
         ] ; 
-        if($("#tipo_tipo_atencion_formulario").val()==="2"){
+        if($("#tipo_tipo_atencion_formulario").val()==="2" || $("#tipo_tipo_atencion_formulario").val()==="6" || $("#tipo_tipo_atencion_formulario").val()==="7"){
             
             html_info_diagnostico='\
                 <div style="display:block;box-sizing: border-box;margin-bottom: 10px;"><span style="font-weight: bold;">Examenes realizados:</span> '+informe[0].agregado_examenes_realizados+'</div>\
