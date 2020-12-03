@@ -2717,7 +2717,19 @@ var html_atencion_control_medico={
 var html_atencion_alta_medica={
     parte_1:'\
     <div style="width:100%;">\
-        <div class="tarjeta" style="margin-left:19%;height: 237px;background: #fff;margin-right: 1%;">\
+        <div style="width: 25%;margin-left: 5%;display:flex;margin-bottom:10px;float:left;">\
+                <a class="btn btn-md btn-primary green-a" style="width: 50%;height: 20px;background:#df4f4f;border:2px solid #555;padding-bottom: 2px;">\
+                    <div>\
+                        <p class="ellipsis-text" style="font-weight: normal;">Estado</p>\
+                    </div>\
+                </a>\
+                <select style="width:45%;background:#fff;border:2px solid;margin:0" class="" id="estado_jugador" name="estado_jugador">\
+                    <option value="0">Seleccione</option>\
+                    <option value="1">Apto para jugar</option>\
+                    <option value="2">Apto para entrenar</option>\
+                </select>\
+            </div>\
+        <div class="tarjeta" style="margin-left:1%;height: 237px;background: #fff;margin-right: 1%;float:left;">\
             <div class="cabezera_tarjeta cabezera_tarjeta_roja">\
                 <span>*Recomendaciones de Alta</span>\
             </div>\
@@ -2729,7 +2741,7 @@ var html_atencion_alta_medica={
                 </div>\
             </div>\
         </div>\
-        <div class="tarjeta_cuerpo_leciones" style="width:42%;height: 238px;">\
+        <div class="tarjeta_cuerpo_leciones" style="width:42%;height: 238px;float:left;">\
             <div class="cabezera_tarjeta cabezera_tarjeta_gris">\
                 <span>Recomendaciones Médicas</span>\
             </div>\
@@ -2768,19 +2780,19 @@ var html_atencion_alta_medica={
 var html_atencion_alta_deportiva={
     parte_1:'\
     <div style="width:100%;">\
-        <div class="span3" style="display: flex;">\
-            <a class="btn btn-md btn-primary green-a" style="width: 50%;background:#404040"><div><p class="ellipsis-text" style="font-weight: normal;">Alta Deportiva</p></div></a>\
-            <div class="btn-group c_objetivo_fisico " style="width: 50%;">\
-                <button id="boton_alta_deportiva" type="button" class="btn dropdown-toggle" data-toggle="dropdown" href="#" onclick="renderizarCheckboxAltaDeportiva()" style="width: 100%;height: 30px;border-radius: 0;border: 2px solid #404040; background-color: #fff;">\
-                    <p id="alta_deportiva" class="titulo_multi ellipsis-text">\
-                        <span id="texto_boton_alta_deportiva">Seleccione una alta deportiva</span>\
-                    </p> \
-                    <span class="caret" style="position: absolute; right: 5px; top: 2px;"></span>\
-                </button>\
-                <ul id="tipo_alta_deportiva" class="dropdown-menu" data-titulo="tipo_ayuda"></ul>\
+        <div style="width: 25%;margin-left: 5%;display:flex;margin-bottom:10px;float:left;">\
+                <a class="btn btn-md btn-primary green-a" style="width: 50%;height: 20px;background:#df4f4f;border:2px solid #555;padding-bottom: 2px;">\
+                    <div>\
+                        <p class="ellipsis-text" style="font-weight: normal;">Estado</p>\
+                    </div>\
+                </a>\
+                <select style="width:45%;background:#fff;border:2px solid;margin:0" class="" id="estado_jugador" name="estado_jugador">\
+                    <option value="0">Seleccione</option>\
+                    <option value="1">Apto para jugar</option>\
+                    <option value="2">Apto para entrenar</option>\
+                </select>\
             </div>\
-        </div>\
-        <div class="tarjeta" style="margin-left:5%;height: 290px;margin-right: 1%;">\
+        <div class="tarjeta" style="margin-left:5%;height: 290px;margin-right: 1%;float:left;">\
             <div class="cabezera_tarjeta cabezera_tarjeta_roja">\
                 <span>*Recomendaciones de Alta</span>\
             </div>\
@@ -2792,7 +2804,7 @@ var html_atencion_alta_deportiva={
                 </div>\
             </div>\
         </div>\
-        <div class="tarjeta_cuerpo_leciones" style="width:42%;">\
+        <div class="tarjeta_cuerpo_leciones" style="width:42%;float:left;">\
             <div class="cabezera_tarjeta cabezera_tarjeta_gris">\
                 <span>Recomendaciones Readaptadores</span>\
             </div>\
@@ -5156,6 +5168,7 @@ function mostrarInformeMedico(id){
 
 function mostrarDatosFormularioMedica(atencion_diaria){
     // console.log(atencion_diaria) ; 
+    $("#estado_jugador").val(atencion_diaria.estado_jugador);
     $("#fecha_atencion").val(atencion_diaria.fecha_atencion_diaria) ; 
     $("#recomendacion_medica").val(atencion_diaria.observacion_medica ) ; 
     $("#idinforme_medico").empty() ; 
@@ -5223,12 +5236,13 @@ function mostrarDatosFormularioMedica(atencion_diaria){
             $('#recomendacion_alta_'+atencion_diaria.recomendacion_alta[contador].recomendacion_alta_atencion_diaria).prop("checked",true)  ;  
         }
     }
-    // $("#boton_agregar_infrome").prop("disabled",false)
+    $("#boton_agregar_infrome").prop("disabled",false);
     $("#formulario_modal_atencion_new").show() ; 
 }
 
 function mostrarDatosFormularioDeportiva(atencion_diaria){
-    // console.log(atencion_diaria) ; 
+    // console.log(atencion_diaria) ;
+    $("#estado_jugador").val(atencion_diaria.estado_jugador); 
     $("#fecha_atencion").val(atencion_diaria.fecha_atencion_diaria) ; 
     $("#idinforme_medico").empty() ; 
     $("#idinforme_medico").append("<option value='0'>Seleccione</option>") ; 
@@ -5291,19 +5305,20 @@ function mostrarDatosFormularioDeportiva(atencion_diaria){
         $("#infon_diagnostico").css("display","none") ; 
     }
     $("#recomendacion_readaptadores").val(atencion_diaria.observacion_readaptor  ) ; 
-    $("#tipo_alta_deportiva").empty() ; 
-    renderizarCheckboxAltaDeportiva() ; 
-    for(let contador0=0;contador0<atencion_diaria.alta_deportiva.length;contador0++){
-        if(document.getElementById('checkbox_alta_deportiva_atencion_diaria_'+atencion_diaria.alta_deportiva[contador0].alta_deportiva_atencion_diaria)){
-            $('#checkbox_alta_deportiva_atencion_diaria_'+atencion_diaria.alta_deportiva[contador0].alta_deportiva_atencion_diaria).prop("checked",true) ; 
-        }
-    }
-    contarElementosAltaDeportiva() ; 
+    // $("#tipo_alta_deportiva").empty() ; 
+    // renderizarCheckboxAltaDeportiva() ; 
+    // for(let contador0=0;contador0<atencion_diaria.alta_deportiva.length;contador0++){
+    //     if(document.getElementById('checkbox_alta_deportiva_atencion_diaria_'+atencion_diaria.alta_deportiva[contador0].alta_deportiva_atencion_diaria)){
+    //         $('#checkbox_alta_deportiva_atencion_diaria_'+atencion_diaria.alta_deportiva[contador0].alta_deportiva_atencion_diaria).prop("checked",true) ; 
+    //     }
+    // }
+    // contarElementosAltaDeportiva() ; 
     for(let contador=0;contador<atencion_diaria.recomendacion_alta.length;contador++){
         if(document.getElementById('recomendacion_alta_'+atencion_diaria.recomendacion_alta[contador].recomendacion_alta_atencion_diaria)){
             $('#recomendacion_alta_'+atencion_diaria.recomendacion_alta[contador].recomendacion_alta_atencion_diaria).prop("checked",true)  ;  
         }
     }
+    $("#boton_agregar_infrome").prop("disabled",false);
     $("#formulario_modal_atencion_new").show() ; 
 }
 

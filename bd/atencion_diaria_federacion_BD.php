@@ -396,11 +396,12 @@ function guardarAtencionDiaria($POST){
                 $recomendacion_medica="NULL";
             }
             $fecha_software=date_futbolJoven();
-            $SQL="INSERT INTO atencion_diaria(
+            $SQL="INSERT INTO atencion_diaria_federacion(
                 idfichaJugador,
                 tipo_atencion_atencion_diaria,
                 fecha_atencion_diaria,
 
+                estado_jugador,
                 observacion_medica ,
                 idinforme_medico,
 
@@ -411,7 +412,7 @@ function guardarAtencionDiaria($POST){
                 ".$POST["tipo_tipo_atencion_formulario"].",
                 '".$POST["fecha_atencion_diaria"]."',
                 
-                
+                ".$POST["estado_jugador"].",
                 ".$recomendacion_medica.",
                 ".$idinforme_medico.",
                 '".$fecha_software."',
@@ -439,9 +440,11 @@ function guardarAtencionDiaria($POST){
                 $recomendacion_medica="NULL";
             }
             $fecha_software=date_futbolJoven();
-            $SQL="UPDATE atencion_diaria SET
+            $SQL="UPDATE atencion_diaria_federacion SET
                 fecha_atencion_diaria='".$POST["fecha_atencion_diaria"]."',
                 tipo_atencion_atencion_diaria=".$POST["tipo_tipo_atencion_formulario"].",
+                
+                estado_jugador=".$POST["estado_jugador"].",
                 observacion_medica=".$recomendacion_medica.",
                 idinforme_medico=".$idinforme_medico.",
 
@@ -477,11 +480,12 @@ function guardarAtencionDiaria($POST){
                 $recomendacion_readaptadore="NULL";
             }
             $fecha_software=date_futbolJoven();
-            $SQL="INSERT INTO atencion_diaria(
+            $SQL="INSERT INTO atencion_diaria_federacion(
                 idfichaJugador,
                 tipo_atencion_atencion_diaria,
                 fecha_atencion_diaria,
-
+                
+                estado_jugador,
                 observacion_readaptor  ,
                 idinforme_medico,
 
@@ -492,7 +496,7 @@ function guardarAtencionDiaria($POST){
                 ".$POST["tipo_tipo_atencion_formulario"].",
                 '".$POST["fecha_atencion_diaria"]."',
 
-                
+                ".$POST["estado_jugador"].",
                 ".$recomendacion_readaptadore.",
                 ".$idinforme_medico.",
                 '".$fecha_software."',
@@ -520,10 +524,11 @@ function guardarAtencionDiaria($POST){
                 $recomendacion_readaptadore="NULL";
             }
             $fecha_software=date_futbolJoven();
-            $SQL="UPDATE atencion_diaria SET
+            $SQL="UPDATE atencion_diaria_federacion SET
                 fecha_atencion_diaria='".$POST["fecha_atencion_diaria"]."',
                 tipo_atencion_atencion_diaria=".$POST["tipo_tipo_atencion_formulario"].",
-
+                
+                estado_jugador=".$POST["estado_jugador"].",
                 observacion_readaptor=".$recomendacion_readaptadore.",
                 idinforme_medico=".$idinforme_medico.",
 
@@ -532,12 +537,8 @@ function guardarAtencionDiaria($POST){
                 WHERE idatencion_diaria_federacion=".$POST["id_atencion_diaria"].";";
             $link->query($SQL);
             $link->close();
-            eliminarAtencionDiariaExamenes($POST);
-            eliminarAtencionDiariaTratamiento($POST);
-            eliminarAtencionDiariaTrabajoReadaptador($POST);
-            eliminarAtencionDiariaAltaDeportiva($POST);
+            // eliminarAtencionDiariaAltaDeportiva($POST);
             eliminarAtencionDiariaRecomendacionAlta($POST);
-            eliminarAtencionDiariaLesiones($POST);
             return $POST["id_atencion_diaria"];
         }
         
