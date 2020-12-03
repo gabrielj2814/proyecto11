@@ -2528,7 +2528,7 @@ var html_atencion_sesion_readaptador={
         </div>\
         <div style="box-sizing: border-box;width: 64.5%;height: 377px;float: left;margin-left: 5%;">\
             <div style="font-size: 12px;margin-bottom: 5px;">Detalle trabajo readaptador / Evolución del jugador / Observaciones</div>\
-            <textarea type="text" style="width:100%;height: 323px;background:#fff;text-align:left;border:2px solid #d2d2d2;resize:none" class=" " id="observaciones_generales" name="observaciones_generales"></textarea>\
+            <textarea type="text" style="width:100%;height: 323px;background:#fff;text-align:left;border:2px solid #d2d2d2;resize:none" class=" " id="observacion" name="observacion"></textarea>\
         </div>\
     </div>\
         <div style="box-sizing:border-box;width:100%;clear: both;display:inline-flex;flex-wrap:wrap;flex-direction:row;">\
@@ -4672,8 +4672,105 @@ function mostarDatosTipoFormulario(tipo,atencion_diaria){
         case "4":mostrarDatosFormularioDeportiva(atencion_diaria);break;
         case "5":mostrarDatosFormularioNuevaAtencion(atencion_diaria);break; 
         case "6":mostrarDatosFormularioControlMedico(atencion_diaria);break; 
-        // case "7":formularioSesionReadaptador(atencion_diaria);break; 
+        case "7":mostrarDatosformularioSesionReadaptador(atencion_diaria);break; 
     }
+}
+
+function mostrarDatosformularioSesionReadaptador(atencion_diaria){
+    $("#estado_jugador").val(atencion_diaria.estado_jugador);
+    $("#fecha_atencion").val(atencion_diaria.fecha_atencion_diaria);
+    $("#observacion").val(atencion_diaria.observacion);
+    $("#asistencia_control").val(atencion_diaria.asistencia_atencion_diaria) ; 
+    $("#fecha_alta").val(atencion_diaria.fecha_estimada_de_alta);
+    $("#indicaciones").val(atencion_diaria.indicaciones);
+    $("#numero_sesiones").val(atencion_diaria.numero_sesion) ; 
+    $("#porcentaje_recuperacion").val(atencion_diaria.porcentaje_recuperacion) ; 
+    if(atencion_diaria.trabajo_readaptor.length===lista_trabajo_readaptador.length-1){
+        $("#checkbox_trabajo_readaptador_atencion_diaria_0").prop("checked",true) ; 
+    }
+    for(let contador3=0;contador3<atencion_diaria.trabajo_readaptor.length;contador3++){
+        if(document.getElementById('checkbox_trabajo_readaptador_atencion_diaria_'+atencion_diaria.trabajo_readaptor[contador3].trabajo_readaptador_atencion_diaria)){
+            $('#checkbox_trabajo_readaptador_atencion_diaria_'+atencion_diaria.trabajo_readaptor[contador3].trabajo_readaptador_atencion_diaria).prop("checked",true)   ; 
+        }
+    }
+    // if(atencion_diaria.tratamiento_aplicado.length===lista_tratamiento_aplicado.length-1){
+    //     $("#checkbox_tratamiento_aplicado_atencion_diaria_0").prop("checked",true);
+    // }
+    // for(let contador2=0;contador2<atencion_diaria.tratamiento_aplicado.length;contador2++){
+    //     if(document.getElementById('checkbox_tratamiento_aplicado_atencion_diaria_'+atencion_diaria.tratamiento_aplicado[contador2].nombre_tratamiento_atencion_diaria)){
+    //         $('#checkbox_tratamiento_aplicado_atencion_diaria_'+atencion_diaria.tratamiento_aplicado[contador2].nombre_tratamiento_atencion_diaria).prop("checked",true) ;
+    //     }
+    // }
+    $("#idinforme_medico").empty() ; 
+    $("#idinforme_medico").append("<option value='0'>Seleccione</option>") ; 
+    let lista_option_dignostico=[] ; 
+    for(let contador4=0;contador4<atencion_diaria.informes_medicos.length;contador4++){
+        let inform_medico=atencion_diaria.informes_medicos[contador4] ; 
+        let option="<option value='"+inform_medico.idinforme_medico+"'>"+inform_medico.diagnostico+"</option>" ; 
+        $("#idinforme_medico").append(option) ; 
+    }
+    if(atencion_diaria.idinforme_medico!==null){
+        $("#infon_diagnostico").empty() ; 
+        $("#idinforme_medico").val(atencion_diaria.idinforme_medico) ; 
+        let informe=atencion_diaria.informes_medicos.filter(informe_medico=> informe_medico.idinforme_medico===atencion_diaria.idinforme_medico) ; 
+        let lista_meses=[
+            "Enero",
+            "Febrero",
+            "Marzo",
+            "Abril",
+            "Mayo",
+            "Junio",
+            "Julio",
+            "Agosto",
+            "Septiembre",
+            "Octubre",
+            "Noviembre",
+            "Diciembre"
+        ] ; 
+
+        let dia_semana=[
+            "Domingo",
+            "Lunes",
+            "Martes",
+            "Miercoles",
+            "Jueves",
+            "Viernes",
+            "Sabado"
+        ] ; 
+        let ano=informe[0].agregado_fecha_lesion.split("-")[0] ; 
+        let mes=informe[0].agregado_fecha_lesion.split("-")[1] ; 
+        let dia=informe[0].agregado_fecha_lesion.split("-")[2] ; 
+        let fecha_lesion=new Date() ; 
+        fecha_lesion.setDate(parseInt(dia)) ; 
+        fecha_lesion.setMonth(parseInt(mes)-1) ; 
+        fecha_lesion.setFullYear(parseInt(ano)) ; 
+
+        let fecha_lesion_diaria_modificada=dia_semana[fecha_lesion.getDay()]+' '+fecha_lesion.getDate()+' de '+lista_meses[fecha_lesion.getMonth()]+' '+fecha_lesion.getFullYear(); 
+
+        let array_contexto=[
+            "Partido Oficial",
+            "Partido Amistoso",
+            "Entrenamiento",
+            "Otro"
+        ] ; 
+
+        let html_info_diagnostico='\
+            <div style="display:block;box-sizing: border-box;margin-bottom: 10px;"><span style="font-weight: bold;">Examenes realizados:</span> '+informe[0].agregado_examenes_realizados+'</div>\
+            <div style="display:block;box-sizing: border-box;margin-bottom: 10px;"><span style="font-weight: bold;">Fecha de lesion:</span> '+fecha_lesion_diaria_modificada+' </div>\
+            <div style="display:block;box-sizing: border-box;margin-bottom: 10px;"><span style="font-weight: bold;">Contexto:</span> '+array_contexto[parseInt(informe[0].contexto)]+'</div>\
+            <div style="display:block;box-sizing: border-box;margin-bottom: 10px;"><span style="font-weight: bold;">Zona afectada:</span> '+informe[0].agregado_zona_afectada+' </div>\
+            <div style="display:block;box-sizing: border-box;margin-bottom: 10px;"><span style="font-weight: bold;">Recidiva:</span> '+((informe[0].agregado_recidiva==="1")?"Si":"No")+' </div>\
+        '; 
+        $("#infon_diagnostico").html(html_info_diagnostico) ; 
+        $("#infon_diagnostico").css("display","block") ; 
+    }
+    else{
+        $("#infon_diagnostico").css("display","none") ; 
+    }
+
+    $("#boton_agregar_infrome").prop("disabled",false);
+    $("#formulario_modal_atencion_new").show() ; 
+
 }
 
 function mostrarDatosFormularioControlMedico(atencion_diaria){
@@ -5368,11 +5465,11 @@ async function formularioSesionReadaptador(tipo){
         $("#idinforme_medico").append(option) ; 
     }
     $("#boton_agregar_infrome").prop("disabled",true) ; 
-    // if(window.id_informe){
-    //     setTimeout(()=>{
-    //         mostarDatosTipoFormulario(tipo,window.busqueda_respuesta_servidor[index_array_atencion_diaria]) ; 
-    //     },1000)
-    // }
+    if(window.id_informe){
+        setTimeout(()=>{
+            mostarDatosTipoFormulario(tipo,window.busqueda_respuesta_servidor[index_array_atencion_diaria]) ; 
+        },1000)
+    }
 }
 
 async function formularioNuevoIncidente(tipo){
@@ -6312,7 +6409,7 @@ function enviarDatos(){
         // alert("enviar datos control")
             let contador2=0 ; 
             while(contador2<datos_formulario.length){
-                if(datos_formulario[contador2].name==="array_checkbox_trabajo_readaptador_atencion_diaria[]"){
+                if(datos_formulario[contador2].name==="array_checkbox_tratamiento_aplicado_atencion_diaria[]"){
                     if(datos_formulario[contador2].value==="0"){
                         datos_formulario.splice(contador2,1) ; 
                     }
@@ -6452,6 +6549,44 @@ function enviarDatos(){
     }
     if(tipo_atencion_formulario==="6"){
         // alert("enviar datos control")
+            let fecha_atencion_diaria=$("#fecha_atencion").val() ; 
+            datos_formulario.push({name:'id_ficha_jugador',value:window.id_ficha_jugador}) ; 
+            datos_formulario.push({name:'fecha_atencion_diaria',value:fecha_atencion_diaria}) ; 
+            datos_formulario.push({name:'tipo_formulario',value:tipo_atencion_formulario}) ; 
+            datos_formulario.push({name:'id_informe',value:window.id_informe}) ; 
+            datos_formulario.push({name:'nombre_usuario_software',value:window.nombre_usuario_software}) ; 
+            datos_formulario.push({name:'id_atencion_diaria',value:window.id_atencion_diaria}) ; 
+            console.log(datos_formulario) ; 
+            $.ajax({
+                url: "post/atencion_diaria_federacion_guardar.php",
+                type: "post",
+                data:datos_formulario
+                ,success: function(respuesta) {
+                    var json=JSON.parse(respuesta);
+                    console.log(json) ; 
+                    $('#modalAtencionDiariaNuevo').modal('hide');
+                    consultarTratamiento2() ; 
+                    consultarTrabajoReadaptador2() ; 
+                    consultarContextosIncidente2() ; 
+                    consulatarDespuesDeRegistrar_Actualizar_Eliminar() ; 
+                    botonVolver() ; 
+                    
+                },error: function(){// will fire when timeout is reached
+                    // alert("errorXXXXX");
+                }, timeout: 10000 // sets timeout to 3 seconds
+            });
+    }
+    if(tipo_atencion_formulario==="7"){
+        // alert("enviar datos control")
+            let contador2=0 ; 
+            while(contador2<datos_formulario.length){
+                if(datos_formulario[contador2].name==="array_checkbox_trabajo_readaptador_atencion_diaria[]"){
+                    if(datos_formulario[contador2].value==="0"){
+                        datos_formulario.splice(contador2,1) ; 
+                    }
+                }
+                contador2++ ; 
+            }
             let fecha_atencion_diaria=$("#fecha_atencion").val() ; 
             datos_formulario.push({name:'id_ficha_jugador',value:window.id_ficha_jugador}) ; 
             datos_formulario.push({name:'fecha_atencion_diaria',value:fecha_atencion_diaria}) ; 

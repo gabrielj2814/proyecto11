@@ -766,6 +766,110 @@ function guardarAtencionDiaria($POST){
             return $POST["id_atencion_diaria"];
         }
     }
+    if($POST["tipo_formulario"]==="7"){
+        if($POST["id_informe"]=="false"){
+            $fecha_software=date_futbolJoven();
+            $idinforme_medico="";
+            if($POST["idinforme_medico"]==="0"){
+                $idinforme_medico="NULL";
+            }
+            else{
+                $idinforme_medico=$POST["idinforme_medico"];
+            }
+            $observacion="";
+            if($POST["observacion"]!=""){
+                // $POST["observacion"]
+                $observacion="'".$POST["observacion"]."'";
+            }
+            else{
+                $observacion="NULL";
+            }
+            // asistencia_atencion_diaria asistencia_control
+            $SQL="INSERT INTO atencion_diaria_federacion(
+                idfichaJugador,
+                tipo_atencion_atencion_diaria,
+                fecha_atencion_diaria,
+
+                observacion ,
+                numero_sesion,
+                porcentaje_recuperacion,
+                idinforme_medico,
+                asistencia_atencion_diaria,
+
+                fecha_estimada_de_alta,
+                estado_jugador,
+                indicaciones,
+
+                fecha_software,
+                nombre_usuario_software
+            ) VALUES(
+                ".$POST["id_ficha_jugador"].",
+                ".$POST["tipo_tipo_atencion_formulario"].",
+                '".$POST["fecha_atencion_diaria"]."',
+
+                ".$observacion.",
+                ".$POST["numero_sesiones"].",
+                ".$POST["porcentaje_recuperacion"].",
+                ".$idinforme_medico.",
+                ".$POST["asistencia_control"].",
+
+                '".$POST["fecha_alta"]."',
+                ".$POST["estado_jugador"].",
+                '".$POST["indicaciones"]."',
+
+                '".$fecha_software."',
+                '".$POST["nombre_usuario_software"]."'
+            );";
+            // echo $SQL;
+            $link->query($SQL);
+            $id=$link->insert_id;
+            $link->close();
+            // echo $SQL;
+            return $id;
+            
+        }
+        else{
+            $fecha_software=date_futbolJoven();
+            if($POST["idinforme_medico"]==="0"){
+                $idinforme_medico="NULL";
+            }
+            else{
+                $idinforme_medico=$POST["idinforme_medico"];
+            }
+            $observacion="";
+            if($POST["observacion"]!=""){
+                // $POST["observacion"]
+                $observacion="'".$POST["observacion"]."'";
+            }
+            else{
+                $observacion="NULL";
+            }
+            
+            $SQL="UPDATE atencion_diaria_federacion SET
+                fecha_atencion_diaria='".$POST["fecha_atencion_diaria"]."',
+                tipo_atencion_atencion_diaria=".$POST["tipo_tipo_atencion_formulario"].",
+                observacion_general=".$observacion.",
+                numero_sesion=".$POST["numero_sesiones"].",
+                porcentaje_recuperacion=".$POST["porcentaje_recuperacion"].",
+                idinforme_medico=".$idinforme_medico.",
+                asistencia_atencion_diaria=".$POST["asistencia_control"].",
+
+                fecha_estimada_de_alta='".$POST["fecha_alta"]."',
+                estado_jugador=".$POST["estado_jugador"].",
+                indicaciones='".$POST["indicaciones"]."',
+
+                fecha_software='".$fecha_software."',
+                nombre_usuario_software='".$POST["nombre_usuario_software"]."'
+
+                WHERE idatencion_diaria_federacion=".$POST["id_atencion_diaria"].";";
+            $link->query($SQL);
+            $link->close();
+            eliminarAtencionDiariaTrabajoReadaptador($POST);
+            // eliminarAtencionDiariaTratamiento($POST);
+            eliminarRecomendacion($POST);
+            return $POST["id_atencion_diaria"];
+        }
+    }
 }
 
 function consultarAtencionDiariaJugador($POST){
