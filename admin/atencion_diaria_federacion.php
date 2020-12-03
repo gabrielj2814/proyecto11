@@ -4278,7 +4278,8 @@ function crearFilasTabla(datos){
         "En espera de resultado de examenes",
         "En post operatorio",
         "En espera de cirugia",
-        "En reposo"
+        "En reposo",
+        "En reintegro"
     ];
     let numero_fila=0;
     let filas=datos.map(atencion_diaria=>{
