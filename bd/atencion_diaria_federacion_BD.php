@@ -373,7 +373,8 @@ function guardarAtencionDiaria($POST){
                 WHERE idatencion_diaria_federacion=".$POST["id_atencion_diaria"].";";
             $link->query($SQL);
             $link->close();
-            eliminarAtencionDiariaTrabajoReadaptador($POST);
+            // eliminarAtencionDiariaTrabajoReadaptador($POST);
+            eliminarAtencionDiariaTratamiento($POST);
             eliminarRecomendacion($POST);
             return $POST["id_atencion_diaria"];
         }

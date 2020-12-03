@@ -2403,21 +2403,22 @@ var html_sesion={
     <label for="recomendacion_9" style="font-size:12px"><input type="checkbox"  name="array_recomendacion[]" id="recomendacion_9" value="9" style="margin-left:5px;margin-right:5px;margin-top:0px;" />Control/Cirugia</label>\
     '
 };
-
+// contenedor_tratamiento
+// contenedor_trabajo_readaptador
 var html_atencion_control_sesion={
     parte_1:'\
     <div style="width:100%;">\
         <div class="tarjeta " style="margin-left: 1%;background: #fff0;height: 377px;float: left;">\
             <div class="cabezera_tarjeta cabezera_tarjeta_gris">\
-                <span>*Trabajo con readaptador</span>\
+                <span>*Tratamiento realizado</span>\
             </div>\
-            <div class="cuerpo_tarjerta" id="contenedor_trabajo_readaptador" style="overflow: auto;overflow-x: hidden;"></div>\
+            <div class="cuerpo_tarjerta" id="contenedor_tratamiento" style="overflow: auto;overflow-x: hidden;"></div>\
         </div>\
         <div style="box-sizing: border-box;width: 53%;height: 377px;float: left;margin-left: 1%;">\
-            <div style="font-size: 12px;margin-bottom: 5px;">Detalle tratamiento readaptador / Obseravación</div>\
+            <div style="font-size: 12px;margin-bottom: 5px;">Detalle tratamiento realizado / Obseravación</div>\
             <textarea type="text" style="width:100%;height: 323px;background:#fff;text-align:left;border:2px solid #d2d2d2;resize:none" class=" " id="observaciones_generales" name="observaciones_generales"></textarea>\
         </div>\
-        <div class="tarjeta" style="height: 290px;margin-left: 3%;background: #fff0;width: 22%;float: left;">\
+        <div class="tarjeta" style="height: 290px;margin-left: 3%;background: #fff0;width: 21%;float: left;">\
             <div class="cabezera_tarjeta cabezera_tarjeta_roja" >\
                 <span>Se recomienda</span>\
             </div>\
@@ -2432,7 +2433,7 @@ var html_atencion_control_sesion={
             <div style="width: 25%;margin-left: 2%;display:flex;margin-bottom:10px">\
                 <a class="btn btn-md btn-primary green-a" style="width: 50%;height: 20px;background:#df4f4f;border:2px solid #555;padding-bottom: 2px;">\
                     <div>\
-                        <p class="ellipsis-text" style="font-weight: normal;">% de recuperación</p>\
+                        <p class="ellipsis-text" style="font-weight: normal;">*% de recuperación</p>\
                     </div>\
                 </a>\
                 <select style="width:50%; height: 30px;background:#fff;border:2px solid" class="" id="porcentaje_recuperacion" name="porcentaje_recuperacion" onchange="validarFormulario()">\
@@ -2493,10 +2494,9 @@ var html_atencion_control_sesion={
                 </div>\
             </a>\
             <select style="width:50%; height: 30px;background:#fff;border:2px solid" class="" id="asistencia_control" name="asistencia_control" onchange="validarFormulario()">\
-                <option value="1">Presente</option>\
-                <option value="0">Ausente</option>\
-                <option value="2">No avisa</option>\
-                <option value="3">Avisa</option>\
+                <option value="1">Presente - Ausente</option>\
+                <option value="0">No avisa - Ausente</option>\
+                <option value="2">Avisa</option>\
             </select>\
         </div>\
         <div style="margin-right:2.5%;width:95%;display:flex;margin-bottom:10px">\
@@ -2594,10 +2594,9 @@ var html_atencion_control_medico={
                 </div>\
             </a>\
             <select style="width:50%; height: 30px;background:#fff;border:2px solid" class="" id="asistencia_control" name="asistencia_control" onchange="validarFormulario()">\
-                <option value="1">Presente</option>\
-                <option value="0">Ausente</option>\
-                <option value="2">No avisa</option>\
-                <option value="3">Avisa</option>\
+                <option value="1">Presente - Ausente</option>\
+                <option value="0">No avisa - Ausente</option>\
+                <option value="2">Avisa</option>\
             </select>\
         </div>\
         <div style="margin-right:2.5%;width:95%;display:flex;margin-bottom:10px">\
@@ -4796,12 +4795,20 @@ function mostrarDatosFormularioControl(atencion_diaria){
     }
     $("#numero_sesiones").val(atencion_diaria.numero_sesion) ; 
     $("#porcentaje_recuperacion").val(atencion_diaria.porcentaje_recuperacion) ; 
-    if(atencion_diaria.trabajo_readaptor.length===lista_trabajo_readaptador.length-1){
-        $("#checkbox_trabajo_readaptador_atencion_diaria_0").prop("checked",true) ; 
+    // if(atencion_diaria.trabajo_readaptor.length===lista_trabajo_readaptador.length-1){
+    //     $("#checkbox_trabajo_readaptador_atencion_diaria_0").prop("checked",true) ; 
+    // }
+    // for(let contador3=0;contador3<atencion_diaria.trabajo_readaptor.length;contador3++){
+    //     if(document.getElementById('checkbox_trabajo_readaptador_atencion_diaria_'+atencion_diaria.trabajo_readaptor[contador3].trabajo_readaptador_atencion_diaria)){
+    //         $('#checkbox_trabajo_readaptador_atencion_diaria_'+atencion_diaria.trabajo_readaptor[contador3].trabajo_readaptador_atencion_diaria).prop("checked",true)   ; 
+    //     }
+    // }
+    if(atencion_diaria.tratamiento_aplicado.length===lista_tratamiento_aplicado.length-1){
+        $("#checkbox_tratamiento_aplicado_atencion_diaria_0").prop("checked",true);
     }
-    for(let contador3=0;contador3<atencion_diaria.trabajo_readaptor.length;contador3++){
-        if(document.getElementById('checkbox_trabajo_readaptador_atencion_diaria_'+atencion_diaria.trabajo_readaptor[contador3].trabajo_readaptador_atencion_diaria)){
-            $('#checkbox_trabajo_readaptador_atencion_diaria_'+atencion_diaria.trabajo_readaptor[contador3].trabajo_readaptador_atencion_diaria).prop("checked",true)   ; 
+    for(let contador2=0;contador2<atencion_diaria.tratamiento_aplicado.length;contador2++){
+        if(document.getElementById('checkbox_tratamiento_aplicado_atencion_diaria_'+atencion_diaria.tratamiento_aplicado[contador2].nombre_tratamiento_atencion_diaria)){
+            $('#checkbox_tratamiento_aplicado_atencion_diaria_'+atencion_diaria.tratamiento_aplicado[contador2].nombre_tratamiento_atencion_diaria).prop("checked",true) ;
         }
     }
     $("#idinforme_medico").empty() ; 
@@ -5276,8 +5283,8 @@ async function formularioNuevoIncidente(tipo){
 }
 
 async function formularioControl(tipo){
-    // await consultarTratamientos() ; 
-    await consultarTrabajoReadaptador() ; 
+    await consultarTratamientos() ; 
+    // await consultarTrabajoReadaptador() ; 
     await consultarContextosIncidentes() ; 
     
     // porcentaje_recuperacion
