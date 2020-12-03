@@ -2552,13 +2552,7 @@ var html_atencion_sesion_readaptador={
                     <option value="0">Seleccione</option>\
                     <option value="1">Apto para jugar</option>\
                     <option value="2">Apto para entrenar</option>\
-                    <option value="3">En reintegro deportivo</option>\
-                    <option value="4">En rehabilitación kinésica</option>\
-                    <option value="5">En espera de revisión médica</option>\
-                    <option value="6">En espera de resultado de examenes</option>\
-                    <option value="7">En post operatorio</option>\
-                    <option value="8">En espera de cirugia</option>\
-                    <option value="9">En reposo</option>\
+                    <option value="10">En reintegro</option>\
                 </select>\
             </div>\
             <div style="width: 35%;margin-left: 5%;display:flex;margin-bottom:10px">\
