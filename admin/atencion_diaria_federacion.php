@@ -1642,7 +1642,7 @@ app.controller("controlador_1",['$scope',function($scope){
 
                                         <div class="span3" style="display: flex;flex-wrap:wrap;">
                                             <div style="font-size: 12px;font-weight: 900;color: #404040;width:100%;">Jugador</div>
-                                            <select  style="box-sizing:border-box;width:100%;height:30px;border:2px solid #d2d2d2;" id="jugador" name="jugador" onchange="mostrarJugador(this.value)">
+                                            <select  style="box-sizing:border-box;width:100%;height:30px;border:2px solid #d2d2d2;text-transform: Capitalize" id="jugador" name="jugador" onchange="mostrarJugador(this.value)">
                                                 
                                             </select>
                                              
@@ -4499,7 +4499,7 @@ async function consultarJugadoreXSeries(serie_select){
                     // console.log(respuesta_servidor_jugadores);
                     let array=respuesta_servidor_jugadores;
                     let list_option_jugadores=array.map(jugadores=> {
-                        return '<option id="option_select_jugador_'+jugadores.idfichaJugador+'_0'+'" value="'+jugadores.idfichaJugador+'_0'+'" >'+jugadores.nombre+' '+jugadores.apellido1+' '+jugadores.apellido2+'</option>';
+                        return '<option id="option_select_jugador_'+jugadores.idfichaJugador+'_0'+'" value="'+jugadores.idfichaJugador+'_0'+'" style="text-transform: Capitalize">'+jugadores.nombre+' '+jugadores.apellido1+' '+jugadores.apellido2+'</option>';
                     });
                     for(let contador=0;contador<list_option_jugadores.length;contador++){
                         $("#jugador").append(list_option_jugadores[contador]);
