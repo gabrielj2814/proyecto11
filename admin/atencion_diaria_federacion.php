@@ -2516,6 +2516,109 @@ var html_atencion_control_sesion={
         </div>'
 };
 
+
+var html_atencion_sesion_readaptador={
+    parte_1:'\
+    <div style="width:100%;">\
+        <div class="tarjeta " style="margin-left: 1%;background: #fff0;height: 377px;float: left;width: 25%;">\
+            <div class="cabezera_tarjeta cabezera_tarjeta_gris">\
+                <span>*Tratamiento realizado</span>\
+            </div>\
+            <div class="cuerpo_tarjerta" id="contenedor_tratamiento" style="overflow: auto;overflow-x: hidden;"></div>\
+        </div>\
+        <div style="box-sizing: border-box;width: 63.5%;height: 377px;float: left;margin-left: 5%;">\
+            <div style="font-size: 12px;margin-bottom: 5px;">Detalle tratamiento realizado / Obseravación</div>\
+            <textarea type="text" style="width:100%;height: 323px;background:#fff;text-align:left;border:2px solid #d2d2d2;resize:none" class=" " id="observaciones_generales" name="observaciones_generales"></textarea>\
+        </div>\
+    </div>\
+        <div style="box-sizing:border-box;width:100%;clear: both;display:inline-flex;flex-wrap:wrap;flex-direction:row;">\
+            <div style="width: 97%;margin-top: 35px;margin-left: 2%;box-sizing: border-box;color: #555;font-weight: bold;font-size: 13px;">ACTUALIZACIÓN DEL ESTADO DEL JUGADOR</div>\
+            <div style="width: 25%;margin-left: 2%;display:flex;margin-bottom:10px">\
+                <a class="btn btn-md btn-primary green-a" style="width: 50%;height: 20px;background:#df4f4f;border:2px solid #555;padding-bottom: 2px;">\
+                    <div>\
+                        <p class="ellipsis-text" style="font-weight: normal;">*% de recuperación</p>\
+                    </div>\
+                </a>\
+                <select style="width:50%; height: 30px;background:#fff;border:2px solid" class="" id="porcentaje_recuperacion" name="porcentaje_recuperacion" onchange="validarFormulario()">\
+                </select>\
+            </div>\
+            <div style="width: 25%;margin-left: 5%;display:flex;margin-bottom:10px">\
+                <a class="btn btn-md btn-primary green-a" style="width: 50%;height: 20px;background:#df4f4f;border:2px solid #555;padding-bottom: 2px;">\
+                    <div>\
+                        <p class="ellipsis-text" style="font-weight: normal;">Estado</p>\
+                    </div>\
+                </a>\
+                <select style="width:45%;background:#fff;border:2px solid;margin:0" class="" id="estado_jugador" name="estado_jugador">\
+                    <option value="0">Seleccione</option>\
+                    <option value="1">Apto para jugar</option>\
+                    <option value="2">Apto para entrenar</option>\
+                    <option value="3">En reintegro deportivo</option>\
+                    <option value="4">En rehabilitación kinésica</option>\
+                    <option value="5">En espera de revisión médica</option>\
+                    <option value="6">En espera de resultado de examenes</option>\
+                    <option value="7">En post operatorio</option>\
+                    <option value="8">En espera de cirugia</option>\
+                    <option value="9">En reposo</option>\
+                </select>\
+            </div>\
+            <div style="width: 35%;margin-left: 5%;display:flex;margin-bottom:10px">\
+                <a class="btn btn-md btn-primary green-a" style="width: 50%;height: 20px;background:#df4f4f;border:2px solid #555;padding-bottom: 2px;">\
+                    <div>\
+                        <p class="ellipsis-text" style="font-weight: normal;">Fecha estimada para el alta deportiva</p>\
+                    </div>\
+                </a>\
+                <input readonly="" style="box-sizing:border-box;width:50%;height:30px;border:2px solid;background-color:#fff;" type="text" class="" id="fecha_alta" name="fecha_alta">\
+            </div>\
+        </div>\
+        <div style="width:95%;height:250px;margin-top:35px;margin-left: 2%;box-sizing: border-box;">\
+            <textarea id="indicaciones" name="indicaciones" style="width:100%;height:100%;border-radius: 0px 0px 5px 5px;resize: none;box-sizing: border-box;border: 2px solid #d2d2d2;"></textarea>\
+        </div>\
+        <div class="row-fluid">\
+            <div class="span12"  style=" margin-top: 20px;">\
+                <center>\
+                    <button type="button" ng-disabled="" disabled="disabled" class="boton_guardar_informe" onClick="mostrarModalFormularioEnviarDatos();" id="boton_agregar_infrome"><i class="icon-save"></i> GUARDAR INFORME</button>\
+                </center>\
+            </div>\
+        </div>',
+    parte_2:'\
+        <div style="margin-right:2.5%;width:29.96%;display:flex;margin-bottom:10px">\
+            <a class="btn btn-md btn-primary green-a" style="width: 50%;height: 20px;background:#404040">\
+                <div>\
+                    <p class="ellipsis-text" style="font-weight: normal;">*N° Sesión</p>\
+                </div>\
+            </a>\
+            <select style="width:50%; height: 30px;background:#fff;border:2px solid" class="" id="numero_sesiones" name="numero_sesiones" onchange="validarFormulario()">\
+            </select>\
+        </div>\
+        <div style="margin-right:2.5%;width:29.96%;display:flex;margin-bottom:10px">\
+            <a class="btn btn-md btn-primary green-a" style="width: 50%;height: 20px;background:#404040">\
+                <div>\
+                    <p class="ellipsis-text" style="font-weight: normal;">*Asistencia</p>\
+                </div>\
+            </a>\
+            <select style="width:50%; height: 30px;background:#fff;border:2px solid" class="" id="asistencia_control" name="asistencia_control" onchange="validarFormulario()">\
+                <option value="1">Presente - Ausente</option>\
+                <option value="0">No avisa - Ausente</option>\
+                <option value="2">Avisa</option>\
+            </select>\
+        </div>\
+        <div style="margin-right:2.5%;width:95%;display:flex;margin-bottom:10px">\
+            <a class="btn btn-md btn-primary green-a" style="width: 14.5%;height: 20px;background:#404040">\
+                <div>\
+                    <p class="ellipsis-text" style="font-weight: normal;">Diagnostico</p>\
+                </div>\
+            </a>\
+            <select style="width:85%; height: 30px;background:#fff;border:2px solid" class="" id="idinforme_medico" name="idinforme_medico" onchange="mostrarInformeMedico(this.value)"></select>\
+        </div>\
+        <div style="width:100%;margin-bottom:10px;display:none;" id="infon_diagnostico">\
+            <div style="display:block;box-sizing: border-box;margin-bottom: 10px;"><span style="font-weight: bold;">Examenes realizados:</span> asdasddasda </div>\
+            <div style="display:block;box-sizing: border-box;margin-bottom: 10px;"><span style="font-weight: bold;">Fecha de lesion:</span> asdasddasda </div>\
+            <div style="display:block;box-sizing: border-box;margin-bottom: 10px;"><span style="font-weight: bold;">Contexto:</span> asdasddasda </div>\
+            <div style="display:block;box-sizing: border-box;margin-bottom: 10px;"><span style="font-weight: bold;">Zona afectada:</span> asdasddasda </div>\
+            <div style="display:block;box-sizing: border-box;margin-bottom: 10px;"><span style="font-weight: bold;">Recidiva:</span> asdasddasda </div>\
+        </div>'
+};
+
 var html_atencion_control_medico={
     parte_1:'\
     <div style="width:100%;">\
@@ -5209,11 +5312,6 @@ function formularioControlMedico(tipo){
     fechaAltaMedicaHoy();
     fechaRecomendacionReposoTotalHoy();
     fechaRecomendacionReposoDepotivoHoy();
-    $("#sesion_actual_1").prop("checked",true) ; 
-    $("#sesion_siguiente_1").prop("checked",true) ; 
-    mostrarFechaReposoDeportivaSiguiente() ; 
-    mostrarFechaReposoDeportiva() ; 
-    sesion_radio() ; 
     $("#idinforme_medico").empty() ; 
     $("#idinforme_medico").append("<option value='0'>Seleccione</option>") ; 
     // console.log(window.respuesta_servidor_jugadores)
@@ -5235,8 +5333,46 @@ function formularioControlMedico(tipo){
         },1000)
     }
 }
-function formularioSesionReadaptador(tipo){
-    alert("formulario sesion readaptador");
+async function formularioSesionReadaptador(tipo){
+    // alert("formulario sesion readaptador");
+    await consultarTratamientos() ; 
+    $("#contenedor_flex_segmento_izquierdo_formulario").css("align-content","flex-start") ; 
+    $("#contenedor_flex_segmento_izquierdo_formulario").append(html_atencion_sesion_readaptador.parte_2) ; 
+    $("#segmento_inferior_formulario").html(html_atencion_sesion_readaptador.parte_1) ; 
+    $("#numero_sesiones").empty() ; 
+    $("#numero_sesiones").append('<option value="0">Seleccione</option>') ; 
+    for(let contador_0=1;contador_0<=150;contador_0++){ 
+        let option='<option value="'+contador_0+'">'+contador_0+'</option>' ; 
+        $("#numero_sesiones").append(option) ; 
+    }
+    $("#porcentaje_recuperacion").append('<option value="0">Seleccione</option>') ; 
+    for(let contador_1=1;contador_1<=100;contador_1++){
+        let option='<option value="'+contador_1+'">'+contador_1+'%</option>' ; 
+        $("#porcentaje_recuperacion").append(option) ; 
+    }
+    fechaAltaMedicaHoy();
+    fechaRecomendacionReposoTotalHoy();
+    fechaRecomendacionReposoDepotivoHoy();
+    $("#idinforme_medico").empty() ; 
+    $("#idinforme_medico").append("<option value='0'>Seleccione</option>") ; 
+    // console.log(window.respuesta_servidor_jugadores)
+    // jugador
+    let id_jugador=$("#jugador").val() ; 
+    let jugador=window.respuesta_servidor_jugadores.filter(jugador => jugador.idfichaJugador===id_jugador.split("_")[0]) ; 
+    // console.log(jugador)
+    window.atencion_diaria_jugador=jugador[0] ; 
+    let atencion_diaria=jugador[0] ; 
+    for(let contador4=0;contador4<atencion_diaria.informes_medicos.length;contador4++){
+        let inform_medico=atencion_diaria.informes_medicos[contador4] ; 
+        let option="<option value='"+inform_medico.idinforme_medico+"'>"+inform_medico.diagnostico+"</option>" ; 
+        $("#idinforme_medico").append(option) ; 
+    }
+    $("#boton_agregar_infrome").prop("disabled",true) ; 
+    // if(window.id_informe){
+    //     setTimeout(()=>{
+    //         mostarDatosTipoFormulario(tipo,window.busqueda_respuesta_servidor[index_array_atencion_diaria]) ; 
+    //     },1000)
+    // }
 }
 
 async function formularioNuevoIncidente(tipo){
