@@ -2522,12 +2522,12 @@ var html_atencion_sesion_readaptador={
     <div style="width:100%;">\
         <div class="tarjeta " style="margin-left: 1%;background: #fff0;height: 377px;float: left;width: 25%;">\
             <div class="cabezera_tarjeta cabezera_tarjeta_gris">\
-                <span>*Tratamiento realizado</span>\
+                <span>*Trabajo con readaptador</span>\
             </div>\
-            <div class="cuerpo_tarjerta" id="contenedor_tratamiento" style="overflow: auto;overflow-x: hidden;"></div>\
+            <div class="cuerpo_tarjerta" id="contenedor_trabajo_readaptador" style="overflow: auto;overflow-x: hidden;"></div>\
         </div>\
         <div style="box-sizing: border-box;width: 64.5%;height: 377px;float: left;margin-left: 5%;">\
-            <div style="font-size: 12px;margin-bottom: 5px;">Detalle tratamiento realizados / Evolución del jugador / Observaciones</div>\
+            <div style="font-size: 12px;margin-bottom: 5px;">Detalle trabajo readaptador / Evolución del jugador / Observaciones</div>\
             <textarea type="text" style="width:100%;height: 323px;background:#fff;text-align:left;border:2px solid #d2d2d2;resize:none" class=" " id="observaciones_generales" name="observaciones_generales"></textarea>\
         </div>\
     </div>\
@@ -5335,7 +5335,7 @@ function formularioControlMedico(tipo){
 }
 async function formularioSesionReadaptador(tipo){
     // alert("formulario sesion readaptador");
-    await consultarTratamientos() ; 
+    await consultarTrabajoReadaptador() ; 
     $("#contenedor_flex_segmento_izquierdo_formulario").css("align-content","flex-start") ; 
     $("#contenedor_flex_segmento_izquierdo_formulario").append(html_atencion_sesion_readaptador.parte_2) ; 
     $("#segmento_inferior_formulario").html(html_atencion_sesion_readaptador.parte_1) ; 
@@ -5938,6 +5938,7 @@ function validarFormulario(){//validaciones
         case "4":validarFormulariDeportiva();break;
         case "5":validarFormularioNuevaAtencion();break;
         case "6":validarFormularioControlMedico();break;
+        case "7":validarFormularioSesionReadaptador();break;
     }
 
 }
@@ -5948,6 +5949,35 @@ function estadoFecha(){
     mostrarFechaReposoDeportivaSiguiente() ; 
     mostrarFechaReposoTotalSiguiente() ; 
     validarFormulario() ; 
+}
+
+function validarFormularioSesionReadaptador(){
+ // validar checkbox list tratamiento aplicado
+    // let estado_examen_solicitado=validarSelectDeSiYNo("examen_solicitado")
+
+    let valor_select_numero_sesiones=$("#numero_sesiones").val() ; 
+    // alert($("#numero_sesiones").val())
+    let estado_select_numero_sesiones=false ; 
+    if(valor_select_numero_sesiones!="0"){
+        estado_select_numero_sesiones=true ; 
+    }
+
+    let valor_select_porcentaje_recuperacion=$("#porcentaje_recuperacion").val() ; 
+    let estado_select_porcentaje_recuperacion=false ; 
+    if(valor_select_porcentaje_recuperacion!="0"){
+        estado_select_porcentaje_recuperacion=true ; 
+    }
+
+    let estado_select=false ; 
+    if(estado_select_numero_sesiones && estado_select_porcentaje_recuperacion){
+        estado_select=true ; 
+    }
+    if(estado_select){
+        $("#boton_agregar_infrome").prop("disabled",false) ; 
+    }
+    else{
+        $("#boton_agregar_infrome").prop("disabled",true) ; 
+    }
 }
 
 function validarFormularioControlMedico(){
