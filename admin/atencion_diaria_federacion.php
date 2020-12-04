@@ -4296,6 +4296,7 @@ function crearFilasTabla(datos){
     let numero_fila=0;
     let filas=datos.map(atencion_diaria=>{
         // ((atencion_diaria.fecha_incidente_atencion_diaria!=null)?fecha_formato_ddmmaaa(atencion_diaria.fecha_incidente_atencion_diaria):"Sin Fecha")
+        console.log(atencion_diaria);
         let fecha_lescion=null;
         if(atencion_diaria.idinforme_medico!==null){
             let informe_medico=atencion_diaria.informes_medicos.filter(informe => informe.idinforme_medico===atencion_diaria.idinforme_medico);
@@ -4375,13 +4376,6 @@ function crearFilasTabla(datos){
                     </p>  \
                 </div>\
             </td>\
-           <!-- <td style="text-align:left;" onClick="verAtencionDiaria('+numero_fila+');">\
-                <div style="max-width:90px">\
-                    <p class="ellipsis-text" style="font-weight: normal;font-size:10px;">\
-                        '+((atencion_diaria.fecha_recomendacion_sesion_actual_atencion_diaria !=null)?fecha_formato_ddmmaaa(atencion_diaria.fecha_recomendacion_sesion_actual_atencion_diaria ):"Sin fecha" )+'\
-                    </p>  \
-                </div>\
-            </td>-->\
             <td style="padding:2px;">\
                     <center>\
                         <a class="boton_add" onClick="descargarPDF('+numero_fila+');">\
