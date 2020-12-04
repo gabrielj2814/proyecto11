@@ -1077,7 +1077,7 @@ else{
                         .celda_propiedad{
                             width: 30%;
                             height: 100%;
-                            background-color: #2099f4;
+                            background-color: #1e3fa5;
                             border-right: 2px solid #555;
                             box-sizing: border-box;
                             color: #fff;
@@ -1340,7 +1340,7 @@ app.controller("controlador_1",['$scope',function($scope){
                         <div class="contenedor_foto_jugador" id="contenedor_foto_jugador">
                             <!-- <img src="" alt=""> -->
                         </div>
-                        <div class="modal-header encabezado_modal" style="background-color: #5fbfe4;">
+                        <div class="modal-header encabezado_modal" style="background-color: #eb595f;">
                             <div style="float:left;width:120px;height: 100%;color:#fff;box-sizing: border-box;padding-top: 19px;">ÁREA <span style="font-weight: bold">MÉDICA</span></div>
                             <div style="float:right;width:134px;height: 100%;display:flex;flex-direction:row;">
                                 <div style="width:50px;margin-right: 10px;height: 100%;box-sizing: border-box;">
@@ -2457,9 +2457,9 @@ var html_atencion_control_sesion={
                 </div>\
             </a>\
             <select style="width:50%; height: 30px;background:#fff;border:2px solid" class="" id="asistencia_control" name="asistencia_control" onchange="validarFormulario()">\
-                <option value="1">Presente - Ausente</option>\
-                <option value="0">No avisa - Ausente</option>\
-                <option value="2">Avisa</option>\
+                <option value="1">Presente</option>\
+                <option value="0">Ausente, no avisa</option>\
+                <option value="2">Ausente, avisa</option>\
             </select>\
         </div>\
         <div style="margin-right:2.5%;width:95%;display:flex;margin-bottom:10px">\
@@ -2554,9 +2554,9 @@ var html_atencion_sesion_readaptador={
                 </div>\
             </a>\
             <select style="width:50%; height: 30px;background:#fff;border:2px solid" class="" id="asistencia_control" name="asistencia_control" onchange="validarFormulario()">\
-                <option value="1">Presente - Ausente</option>\
-                <option value="0">No avisa - Ausente</option>\
-                <option value="2">Avisa</option>\
+                <option value="1">Presente</option>\
+                <option value="0">Ausente, no avisa</option>\
+                <option value="2">Ausente, avisa</option>\
             </select>\
         </div>\
         <div style="margin-right:2.5%;width:95%;display:flex;margin-bottom:10px">\
@@ -2654,9 +2654,9 @@ var html_atencion_control_medico={
                 </div>\
             </a>\
             <select style="width:50%; height: 30px;background:#fff;border:2px solid" class="" id="asistencia_control" name="asistencia_control" onchange="validarFormulario()">\
-                <option value="1">Presente - Ausente</option>\
-                <option value="0">No avisa - Ausente</option>\
-                <option value="2">Avisa</option>\
+                <option value="1">Presente</option>\
+                <option value="0">Ausente, no avisa</option>\
+                <option value="2">Ausente, avisa</option>\
             </select>\
         </div>\
         <div style="margin-right:2.5%;width:95%;display:flex;margin-bottom:10px">\
@@ -2892,11 +2892,6 @@ function verAtencionDiaria(posicion){
             texto_serie="Sub  "+atencion_diaria.serieActual;
         }
     }
-    
-    
-
-
-
     // let serie=(atencion_diaria.serieActual==="99")?"Primer equipo":""
 
 
@@ -2906,12 +2901,59 @@ function verAtencionDiaria(posicion){
         case "2":$("#tabla_detalle_atencion_diaria").html(tablaControl(atencion_diaria));break;
         case "3":$("#tabla_detalle_atencion_diaria").html(tablaMedica(atencion_diaria));break;
         case "4":$("#tabla_detalle_atencion_diaria").html(tablaDeportiva(atencion_diaria));break;
+        case "5":$("#tabla_detalle_atencion_diaria").html(tablaNuevaAtencion(atencion_diaria));break;
     }
     $("#modalVerJugador").modal("show");
 }
 
 function tablaNuevoIncidente(atencion_diaria){
     console.log(atencion_diaria)
+
+    let listaEstadoJugador=[
+        "Sin estado",
+        "Apto para jugar",
+        "Apto para entrenar",
+        "En reintegro deportivo",
+        "En rehabilitación kinésica",
+        "En espera de revisión médica",
+        "En espera de resultado de examenes",
+        "En post operatorio",
+        "En espera de cirugia",
+        "En reposo",
+        "En reintegro"
+    ];
+
+    let seRecomienda=[
+        "Reposo Deportivo",
+        "Reposo total",
+        "Sesiones Kinesiología",
+        "Trabajo con readaptador",
+        "Realizarse exámenes",
+        "Entrenamiento normal",
+        "Entrenamiento diferenciado",
+        "Control/Revisión médica",
+        "Control/Cirugia"
+    ];
+
+    let listaRecomendaciones=[];
+
+    for (let recomendacion of atencion_diaria.recomendaciones){
+        if(recomendacion.recomendacion_numero==="1" || recomendacion.recomendacion_numero==="2"){
+            listaRecomendaciones.push(seRecomienda[parseInt(recomendacion.recomendacion_numero)-1]+" "+recomendacion.fecha_recomendacion);
+        }
+        else{
+            listaRecomendaciones.push(seRecomienda[parseInt(recomendacion.recomendacion_numero)-1]);
+        }
+    }
+
+    let strRecomendaciones=null;
+    if(listaRecomendaciones.length===1){
+        strRecomendaciones=listaRecomendaciones[0];
+    }
+    else{
+        strRecomendaciones=listaRecomendaciones.join(", ");
+    }
+
     let partes_frt = ["","Cara \/ Cabeza","Hombro derecho","Hombro izquierdo","Torax","Brazo Derecho","Brazo izquierdo","Antebrazo Derecho","Antebrazo izquierdo","Abdomen","Mu\u00f1eca Derecha","Mu\u00f1eca izquierda","Manos \/ Dedos Der","Manos \/ Dedos Izq","Cadera \/ Ingle\/ Pelvis","Muslo Anterior Der","Muslo Anterior Izq","Rodilla Derecha","Rodilla Izquierda","Pierna Derecha","Pierna Izquierda","Tobillo Derecho","Tobillo Izquierdo","Pie Derecho","Pie Izquierdo"];
     let partes_bck = ["","Cuello \/ Cervical","Dorsales","Lumbares","Codo Izquierdo","Codo Derecho","Gluteos","Muslo Posterior Izquierdo","Muslo Posterior Derecho","Pantorrilla Izquierda","Pantorrilla Derecha"];
     let partes_frt_encontradas=[];
@@ -2926,23 +2968,6 @@ function tablaNuevoIncidente(atencion_diaria){
             partes_bck_encontradas.push(partes_bck[parseInt(parte.codigo_zonas_lesion.split("-")[1])]);
         }
     }
-
-
-    let lista_sesion=[
-        "Reposo Deportivo",
-        "Entrenamiento diferenciado",
-        "Alta médica solo para entrenar",
-        "Kinesiología",
-        "Reaptador",
-        "Regenerativo",
-        "Reposo total",
-        "Derivado a relizar examenes",
-        "Derivado a urgencias",
-        "Alta médica para partidos y entrenamientos",
-        "Citado a Médico",
-        "Citado a Médico para Alta",
-        "Reintegro deportivo progresivo"
-    ];
 
     let lista_meses=[
         "Enero",
@@ -2971,7 +2996,9 @@ function tablaNuevoIncidente(atencion_diaria){
 
     let tipo_atencion=[
         "Nuevo incidente",
-        "Control",
+        "Control / Sesion kinesica",
+        "Control Medica",
+        "Sesion Readaptador",
         "Medica",
         "Deportiva"
     ];
@@ -2993,8 +3020,6 @@ function tablaNuevoIncidente(atencion_diaria){
     fecha_incidente.setDate(parseInt(dia2));
     fecha_incidente.setMonth(parseInt(mes2)-1);
     fecha_incidente.setFullYear(parseInt(ano2));
-    // alert(fecha_incidente.getMonth())
-    // alert(fecha_incidente.getDay())
 
     let fecha_incidente_atencion_diaria_modificada=dia_semana[fecha_incidente.getDay()]+' '+fecha_incidente.getDate()+' de '+lista_meses[fecha_incidente.getMonth()]+' '+fecha_incidente.getFullYear();
     atencion_diaria.lista_tratamiento=[];
@@ -3015,36 +3040,6 @@ function tablaNuevoIncidente(atencion_diaria){
         let trabajo_readaptador=atencion_diaria.trabajo_readaptor[contador_2];
         let trabajo_readaptador_filtrados=lista_trabajo_readaptador_modal.filter((trabajo_re=> trabajo_readaptador.trabajo_readaptador_atencion_diaria===trabajo_re.idtrabajo_readatador));
         atencion_diaria.lista_trbajo_readaptador.push(trabajo_readaptador_filtrados[0].trabajo_readatador);
-    }
-    let fecha_recomendacion_sesion_actual="";
-    if(atencion_diaria.recomendacion_sesion_actual_atencion_diaria==="1" || atencion_diaria.recomendacion_sesion_actual_atencion_diaria==="7"){
-        let ano3=atencion_diaria.fecha_recomendacion_sesion_actual_atencion_diaria.split("-")[0];
-        let mes3=atencion_diaria.fecha_recomendacion_sesion_actual_atencion_diaria.split("-")[1];
-        let dia3=atencion_diaria.fecha_recomendacion_sesion_actual_atencion_diaria.split("-")[2];
-        let fecha_sesion_actual=new Date();
-        fecha_sesion_actual.setDate(parseInt(dia3));
-        fecha_sesion_actual.setMonth(parseInt(mes3)-1);
-        fecha_sesion_actual.setFullYear(parseInt(ano3));
-
-        let fecha_sesion_actual_modificada=dia_semana[fecha_sesion_actual.getDay()]+' '+fecha_sesion_actual.getDate()+' de '+lista_meses[fecha_sesion_actual.getMonth()]+' '+fecha_sesion_actual.getFullYear();
-        
-        
-        fecha_recomendacion_sesion_actual=", "+fecha_sesion_actual_modificada;
-    }
-    
-    let fecha_recomendacion_sesion_siguiente="";
-    if(atencion_diaria.recomendacion_sesion_siguiente_atencion_diaria ==="1" || atencion_diaria.recomendacion_sesion_siguiente_atencion_diaria ==="7"){
-        let ano4=atencion_diaria.fecha_recomendacion_sesion_siguiente_atencion_diairai.split("-")[0];
-        let mes4=atencion_diaria.fecha_recomendacion_sesion_siguiente_atencion_diairai.split("-")[1];
-        let dia4=atencion_diaria.fecha_recomendacion_sesion_siguiente_atencion_diairai.split("-")[2];
-        let fecha_sesion_siguiente=new Date();
-        fecha_sesion_siguiente.setDate(parseInt(dia4));
-        fecha_sesion_siguiente.setMonth(parseInt(mes4)-1);
-        fecha_sesion_siguiente.setFullYear(parseInt(ano4));
-
-        let fecha_sesion_siguiente_modificada=dia_semana[fecha_sesion_siguiente.getDay()]+' '+fecha_sesion_siguiente.getDate()+' de '+lista_meses[fecha_sesion_siguiente.getMonth()]+' '+fecha_sesion_siguiente.getFullYear();
-        
-        fecha_recomendacion_sesion_siguiente=", "+fecha_sesion_siguiente_modificada;
     }
 
     const lista_examenes=[
@@ -3141,21 +3136,265 @@ function tablaNuevoIncidente(atencion_diaria){
         <span class="celda_propiedad" style="padding-top: 41px;">Anamnesis</span>\
         <span class="celda_valor">'+atencion_diaria.anamnesis_atencion_diaria+'</span>\
     </div>\
+    <div class="row_tabla" style="height:100px">\
+        <span class="celda_propiedad" style="padding-top: 41px;">Examen Fisico</span>\
+        <span class="celda_valor">'+atencion_diaria.examen_fisico+'</span>\
+    </div>\
+    <div class="row_tabla" style="height:100px">\
+        <span class="celda_propiedad" style="padding-top: 41px;background-color:#ec7d7c;">Indicaciones</span>\
+        <span class="celda_valor">'+atencion_diaria.observacion_kinesiologo+'</span>\
+    </div>\
     <div class="row_tabla" style="height:auto;">\
         <span class="celda_propiedad" style="height:auto;background-color:#ec7d7c;">Derivado a seguro</span>\
         <span class="celda_valor" style="height:auto;">'+((atencion_diaria.derivado_seguro_atencion_diaria==="1")?"Si":"No")+'</span>\
     </div>\
+    <div class="row_tabla" style="height: auto;">\
+    <span class="celda_propiedad" style="height:auto;background-color:#ec7d7c;">Examenes solicitados</span>\
+    <span class="celda_valor" style="height:auto;">'+((valor_ninguno)?lista_examenes_busqueda.join(", "):"Ninguno")+'</span>\
+    </div>\
     <div class="row_tabla">\
-        <span class="celda_propiedad" style="height:auto;background-color:#ec7d7c;">Examenes solicitados</span>\
-        <span class="celda_valor" style="height:auto;">'+((valor_ninguno)?lista_examenes_busqueda.join(", "):"Ninguno")+'</span>\
+    <span class="celda_propiedad" style="height:auto;background-color:#ec7d7c;">Zonas Afectadas</span>\
+    <span class="celda_valor" style="height:auto;">'+lista_partes_frt+''+lista_partes_bck+' </span>\
+    </div>\
+    <div class="row_tabla" style="height:auto;">\
+    <span class="celda_propiedad" style="height:auto;background-color:#ec7d7c;">Tratamiento realizado</span>\
+    <span class="celda_valor" style="height:auto;">'+((atencion_diaria.lista_tratamiento.length>1)?atencion_diaria.lista_tratamiento.join(", "):atencion_diaria.lista_tratamiento[0] )+'</span>\
+    </div>\
+    <div class="row_tabla" style="height:auto;">\
+    <span class="celda_propiedad" style="height:auto;background-color:#ec7d7c;">Recomendaciones</span>\
+    <span class="celda_valor" style="height:auto;">'+strRecomendaciones+'</span>\
+    </div>\
+    <div class="row_tabla" style="height:auto;">\
+        <span class="celda_propiedad" style="height:auto;background-color:#ec7d7c;">Estado jugador</span>\
+        <span class="celda_valor" style="height:auto;">'+listaEstadoJugador[parseInt(atencion_diaria.estado_jugador)]+'</span>\
+    </div>';
+    return template;
+}
+
+function tablaNuevaAtencion(atencion_diaria){
+    console.log(atencion_diaria)
+
+    let listaEstadoJugador=[
+        "Sin estado",
+        "Apto para jugar",
+        "Apto para entrenar",
+        "En reintegro deportivo",
+        "En rehabilitación kinésica",
+        "En espera de revisión médica",
+        "En espera de resultado de examenes",
+        "En post operatorio",
+        "En espera de cirugia",
+        "En reposo",
+        "En reintegro"
+    ];
+
+    let partes_frt = ["","Cara \/ Cabeza","Hombro derecho","Hombro izquierdo","Torax","Brazo Derecho","Brazo izquierdo","Antebrazo Derecho","Antebrazo izquierdo","Abdomen","Mu\u00f1eca Derecha","Mu\u00f1eca izquierda","Manos \/ Dedos Der","Manos \/ Dedos Izq","Cadera \/ Ingle\/ Pelvis","Muslo Anterior Der","Muslo Anterior Izq","Rodilla Derecha","Rodilla Izquierda","Pierna Derecha","Pierna Izquierda","Tobillo Derecho","Tobillo Izquierdo","Pie Derecho","Pie Izquierdo"];
+    let partes_bck = ["","Cuello \/ Cervical","Dorsales","Lumbares","Codo Izquierdo","Codo Derecho","Gluteos","Muslo Posterior Izquierdo","Muslo Posterior Derecho","Pantorrilla Izquierda","Pantorrilla Derecha"];
+    let partes_frt_encontradas=[];
+    let partes_bck_encontradas=[];
+    let partes_cuerpo_total=[];
+    for(let contador_cuerpo=0;contador_cuerpo<atencion_diaria.lesiones.length;contador_cuerpo++){
+        let parte=atencion_diaria.lesiones[contador_cuerpo];
+        if(parte.codigo_zonas_lesion.split("-")[0]==="frt"){
+            partes_frt_encontradas.push(partes_frt[parseInt(parte.codigo_zonas_lesion.split("-")[1])]);
+        }
+        else{
+            partes_bck_encontradas.push(partes_bck[parseInt(parte.codigo_zonas_lesion.split("-")[1])]);
+        }
+    }
+
+    let lista_meses=[
+        "Enero",
+        "Febrero",
+        "Marzo",
+        "Abril",
+        "Mayo",
+        "Junio",
+        "Julio",
+        "Agosto",
+        "Septiembre",
+        "Octubre",
+        "Noviembre",
+        "Diciembre"
+    ];
+
+    let dia_semana=[
+        "Domingo",
+        "Lunes",
+        "Martes",
+        "Miercoles",
+        "Jueves",
+        "Viernes",
+        "Sabado"
+    ];
+
+    let tipo_atencion=[
+        "Nuevo incidente",
+        "Control / Sesion kinesica",
+        "Control Medica",
+        "Sesion Readaptador",
+        "Medica",
+        "Deportiva"
+    ];
+
+    let ano=atencion_diaria.fecha_atencion_diaria.split("-")[0];
+    let mes=atencion_diaria.fecha_atencion_diaria.split("-")[1];
+    let dia=atencion_diaria.fecha_atencion_diaria.split("-")[2];
+    let fecha_atencion=new Date();
+    fecha_atencion.setDate(parseInt(dia));
+    fecha_atencion.setMonth(parseInt(mes)-1);
+    fecha_atencion.setFullYear(parseInt(ano));
+
+    let fecha_atencion_diaria_modificada=dia_semana[fecha_atencion.getDay()]+' '+fecha_atencion.getDate()+' de '+lista_meses[fecha_atencion.getMonth()]+' '+fecha_atencion.getFullYear();
+
+    let ano2=atencion_diaria.fecha_incidente_atencion_diaria.split("-")[0];
+    let mes2=atencion_diaria.fecha_incidente_atencion_diaria.split("-")[1];
+    let dia2=atencion_diaria.fecha_incidente_atencion_diaria.split("-")[2];
+    let fecha_incidente=new Date();
+    fecha_incidente.setDate(parseInt(dia2));
+    fecha_incidente.setMonth(parseInt(mes2)-1);
+    fecha_incidente.setFullYear(parseInt(ano2));
+    // alert(fecha_incidente.getMonth())
+    // alert(fecha_incidente.getDay())
+
+    let fecha_incidente_atencion_diaria_modificada=dia_semana[fecha_incidente.getDay()]+' '+fecha_incidente.getDate()+' de '+lista_meses[fecha_incidente.getMonth()]+' '+fecha_incidente.getFullYear();
+    atencion_diaria.lista_tratamiento=[];
+    for(let contador_0=0;contador_0<atencion_diaria.tratamiento_aplicado.length;contador_0++){
+        let tratamiento=atencion_diaria.tratamiento_aplicado[contador_0];
+        let tratamiento_filtrados=window.lista_tratamiento_aplicado_modal.filter((tratamiento_filtrado)=> tratamiento.nombre_tratamiento_atencion_diaria===tratamiento_filtrado.idtratamiento_aplicado);
+        atencion_diaria.lista_tratamiento.push(tratamiento_filtrados[0].nombre_tratamiento_aplicado);
+    }
+    atencion_diaria.contexto="";
+    for(let contador_1=0;contador_1<lista_contexto_incidente_modal.length;contador_1++){
+        let contexto=lista_contexto_incidente_modal[contador_1];
+        if(contexto.idcontexto_incidente===atencion_diaria.idcontexto_incidente){
+            atencion_diaria.contexto=contexto.nombre_contexto_incidente;
+        }
+    }
+    atencion_diaria.lista_trbajo_readaptador=[];
+    for(let contador_2=0;contador_2<atencion_diaria.trabajo_readaptor.length;contador_2++){
+        let trabajo_readaptador=atencion_diaria.trabajo_readaptor[contador_2];
+        let trabajo_readaptador_filtrados=lista_trabajo_readaptador_modal.filter((trabajo_re=> trabajo_readaptador.trabajo_readaptador_atencion_diaria===trabajo_re.idtrabajo_readatador));
+        atencion_diaria.lista_trbajo_readaptador.push(trabajo_readaptador_filtrados[0].trabajo_readatador);
+    }
+
+    const lista_examenes=[
+            {idExamen:1,examen:"Resonancia Magenética"},
+            {idExamen:2,examen:"Radiografía"},
+            {idExamen:3,examen:"Scanner / TAC"},
+            {idExamen:4,examen:"Artroscopia"},
+            {idExamen:5,examen:"Ecotomografía"},
+            {idExamen:6,examen:"Fisico"},
+            {idExamen:7,examen:"Clinico"},
+            {idExamen:0,examen:"Ninguno"}
+    ];
+
+    let valor_ninguno=false;
+    let lista_examenes_busqueda=[];
+    if(atencion_diaria.examen_solicitados_atencion_diaria==="1"){
+        valor_ninguno=true;
+        for(let contador_examenes=0;contador_examenes<atencion_diaria.examenes_solicitados.length;contador_examenes++){
+            let examen=atencion_diaria.examenes_solicitados[contador_examenes];
+            examenes_filtrados=lista_examenes.filter(examen_filtro => examen_filtro.idExamen===parseInt(examen.nombre_examen_atencion_diaria));
+            lista_examenes_busqueda.push(examenes_filtrados[0].examen);
+        }
+    }
+    // partes_bck_encontradas
+    let lista_partes_frt="";
+    if(partes_frt_encontradas.length>1){
+        if(partes_bck_encontradas.length>1 || partes_bck_encontradas.length===1){
+            lista_partes_frt=partes_frt_encontradas.join(",")+',';
+        }
+        else{
+            lista_partes_frt=partes_frt_encontradas.join(",");
+        }
+        
+    }
+    else{
+        if(partes_frt_encontradas.length===1){
+            if(partes_bck_encontradas.length>1 || partes_bck_encontradas.length===1){
+                lista_partes_frt=partes_frt_encontradas[0]+',';
+            }
+            else{
+                lista_partes_frt=partes_frt_encontradas[0];
+            }
+            
+        }
+        else{
+            lista_partes_frt="";
+        }
+    }
+    let lista_partes_bck="";
+    if(partes_bck_encontradas.length>1){
+        lista_partes_bck=partes_bck_encontradas.join(",");
+    }
+    else{
+        if(partes_bck_encontradas.length===1){
+            lista_partes_bck=partes_bck_encontradas[0];
+        }
+        else{
+            lista_partes_bck="";
+        }
+    }
+
+
+
+    const template='\
+    <div class="row_tabla">\
+        <span class="celda_propiedad">Jugador Atendido</span>\
+        <span class="celda_valor">'+atencion_diaria.nombre+' '+atencion_diaria.apellido1+' '+atencion_diaria.apellido2+'</span>\
+    </div>\
+    <div class="row_tabla">\
+        <span class="celda_propiedad">Serie</span>\
+        <span class="celda_valor">Sub  '+atencion_diaria.serieActual+'</span>\
+    </div>\
+    <div class="row_tabla">\
+        <span class="celda_propiedad">Fecha Atencion</span>\
+        <span class="celda_valor">'+fecha_atencion_diaria_modificada+'</span>\
+    </div>\
+    <div class="row_tabla">\
+        <span class="celda_propiedad">Tipo atención</span>\
+        <span class="celda_valor">'+tipo_atencion[parseInt(atencion_diaria.tipo_atencion_atencion_diaria)-1]+'</span>\
+    </div>\
+    <div class="row_tabla">\
+        <span class="celda_propiedad">Contexto</span>\
+        <span class="celda_valor">'+atencion_diaria.contexto+'</span>\
+    </div>\
+    <div class="row_tabla">\
+        <span class="celda_propiedad">Fecha incidente</span>\
+        <span class="celda_valor">'+fecha_incidente_atencion_diaria_modificada+'</span>\
+    </div>\
+    <div class="row_tabla">\
+        <span class="celda_propiedad">Diagnostico</span>\
+        <span class="celda_valor">'+atencion_diaria.diagnostico_atencion_diaria+'</span>\
+    </div>\
+    <div class="row_tabla" style="height:100px">\
+        <span class="celda_propiedad" style="padding-top: 41px;">Anamnesis</span>\
+        <span class="celda_valor">'+atencion_diaria.anamnesis_atencion_diaria+'</span>\
+    </div>\
+    <div class="row_tabla" style="height:100px">\
+        <span class="celda_propiedad" style="padding-top: 41px;">Examen Fisico</span>\
+        <span class="celda_valor">'+atencion_diaria.examen_fisico+'</span>\
+    </div>\
+    <div class="row_tabla" style="height:100px">\
+        <span class="celda_propiedad" style="padding-top: 41px;">Plan</span>\
+        <span class="celda_valor">'+atencion_diaria.plan_atencion_diaria+'</span>\
+    </div>\
+    <div class="row_tabla" style="height:100px">\
+        <span class="celda_propiedad" style="padding-top: 41px;background-color:#ec7d7c;">Indicaciones</span>\
+        <span class="celda_valor">'+atencion_diaria.indicaciones+'</span>\
+    </div>\
+    <div class="row_tabla" style="height: auto;">\
+    <span class="celda_propiedad" style="height:auto;background-color:#ec7d7c;">Examenes solicitados</span>\
+    <span class="celda_valor" style="height:auto;">'+((valor_ninguno)?lista_examenes_busqueda.join(", "):"Ninguno")+'</span>\
     </div>\
     <div class="row_tabla">\
         <span class="celda_propiedad" style="height:auto;background-color:#ec7d7c;">Zonas Afectadas</span>\
         <span class="celda_valor" style="height:auto;">'+lista_partes_frt+''+lista_partes_bck+' </span>\
     </div>\
     <div class="row_tabla" style="height:auto;">\
-        <span class="celda_propiedad" style="height:auto;background-color:#ec7d7c;">Tratamiento realizado</span>\
-        <span class="celda_valor" style="height:auto;">'+((atencion_diaria.lista_tratamiento.length>1)?atencion_diaria.lista_tratamiento.join(", "):atencion_diaria.lista_tratamiento[0] )+'</span>\
+        <span class="celda_propiedad" style="height:auto;background-color:#ec7d7c;">Estado jugador</span>\
+        <span class="celda_valor" style="height:auto;">'+listaEstadoJugador[parseInt(atencion_diaria.estado_jugador)]+'</span>\
     </div>';
     return template;
 }
@@ -3206,7 +3445,9 @@ function tablaControl(atencion_diaria){
 
     let tipo_atencion=[
         "Nuevo incidente",
-        "Control",
+        "Control / Sesion kinesica",
+        "Control Medica",
+        "Sesion Readaptador",
         "Medica",
         "Deportiva"
     ];
@@ -3341,6 +3582,19 @@ function tablaControl(atencion_diaria){
 }
 
 function tablaMedica(atencion_diaria){
+    let listaEstadoJugador=[
+        "Sin estado",
+        "Apto para jugar",
+        "Apto para entrenar",
+        "En reintegro deportivo",
+        "En rehabilitación kinésica",
+        "En espera de revisión médica",
+        "En espera de resultado de examenes",
+        "En post operatorio",
+        "En espera de cirugia",
+        "En reposo",
+        "En reintegro"
+    ];
     let informe_medico=atencion_diaria.informes_medicos.filter(informe => informe.idinforme_medico===atencion_diaria.idinforme_medico);
     let lista_recomendacion_alta=[
         {codigo:"1",valor:"Continuar el trabajo con readaptacion"},
@@ -3378,7 +3632,9 @@ function tablaMedica(atencion_diaria){
 
     let tipo_atencion=[
         "Nuevo incidente",
-        "Control",
+        "Control / Sesion kinesica",
+        "Control Medica",
+        "Sesion Readaptador",
         "Medica",
         "Deportiva"
     ];
@@ -3447,12 +3703,30 @@ function tablaMedica(atencion_diaria){
     <div class="row_tabla" style="height:100px">\
         <span class="celda_propiedad" style="height:auto;padding-top: 41px;background-color:#ec7d7c;">Observación</span>\
         <span class="celda_valor" style="height:auto;">'+((atencion_diaria.observacion_medica===null)?"Sin observación":atencion_diaria.observacion_medica)+'</span>\
+    </div>\
+    <div class="row_tabla" style="height:auto;">\
+        <span class="celda_propiedad" style="height:auto;background-color:#ec7d7c;">Estado jugador</span>\
+        <span class="celda_valor" style="height:auto;">'+listaEstadoJugador[parseInt(atencion_diaria.estado_jugador)]+'</span>\
     </div>';
     return template;
 }
 
 
 function tablaDeportiva(atencion_diaria){
+    let listaEstadoJugador=[
+        "Sin estado",
+        "Apto para jugar",
+        "Apto para entrenar",
+        "En reintegro deportivo",
+        "En rehabilitación kinésica",
+        "En espera de revisión médica",
+        "En espera de resultado de examenes",
+        "En post operatorio",
+        "En espera de cirugia",
+        "En reposo",
+        "En reintegro"
+    ];
+
     let informe_medico=atencion_diaria.informes_medicos.filter(informe => informe.idinforme_medico===atencion_diaria.idinforme_medico);
     let lista_recomendacion_alta=[
         {codigo:"1",valor:"Continuar el trabajo con readaptacion"},
@@ -3490,7 +3764,9 @@ function tablaDeportiva(atencion_diaria){
 
     let tipo_atencion=[
         "Nuevo incidente",
-        "Control",
+        "Control / Sesion kinesica",
+        "Control Medica",
+        "Sesion Readaptador",
         "Medica",
         "Deportiva"
     ];
@@ -3530,7 +3806,7 @@ function tablaDeportiva(atencion_diaria){
         pedaso_html_alta_deportiva='\
         <div class="row_tabla" style="height:auto;">\
             <span class="celda_propiedad" style="height:auto;">Alta Deportiva</span>\
-            <span class="celda_valor" style="height:auto;">no tiene lata deportiva</span>\
+            <span class="celda_valor" style="height:auto;">no tiene alta deportiva</span>\
         </div>';
     }
     
@@ -3582,7 +3858,6 @@ function tablaDeportiva(atencion_diaria){
         <span class="celda_propiedad">N° sesiones</span>\
         <span class="celda_valor">'+((atencion_diaria.numero_sesion!==null)?atencion_diaria.numero_sesion:"no tiene ninguna sesion")+'</span>\
     </div>\
-    '+pedaso_html_alta_deportiva+'\
     <div class="row_tabla" style="height:auto;">\
         <span class="celda_propiedad" style="height:auto;background-color:#ec7d7c;">Recomendaciones de Alta</span>\
         <span class="celda_valor" style="height:auto;">'+((atencion_diaria.recomendaciones_alta.length>1)?atencion_diaria.recomendaciones_alta.join(", "):atencion_diaria.recomendaciones_alta[0])+'</span>\
@@ -3590,6 +3865,10 @@ function tablaDeportiva(atencion_diaria){
     <div class="row_tabla" style="height:100px">\
         <span class="celda_propiedad" style="height:auto;padding-top: 41px;background-color:#ec7d7c;">Recomendaciones readaptador</span>\
         <span class="celda_valor" style="height:auto;">'+((atencion_diaria.observacion_medica===null)?"Sin observación":atencion_diaria.observacion_medica)+'</span>\
+    </div>\
+    <div class="row_tabla" style="height:auto;">\
+        <span class="celda_propiedad" style="height:auto;background-color:#ec7d7c;">Estado jugador</span>\
+        <span class="celda_valor" style="height:auto;">'+listaEstadoJugador[parseInt(atencion_diaria.estado_jugador)]+'</span>\
     </div>';
     return template;
 }
