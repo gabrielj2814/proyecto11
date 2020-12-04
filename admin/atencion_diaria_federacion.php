@@ -3161,8 +3161,8 @@ function tablaNuevoIncidente(atencion_diaria){
     <span class="celda_valor" style="height:auto;">'+((atencion_diaria.lista_tratamiento.length>1)?atencion_diaria.lista_tratamiento.join(", "):atencion_diaria.lista_tratamiento[0] )+'</span>\
     </div>\
     <div class="row_tabla" style="height:auto;">\
-    <span class="celda_propiedad" style="height:auto;background-color:#ec7d7c;">Recomendaciones</span>\
-    <span class="celda_valor" style="height:auto;">'+strRecomendaciones+'</span>\
+        <span class="celda_propiedad" style="height:auto;background-color:#ec7d7c;">Recomendaciones</span>\
+        <span class="celda_valor" style="height:auto;">'+strRecomendaciones+'</span>\
     </div>\
     <div class="row_tabla" style="height:auto;">\
         <span class="celda_propiedad" style="height:auto;background-color:#ec7d7c;">Estado jugador</span>\
@@ -3400,6 +3400,52 @@ function tablaNuevaAtencion(atencion_diaria){
 }
 
 function tablaControl(atencion_diaria){
+    let listaEstadoJugador=[
+        "Sin estado",
+        "Apto para jugar",
+        "Apto para entrenar",
+        "En reintegro deportivo",
+        "En rehabilitación kinésica",
+        "En espera de revisión médica",
+        "En espera de resultado de examenes",
+        "En post operatorio",
+        "En espera de cirugia",
+        "En reposo",
+        "En reintegro"
+    ];
+
+    let seRecomienda=[
+        "Reposo Deportivo",
+        "Reposo total",
+        "Sesiones Kinesiología",
+        "Trabajo con readaptador",
+        "Realizarse exámenes",
+        "Entrenamiento normal",
+        "Entrenamiento diferenciado",
+        "Control/Revisión médica",
+        "Control/Cirugia"
+    ];
+
+    let listaRecomendaciones=[];
+
+    for (let recomendacion of atencion_diaria.recomendaciones){
+        if(recomendacion.recomendacion_numero==="1" || recomendacion.recomendacion_numero==="2"){
+            listaRecomendaciones.push(seRecomienda[parseInt(recomendacion.recomendacion_numero)-1]+" "+recomendacion.fecha_recomendacion);
+        }
+        else{
+            listaRecomendaciones.push(seRecomienda[parseInt(recomendacion.recomendacion_numero)-1]);
+        }
+    }
+
+    let strRecomendaciones=null;
+    if(listaRecomendaciones.length===1){
+        strRecomendaciones=listaRecomendaciones[0];
+    }
+    else{
+        strRecomendaciones=listaRecomendaciones.join(", ");
+    }
+
+
     let informe_medico=atencion_diaria.informes_medicos.filter(informe => informe.idinforme_medico===atencion_diaria.idinforme_medico);
 
     let lista_sesion=[
@@ -3493,36 +3539,13 @@ function tablaControl(atencion_diaria){
         let trabajo_readaptador_filtrados=lista_trabajo_readaptador_modal.filter((trabajo_re=> trabajo_readaptador.trabajo_readaptador_atencion_diaria===trabajo_re.idtrabajo_readatador));
         atencion_diaria.lista_trbajo_readaptador.push(trabajo_readaptador_filtrados[0].trabajo_readatador);
     }
-    let fecha_recomendacion_sesion_actual="";
-    if(atencion_diaria.recomendacion_sesion_actual_atencion_diaria==="1" || atencion_diaria.recomendacion_sesion_actual_atencion_diaria==="7"){
-        let ano3=atencion_diaria.fecha_recomendacion_sesion_actual_atencion_diaria.split("-")[0];
-        let mes3=atencion_diaria.fecha_recomendacion_sesion_actual_atencion_diaria.split("-")[1];
-        let dia3=atencion_diaria.fecha_recomendacion_sesion_actual_atencion_diaria.split("-")[2];
-        let fecha_sesion_actual=new Date();
-        fecha_sesion_actual.setDate(parseInt(dia3));
-        fecha_sesion_actual.setMonth(parseInt(mes3)-1);
-        fecha_sesion_actual.setFullYear(parseInt(ano3));
 
-        let fecha_sesion_actual_modificada=dia_semana[fecha_sesion_actual.getDay()]+' '+fecha_sesion_actual.getDate()+' de '+lista_meses[fecha_sesion_actual.getMonth()]+' '+fecha_sesion_actual.getFullYear();
-        
-        
-        fecha_recomendacion_sesion_actual=", "+fecha_sesion_actual_modificada;
-    }
-    
-    let fecha_recomendacion_sesion_siguiente="";
-    if(atencion_diaria.recomendacion_sesion_siguiente_atencion_diaria ==="1" || atencion_diaria.recomendacion_sesion_siguiente_atencion_diaria ==="7"){
-        let ano4=atencion_diaria.fecha_recomendacion_sesion_siguiente_atencion_diairai.split("-")[0];
-        let mes4=atencion_diaria.fecha_recomendacion_sesion_siguiente_atencion_diairai.split("-")[1];
-        let dia4=atencion_diaria.fecha_recomendacion_sesion_siguiente_atencion_diairai.split("-")[2];
-        let fecha_sesion_siguiente=new Date();
-        fecha_sesion_siguiente.setDate(parseInt(dia4));
-        fecha_sesion_siguiente.setMonth(parseInt(mes4)-1);
-        fecha_sesion_siguiente.setFullYear(parseInt(ano4));
-
-        let fecha_sesion_siguiente_modificada=dia_semana[fecha_sesion_siguiente.getDay()]+' '+fecha_sesion_siguiente.getDate()+' de '+lista_meses[fecha_sesion_siguiente.getMonth()]+' '+fecha_sesion_siguiente.getFullYear();
-        
-        fecha_recomendacion_sesion_siguiente=", "+fecha_sesion_siguiente_modificada;
-    }
+    /*
+    <div class="row_tabla" style="height:auto;">\
+        <span class="celda_propiedad" style="height:auto;background-color:#ec7d7c;">Trabajo readaptor</span>\
+        <span class="celda_valor" style="height:auto;">'+((atencion_diaria.lista_trbajo_readaptador.length>1)?atencion_diaria.lista_trbajo_readaptador.join(", "):atencion_diaria.lista_trbajo_readaptador[0])+'</span>\
+    </div>\
+    */
 
     const template='\
     <div class="row_tabla">\
@@ -3550,6 +3573,10 @@ function tablaControl(atencion_diaria){
         <span class="celda_valor">'+informe_medico[0].diagnostico+'</span>\
     </div>\
     <div class="row_tabla">\
+        <span class="celda_propiedad">Obseravación</span>\
+        <span class="celda_valor">'+tipo_atencion.observacion_general+'</span>\
+    </div>\
+    <div class="row_tabla">\
         <span class="celda_propiedad">Fecha lesion</span>\
         <span class="celda_valor">'+fecha_lesion_informe+'</span>\
     </div>\
@@ -3557,25 +3584,29 @@ function tablaControl(atencion_diaria){
         <span class="celda_propiedad">Zona Afectada</span>\
         <span class="celda_valor">'+informe_medico[0].agregado_localizacion_lesion+'</span>\
     </div>\
+    <div class="row_tabla" style="height:100px">\
+        <span class="celda_propiedad" style="padding-top: 41px;background-color:#ec7d7c;">Indicaciones</span>\
+        <span class="celda_valor">'+atencion_diaria.indicaciones+'</span>\
+    </div>\
     <div class="row_tabla" style="height:auto;">\
         <span class="celda_propiedad" style="height:auto;background-color:#ec7d7c;">Tratamiento realizado</span>\
         <span class="celda_valor" style="height:auto;">'+((atencion_diaria.lista_tratamiento.length>1)?atencion_diaria.lista_tratamiento.join(", "):atencion_diaria.lista_tratamiento[0])+'</span>\
-    </div>\
-    <div class="row_tabla" style="height:auto;">\
-        <span class="celda_propiedad" style="height:auto;background-color:#ec7d7c;">Trabajo readaptor</span>\
-        <span class="celda_valor" style="height:auto;">'+((atencion_diaria.lista_trbajo_readaptador.length>1)?atencion_diaria.lista_trbajo_readaptador.join(", "):atencion_diaria.lista_trbajo_readaptador[0])+'</span>\
     </div>\
     <div class="row_tabla">\
         <span class="celda_propiedad" style="background-color:#ec7d7c;">% de recuperación</span>\
         <span class="celda_valor">'+atencion_diaria.porcentaje_recuperacion+'%</span>\
     </div>\
     <div class="row_tabla">\
-        <span class="celda_propiedad" style="background-color:#ec7d7c;">Recomendación actual</span>\
-        <span class="celda_valor">'+lista_sesion[parseInt(atencion_diaria.recomendacion_sesion_actual_atencion_diaria)-1]+''+fecha_recomendacion_sesion_actual+'</span>\
+        <span class="celda_propiedad" style="background-color:#ec7d7c;">Fecha estimada para el alta medica</span>\
+        <span class="celda_valor">'+formato_fecha_mes_texto_2(atencion_diaria.fecha_estimada_de_alta)+'</span>\
     </div>\
-    <div class="row_tabla">\
-        <span class="celda_propiedad" style="background-color:#ec7d7c;">Recomendación proxima sesion</span>\
-        <span class="celda_valor">'+lista_sesion[parseInt(atencion_diaria.recomendacion_sesion_siguiente_atencion_diaria)-1]+''+fecha_recomendacion_sesion_siguiente+'</span>\
+    <div class="row_tabla" style="height:auto;">\
+        <span class="celda_propiedad" style="height:auto;background-color:#ec7d7c;">Estado jugador</span>\
+        <span class="celda_valor" style="height:auto;">'+listaEstadoJugador[parseInt(atencion_diaria.estado_jugador)]+'</span>\
+    </div>\
+    <div class="row_tabla" style="height:auto;">\
+        <span class="celda_propiedad" style="height:auto;background-color:#ec7d7c;">Recomendaciones</span>\
+        <span class="celda_valor" style="height:auto;">'+strRecomendaciones+'</span>\
     </div>';
     return template;
 
@@ -7290,6 +7321,7 @@ function fechaAtencionDiariaHoy(){
 }
 
 function formato_fecha_mes_texto(fecha_sin_formato){
+     // version sin dia de la semana
     let lista_meses=[
                 "Enero",
                 "Febrero",
@@ -7324,6 +7356,45 @@ function formato_fecha_mes_texto(fecha_sin_formato){
 
             // let fecha_con_formato=dia_semana[fecha.getDay()]+' '+fecha.getDate()+' de '+lista_meses[fecha.getMonth()]+' '+fecha.getFullYear() ; 
             let fecha_con_formato=fecha.getDate()+' de '+lista_meses[fecha.getMonth()]+' del '+fecha.getFullYear() ; 
+            return fecha_con_formato;
+}
+
+function formato_fecha_mes_texto_2(fecha_sin_formato){
+    // version con dia de la semana
+    let lista_meses=[
+                "Enero",
+                "Febrero",
+                "Marzo",
+                "Abril",
+                "Mayo",
+                "Junio",
+                "Julio",
+                "Agosto",
+                "Septiembre",
+                "Octubre",
+                "Noviembre",
+                "Diciembre"
+            ] ; 
+
+        let dia_semana=[
+                "Domingo",
+                "Lunes",
+                "Martes",
+                "Miercoles",
+                "Jueves",
+                "Viernes",
+                "Sabado"
+        ] ; 
+            let ano=fecha_sin_formato.split("-")[0] ; 
+            let mes=fecha_sin_formato.split("-")[1] ; 
+            let dia=fecha_sin_formato.split("-")[2] ; 
+            let fecha=new Date() ; 
+            fecha.setDate(parseInt(dia)) ; 
+            fecha.setMonth(parseInt(mes)-1) ; 
+            fecha.setFullYear(parseInt(ano)) ; 
+
+            let fecha_con_formato=dia_semana[fecha.getDay()]+' '+fecha.getDate()+' de '+lista_meses[fecha.getMonth()]+' '+fecha.getFullYear() ; 
+            // let fecha_con_formato=fecha.getDate()+' de '+lista_meses[fecha.getMonth()]+' del '+fecha.getFullYear() ; 
             return fecha_con_formato;
 }
 
