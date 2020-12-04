@@ -896,14 +896,14 @@ function consultarAtencionDiariaJugador($POST){
         if(sizeof($POST["array_checkbox_tipo_atencion_filtro_atencion_diaria"])>1){
             $list_atencion_or=[];
             for($contador2=0;$contador2<sizeof($POST["array_checkbox_tipo_atencion_filtro_atencion_diaria"]);$contador2++){
-                $list_atencion_or[]=" atencion_diaria.tipo_atencion_atencion_diaria=".$POST["array_checkbox_tipo_atencion_filtro_atencion_diaria"][$contador2]."";
+                $list_atencion_or[]=" atencion_diaria_federacion.tipo_atencion_atencion_diaria=".$POST["array_checkbox_tipo_atencion_filtro_atencion_diaria"][$contador2]."";
             }
             $str_atencion_or=implode(" OR ",$list_atencion_or);
             // $list_serie_or
             $SQL_atencion_diaria.=" AND ( ".$str_atencion_or." ) ";
         }
         else{
-            $SQL_atencion_diaria.=" AND  ( atencion_diaria.tipo_atencion_atencion_diaria=".$POST["array_checkbox_tipo_atencion_filtro_atencion_diaria"][0]." ) ";
+            $SQL_atencion_diaria.=" AND  ( atencion_diaria_federacion.tipo_atencion_atencion_diaria=".$POST["array_checkbox_tipo_atencion_filtro_atencion_diaria"][0]." ) ";
         }
     }
     // print($SQL_atencion_diaria);

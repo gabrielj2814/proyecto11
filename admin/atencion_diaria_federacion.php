@@ -1505,40 +1505,6 @@ app.controller("controlador_1",['$scope',function($scope){
                                     <table style="border: 0px solid #8f8f8f; width:100%;" id="tabla_ver_informes">
                                         <thead>
                                             <tr style="background-color:#555; color:white;">
-                                                <!-- <th scope="col" style="border-top-left-radius:5px; padding-top:5px; padding-bottom:5px; min-width:25px;font-size: 10px;"><center>#</center></th>
-                                                <th scope="col" style="cursor:pointer; padding:0px;">
-                                                <div class="tip-top" data-original-title="Fecha atención" style="width:105px;text-align: left;font-size: 10px;">FECHA ATENCION</div>
-                                                </th>
-                                                <th scope="col" style="cursor:pointer; padding:0px;">
-                                                <div class="tip-top" data-original-title="Mes" style="width:50px;text-align:left;font-size: 10px;">MES</div>
-                                                </th>
-                                                <th scope="col" style="cursor:pointer; padding:0px;">
-                                                <div class="tip-top" data-original-title="jugador atendido" style="width:150px;text-align:left;font-size: 10px;">JUGADOR ATENDIDO</div>
-                                                </th>
-                                                <th scope="col" style="cursor:pointer; padding:0px;">
-                                                <div class="tip-top" data-original-title="rut" style="width:75px;text-align:left;font-size: 10px;">RUT</div>
-                                                </th>
-                                                <th scope="col" style="cursor:pointer; padding:0px;">
-                                                <div class="tip-top" data-original-title="serie" style="width:55px;text-align:left;font-size: 10px;">SERIE</div>
-                                                </th>
-                                                <th scope="col" style="cursor:pointer; padding:0px;">
-                                                <div class="tip-top" data-original-title="fecha incidente" style="width:105px;text-align:left;font-size: 10px;">FECHA INCIDENTE</div>
-                                                </th>
-                                                <th scope="col" style="cursor:pointer; padding:0px;">
-                                                <div class="tip-top" data-original-title="tipo de atención" style="width:90px;text-align:left;font-size: 10px;">TIPO ATENCIÓN</div>
-                                                </th>
-                                                <th scope="col" style="cursor:pointer; padding:0px;">
-                                                <div class="tip-top" data-original-title="seguro" style="width:60px;text-align:left;font-size: 10px;">SEGURO</div>
-                                                </th>
-                                                <th scope="col" style="cursor:pointer; padding:0px;">
-                                                <div class="tip-top" data-original-title="jugador atendido" style="width:90px;text-align:left;font-size: 10px;">ALTE ENT.SERIE</div>
-                                                </th>
-                                                <th scope="col" style="cursor:pointer; padding:0px;">
-                                                <div class="tip-top" data-original-title="fecha de alta" style="width:80px;text-align:left;font-size: 10px;">FECHA ALTA</div>
-                                                </th>
-                                                <th scope="col" style="cursor:pointer; padding:0px;  border-top-right-radius:0px; width:30px;"></th>
-                                                <th scope="col" style="cursor:pointer; padding:0px;  border-top-right-radius:0px; width:30px;"></th>
-                                                <th scope="col" style="cursor:pointer; padding:0px;  border-top-right-radius:5px; width:30px;"></th> -->
                                                 <th scope="col" style="border-top-left-radius:5px; padding-top:5px; padding-bottom:5px; min-width:25px;font-size: 10px;"><center>#</center></th>
                                                 <th scope="col" style="cursor:pointer; padding:0px;">
                                                 <div class="tip-top" data-original-title="Fecha atención" style="width:105px;text-align: left;font-size: 10px;">FECHA ATENCION</div>
@@ -1559,14 +1525,11 @@ app.controller("controlador_1",['$scope',function($scope){
                                                 <div class="tip-top" data-original-title="tipo de atención" style="width:86px;text-align:left;font-size: 10px;">TIPO ATENCIÓN</div>
                                                 </th>
                                                 <th scope="col" style="cursor:pointer; padding:0px;">
-                                                <div class="tip-top" data-original-title="seguro" style="width:60px;text-align:left;font-size: 10px;">SEGURO</div>
+                                                <div class="tip-top" data-original-title="seguro" style="width:60px;text-align:left;font-size: 10px;">DIAGNOSTICO</div>
                                                 </th>
                                                 <th scope="col" style="cursor:pointer; padding:0px;">
                                                 <div class="tip-top" data-original-title="seguro" style="width:90px;text-align:left;font-size: 10px;">ESTADO</div>
                                                 </th>
-                                                <!-- <th scope="col" style="cursor:pointer; padding:0px;">
-                                                <div class="tip-top" data-original-title="fecha de alta" style="width:80px;text-align:left;font-size: 10px;">FECHA ALTA</div>
-                                                </th> -->
                                                 <th scope="col" style="cursor:pointer; padding:0px;  border-top-right-radius:0px; width:30px;"></th>
                                                 <th scope="col" style="cursor:pointer; padding:0px;  border-top-right-radius:0px; width:30px;"></th>
                                                 <th scope="col" style="cursor:pointer; padding:0px;  border-top-right-radius:5px; width:30px;"></th>
@@ -4127,7 +4090,10 @@ var lista_serie=[
 var lista_tipo_atencion=[
     {numero_tipo_atencion:0,nombre_tipo_atencion:"Todos"},
     {numero_tipo_atencion:1,nombre_tipo_atencion:"Nuevo Incidente"},
-    {numero_tipo_atencion:2,nombre_tipo_atencion:"Control"},
+    {numero_tipo_atencion:5,nombre_tipo_atencion:"Nueva Atencion"},
+    {numero_tipo_atencion:2,nombre_tipo_atencion:"Control / Sesion kinesica"},
+    {numero_tipo_atencion:6,nombre_tipo_atencion:"Control Medica"},
+    {numero_tipo_atencion:7,nombre_tipo_atencion:"Sesion Readaptador"},
     {numero_tipo_atencion:3,nombre_tipo_atencion:"Alta Médica"},
     {numero_tipo_atencion:4,nombre_tipo_atencion:"Alta Deportiva"}
 ];
@@ -4295,8 +4261,23 @@ function crearFilasTabla(datos){
     ];
     let numero_fila=0;
     let filas=datos.map(atencion_diaria=>{
-        // ((atencion_diaria.fecha_incidente_atencion_diaria!=null)?fecha_formato_ddmmaaa(atencion_diaria.fecha_incidente_atencion_diaria):"Sin Fecha")
-        console.log(atencion_diaria);
+        let estado =false;
+        let informeMedico=null;
+        if(atencion_diaria.idinforme_medico!==null){
+            informeMedico=atencion_diaria.informes_medicos.filter(informe => atencion_diaria.idinforme_medico===informe.idinforme_medico)[0].diagnostico;
+            estado=true;
+            console.log("informe medico ->>> ",informeMedico);
+        }
+        else{
+            informeMedico=atencion_diaria.diagnostico_atencion_diaria;
+            console.log("diagnostico ->>> ",informeMedico);
+        }
+
+
+
+
+
+
         let fecha_lescion=null;
         if(atencion_diaria.idinforme_medico!==null){
             let informe_medico=atencion_diaria.informes_medicos.filter(informe => informe.idinforme_medico===atencion_diaria.idinforme_medico);
@@ -4318,7 +4299,7 @@ function crearFilasTabla(datos){
                     </center>  \
                 </div>\
             </td>\
-            <td style="text-align:left;" onClick="verAtencionDiaria('+numero_fila+');">\
+            <td style="text-align:left;width: 103px;" onClick="verAtencionDiaria('+numero_fila+');">\
                 <div style="max-width:105px">\
                     <p class="ellipsis-text" style="font-weight: normal;font-size:10px;">\
                         '+fecha_formato_ddmmaaa(atencion_diaria.fecha_atencion_diaria)+'\
@@ -4347,7 +4328,7 @@ function crearFilasTabla(datos){
                     </p>  \
                 </div>\
             </td>\
-            <td style="text-align:left;" onClick="verAtencionDiaria('+numero_fila+');">\
+            <td style="text-align:left;width: 102px;" onClick="verAtencionDiaria('+numero_fila+');">\
                 <div style="max-width:105px">\
                     <p class="ellipsis-text" style="font-weight: normal;font-size:10px;">\
                         '+fecha_lescion+'\
@@ -4361,10 +4342,10 @@ function crearFilasTabla(datos){
                     </p>  \
                 </div>\
             </td>\
-            <td style="text-align:center;" onClick="verAtencionDiaria('+numero_fila+');">\
-                <div style="max-width:60px">\
-                    <p class="ellipsis-text" style="color:#fff;'+((atencion_diaria.derivado_seguro_atencion_diaria==="1")?"background-color:red;":"background-color:green;")+'font-size:10px;">\
-                        '+((atencion_diaria.derivado_seguro_atencion_diaria==="1")?"Si":"No")+'\
+            <td style="text-align:left;width: 153px;" onClick="verAtencionDiaria('+numero_fila+');">\
+                <div style="max-width: 153px;">\
+                    <p class="ellipsis-text" style="font-size:10px;">\
+                    '+informeMedico+'\
                     </p>  \
                 </div>\
             </td>\
