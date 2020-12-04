@@ -3156,14 +3156,6 @@ function tablaNuevoIncidente(atencion_diaria){
     <div class="row_tabla" style="height:auto;">\
         <span class="celda_propiedad" style="height:auto;background-color:#ec7d7c;">Tratamiento realizado</span>\
         <span class="celda_valor" style="height:auto;">'+((atencion_diaria.lista_tratamiento.length>1)?atencion_diaria.lista_tratamiento.join(", "):atencion_diaria.lista_tratamiento[0] )+'</span>\
-    </div>\
-    <div class="row_tabla">\
-        <span class="celda_propiedad" style="background-color:#ec7d7c;">Recomendación actual</span>\
-        <span class="celda_valor">'+lista_sesion[parseInt(atencion_diaria.recomendacion_sesion_actual_atencion_diaria)-1]+''+fecha_recomendacion_sesion_actual+'</span>\
-    </div>\
-    <div class="row_tabla">\
-        <span class="celda_propiedad" style="background-color:#ec7d7c;">Recomendación proxima sesion</span>\
-        <span class="celda_valor">'+lista_sesion[parseInt(atencion_diaria.recomendacion_sesion_siguiente_atencion_diaria)-1]+''+fecha_recomendacion_sesion_siguiente+'</span>\
     </div>';
     return template;
 }
