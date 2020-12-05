@@ -4258,7 +4258,7 @@ function tablaMedica(atencion_diaria){
         "En reposo",
         "En reintegro"
     ];
-    let informe_medico=atencion_diaria.informes_medicos.filter(informe => informe.idinforme_medico===atencion_diaria.idinforme_medico);
+
     let lista_recomendacion_alta=[
         {codigo:"1",valor:"Continuar el trabajo con readaptacion"},
         {codigo:"2",valor:"Reevaluación Fisica"},
@@ -4302,77 +4302,155 @@ function tablaMedica(atencion_diaria){
         "Control Medica",
         "Sesion Readaptador"
     ];
-    // recomendacion_alta_atencion_diaria 
 
-    atencion_diaria.recomendaciones_alta=[];
-    for(let contador=0;contador<atencion_diaria.recomendacion_alta.length;contador++){
-        let recomendacion=atencion_diaria.recomendacion_alta[contador];
-        let recomendaciones_filtradas=lista_recomendacion_alta.filter(recomendacion_filtro => recomendacion_filtro.codigo===recomendacion.recomendacion_alta_atencion_diaria);
-        atencion_diaria.recomendaciones_alta.push(recomendaciones_filtradas[0].valor);
+    try{
+        let informe_medico=atencion_diaria.informes_medicos.filter(informe => informe.idinforme_medico===atencion_diaria.idinforme_medico);
+    
+        // recomendacion_alta_atencion_diaria 
 
+        atencion_diaria.recomendaciones_alta=[];
+        for(let contador=0;contador<atencion_diaria.recomendacion_alta.length;contador++){
+            let recomendacion=atencion_diaria.recomendacion_alta[contador];
+            let recomendaciones_filtradas=lista_recomendacion_alta.filter(recomendacion_filtro => recomendacion_filtro.codigo===recomendacion.recomendacion_alta_atencion_diaria);
+            atencion_diaria.recomendaciones_alta.push(recomendaciones_filtradas[0].valor);
+
+        }
+
+        let ano=atencion_diaria.fecha_atencion_diaria.split("-")[0];
+        let mes=atencion_diaria.fecha_atencion_diaria.split("-")[1];
+        let dia=atencion_diaria.fecha_atencion_diaria.split("-")[2];
+        let fecha_atencion=new Date();
+        fecha_atencion.setDate(parseInt(dia));
+        fecha_atencion.setMonth(parseInt(mes)-1);
+        fecha_atencion.setFullYear(parseInt(ano));
+
+        let fecha_atencion_diaria_modificada=dia_semana[fecha_atencion.getDay()]+' '+fecha_atencion.getDate()+' de '+lista_meses[fecha_atencion.getMonth()]+' '+fecha_atencion.getFullYear();
+
+
+        const template='\
+        <div class="row_tabla">\
+            <span class="celda_propiedad">Jugador Atendido</span>\
+            <span class="celda_valor">'+atencion_diaria.nombre+' '+atencion_diaria.apellido1+' '+atencion_diaria.apellido2+'</span>\
+        </div>\
+        <div class="row_tabla">\
+            <span class="celda_propiedad">Serie</span>\
+            <span class="celda_valor">Sub  '+atencion_diaria.serieActual+'</span>\
+        </div>\
+        <div class="row_tabla">\
+            <span class="celda_propiedad">Diagnostico</span>\
+            <span class="celda_valor">'+informe_medico[0].diagnostico+'</span>\
+        </div>\
+        <div class="row_tabla">\
+            <span class="celda_propiedad">Fecha Atencion</span>\
+            <span class="celda_valor">'+fecha_atencion_diaria_modificada+'</span>\
+        </div>\
+        <div class="row_tabla">\
+            <span class="celda_propiedad">Localización de la lesion</span>\
+            <span class="celda_valor">'+informe_medico[0].agregado_localizacion_lesion+'</span>\
+        </div>\
+        <div class="row_tabla">\
+            <span class="celda_propiedad">Derivado seguro</span>\
+            <span class="celda_valor">'+((informe_medico[0].agregado_seguro_medico==="1")?"Si":"No")+'</span>\
+        </div>\
+        <div class="row_tabla">\
+            <span class="celda_propiedad">Examenes realizados</span>\
+            <span class="celda_valor">'+informe_medico[0].agregado_examenes_realizados+'</span>\
+        </div>\
+        <div class="row_tabla">\
+            <span class="celda_propiedad">Dias de baja</span>\
+            <span class="celda_valor">'+informe_medico[0].agregado_dias_de_baja+' '+((informe_medico[0].agregado_dias_de_baja>1)?"días":"día")+'</span>\
+        </div>\
+        <div class="row_tabla">\
+            <span class="celda_propiedad">N° sesiones</span>\
+            <span class="celda_valor">'+((atencion_diaria.numero_sesion!==null)?atencion_diaria.numero_sesion:"no tiene ninguna sesion")+'</span>\
+        </div>\
+        <div class="row_tabla" style="height:auto;">\
+            <span class="celda_propiedad" style="height:auto;background-color:#ec7d7c;">Recomendaciones de Alta</span>\
+            <span class="celda_valor" style="height:auto;">'+((atencion_diaria.recomendaciones_alta.length>1)?atencion_diaria.recomendaciones_alta.join(", "):atencion_diaria.recomendaciones_alta[0])+'</span>\
+        </div>\
+        <div class="row_tabla" style="height:100px">\
+            <span class="celda_propiedad" style="height:auto;padding-top: 41px;background-color:#ec7d7c;">Observación</span>\
+            <span class="celda_valor" style="height:auto;">'+((atencion_diaria.observacion_medica===null)?"Sin observación":atencion_diaria.observacion_medica)+'</span>\
+        </div>\
+        <div class="row_tabla" style="height:auto;">\
+            <span class="celda_propiedad" style="height:auto;background-color:#ec7d7c;">Estado jugador</span>\
+            <span class="celda_valor" style="height:auto;">'+listaEstadoJugador[parseInt(atencion_diaria.estado_jugador)]+'</span>\
+        </div>';
+        return template;
     }
+    catch{
+     // recomendacion_alta_atencion_diaria 
 
-    let ano=atencion_diaria.fecha_atencion_diaria.split("-")[0];
-    let mes=atencion_diaria.fecha_atencion_diaria.split("-")[1];
-    let dia=atencion_diaria.fecha_atencion_diaria.split("-")[2];
-    let fecha_atencion=new Date();
-    fecha_atencion.setDate(parseInt(dia));
-    fecha_atencion.setMonth(parseInt(mes)-1);
-    fecha_atencion.setFullYear(parseInt(ano));
+        atencion_diaria.recomendaciones_alta=[];
+        for(let contador=0;contador<atencion_diaria.recomendacion_alta.length;contador++){
+            let recomendacion=atencion_diaria.recomendacion_alta[contador];
+            let recomendaciones_filtradas=lista_recomendacion_alta.filter(recomendacion_filtro => recomendacion_filtro.codigo===recomendacion.recomendacion_alta_atencion_diaria);
+            atencion_diaria.recomendaciones_alta.push(recomendaciones_filtradas[0].valor);
 
-    let fecha_atencion_diaria_modificada=dia_semana[fecha_atencion.getDay()]+' '+fecha_atencion.getDate()+' de '+lista_meses[fecha_atencion.getMonth()]+' '+fecha_atencion.getFullYear();
+        }
+
+        let ano=atencion_diaria.fecha_atencion_diaria.split("-")[0];
+        let mes=atencion_diaria.fecha_atencion_diaria.split("-")[1];
+        let dia=atencion_diaria.fecha_atencion_diaria.split("-")[2];
+        let fecha_atencion=new Date();
+        fecha_atencion.setDate(parseInt(dia));
+        fecha_atencion.setMonth(parseInt(mes)-1);
+        fecha_atencion.setFullYear(parseInt(ano));
+
+        let fecha_atencion_diaria_modificada=dia_semana[fecha_atencion.getDay()]+' '+fecha_atencion.getDate()+' de '+lista_meses[fecha_atencion.getMonth()]+' '+fecha_atencion.getFullYear();
 
 
-    const template='\
-    <div class="row_tabla">\
-        <span class="celda_propiedad">Jugador Atendido</span>\
-        <span class="celda_valor">'+atencion_diaria.nombre+' '+atencion_diaria.apellido1+' '+atencion_diaria.apellido2+'</span>\
-    </div>\
-    <div class="row_tabla">\
-        <span class="celda_propiedad">Serie</span>\
-        <span class="celda_valor">Sub  '+atencion_diaria.serieActual+'</span>\
-    </div>\
-    <div class="row_tabla">\
-        <span class="celda_propiedad">Diagnostico</span>\
-        <span class="celda_valor">'+informe_medico[0].diagnostico+'</span>\
-    </div>\
-    <div class="row_tabla">\
-        <span class="celda_propiedad">Fecha Atencion</span>\
-        <span class="celda_valor">'+fecha_atencion_diaria_modificada+'</span>\
-    </div>\
-    <div class="row_tabla">\
-        <span class="celda_propiedad">Localización de la lesion</span>\
-        <span class="celda_valor">'+informe_medico[0].agregado_localizacion_lesion+'</span>\
-    </div>\
-    <div class="row_tabla">\
-        <span class="celda_propiedad">Derivado seguro</span>\
-        <span class="celda_valor">'+((informe_medico[0].agregado_seguro_medico==="1")?"Si":"No")+'</span>\
-    </div>\
-    <div class="row_tabla">\
-        <span class="celda_propiedad">Examenes realizados</span>\
-        <span class="celda_valor">'+informe_medico[0].agregado_examenes_realizados+'</span>\
-    </div>\
-    <div class="row_tabla">\
-        <span class="celda_propiedad">Dias de baja</span>\
-        <span class="celda_valor">'+informe_medico[0].agregado_dias_de_baja+' '+((informe_medico[0].agregado_dias_de_baja>1)?"días":"día")+'</span>\
-    </div>\
-    <div class="row_tabla">\
-        <span class="celda_propiedad">N° sesiones</span>\
-        <span class="celda_valor">'+((atencion_diaria.numero_sesion!==null)?atencion_diaria.numero_sesion:"no tiene ninguna sesion")+'</span>\
-    </div>\
-    <div class="row_tabla" style="height:auto;">\
-        <span class="celda_propiedad" style="height:auto;background-color:#ec7d7c;">Recomendaciones de Alta</span>\
-        <span class="celda_valor" style="height:auto;">'+((atencion_diaria.recomendaciones_alta.length>1)?atencion_diaria.recomendaciones_alta.join(", "):atencion_diaria.recomendaciones_alta[0])+'</span>\
-    </div>\
-    <div class="row_tabla" style="height:100px">\
-        <span class="celda_propiedad" style="height:auto;padding-top: 41px;background-color:#ec7d7c;">Observación</span>\
-        <span class="celda_valor" style="height:auto;">'+((atencion_diaria.observacion_medica===null)?"Sin observación":atencion_diaria.observacion_medica)+'</span>\
-    </div>\
-    <div class="row_tabla" style="height:auto;">\
-        <span class="celda_propiedad" style="height:auto;background-color:#ec7d7c;">Estado jugador</span>\
-        <span class="celda_valor" style="height:auto;">'+listaEstadoJugador[parseInt(atencion_diaria.estado_jugador)]+'</span>\
-    </div>';
-    return template;
+        const template='\
+        <div class="row_tabla">\
+            <span class="celda_propiedad">Jugador Atendido</span>\
+            <span class="celda_valor">'+atencion_diaria.nombre+' '+atencion_diaria.apellido1+' '+atencion_diaria.apellido2+'</span>\
+        </div>\
+        <div class="row_tabla">\
+            <span class="celda_propiedad">Serie</span>\
+            <span class="celda_valor">Sub  '+atencion_diaria.serieActual+'</span>\
+        </div>\
+        <div class="row_tabla">\
+            <span class="celda_propiedad">Diagnostico</span>\
+            <span class="celda_valor">'+" "+'</span>\
+        </div>\
+        <div class="row_tabla">\
+            <span class="celda_propiedad">Fecha Atencion</span>\
+            <span class="celda_valor">'+fecha_atencion_diaria_modificada+'</span>\
+        </div>\
+        <div class="row_tabla">\
+            <span class="celda_propiedad">Localización de la lesion</span>\
+            <span class="celda_valor">'+" "+'</span>\
+        </div>\
+        <div class="row_tabla">\
+            <span class="celda_propiedad">Derivado seguro</span>\
+            <span class="celda_valor">'+" "+'</span>\
+        </div>\
+        <div class="row_tabla">\
+            <span class="celda_propiedad">Examenes realizados</span>\
+            <span class="celda_valor">'+" "+'</span>\
+        </div>\
+        <div class="row_tabla">\
+            <span class="celda_propiedad">Dias de baja</span>\
+            <span class="celda_valor">'+" "+'</span>\
+        </div>\
+        <div class="row_tabla">\
+            <span class="celda_propiedad">N° sesiones</span>\
+            <span class="celda_valor">'+((atencion_diaria.numero_sesion!==null)?atencion_diaria.numero_sesion:"no tiene ninguna sesion")+'</span>\
+        </div>\
+        <div class="row_tabla" style="height:auto;">\
+            <span class="celda_propiedad" style="height:auto;background-color:#ec7d7c;">Recomendaciones de Alta</span>\
+            <span class="celda_valor" style="height:auto;">'+((atencion_diaria.recomendaciones_alta.length>1)?atencion_diaria.recomendaciones_alta.join(", "):atencion_diaria.recomendaciones_alta[0])+'</span>\
+        </div>\
+        <div class="row_tabla" style="height:100px">\
+            <span class="celda_propiedad" style="height:auto;padding-top: 41px;background-color:#ec7d7c;">Observación</span>\
+            <span class="celda_valor" style="height:auto;">'+((atencion_diaria.observacion_medica===null)?"Sin observación":atencion_diaria.observacion_medica)+'</span>\
+        </div>\
+        <div class="row_tabla" style="height:auto;">\
+            <span class="celda_propiedad" style="height:auto;background-color:#ec7d7c;">Estado jugador</span>\
+            <span class="celda_valor" style="height:auto;">'+listaEstadoJugador[parseInt(atencion_diaria.estado_jugador)]+'</span>\
+        </div>';
+        return template;
+    }
 }
 
 
@@ -4443,99 +4521,148 @@ function tablaDeportiva(atencion_diaria){
 
     // recomendacion_alta_atencion_diaria 
 
-    atencion_diaria.recomendaciones_alta=[];
-    for(let contador=0;contador<atencion_diaria.recomendacion_alta.length;contador++){
-        let recomendacion=atencion_diaria.recomendacion_alta[contador];
-        let recomendaciones_filtradas=lista_recomendacion_alta.filter(recomendacion_filtro => recomendacion_filtro.codigo===recomendacion.recomendacion_alta_atencion_diaria);
-        atencion_diaria.recomendaciones_alta.push(recomendaciones_filtradas[0].valor);
+    try{
+        atencion_diaria.recomendaciones_alta=[];
+        for(let contador=0;contador<atencion_diaria.recomendacion_alta.length;contador++){
+            let recomendacion=atencion_diaria.recomendacion_alta[contador];
+            let recomendaciones_filtradas=lista_recomendacion_alta.filter(recomendacion_filtro => recomendacion_filtro.codigo===recomendacion.recomendacion_alta_atencion_diaria);
+            atencion_diaria.recomendaciones_alta.push(recomendaciones_filtradas[0].valor);
 
-    }
-    
-    let pedaso_html_alta_deportiva="";
-    if(atencion_diaria.alta_deportiva.length>0){
-        atencion_diaria.lista_alta_deportiva=[];
-
-        for(let contador2=0;contador2<atencion_diaria.alta_deportiva.length;contador2++){
-
-            let alta_deportiva_posision=atencion_diaria.alta_deportiva[contador2];
-            let alta_deportiva_filtradas=alta_deportiva.filter(alta_deportiva_filtro => alta_deportiva_filtro.idalta_deportiva===parseInt(alta_deportiva_posision.alta_deportiva_atencion_diaria));
-            atencion_diaria.lista_alta_deportiva.push(alta_deportiva_filtradas[0].alta_deportiva);
         }
-        pedaso_html_alta_deportiva='\
+        
+        let ano=atencion_diaria.fecha_atencion_diaria.split("-")[0];
+        let mes=atencion_diaria.fecha_atencion_diaria.split("-")[1];
+        let dia=atencion_diaria.fecha_atencion_diaria.split("-")[2];
+        let fecha_atencion=new Date();
+        fecha_atencion.setDate(parseInt(dia));
+        fecha_atencion.setMonth(parseInt(mes)-1);
+        fecha_atencion.setFullYear(parseInt(ano));
+
+        let fecha_atencion_diaria_modificada=dia_semana[fecha_atencion.getDay()]+' '+fecha_atencion.getDate()+' de '+lista_meses[fecha_atencion.getMonth()]+' '+fecha_atencion.getFullYear();
+
+
+        const template='\
+        <div class="row_tabla">\
+            <span class="celda_propiedad">Jugador Atendido</span>\
+            <span class="celda_valor">'+atencion_diaria.nombre+' '+atencion_diaria.apellido1+' '+atencion_diaria.apellido2+'</span>\
+        </div>\
+        <div class="row_tabla">\
+            <span class="celda_propiedad">Serie</span>\
+            <span class="celda_valor">Sub  '+atencion_diaria.serieActual+'</span>\
+        </div>\
+        <div class="row_tabla">\
+            <span class="celda_propiedad">Diagnostico</span>\
+            <span class="celda_valor">'+informe_medico[0].diagnostico+'</span>\
+        </div>\
+        <div class="row_tabla">\
+            <span class="celda_propiedad">Fecha Atencion</span>\
+            <span class="celda_valor">'+fecha_atencion_diaria_modificada+'</span>\
+        </div>\
+        <div class="row_tabla">\
+            <span class="celda_propiedad">Localización de la lesion</span>\
+            <span class="celda_valor">'+informe_medico[0].agregado_localizacion_lesion+'</span>\
+        </div>\
+        <div class="row_tabla">\
+            <span class="celda_propiedad">Derivado seguro</span>\
+            <span class="celda_valor">'+((informe_medico[0].agregado_seguro_medico==="1")?"Si":"No")+'</span>\
+        </div>\
+        <div class="row_tabla">\
+            <span class="celda_propiedad">Examenes realizados</span>\
+            <span class="celda_valor">'+informe_medico[0].agregado_examenes_realizados+'</span>\
+        </div>\
+        <div class="row_tabla">\
+            <span class="celda_propiedad">Dias de baja</span>\
+            <span class="celda_valor">'+informe_medico[0].agregado_dias_de_baja+' '+((informe_medico[0].agregado_dias_de_baja>1)?"días":"día")+'</span>\
+        </div>\
+        <div class="row_tabla">\
+            <span class="celda_propiedad">N° sesiones</span>\
+            <span class="celda_valor">'+((atencion_diaria.numero_sesion!==null)?atencion_diaria.numero_sesion:"no tiene ninguna sesion")+'</span>\
+        </div>\
         <div class="row_tabla" style="height:auto;">\
-            <span class="celda_propiedad" style="height:auto;">Alta depotiva para</span>\
-            <span class="celda_valor" style="height:auto;">'+((atencion_diaria.lista_alta_deportiva.length>1)?atencion_diaria.lista_alta_deportiva.join(" y "):atencion_diaria.lista_alta_deportiva[0] )+'</span>\
-        </div>';
-    }
-    else{
-        pedaso_html_alta_deportiva='\
+            <span class="celda_propiedad" style="height:auto;background-color:#ec7d7c;">Recomendaciones de Alta</span>\
+            <span class="celda_valor" style="height:auto;">'+((atencion_diaria.recomendaciones_alta.length>1)?atencion_diaria.recomendaciones_alta.join(", "):atencion_diaria.recomendaciones_alta[0])+'</span>\
+        </div>\
+        <div class="row_tabla" style="height:100px">\
+            <span class="celda_propiedad" style="height:auto;padding-top: 41px;background-color:#ec7d7c;">Recomendaciones readaptador</span>\
+            <span class="celda_valor" style="height:auto;">'+((atencion_diaria.observacion_medica===null)?"Sin observación":atencion_diaria.observacion_medica)+'</span>\
+        </div>\
         <div class="row_tabla" style="height:auto;">\
-            <span class="celda_propiedad" style="height:auto;">Alta Deportiva</span>\
-            <span class="celda_valor" style="height:auto;">no tiene alta deportiva</span>\
+            <span class="celda_propiedad" style="height:auto;background-color:#ec7d7c;">Estado jugador</span>\
+            <span class="celda_valor" style="height:auto;">'+listaEstadoJugador[parseInt(atencion_diaria.estado_jugador)]+'</span>\
         </div>';
+        return template;
     }
-    
-    let ano=atencion_diaria.fecha_atencion_diaria.split("-")[0];
-    let mes=atencion_diaria.fecha_atencion_diaria.split("-")[1];
-    let dia=atencion_diaria.fecha_atencion_diaria.split("-")[2];
-    let fecha_atencion=new Date();
-    fecha_atencion.setDate(parseInt(dia));
-    fecha_atencion.setMonth(parseInt(mes)-1);
-    fecha_atencion.setFullYear(parseInt(ano));
+    catch{
+        atencion_diaria.recomendaciones_alta=[];
+        for(let contador=0;contador<atencion_diaria.recomendacion_alta.length;contador++){
+            let recomendacion=atencion_diaria.recomendacion_alta[contador];
+            let recomendaciones_filtradas=lista_recomendacion_alta.filter(recomendacion_filtro => recomendacion_filtro.codigo===recomendacion.recomendacion_alta_atencion_diaria);
+            atencion_diaria.recomendaciones_alta.push(recomendaciones_filtradas[0].valor);
 
-    let fecha_atencion_diaria_modificada=dia_semana[fecha_atencion.getDay()]+' '+fecha_atencion.getDate()+' de '+lista_meses[fecha_atencion.getMonth()]+' '+fecha_atencion.getFullYear();
+        }
+        
+        let ano=atencion_diaria.fecha_atencion_diaria.split("-")[0];
+        let mes=atencion_diaria.fecha_atencion_diaria.split("-")[1];
+        let dia=atencion_diaria.fecha_atencion_diaria.split("-")[2];
+        let fecha_atencion=new Date();
+        fecha_atencion.setDate(parseInt(dia));
+        fecha_atencion.setMonth(parseInt(mes)-1);
+        fecha_atencion.setFullYear(parseInt(ano));
+
+        let fecha_atencion_diaria_modificada=dia_semana[fecha_atencion.getDay()]+' '+fecha_atencion.getDate()+' de '+lista_meses[fecha_atencion.getMonth()]+' '+fecha_atencion.getFullYear();
 
 
-    const template='\
-    <div class="row_tabla">\
-        <span class="celda_propiedad">Jugador Atendido</span>\
-        <span class="celda_valor">'+atencion_diaria.nombre+' '+atencion_diaria.apellido1+' '+atencion_diaria.apellido2+'</span>\
-    </div>\
-    <div class="row_tabla">\
-        <span class="celda_propiedad">Serie</span>\
-        <span class="celda_valor">Sub  '+atencion_diaria.serieActual+'</span>\
-    </div>\
-    <div class="row_tabla">\
-        <span class="celda_propiedad">Diagnostico</span>\
-        <span class="celda_valor">'+informe_medico[0].diagnostico+'</span>\
-    </div>\
-    <div class="row_tabla">\
-        <span class="celda_propiedad">Fecha Atencion</span>\
-        <span class="celda_valor">'+fecha_atencion_diaria_modificada+'</span>\
-    </div>\
-    <div class="row_tabla">\
-        <span class="celda_propiedad">Localización de la lesion</span>\
-        <span class="celda_valor">'+informe_medico[0].agregado_localizacion_lesion+'</span>\
-    </div>\
-    <div class="row_tabla">\
-        <span class="celda_propiedad">Derivado seguro</span>\
-        <span class="celda_valor">'+((informe_medico[0].agregado_seguro_medico==="1")?"Si":"No")+'</span>\
-    </div>\
-    <div class="row_tabla">\
-        <span class="celda_propiedad">Examenes realizados</span>\
-        <span class="celda_valor">'+informe_medico[0].agregado_examenes_realizados+'</span>\
-    </div>\
-    <div class="row_tabla">\
-        <span class="celda_propiedad">Dias de baja</span>\
-        <span class="celda_valor">'+informe_medico[0].agregado_dias_de_baja+' '+((informe_medico[0].agregado_dias_de_baja>1)?"días":"día")+'</span>\
-    </div>\
-    <div class="row_tabla">\
-        <span class="celda_propiedad">N° sesiones</span>\
-        <span class="celda_valor">'+((atencion_diaria.numero_sesion!==null)?atencion_diaria.numero_sesion:"no tiene ninguna sesion")+'</span>\
-    </div>\
-    <div class="row_tabla" style="height:auto;">\
-        <span class="celda_propiedad" style="height:auto;background-color:#ec7d7c;">Recomendaciones de Alta</span>\
-        <span class="celda_valor" style="height:auto;">'+((atencion_diaria.recomendaciones_alta.length>1)?atencion_diaria.recomendaciones_alta.join(", "):atencion_diaria.recomendaciones_alta[0])+'</span>\
-    </div>\
-    <div class="row_tabla" style="height:100px">\
-        <span class="celda_propiedad" style="height:auto;padding-top: 41px;background-color:#ec7d7c;">Recomendaciones readaptador</span>\
-        <span class="celda_valor" style="height:auto;">'+((atencion_diaria.observacion_medica===null)?"Sin observación":atencion_diaria.observacion_medica)+'</span>\
-    </div>\
-    <div class="row_tabla" style="height:auto;">\
-        <span class="celda_propiedad" style="height:auto;background-color:#ec7d7c;">Estado jugador</span>\
-        <span class="celda_valor" style="height:auto;">'+listaEstadoJugador[parseInt(atencion_diaria.estado_jugador)]+'</span>\
-    </div>';
-    return template;
+        const template='\
+        <div class="row_tabla">\
+            <span class="celda_propiedad">Jugador Atendido</span>\
+            <span class="celda_valor">'+atencion_diaria.nombre+' '+atencion_diaria.apellido1+' '+atencion_diaria.apellido2+'</span>\
+        </div>\
+        <div class="row_tabla">\
+            <span class="celda_propiedad">Serie</span>\
+            <span class="celda_valor">Sub  '+atencion_diaria.serieActual+'</span>\
+        </div>\
+        <div class="row_tabla">\
+            <span class="celda_propiedad">Diagnostico</span>\
+            <span class="celda_valor">'+""+'</span>\
+        </div>\
+        <div class="row_tabla">\
+            <span class="celda_propiedad">Fecha Atencion</span>\
+            <span class="celda_valor">'+fecha_atencion_diaria_modificada+'</span>\
+        </div>\
+        <div class="row_tabla">\
+            <span class="celda_propiedad">Localización de la lesion</span>\
+            <span class="celda_valor">'+" "+'</span>\
+        </div>\
+        <div class="row_tabla">\
+            <span class="celda_propiedad">Derivado seguro</span>\
+            <span class="celda_valor">'+" "+'</span>\
+        </div>\
+        <div class="row_tabla">\
+            <span class="celda_propiedad">Examenes realizados</span>\
+            <span class="celda_valor">'+" "+'</span>\
+        </div>\
+        <div class="row_tabla">\
+            <span class="celda_propiedad">Dias de baja</span>\
+            <span class="celda_valor">'+" "+'</span>\
+        </div>\
+        <div class="row_tabla">\
+            <span class="celda_propiedad">N° sesiones</span>\
+            <span class="celda_valor">'+((atencion_diaria.numero_sesion!==null)?atencion_diaria.numero_sesion:"no tiene ninguna sesion")+'</span>\
+        </div>\
+        <div class="row_tabla" style="height:auto;">\
+            <span class="celda_propiedad" style="height:auto;background-color:#ec7d7c;">Recomendaciones de Alta</span>\
+            <span class="celda_valor" style="height:auto;">'+((atencion_diaria.recomendaciones_alta.length>1)?atencion_diaria.recomendaciones_alta.join(", "):atencion_diaria.recomendaciones_alta[0])+'</span>\
+        </div>\
+        <div class="row_tabla" style="height:100px">\
+            <span class="celda_propiedad" style="height:auto;padding-top: 41px;background-color:#ec7d7c;">Recomendaciones readaptador</span>\
+            <span class="celda_valor" style="height:auto;">'+((atencion_diaria.observacion_medica===null)?"Sin observación":atencion_diaria.observacion_medica)+'</span>\
+        </div>\
+        <div class="row_tabla" style="height:auto;">\
+            <span class="celda_propiedad" style="height:auto;background-color:#ec7d7c;">Estado jugador</span>\
+            <span class="celda_valor" style="height:auto;">'+listaEstadoJugador[parseInt(atencion_diaria.estado_jugador)]+'</span>\
+        </div>';
+        return template;
+    }
 }
 
 async function descargarPDF(posicion){
@@ -4801,81 +4928,141 @@ async function descargarPDF(posicion){
 
     }
     if(atencion_diaria.tipo_atencion_atencion_diaria==="3"){
-        let informe_medico=atencion_diaria.informes_medicos.filter(informe => informe.idinforme_medico===atencion_diaria.idinforme_medico);
-        // console.log(informe_medico[0]);
-        let lista_recomendacion_alta=[
-            {codigo:"1",valor:"Continuar el trabajo con readaptacion"},
-            {codigo:"2",valor:"Reevaluación Fisica"},
-            {codigo:"3",valor:"Debe realizar trabajo diferenciado"},
-            {codigo:"4",valor:"Derivado al trabajo con readaptacion"},
-            {codigo:"5",valor:"Kinesiologia completa"},
-            {codigo:"6",valor:"Reevaluación médica"},
-        ];
-        atencion_diaria.recomendaciones_alta=[];
-        for(let contador=0;contador<atencion_diaria.recomendacion_alta.length;contador++){
-            let recomendacion=atencion_diaria.recomendacion_alta[contador];
-            let recomendaciones_filtradas=lista_recomendacion_alta.filter(recomendacion_filtro => recomendacion_filtro.codigo===recomendacion.recomendacion_alta_atencion_diaria);
-            atencion_diaria.recomendaciones_alta.push(recomendaciones_filtradas[0].valor);
+        try{
+            let informe_medico=atencion_diaria.informes_medicos.filter(informe => informe.idinforme_medico===atencion_diaria.idinforme_medico);
+            // console.log(informe_medico[0]);
+            let lista_recomendacion_alta=[
+                {codigo:"1",valor:"Continuar el trabajo con readaptacion"},
+                {codigo:"2",valor:"Reevaluación Fisica"},
+                {codigo:"3",valor:"Debe realizar trabajo diferenciado"},
+                {codigo:"4",valor:"Derivado al trabajo con readaptacion"},
+                {codigo:"5",valor:"Kinesiologia completa"},
+                {codigo:"6",valor:"Reevaluación médica"},
+            ];
+            atencion_diaria.recomendaciones_alta=[];
+            for(let contador=0;contador<atencion_diaria.recomendacion_alta.length;contador++){
+                let recomendacion=atencion_diaria.recomendacion_alta[contador];
+                let recomendaciones_filtradas=lista_recomendacion_alta.filter(recomendacion_filtro => recomendacion_filtro.codigo===recomendacion.recomendacion_alta_atencion_diaria);
+                atencion_diaria.recomendaciones_alta.push(recomendaciones_filtradas[0].valor);
+            }
+            
+            let ano2=informe_medico[0].agregado_fecha_lesion.split("-")[0];
+            let mes2=informe_medico[0].agregado_fecha_lesion.split("-")[1];
+            let dia2=informe_medico[0].agregado_fecha_lesion.split("-")[2];
+            let fecha_lesion=new Date();
+            fecha_lesion.setDate(parseInt(dia2));
+            fecha_lesion.setMonth(parseInt(mes2)-1);
+            fecha_lesion.setFullYear(parseInt(ano2));
+
+            let fecha_lesion_informe=dia_semana[fecha_lesion.getDay()]+' '+fecha_lesion.getDate()+' de '+lista_meses[fecha_lesion.getMonth()]+' '+fecha_lesion.getFullYear();
+            atencion_diaria.fecha_lesion_informe=fecha_lesion_informe;
+            atencion_diaria.recidiva_informe=informe_medico[0].agregado_recidiva ;
+            atencion_diaria.comentario_examen_informe=informe_medico[0].agregado_comentario_examen ;
+            atencion_diaria.dias_baja_informe=informe_medico[0].agregado_dias_de_baja  ;
+            atencion_diaria.nombre_medico=informe_medico[0].nombre_medico;
+            atencion_diaria.diagnostico_informe= informe_medico[0].diagnostico  ;
+            atencion_diaria.contexto_informe_medico=array_contexto[parseInt(informe_medico[0].contexto)] ;
+            atencion_diaria.examenes_informe_medico=informe_medico[0].agregado_examenes_realizados ;
+            atencion_diaria.zonas_afectadas=informe_medico[0].agregado_zona_afectada ;
+            atencion_diaria.seguro_informe_medico=informe_medico[0].agregado_seguro_medico  ;
+        }
+        catch{
+             // console.log(informe_medico[0]);
+             let lista_recomendacion_alta=[
+                {codigo:"1",valor:"Continuar el trabajo con readaptacion"},
+                {codigo:"2",valor:"Reevaluación Fisica"},
+                {codigo:"3",valor:"Debe realizar trabajo diferenciado"},
+                {codigo:"4",valor:"Derivado al trabajo con readaptacion"},
+                {codigo:"5",valor:"Kinesiologia completa"},
+                {codigo:"6",valor:"Reevaluación médica"},
+            ];
+            atencion_diaria.recomendaciones_alta=[];
+            for(let contador=0;contador<atencion_diaria.recomendacion_alta.length;contador++){
+                let recomendacion=atencion_diaria.recomendacion_alta[contador];
+                let recomendaciones_filtradas=lista_recomendacion_alta.filter(recomendacion_filtro => recomendacion_filtro.codigo===recomendacion.recomendacion_alta_atencion_diaria);
+                atencion_diaria.recomendaciones_alta.push(recomendaciones_filtradas[0].valor);
+            }
+            
+            atencion_diaria.fecha_lesion_informe=" ";
+            atencion_diaria.recidiva_informe="null";
+            atencion_diaria.comentario_examen_informe=" ";
+            atencion_diaria.dias_baja_informe="null"  ;
+            atencion_diaria.nombre_medico=" ";
+            atencion_diaria.diagnostico_informe= " ";
+            atencion_diaria.contexto_informe_medico=" " ;
+            atencion_diaria.examenes_informe_medico=" " ;
+            atencion_diaria.zonas_afectadas=" " ;
+            atencion_diaria.seguro_informe_medico="null"  ;
         }
         
-        let ano2=informe_medico[0].agregado_fecha_lesion.split("-")[0];
-        let mes2=informe_medico[0].agregado_fecha_lesion.split("-")[1];
-        let dia2=informe_medico[0].agregado_fecha_lesion.split("-")[2];
-        let fecha_lesion=new Date();
-        fecha_lesion.setDate(parseInt(dia2));
-        fecha_lesion.setMonth(parseInt(mes2)-1);
-        fecha_lesion.setFullYear(parseInt(ano2));
-
-        let fecha_lesion_informe=dia_semana[fecha_lesion.getDay()]+' '+fecha_lesion.getDate()+' de '+lista_meses[fecha_lesion.getMonth()]+' '+fecha_lesion.getFullYear();
-        atencion_diaria.fecha_lesion_informe=fecha_lesion_informe;
-        atencion_diaria.recidiva_informe=informe_medico[0].agregado_recidiva ;
-        atencion_diaria.comentario_examen_informe=informe_medico[0].agregado_comentario_examen ;
-        atencion_diaria.dias_baja_informe=informe_medico[0].agregado_dias_de_baja  ;
-        atencion_diaria.nombre_medico=informe_medico[0].nombre_medico;
-        atencion_diaria.diagnostico_informe= informe_medico[0].diagnostico  ;
-        atencion_diaria.contexto_informe_medico=array_contexto[parseInt(informe_medico[0].contexto)] ;
-        atencion_diaria.examenes_informe_medico=informe_medico[0].agregado_examenes_realizados ;
-        atencion_diaria.zonas_afectadas=informe_medico[0].agregado_zona_afectada ;
-        atencion_diaria.seguro_informe_medico=informe_medico[0].agregado_seguro_medico  ;
     }
     if(atencion_diaria.tipo_atencion_atencion_diaria==="4"){
-        let informe_medico=atencion_diaria.informes_medicos.filter(informe => informe.idinforme_medico===atencion_diaria.idinforme_medico);
-        console.log(informe_medico[0]);
-        let lista_recomendacion_alta=[
-            {codigo:"1",valor:"Continuar el trabajo con readaptacion"},
-            {codigo:"2",valor:"Reevaluación Fisica"},
-            {codigo:"3",valor:"Debe realizar trabajo diferenciado"},
-            {codigo:"4",valor:"Derivado al trabajo con readaptacion"},
-            {codigo:"5",valor:"Kinesiologia completa"},
-            {codigo:"6",valor:"Reevaluación médica"},
-        ];
-        atencion_diaria.recomendaciones_alta=[];
-        for(let contador=0;contador<atencion_diaria.recomendacion_alta.length;contador++){
-            let recomendacion=atencion_diaria.recomendacion_alta[contador];
-            let recomendaciones_filtradas=lista_recomendacion_alta.filter(recomendacion_filtro => recomendacion_filtro.codigo===recomendacion.recomendacion_alta_atencion_diaria);
-            atencion_diaria.recomendaciones_alta.push(recomendaciones_filtradas[0].valor);
-        }
-        // console.log(atencion_diaria.recomendaciones_alta);
-        
-        let ano2=informe_medico[0].agregado_fecha_lesion.split("-")[0];
-        let mes2=informe_medico[0].agregado_fecha_lesion.split("-")[1];
-        let dia2=informe_medico[0].agregado_fecha_lesion.split("-")[2];
-        let fecha_lesion=new Date();
-        fecha_lesion.setDate(parseInt(dia2));
-        fecha_lesion.setMonth(parseInt(mes2)-1);
-        fecha_lesion.setFullYear(parseInt(ano2));
+        try{
+            let informe_medico=atencion_diaria.informes_medicos.filter(informe => informe.idinforme_medico===atencion_diaria.idinforme_medico);
+            console.log(informe_medico[0]);
+            let lista_recomendacion_alta=[
+                {codigo:"1",valor:"Continuar el trabajo con readaptacion"},
+                {codigo:"2",valor:"Reevaluación Fisica"},
+                {codigo:"3",valor:"Debe realizar trabajo diferenciado"},
+                {codigo:"4",valor:"Derivado al trabajo con readaptacion"},
+                {codigo:"5",valor:"Kinesiologia completa"},
+                {codigo:"6",valor:"Reevaluación médica"},
+            ];
+            atencion_diaria.recomendaciones_alta=[];
+            for(let contador=0;contador<atencion_diaria.recomendacion_alta.length;contador++){
+                let recomendacion=atencion_diaria.recomendacion_alta[contador];
+                let recomendaciones_filtradas=lista_recomendacion_alta.filter(recomendacion_filtro => recomendacion_filtro.codigo===recomendacion.recomendacion_alta_atencion_diaria);
+                atencion_diaria.recomendaciones_alta.push(recomendaciones_filtradas[0].valor);
+            }
+            // console.log(atencion_diaria.recomendaciones_alta);
+            
+            let ano2=informe_medico[0].agregado_fecha_lesion.split("-")[0];
+            let mes2=informe_medico[0].agregado_fecha_lesion.split("-")[1];
+            let dia2=informe_medico[0].agregado_fecha_lesion.split("-")[2];
+            let fecha_lesion=new Date();
+            fecha_lesion.setDate(parseInt(dia2));
+            fecha_lesion.setMonth(parseInt(mes2)-1);
+            fecha_lesion.setFullYear(parseInt(ano2));
 
-        let fecha_lesion_informe=dia_semana[fecha_lesion.getDay()]+' '+fecha_lesion.getDate()+' de '+lista_meses[fecha_lesion.getMonth()]+' '+fecha_lesion.getFullYear();
-        atencion_diaria.fecha_lesion_informe=fecha_lesion_informe;
-        atencion_diaria.recidiva_informe=informe_medico[0].agregado_recidiva ;
-        atencion_diaria.comentario_examen_informe=informe_medico[0].agregado_comentario_examen ;
-        atencion_diaria.dias_baja_informe=informe_medico[0].agregado_dias_de_baja  ;
-        atencion_diaria.nombre_medico=informe_medico[0].nombre_medico;
-        atencion_diaria.diagnostico_informe= informe_medico[0].diagnostico  ;
-        atencion_diaria.contexto_informe_medico=array_contexto[parseInt(informe_medico[0].contexto)] ;
-        atencion_diaria.examenes_informe_medico=informe_medico[0].agregado_examenes_realizados ;
-        atencion_diaria.zonas_afectadas=informe_medico[0].agregado_zona_afectada ;
-        atencion_diaria.seguro_informe_medico=informe_medico[0].agregado_seguro_medico  ;
+            let fecha_lesion_informe=dia_semana[fecha_lesion.getDay()]+' '+fecha_lesion.getDate()+' de '+lista_meses[fecha_lesion.getMonth()]+' '+fecha_lesion.getFullYear();
+            atencion_diaria.fecha_lesion_informe=fecha_lesion_informe;
+            atencion_diaria.recidiva_informe=informe_medico[0].agregado_recidiva ;
+            atencion_diaria.comentario_examen_informe=informe_medico[0].agregado_comentario_examen ;
+            atencion_diaria.dias_baja_informe=informe_medico[0].agregado_dias_de_baja  ;
+            atencion_diaria.nombre_medico=informe_medico[0].nombre_medico;
+            atencion_diaria.diagnostico_informe= informe_medico[0].diagnostico  ;
+            atencion_diaria.contexto_informe_medico=array_contexto[parseInt(informe_medico[0].contexto)] ;
+            atencion_diaria.examenes_informe_medico=informe_medico[0].agregado_examenes_realizados ;
+            atencion_diaria.zonas_afectadas=informe_medico[0].agregado_zona_afectada ;
+            atencion_diaria.seguro_informe_medico=informe_medico[0].agregado_seguro_medico  ;
+        }
+        catch{
+            let lista_recomendacion_alta=[
+                {codigo:"1",valor:"Continuar el trabajo con readaptacion"},
+                {codigo:"2",valor:"Reevaluación Fisica"},
+                {codigo:"3",valor:"Debe realizar trabajo diferenciado"},
+                {codigo:"4",valor:"Derivado al trabajo con readaptacion"},
+                {codigo:"5",valor:"Kinesiologia completa"},
+                {codigo:"6",valor:"Reevaluación médica"},
+            ];
+            atencion_diaria.recomendaciones_alta=[];
+            for(let contador=0;contador<atencion_diaria.recomendacion_alta.length;contador++){
+                let recomendacion=atencion_diaria.recomendacion_alta[contador];
+                let recomendaciones_filtradas=lista_recomendacion_alta.filter(recomendacion_filtro => recomendacion_filtro.codigo===recomendacion.recomendacion_alta_atencion_diaria);
+                atencion_diaria.recomendaciones_alta.push(recomendaciones_filtradas[0].valor);
+            }
+
+            atencion_diaria.fecha_lesion_informe=" ";
+            atencion_diaria.recidiva_informe="null" ;
+            atencion_diaria.comentario_examen_informe=" " ;
+            atencion_diaria.dias_baja_informe="null"  ;
+            atencion_diaria.nombre_medico=" ";
+            atencion_diaria.diagnostico_informe= " "  ;
+            atencion_diaria.contexto_informe_medico=" " ;
+            atencion_diaria.examenes_informe_medico=" " ;
+            atencion_diaria.zonas_afectadas=" " ;
+            atencion_diaria.seguro_informe_medico="null"  ;
+        }
     }
     // console.log(atencion_diaria)
     $("#descargarPDF").modal('show');

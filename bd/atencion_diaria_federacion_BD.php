@@ -1227,18 +1227,26 @@ function consultarInformeMedicoPdf($id){
 function consultarAtencionPdf($id){
     // recomendacion_alta_atencion_diaria
     include("conexion.php");
-    $SQL="SELECT * FROM atencion_diaria,fichaJugador WHERE atencion_diaria.idatencion_diaria_federacion=".$id." AND fichaJugador.idfichaJugador=atencion_diaria.idfichaJugador;";
+    $SQL="SELECT * FROM atencion_diaria_federacion,fichaJugador WHERE atencion_diaria_federacion.idatencion_diaria_federacion=".$id." AND fichaJugador.idfichaJugador=atencion_diaria_federacion.idfichaJugador;";
     $result_atencion=$link->query($SQL);
     $datos=[];
     while($row_atencion_diaria=mysqli_fetch_array($result_atencion)){
 
-        $SQL_tratamiento_aplicado="SELECT * FROM tratamiento_aplicado_atencion_diaria WHERE  idatencion_diaria_federacion=".$row_atencion_diaria["idatencion_diaria_federacion"].";";
+        $SQL_tratamiento_aplicado="SELECT * FROM tratamiento_aplicado_atencion_diaria_federacion WHERE  idatencion_diaria_federacion=".$row_atencion_diaria["idatencion_diaria_federacion"].";";
         $result_tratamiento_aplicado=$link->query($SQL_tratamiento_aplicado);
         $datos_tratamiento_aplicado=[];
         while($row_tratamiento_aplicado=mysqli_fetch_array($result_tratamiento_aplicado)){
             $datos_tratamiento_aplicado[]=utf8_converter($row_tratamiento_aplicado);
         }
         $row_atencion_diaria["lista_tratamiento"]=$datos_tratamiento_aplicado;
+
+        $SQL_tranajo_readaptor="SELECT * FROM trabajo_readaptador_atencion_diaria_federacion WHERE idatencion_diaria_federacion=".$row_atencion_diaria["idatencion_diaria_federacion"]."";
+        $result_trabajo_readaptador=$link->query($SQL_tranajo_readaptor);
+        $datos_trabajo=[];
+        while($row_trabajo=mysqli_fetch_array($result_trabajo_readaptador)){
+            $datos_trabajo[]=utf8_converter($row_trabajo);
+        }
+        $row_atencion_diaria["trabajo_readaptor"]= $datos_trabajo;
 
         $SQL_recomendacion="SELECT * FROM recomendacion_alta_atencion_diaria WHERE  idatencion_diaria_federacion=".$row_atencion_diaria["idatencion_diaria_federacion"].";";
         $result_recomendacion=$link->query($SQL_recomendacion);
@@ -1257,6 +1265,14 @@ function consultarAtencionPdf($id){
             }
             $row_atencion_diaria["informe_medico"]=$datos_informe_medico;
         }
+        
+        $SQL_recomendacion="SELECT * FROM recomendaciones_atencion_diaria_federacion WHERE idatencion_diaria_federacion=".$row_atencion_diaria["idatencion_diaria_federacion"]."";
+        $result_recomendacion=$link->query($SQL_recomendacion);
+        $datos_recomendacion=[];
+        while($row_recomendacion=mysqli_fetch_array($result_recomendacion)){
+            $datos_recomendacion[]=utf8_converter($row_recomendacion);
+        }
+        $row_atencion_diaria["recomendaciones"]= $datos_recomendacion;
 
         $datos[]=utf8_converter($row_atencion_diaria);
     }
@@ -1267,7 +1283,7 @@ function consultarAtencionPdf($id){
 function consultarTratamientoControl($id){
     // recomendacion_alta_atencion_diaria
     include("conexion.php");
-    $SQL="SELECT * FROM atencion_diaria,fichaJugador WHERE atencion_diaria.idinforme_medico=".$id." AND fichaJugador.idfichaJugador=atencion_diaria.idfichaJugador;";
+    $SQL="SELECT * FROM atencion_diaria_federacion,fichaJugador WHERE atencion_diaria_federacion.idinforme_medico=".$id." AND fichaJugador.idfichaJugador=atencion_diaria_federacion.idfichaJugador;";
     $result_atencion=$link->query($SQL);
     $datos=[];
     $lista_tratamiento_control=[];
