@@ -808,7 +808,7 @@ function guardarAtencionDiaria($POST){
                 ".$POST["tipo_tipo_atencion_formulario"].",
                 '".$POST["fecha_atencion_diaria"]."',
 
-                ".$observacion.",
+                '".$observacion."',
                 ".$POST["numero_sesiones"].",
                 ".$POST["porcentaje_recuperacion"].",
                 ".$idinforme_medico.",
@@ -849,7 +849,7 @@ function guardarAtencionDiaria($POST){
             $SQL="UPDATE atencion_diaria_federacion SET
                 fecha_atencion_diaria='".$POST["fecha_atencion_diaria"]."',
                 tipo_atencion_atencion_diaria=".$POST["tipo_tipo_atencion_formulario"].",
-                observacion_general=".$observacion.",
+                observacion=".$observacion.",
                 numero_sesion=".$POST["numero_sesiones"].",
                 porcentaje_recuperacion=".$POST["porcentaje_recuperacion"].",
                 idinforme_medico=".$idinforme_medico.",

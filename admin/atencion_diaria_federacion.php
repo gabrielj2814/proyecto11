@@ -2373,7 +2373,7 @@ var html_atencion_control_sesion={
     <div style="width:100%;">\
         <div class="tarjeta " style="margin-left: 1%;background: #fff0;height: 377px;float: left;">\
             <div class="cabezera_tarjeta cabezera_tarjeta_gris">\
-                <span>*Tratamiento realizado</span>\
+                <span>Tratamiento realizado</span>\
             </div>\
             <div class="cuerpo_tarjerta" id="contenedor_tratamiento" style="overflow: auto;overflow-x: hidden;"></div>\
         </div>\
@@ -2396,7 +2396,7 @@ var html_atencion_control_sesion={
             <div style="width: 25%;margin-left: 2%;display:flex;margin-bottom:10px">\
                 <a class="btn btn-md btn-primary green-a" style="width: 50%;height: 20px;background:#df4f4f;border:2px solid #555;padding-bottom: 2px;">\
                     <div>\
-                        <p class="ellipsis-text" style="font-weight: normal;">*% de recuperación</p>\
+                        <p class="ellipsis-text" style="font-weight: normal;">% de recuperación</p>\
                     </div>\
                 </a>\
                 <select style="width:50%; height: 30px;background:#fff;border:2px solid" class="" id="porcentaje_recuperacion" name="porcentaje_recuperacion" onchange="validarFormulario()">\
@@ -2444,7 +2444,7 @@ var html_atencion_control_sesion={
         <div style="margin-right:2.5%;width:29.96%;display:flex;margin-bottom:10px">\
             <a class="btn btn-md btn-primary green-a" style="width: 50%;height: 20px;background:#404040">\
                 <div>\
-                    <p class="ellipsis-text" style="font-weight: normal;">*N° Sesión</p>\
+                    <p class="ellipsis-text" style="font-weight: normal;">N° Sesión</p>\
                 </div>\
             </a>\
             <select style="width:50%; height: 30px;background:#fff;border:2px solid" class="" id="numero_sesiones" name="numero_sesiones" onchange="validarFormulario()">\
@@ -2499,7 +2499,7 @@ var html_atencion_sesion_readaptador={
             <div style="width: 25%;margin-left: 2%;display:flex;margin-bottom:10px">\
                 <a class="btn btn-md btn-primary green-a" style="width: 50%;height: 20px;background:#df4f4f;border:2px solid #555;padding-bottom: 2px;">\
                     <div>\
-                        <p class="ellipsis-text" style="font-weight: normal;">*% de recuperación</p>\
+                        <p class="ellipsis-text" style="font-weight: normal;">% de recuperación</p>\
                     </div>\
                 </a>\
                 <select style="width:50%; height: 30px;background:#fff;border:2px solid" class="" id="porcentaje_recuperacion" name="porcentaje_recuperacion" onchange="validarFormulario()">\
@@ -2541,7 +2541,7 @@ var html_atencion_sesion_readaptador={
         <div style="margin-right:2.5%;width:29.96%;display:flex;margin-bottom:10px">\
             <a class="btn btn-md btn-primary green-a" style="width: 50%;height: 20px;background:#404040">\
                 <div>\
-                    <p class="ellipsis-text" style="font-weight: normal;">*N° Sesión</p>\
+                    <p class="ellipsis-text" style="font-weight: normal;">N° Sesión</p>\
                 </div>\
             </a>\
             <select style="width:50%; height: 30px;background:#fff;border:2px solid" class="" id="numero_sesiones" name="numero_sesiones" onchange="validarFormulario()">\
@@ -2641,7 +2641,7 @@ var html_atencion_control_medico={
         <div style="margin-right:2.5%;width:29.96%;display:flex;margin-bottom:10px">\
             <a class="btn btn-md btn-primary green-a" style="width: 50%;height: 20px;background:#404040">\
                 <div>\
-                    <p class="ellipsis-text" style="font-weight: normal;">*N° Sesión</p>\
+                    <p class="ellipsis-text" style="font-weight: normal;">N° Sesión</p>\
                 </div>\
             </a>\
             <select style="width:50%; height: 30px;background:#fff;border:2px solid" class="" id="numero_sesiones" name="numero_sesiones" onchange="validarFormulario()">\
@@ -3499,6 +3499,7 @@ function tablaControl(atencion_diaria){
         ];
 
         let informe_medico=atencion_diaria.informes_medicos.filter(informe => informe.idinforme_medico===atencion_diaria.idinforme_medico);
+
     try{
 
 
@@ -3522,36 +3523,21 @@ function tablaControl(atencion_diaria){
 
         let fecha_lesion_informe=dia_semana[fecha_lesion.getDay()]+' '+fecha_lesion.getDate()+' de '+lista_meses[fecha_lesion.getMonth()]+' '+fecha_lesion.getFullYear();
 
-
-
         atencion_diaria.lista_tratamiento=[];
         for(let contador_0=0;contador_0<atencion_diaria.tratamiento_aplicado.length;contador_0++){
             let tratamiento=atencion_diaria.tratamiento_aplicado[contador_0];
             let tratamiento_filtrados=window.lista_tratamiento_aplicado_modal.filter((tratamiento_filtrado)=> tratamiento.nombre_tratamiento_atencion_diaria===tratamiento_filtrado.idtratamiento_aplicado);
             atencion_diaria.lista_tratamiento.push(tratamiento_filtrados[0].nombre_tratamiento_aplicado);
         }
-        atencion_diaria.contexto="";
-        for(let contador_1=0;contador_1<lista_contexto_incidente_modal.length;contador_1++){
-            let contexto=lista_contexto_incidente_modal[contador_1];
-            if(contexto.idcontexto_incidente===atencion_diaria.idcontexto_incidente){
-                atencion_diaria.contexto=contexto.nombre_contexto_incidente;
-            }
+        let strTraramientoRealizado=null;
+        if(atencion_diaria.lista_tratamiento.length===1){
+            strTraramientoRealizado=atencion_diaria.lista_tratamiento[0];
         }
-        let strTrabajoReadaptador=null;
-        atencion_diaria.lista_trbajo_readaptador=[];
-        for(let contador_2=0;contador_2<atencion_diaria.trabajo_readaptor.length;contador_2++){
-                let trabajo_readaptador=atencion_diaria.trabajo_readaptor[contador_2];
-                let trabajo_readaptador_filtrados=lista_trabajo_readaptador_modal.filter((trabajo_re=> trabajo_readaptador.trabajo_readaptador_atencion_diaria===trabajo_re.idtrabajo_readatador));
-                atencion_diaria.lista_trbajo_readaptador.push(trabajo_readaptador_filtrados[0].trabajo_readatador);
-            }
-        if(atencion_diaria.lista_trbajo_readaptador.length===1){
-            strTrabajoReadaptador=atencion_diaria.lista_trbajo_readaptador[0];
-        }
-        else if(atencion_diaria.lista_trbajo_readaptador.length>1){
-            strTrabajoReadaptador=atencion_diaria.lista_trbajo_readaptador.join(", ");
+        else if(atencion_diaria.lista_tratamiento.length>1){
+            strTraramientoRealizado=atencion_diaria.lista_tratamiento.join(", ");
         }
         else{
-            strTrabajoReadaptador="";
+            strTraramientoRealizado="";
         }
 
         /*
@@ -3604,7 +3590,7 @@ function tablaControl(atencion_diaria){
         </div>\
         <div class="row_tabla" style="height:auto;">\
             <span class="celda_propiedad" style="height:auto;background-color:#ec7d7c;">Tratamiento realizado</span>\
-            <span class="celda_valor" style="height:auto;">'+strTrabajoReadaptador+'</span>\
+            <span class="celda_valor" style="height:auto;">'+strTraramientoRealizado+'</span>\
         </div>\
         <div class="row_tabla">\
             <span class="celda_propiedad" style="background-color:#ec7d7c;">% de recuperación</span>\
@@ -3670,13 +3656,6 @@ function tablaControl(atencion_diaria){
         else{
             strTrabajoReadaptador="";
         }
-
-        /*
-        <div class="row_tabla" style="height:auto;">\
-            <span class="celda_propiedad" style="height:auto;background-color:#ec7d7c;">Trabajo readaptor</span>\
-            <span class="celda_valor" style="height:auto;">'+((atencion_diaria.lista_trbajo_readaptador.length>1)?atencion_diaria.lista_trbajo_readaptador.join(", "):atencion_diaria.lista_trbajo_readaptador[0])+'</span>\
-        </div>\
-        */
 
         const template='\
         <div class="row_tabla">\
@@ -4089,14 +4068,14 @@ function tablaSesionReadaptador(atencion_diaria){
         let fecha_atencion_diaria_modificada=dia_semana[fecha_atencion.getDay()]+' '+fecha_atencion.getDate()+' de '+lista_meses[fecha_atencion.getMonth()]+' '+fecha_atencion.getFullYear();
 
         let ano2=informe_medico[0].agregado_fecha_lesion.split("-")[0];
-            let mes2=informe_medico[0].agregado_fecha_lesion.split("-")[1];
-            let dia2=informe_medico[0].agregado_fecha_lesion.split("-")[2];
-            let fecha_lesion=new Date();
-            fecha_lesion.setDate(parseInt(dia2));
-            fecha_lesion.setMonth(parseInt(mes2)-1);
-            fecha_lesion.setFullYear(parseInt(ano2));
+        let mes2=informe_medico[0].agregado_fecha_lesion.split("-")[1];
+        let dia2=informe_medico[0].agregado_fecha_lesion.split("-")[2];
+        let fecha_lesion=new Date();
+        fecha_lesion.setDate(parseInt(dia2));
+        fecha_lesion.setMonth(parseInt(mes2)-1);
+        fecha_lesion.setFullYear(parseInt(ano2));
 
-            let fecha_lesion_informef=echa_lesion_informe=dia_semana[fecha_lesion.getDay()]+' '+fecha_lesion.getDate()+' de '+lista_meses[fecha_lesion.getMonth()]+' '+fecha_lesion.getFullYear();
+        let fecha_lesion_informe=dia_semana[fecha_lesion.getDay()]+' '+fecha_lesion.getDate()+' de '+lista_meses[fecha_lesion.getMonth()]+' '+fecha_lesion.getFullYear();
 
         atencion_diaria.lista_trbajo_readaptador=[];
         for(let contador_2=0;contador_2<atencion_diaria.trabajo_readaptor.length;contador_2++){
@@ -6327,7 +6306,6 @@ async function formularioNuevaAtencion(tipo){
 }
 function formularioControlMedico(tipo){
     // alert("formulario control medico");
-
     $("#contenedor_flex_segmento_izquierdo_formulario").css("align-content","flex-start") ; 
     $("#contenedor_flex_segmento_izquierdo_formulario").append(html_atencion_control_medico.parte_2) ; 
     $("#segmento_inferior_formulario").html(html_atencion_control_medico.parte_1) ; 
@@ -6360,7 +6338,8 @@ function formularioControlMedico(tipo){
         let option="<option value='"+inform_medico.idinforme_medico+"'>"+inform_medico.diagnostico+"</option>" ; 
         $("#idinforme_medico").append(option) ; 
     }
-    $("#boton_agregar_infrome").prop("disabled",true) ; 
+    
+    $("#boton_agregar_infrome").prop("disabled",false) ; 
     if(window.id_informe){
         setTimeout(()=>{
             mostarDatosTipoFormulario(tipo,window.busqueda_respuesta_servidor[index_array_atencion_diaria]) ; 
@@ -6401,7 +6380,7 @@ async function formularioSesionReadaptador(tipo){
         let option="<option value='"+inform_medico.idinforme_medico+"'>"+inform_medico.diagnostico+"</option>" ; 
         $("#idinforme_medico").append(option) ; 
     }
-    $("#boton_agregar_infrome").prop("disabled",true) ; 
+    $("#boton_agregar_infrome").prop("disabled",false) ; 
     if(window.id_informe){
         setTimeout(()=>{
             mostarDatosTipoFormulario(tipo,window.busqueda_respuesta_servidor[index_array_atencion_diaria]) ; 
@@ -6480,7 +6459,6 @@ async function formularioControl(tipo){
     $("#sesion_siguiente_1").prop("checked",true) ; 
     mostrarFechaReposoDeportivaSiguiente() ; 
     mostrarFechaReposoDeportiva() ; 
-    sesion_radio() ; 
     $("#idinforme_medico").empty() ; 
     $("#idinforme_medico").append("<option value='0'>Seleccione</option>") ; 
     // console.log(window.respuesta_servidor_jugadores)
@@ -6495,7 +6473,7 @@ async function formularioControl(tipo){
         let option="<option value='"+inform_medico.idinforme_medico+"'>"+inform_medico.diagnostico+"</option>" ; 
         $("#idinforme_medico").append(option) ; 
     }
-    $("#boton_agregar_infrome").prop("disabled",true) ; 
+    // $("#boton_agregar_infrome").prop("disabled",true) ; 
     if(window.id_informe){
         setTimeout(()=>{
             mostarDatosTipoFormulario(tipo,window.busqueda_respuesta_servidor[index_array_atencion_diaria]) ; 
@@ -6989,49 +6967,51 @@ function validarFormularioSesionReadaptador(){
  // validar checkbox list tratamiento aplicado
     // let estado_examen_solicitado=validarSelectDeSiYNo("examen_solicitado")
 
-    let valor_select_numero_sesiones=$("#numero_sesiones").val() ; 
-    // alert($("#numero_sesiones").val())
-    let estado_select_numero_sesiones=false ; 
-    if(valor_select_numero_sesiones!="0"){
-        estado_select_numero_sesiones=true ; 
-    }
+    // let valor_select_numero_sesiones=$("#numero_sesiones").val() ; 
+    // // alert($("#numero_sesiones").val())
+    // let estado_select_numero_sesiones=false ; 
+    // if(valor_select_numero_sesiones!="0"){
+    //     estado_select_numero_sesiones=true ; 
+    // }
 
-    let valor_select_porcentaje_recuperacion=$("#porcentaje_recuperacion").val() ; 
-    let estado_select_porcentaje_recuperacion=false ; 
-    if(valor_select_porcentaje_recuperacion!="0"){
-        estado_select_porcentaje_recuperacion=true ; 
-    }
+    // let valor_select_porcentaje_recuperacion=$("#porcentaje_recuperacion").val() ; 
+    // let estado_select_porcentaje_recuperacion=false ; 
+    // if(valor_select_porcentaje_recuperacion!="0"){
+    //     estado_select_porcentaje_recuperacion=true ; 
+    // }
 
-    let estado_select=false ; 
-    if(estado_select_numero_sesiones && estado_select_porcentaje_recuperacion){
-        estado_select=true ; 
-    }
-    if(estado_select){
-        $("#boton_agregar_infrome").prop("disabled",false) ; 
-    }
-    else{
-        $("#boton_agregar_infrome").prop("disabled",true) ; 
-    }
+    // let estado_select=false ; 
+    // if(estado_select_numero_sesiones && estado_select_porcentaje_recuperacion){
+    //     estado_select=true ; 
+    // }
+    // if(estado_select){
+    //     $("#boton_agregar_infrome").prop("disabled",false) ; 
+    // }
+    // else{
+    //     $("#boton_agregar_infrome").prop("disabled",true) ; 
+    // }
+    $("#boton_agregar_infrome").prop("disabled",false) ; 
 }
 
 function validarFormularioControlMedico(){
-    let valor_select_numero_sesiones=$("#numero_sesiones").val() ; 
-    // alert($("#numero_sesiones").val())
-    let estado_select_numero_sesiones=false ; 
-    if(valor_select_numero_sesiones!="0"){
-        estado_select_numero_sesiones=true ; 
-    }
+    // let valor_select_numero_sesiones=$("#numero_sesiones").val() ; 
+    // // alert($("#numero_sesiones").val())
+    // let estado_select_numero_sesiones=false ; 
+    // if(valor_select_numero_sesiones!="0"){
+    //     estado_select_numero_sesiones=true ; 
+    // }
 
-    let estado_select=false ; 
-    if(estado_select_numero_sesiones){
-        estado_select=true ; 
-    }
-    if(estado_select){
-        $("#boton_agregar_infrome").prop("disabled",false) ; 
-    }
-    else{
-        $("#boton_agregar_infrome").prop("disabled",true) ; 
-    }
+    // let estado_select=false ; 
+    // if(estado_select_numero_sesiones){
+    //     estado_select=true ; 
+    // }
+    // if(estado_select){
+    //     $("#boton_agregar_infrome").prop("disabled",false) ; 
+    // }
+    // else{
+    //     $("#boton_agregar_infrome").prop("disabled",true) ; 
+    // }
+    $("#boton_agregar_infrome").prop("disabled",false) ; 
 }
 
 function validarFormularioNuevaAtencion(){
@@ -7144,29 +7124,31 @@ function validarFormularioControl(){
     // validar checkbox list tratamiento aplicado
     // let estado_examen_solicitado=validarSelectDeSiYNo("examen_solicitado")
 
-    let valor_select_numero_sesiones=$("#numero_sesiones").val() ; 
+    // let valor_select_numero_sesiones=$("#numero_sesiones").val() ; 
     // alert($("#numero_sesiones").val())
-    let estado_select_numero_sesiones=false ; 
-    if(valor_select_numero_sesiones!="0"){
-        estado_select_numero_sesiones=true ; 
-    }
+    // let estado_select_numero_sesiones=false ; 
+    // if(valor_select_numero_sesiones!="0"){
+    //     estado_select_numero_sesiones=true ; 
+    // }
 
-    let valor_select_porcentaje_recuperacion=$("#porcentaje_recuperacion").val() ; 
-    let estado_select_porcentaje_recuperacion=false ; 
-    if(valor_select_porcentaje_recuperacion!="0"){
-        estado_select_porcentaje_recuperacion=true ; 
-    }
+    // let valor_select_porcentaje_recuperacion=$("#porcentaje_recuperacion").val() ; 
+    // let estado_select_porcentaje_recuperacion=false ; 
+    // if(valor_select_porcentaje_recuperacion!="0"){
+    //     estado_select_porcentaje_recuperacion=true ; 
+    // }
 
-    let estado_select=false ; 
-    if(estado_select_numero_sesiones && estado_select_porcentaje_recuperacion){
-        estado_select=true ; 
-    }
-    if(estado_select){
-        $("#boton_agregar_infrome").prop("disabled",false) ; 
-    }
-    else{
-        $("#boton_agregar_infrome").prop("disabled",true) ; 
-    }
+    // let estado_select=false ; 
+    // if(estado_select_numero_sesiones && estado_select_porcentaje_recuperacion){
+    //     estado_select=true ; 
+    // }
+    // if(estado_select){
+    //     $("#boton_agregar_infrome").prop("disabled",false) ; 
+    // }
+    // else{
+    //     $("#boton_agregar_infrome").prop("disabled",true) ; 
+    // }
+    $("#boton_agregar_infrome").prop("disabled",false) ; 
+
 }
 
 function validarFormularioAltaMedica(){
