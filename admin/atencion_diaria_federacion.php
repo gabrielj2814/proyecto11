@@ -3368,23 +3368,23 @@ function tablaNuevaAtencion(atencion_diaria){
     </div>\
     <div class="row_tabla">\
         <span class="celda_propiedad">Diagnostico</span>\
-        <span class="celda_valor">'+atencion_diaria.diagnostico_atencion_diaria+'</span>\
+        <span class="celda_valor">'+((atencion_diaria.diagnostico_atencion_diaria===null)?"":atencion_diaria.diagnostico_atencion_diaria)+'</span>\
     </div>\
     <div class="row_tabla" style="height:100px">\
         <span class="celda_propiedad" style="padding-top: 41px;">Anamnesis</span>\
-        <span class="celda_valor">'+atencion_diaria.anamnesis_atencion_diaria+'</span>\
+        <span class="celda_valor">'+((atencion_diaria.anamnesis_atencion_diaria===null)?"":atencion_diaria.anamnesis_atencion_diaria)+'</span>\
     </div>\
     <div class="row_tabla" style="height:100px">\
         <span class="celda_propiedad" style="padding-top: 41px;">Examen Fisico</span>\
-        <span class="celda_valor">'+atencion_diaria.examen_fisico+'</span>\
+        <span class="celda_valor">'+((atencion_diaria.examen_fisico===null)?"":atencion_diaria.examen_fisico===null)+'</span>\
     </div>\
     <div class="row_tabla" style="height:100px">\
         <span class="celda_propiedad" style="padding-top: 41px;">Plan</span>\
-        <span class="celda_valor">'+atencion_diaria.plan_atencion_diaria+'</span>\
+        <span class="celda_valor">'+((atencion_diaria.plan_atencion_diaria===null)?"":atencion_diaria.plan_atencion_diaria)+'</span>\
     </div>\
     <div class="row_tabla" style="height:100px">\
         <span class="celda_propiedad" style="padding-top: 41px;background-color:#ec7d7c;">Indicaciones</span>\
-        <span class="celda_valor">'+atencion_diaria.indicaciones+'</span>\
+        <span class="celda_valor">'+((atencion_diaria.indicaciones===null)?"":atencion_diaria.indicaciones)+'</span>\
     </div>\
     <div class="row_tabla" style="height: auto;">\
     <span class="celda_propiedad" style="height:auto;background-color:#ec7d7c;">Examenes solicitados</span>\
@@ -3586,7 +3586,7 @@ function tablaControl(atencion_diaria){
         </div>\
         <div class="row_tabla" style="height:100px">\
             <span class="celda_propiedad" style="padding-top: 41px;background-color:#ec7d7c;">Indicaciones</span>\
-            <span class="celda_valor">'+atencion_diaria.indicaciones+'</span>\
+            <span class="celda_valor">'+((atencion_diaria.indicaciones===null)?"":atencion_diaria.indicaciones)+'</span>\
         </div>\
         <div class="row_tabla" style="height:auto;">\
             <span class="celda_propiedad" style="height:auto;background-color:#ec7d7c;">Tratamiento realizado</span>\
@@ -3696,7 +3696,7 @@ function tablaControl(atencion_diaria){
         </div>\
         <div class="row_tabla" style="height:100px">\
             <span class="celda_propiedad" style="padding-top: 41px;background-color:#ec7d7c;">Indicaciones</span>\
-            <span class="celda_valor">'+atencion_diaria.indicaciones+'</span>\
+            <span class="celda_valor">'+((atencion_diaria.indicaciones===null)?"":atencion_diaria.indicaciones)+'</span>\
         </div>\
         <div class="row_tabla" style="height:auto;">\
             <span class="celda_propiedad" style="height:auto;background-color:#ec7d7c;">Tratamiento realizado</span>\
@@ -3889,7 +3889,7 @@ function tablaControlMedica(atencion_diaria){
         </div>\
         <div class="row_tabla" style="height:100px">\
             <span class="celda_propiedad" style="padding-top: 41px;background-color:#ec7d7c;">Indicaciones</span>\
-            <span class="celda_valor">'+atencion_diaria.indicaciones+'</span>\
+            <span class="celda_valor">'+((atencion_diaria.indicaciones===null)?"":atencion_diaria.indicaciones)+'</span>\
         </div>\
         <div class="row_tabla">\
             <span class="celda_propiedad" style="background-color:#ec7d7c;">Fecha estimada para el alta medica</span>\
@@ -3963,7 +3963,7 @@ function tablaControlMedica(atencion_diaria){
         </div>\
         <div class="row_tabla" style="height:100px">\
             <span class="celda_propiedad" style="padding-top: 41px;background-color:#ec7d7c;">Indicaciones</span>\
-            <span class="celda_valor">'+atencion_diaria.indicaciones+'</span>\
+            <span class="celda_valor">'+((atencion_diaria.indicaciones===null)?"":atencion_diaria.indicaciones)+'</span>\
         </div>\
         <div class="row_tabla">\
             <span class="celda_propiedad" style="background-color:#ec7d7c;">Fecha estimada para el alta medica</span>\
@@ -4131,7 +4131,7 @@ function tablaSesionReadaptador(atencion_diaria){
         </div>\
         <div class="row_tabla" style="height:100px">\
             <span class="celda_propiedad" style="padding-top: 41px;background-color:#ec7d7c;">Indicaciones</span>\
-            <span class="celda_valor">'+atencion_diaria.indicaciones+'</span>\
+            <span class="celda_valor">'+((atencion_diaria.indicaciones===null)?"":atencion_diaria.indicaciones)+'</span>\
         </div>\
         <div class="row_tabla" style="height:auto">\
             <span class="celda_propiedad" style="background-color:#ec7d7c;">Fecha estimada para el alta deportiva</span>\
@@ -4218,7 +4218,7 @@ function tablaSesionReadaptador(atencion_diaria){
         </div>\
         <div class="row_tabla" style="height:100px">\
             <span class="celda_propiedad" style="padding-top: 41px;background-color:#ec7d7c;">Indicaciones</span>\
-            <span class="celda_valor">'+atencion_diaria.indicaciones+'</span>\
+            <span class="celda_valor">'+((atencion_diaria.indicaciones===null)?"":atencion_diaria.indicaciones)+'</span>\
         </div>\
         <div class="row_tabla" style="height:auto">\
             <span class="celda_propiedad" style="background-color:#ec7d7c;">Fecha estimada para el alta deportiva</span>\
