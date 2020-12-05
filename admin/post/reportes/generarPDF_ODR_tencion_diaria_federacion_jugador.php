@@ -96,8 +96,99 @@ $titulo_pdf="";
 
 $template="";
 
+if($numero===5){
+  $titulo_pdf="REGISTRO DE NUEVA ATENCION";
+  $mes_y_dia_semana2= date('d-n-Y-N', strtotime($_POST["fecha_incidente_atencion_diaria"]) );
+
+  $mes_y_dia_semana_explotado2=explode("-",$mes_y_dia_semana2);
+
+  $dia2=(int)$mes_y_dia_semana_explotado2[0];
+  $mes2=$lista_mes[(int)$mes_y_dia_semana_explotado2[1]-1];
+  $ano2=(int)$mes_y_dia_semana_explotado2[2];
+  $semana2=$lista_dia_semana[((int)$mes_y_dia_semana_explotado2[3])-1];
+
+  $fecha2=$semana2." ".$dia2." de ".$mes2." del ".$ano2;
+
+  // <div style="text-align:left;margin-top: 25px;width:100%;display:block;">Trabajo Readaptor: '.((sizeof($_POST["lista_trbajo_readaptador"])>1)?implode(", ",$_POST["lista_trbajo_readaptador"]):$_POST["lista_trbajo_readaptador"][0]).'</div>
+  // $contador_tratamiento=0;
+  // $lista_tratamiento=[];
+  // while($contador_tratamiento<sizeof($_POST["datos_ayuda"]["tratamiento"])){
+  //   $lista_tratamiento[]=$_POST["datos_ayuda"]["tratamiento"][$contador_tratamiento]["nombre_tratamiento_aplicado"];
+  //   for($contador_2=0;$contador_2<sizeof($_POST["datos_ayuda"].)){
+
+  //   }
+  //   $contador_tratamiento++;
+  // }
+  // (sizeof($_POST["lista_trbajo_readaptador"])>1)?implode(", ",$_POST["lista_trbajo_readaptador"]):$_POST["lista_trbajo_readaptador"][0] <span style="color:#6d6d6e;"></span>
+
+  $lista_partes_frt="";
+  if(sizeof($_POST["partes_frt_encontradas"])>1){
+    if(sizeof($_POST["partes_bck_encontradas"])>1 ||sizeof($_POST["partes_bck_encontradas"])===1){
+      $lista_partes_frt=''.implode(",",$_POST["partes_frt_encontradas"]).',';
+    }
+    else{
+      $lista_partes_frt=''.implode(",",$_POST["partes_frt_encontradas"]).'';
+    }
+  }
+  else{
+    if(sizeof($_POST["partes_frt_encontradas"])===1){
+      if(sizeof($_POST["partes_bck_encontradas"])>1 ||sizeof($_POST["partes_bck_encontradas"])===1){
+        $lista_partes_frt=''.$_POST["partes_frt_encontradas"][0].',';
+      }
+      else{
+        $lista_partes_frt=''.$_POST["partes_frt_encontradas"][0].'';
+      }
+    }
+    else{
+      $lista_partes_frt='';
+    }
+  }
+
+  $lista_partes_bck="";
+  if(sizeof($_POST["partes_bck_encontradas"])>1){
+    $lista_partes_bck=''.implode(",",$_POST["partes_bck_encontradas"]).'';
+  }
+  else{
+    if(sizeof($_POST["partes_bck_encontradas"])===1){
+      $lista_partes_bck=''.$_POST["partes_bck_encontradas"][0].'';
+    }
+    else{
+      $lista_partes_bck="";
+    }
+  }
+
+  // print($lista_partes_frt.''.$lista_partes_bck);
+  
+  
+  $template='
+          <div style="width:100%;height:50px;display:block;"></span></div>
+          <div style="font-size:12px;color:#404040;font-weight: bold;text-align:left;margin-top: 15px;width:100%;display:none;">Atendido por: <span style="color:#6d6d6e;">'.$_POST["nombre_medico"].'</span></div>
+          <div style="font-size:12px;color:#404040;font-weight: bold;text-align:left;margin-top: 15px;width:100%;display:block;">Fecha de la atención: <span style="color:#6d6d6e;">'.$fecha.'</span></div>
+          <div style="font-size:12px;color:#404040;font-weight: bold;text-align:left;margin-top: 15px;width:100%;display:block;">Tipo atención: <span style="color:#6d6d6e;">Nueva Atencion</span></div>
+          <div style="font-size:12px;color:#404040;font-weight: bold;text-align:left;margin-top: 15px;width:100%;display:block;">Fecha del incidente: <span style="color:#6d6d6e;">'.$fecha2.'</span></div>
+          <div style="font-size:12px;color:#404040;font-weight: bold;text-align:left;margin-top: 15px;width:100%;display:block;">Diagnóstico: <span style="color:#6d6d6e;">'.$_POST["diagnostico_atencion_diaria"].'</span></div>
+          <div style="font-size:12px;color:#404040;font-weight: bold;text-align:left;margin-top: 15px;width:100%;display:block;">Anamnesis: <span style="color:#6d6d6e;">'.$_POST["anamnesis_atencion_diaria"].'</span></div>
+          <div style="font-size:12px;color:#404040;font-weight: bold;text-align:left;margin-top: 15px;width:100%;display:block;">Contexto incidente: <span style="color:#6d6d6e;">'.$_POST["contexto"].'</span></div>
+          <div style="font-size:12px;color:#404040;font-weight: bold;text-align:left;margin-top: 15px;width:100%;display:block;">Zona Afectada: <span style="color:#6d6d6e;">'.$lista_partes_frt.''.$lista_partes_bck.'</span></div>
+          <div style="font-size:12px;color:#404040;font-weight: bold;text-align:left;margin-top: 15px;width:100%;display:block;">Observaciones Kinesiologo: <span style="color:#6d6d6e;">'.(($_POST["observacion_kinesiologo"]!=="null")?$_POST["observacion_kinesiologo"]:"Sin observación").'</span></div>
+  
+          <div style="display:block;margin-top: 15px;font-size:12px;color:#404040;font-weight: bold;text-align:left;">
+              <div style="display:inline;">Examenes solicitados : <span style="color:#6d6d6e;">'.((sizeof($_POST["lista_examenes"])>1)?implode(", ",$_POST["lista_examenes"]):$_POST["lista_examenes"][0]).'</span></div>
+          </div>
+          <div style="display:block;margin-top: 15px;font-size:12px;color:#404040;font-weight: bold;text-align:left;">
+              <div style="display:inline;margin-right:25px;">Estado jugador: <span style="color:red;">'.$listaEstadoJugador[(int)$consultaAtencionDiaria["datos"][0]["estado_jugador"]].'</span></div>
+          </div>
+          <div style="display:block;margin-top: 15px;font-size:12px;color:#404040;font-weight: bold;text-align:left;">
+              <div style="display:inline;margin-right:25px;">Examen fisico: <span style="color:#6d6d6e;">'.(($consultaAtencionDiaria["datos"][0]["examen_fisico"]===NULL)?"":$consultaAtencionDiaria["datos"][0]["examen_fisico"]).'</span></div>
+          </div>
+          <div style="display:block;margin-top: 15px;font-size:12px;color:#404040;font-weight: bold;text-align:left;">
+              <div style="display:inline;margin-right:25px;">Plan: <span style="color:#6d6d6e;">'.(($consultaAtencionDiaria["datos"][0]["plan_atencion_diaria"]===NULL)?"":$consultaAtencionDiaria["datos"][0]["plan_atencion_diaria"]).'</span></div>
+          </div>
+  ';
+}
+
 if($tipo_atencion==="Nueva"){
-  $titulo_pdf="REGISTRO DE NUEVOINCIDENTEATENCIÓN MÉDICA";
+  $titulo_pdf="REGISTRO DE NUEVO INCIDENTE ATENCIÓN MÉDICA";
   $mes_y_dia_semana2= date('d-n-Y-N', strtotime($_POST["fecha_incidente_atencion_diaria"]) );
 
   $mes_y_dia_semana_explotado2=explode("-",$mes_y_dia_semana2);
@@ -203,8 +294,8 @@ if($tipo_atencion==="Nueva"){
   ';
 }
 
-if($tipo_atencion==="Control"){
-  $titulo_pdf="REGISTRO DE CONTROL ATENCIÓN DIARIA";
+if($numero===6){
+  $titulo_pdf="REGISTRO DE CONTROL MEDICO";
   $mes_y_dia_semana2= date('d-n-Y-N', strtotime($_POST["agregado_fecha_lesion"]) );
 
   $mes_y_dia_semana_explotado2=explode("-",$mes_y_dia_semana2);
@@ -227,13 +318,41 @@ if($tipo_atencion==="Control"){
   //   $contador_tratamiento++;
   // }
   // (sizeof($_POST["lista_trbajo_readaptador"])>1)?implode(", ",$_POST["lista_trbajo_readaptador"]):$_POST["lista_trbajo_readaptador"][0] <span style="color:#6d6d6e;"></span>
+  $strSeguro=" ";
+  if($_POST["seguro_informe_medico"]!=="null"){
+    $strSeguro=($_POST["seguro_informe_medico"]==="1")?"Si":"No";
+  }
+  // ((sizeof($_POST["lista_tratamiento"])>1)?implode(", ",$_POST["lista_tratamiento"]):$_POST["lista_tratamiento"][0])
+  $strTratamiento=" ";
+  if(sizeof($_POST["lista_tratamiento"])>1){
+    $strTratamiento=implode(", ",$_POST["lista_tratamiento"]);
+  }
+  else if(sizeof($_POST["lista_tratamiento"])===1){
+    $strTratamiento=$_POST["lista_tratamiento"][0];
+  }
 
+  $strRecomendacion=" ";
+  $listaRecomendaciones=[];
+  for($contadorRecomendacion=0;$contadorRecomendacion<sizeof($consultaAtencionDiaria["datos"][0]["recomendaciones"]);$contadorRecomendacion++){
+    if($consultaAtencionDiaria["datos"][0]["recomendaciones"][$contadorRecomendacion]["recomendacion_numero"]==="1" || $consultaAtencionDiaria["datos"][0]["recomendaciones"][$contadorRecomendacion]["recomendacion_numero"]==="2"){
+      $listaRecomendaciones[]=$seRecomienda[(int)$consultaAtencionDiaria["datos"][0]["recomendaciones"][$contadorRecomendacion]["recomendacion_numero"]]." ".$consultaAtencionDiaria["datos"][0]["recomendaciones"][$contadorRecomendacion]["fecha_recomendacion"];
+    }
+    else{
+      $listaRecomendaciones[]=$seRecomienda[(int)$consultaAtencionDiaria["datos"][0]["recomendaciones"][$contadorRecomendacion]["recomendacion_numero"]];
+    }
+  }
+  if(sizeof($listaRecomendaciones)>1){
+    $strRecomendacion=implode(", ",$listaRecomendaciones);
+  }
+  else if(sizeof($listaRecomendaciones)===1){
+    $strRecomendacion=$listaRecomendaciones[0];
+  }
   
   $template='
           <div style="width:100%;height:50px;display:block;"></span></div>
           <div style="font-size:12px;color:#404040;font-weight: bold;text-align:left;margin-top: 15px;width:100%;display:block;">Atendido por: <span style="color:#6d6d6e;">'.$_POST["nombre_medico"].'</span></div>
           <div style="font-size:12px;color:#404040;font-weight: bold;text-align:left;margin-top: 15px;width:100%;display:block;">Fecha de la atención: <span style="color:#6d6d6e;">'.$fecha.'</span></div>
-          <div style="font-size:12px;color:#404040;font-weight: bold;text-align:left;margin-top: 15px;width:100%;display:block;">Tipo atención: <span style="color:#6d6d6e;">'.$tipo_atencion.'</span></div>
+          <div style="font-size:12px;color:#404040;font-weight: bold;text-align:left;margin-top: 15px;width:100%;display:block;">Tipo atención: <span style="color:#6d6d6e;">Control / Sesion kinesica</span></div>
           <div style="font-size:12px;color:#404040;font-weight: bold;text-align:left;margin-top: 15px;width:100%;display:block;">N° sesion: <span style="color:#6d6d6e;">'.$_POST["numero_sesion"].'</span></div>
           <div style="font-size:12px;color:#404040;font-weight: bold;text-align:left;margin-top: 15px;width:100%;display:block;">Fecha del incidente: <span style="color:#6d6d6e;">'.$fecha2.'</span></div>
           <div style="font-size:12px;color:#404040;font-weight: bold;text-align:left;margin-top: 15px;width:100%;display:block;">Diagnostico: <span style="color:#6d6d6e;">'.$_POST["diagnostico_informe"].'</span></div>
@@ -241,17 +360,142 @@ if($tipo_atencion==="Control"){
           <div style="font-size:12px;color:#404040;font-weight: bold;text-align:left;margin-top: 15px;width:100%;display:block;">Contexto incidente: <span style="color:#6d6d6e;">'.$_POST["contexto_informe_medico"].'</span></div>
           <div style="font-size:12px;color:#404040;font-weight: bold;text-align:left;margin-top: 15px;width:100%;display:block;">Examenes solicitados : <span style="color:#6d6d6e;">'.$_POST["examenes_informe_medico"].'</span></div>
           <div style="font-size:12px;color:#404040;font-weight: bold;text-align:left;margin-top: 15px;width:100%;display:block;">Zona Afectada: <span style="color:#6d6d6e;">'.$_POST["zonas_afectadas"].'</span></div>
-          <div style="font-size:12px;color:#404040;font-weight: bold;text-align:left;margin-top: 15px;width:100%;display:block;">Derivado a seguro: <span style="color:red;">'.(($_POST["seguro_informe_medico"]==="1")?"Si":"No").'</span></div>
-          <div style="font-size:12px;color:#404040;font-weight: bold;text-align:left;margin-top: 15px;width:100%;display:block;">Tratamiento: <span style="color:#6d6d6e;">'.((sizeof($_POST["lista_tratamiento"])>1)?implode(", ",$_POST["lista_tratamiento"]):$_POST["lista_tratamiento"][0]).'</span></div>
-          <div style="font-size:12px;color:#404040;font-weight: bold;text-align:left;margin-top: 15px;width:100%;display:block;">Trabajo readaptador: <span style="color:#6d6d6e;">'.((sizeof($_POST["lista_trbajo_readaptador"])>1)?implode(", ",$_POST["lista_trbajo_readaptador"]):$_POST["lista_trbajo_readaptador"][0]).'</span></div>
-          <div style="font-size:12px;color:#404040;font-weight: bold;text-align:left;margin-top: 15px;width:100%;display:block;">Obseervación general: <span style="color:#6d6d6e;">'.(($_POST["observacion_general"]!=="null")?$_POST["observacion_general"]:"Sin observación").'</span></div>
-          <div style="font-size:12px;color:#404040;font-weight: bold;text-align:left;margin-top: 15px;width:100%;display:block;">% de recuperacón: <span style="color:#6d6d6e;">'.$_POST["porcentaje_recuperacion"].'%</span></div>
-          
+          <div style="font-size:12px;color:#404040;font-weight: bold;text-align:left;margin-top: 15px;width:100%;display:block;">Derivado a seguro: <span style="color:red;">'.$strSeguro.'</span></div>
+          <div style="font-size:12px;color:#404040;font-weight: bold;text-align:left;margin-top: 15px;width:100%;display:block;">Obseervación: <span style="color:#6d6d6e;">'.(($_POST["observacion"]!=="null")?$_POST["observacion"]:"Sin observación").'</span></div>
+          <div style="font-size:12px;color:#404040;font-weight: bold;text-align:left;margin-top: 15px;width:100%;display:block;">Examen fisico: <span style="color:#6d6d6e;">'.(($_POST["examen_fisico"]!=="null")?$_POST["examen_fisico"]:"Sin observación").'</span></div>
+          <div style="font-size:12px;color:#404040;font-weight: bold;text-align:left;margin-top: 15px;width:100%;display:block;">Indicaciones: <span style="color:#6d6d6e;">'.(($consultaAtencionDiaria["datos"][0]["indicaciones"]===NULL)?"":$consultaAtencionDiaria["datos"][0]["indicaciones"]).'</span></div>
+          <div style="font-size:12px;color:#404040;font-weight: bold;text-align:left;margin-top: 15px;width:100%;display:block;">Fecha de alta medica: <span style="color:#6d6d6e;">'.$_POST["fecha_estimada_de_alta"].'</span></div>
+          <div style="font-size:12px;color:#404040;font-weight: bold;text-align:left;margin-top: 15px;width:100%;display:block;">Estado jugador: <span style="color:#6d6d6e;">'.$listaEstadoJugador[(int)$consultaAtencionDiaria["datos"][0]["estado_jugador"]].'</span></div>
           <div style="display:block;margin-top: 15px;font-size:12px;color:#404040;font-weight: bold;text-align:left;">
-              <div style="display:inline;margin-right:25px;">Recomendacion sesion actual: <span style="color:red;">'.$_POST["recomendacion_sesion_actual"].'</span></div>
+              <div style="display:inline;margin-right:25px;">Recomendaciones: <span style="color:#6d6d6e;">'.$strRecomendacion.'</span></div>
           </div>
           <div style="display:block;margin-top: 15px;font-size:12px;color:#404040;font-weight: bold;text-align:left;">
-              <div style="display:inline;">Recomendacion próxima sesion: <span style="color:red;">'.$_POST["recomendacion_sesion_siguiente"].'</span></div>
+              <div style="display:inline;margin-right:25px;">Tratamiento: <span style="color:#6d6d6e;">'.$strTratamiento.'</span></div>
+          </div>
+  ';
+}
+if($numero===7){
+  $titulo_pdf="REGISTRO DE SESION READAPTADOR";
+  $mes_y_dia_semana2= date('d-n-Y-N', strtotime($_POST["agregado_fecha_lesion"]) );
+
+  $mes_y_dia_semana_explotado2=explode("-",$mes_y_dia_semana2);
+
+  $dia2=(int)$mes_y_dia_semana_explotado2[0];
+  $mes2=$lista_mes[(int)$mes_y_dia_semana_explotado2[1]-1];
+  $ano2=(int)$mes_y_dia_semana_explotado2[2];
+  $semana2=$lista_dia_semana[(int)$mes_y_dia_semana_explotado2[3]-1];
+
+  $fecha2=$semana2." ".$dia2." de ".$mes2." del ".$ano2;
+
+  $strSeguro=" ";
+  if($_POST["seguro_informe_medico"]!=="null"){
+    $strSeguro=($_POST["seguro_informe_medico"]==="1")?"Si":"No";
+  }
+  // ((sizeof($_POST["lista_tratamiento"])>1)?implode(", ",$_POST["lista_tratamiento"]):$_POST["lista_tratamiento"][0])
+  $strTrabajorReadaptador=" ";
+  if(sizeof($_POST["lista_trbajo_readaptador"])>1){
+    $strTrabajorReadaptador=implode(", ",$_POST["lista_trbajo_readaptador"]);
+  }
+  else if(sizeof($_POST["lista_trbajo_readaptador"])===1){
+    $strTrabajorReadaptador=$_POST["lista_trbajo_readaptador"][0];
+  }
+  
+  $template='
+          <div style="width:100%;height:50px;display:block;"></span></div>
+          <div style="font-size:12px;color:#404040;font-weight: bold;text-align:left;margin-top: 15px;width:100%;display:block;">Atendido por: <span style="color:#6d6d6e;">'.$_POST["nombre_medico"].'</span></div>
+          <div style="font-size:12px;color:#404040;font-weight: bold;text-align:left;margin-top: 15px;width:100%;display:block;">Fecha de la atención: <span style="color:#6d6d6e;">'.$fecha.'</span></div>
+          <div style="font-size:12px;color:#404040;font-weight: bold;text-align:left;margin-top: 15px;width:100%;display:block;">Tipo atención: <span style="color:#6d6d6e;">Control / Sesion kinesica</span></div>
+          <div style="font-size:12px;color:#404040;font-weight: bold;text-align:left;margin-top: 15px;width:100%;display:block;">N° sesion: <span style="color:#6d6d6e;">'.$_POST["numero_sesion"].'</span></div>
+          <div style="font-size:12px;color:#404040;font-weight: bold;text-align:left;margin-top: 15px;width:100%;display:block;">Fecha del incidente: <span style="color:#6d6d6e;">'.$fecha2.'</span></div>
+          <div style="font-size:12px;color:#404040;font-weight: bold;text-align:left;margin-top: 15px;width:100%;display:block;">Diagnostico: <span style="color:#6d6d6e;">'.$_POST["diagnostico_informe"].'</span></div>
+        
+          <div style="font-size:12px;color:#404040;font-weight: bold;text-align:left;margin-top: 15px;width:100%;display:block;">Contexto incidente: <span style="color:#6d6d6e;">'.$_POST["contexto_informe_medico"].'</span></div>
+          <div style="font-size:12px;color:#404040;font-weight: bold;text-align:left;margin-top: 15px;width:100%;display:block;">Examenes solicitados : <span style="color:#6d6d6e;">'.$_POST["examenes_informe_medico"].'</span></div>
+          <div style="font-size:12px;color:#404040;font-weight: bold;text-align:left;margin-top: 15px;width:100%;display:block;">Zona Afectada: <span style="color:#6d6d6e;">'.$_POST["zonas_afectadas"].'</span></div>
+          <div style="font-size:12px;color:#404040;font-weight: bold;text-align:left;margin-top: 15px;width:100%;display:block;">Derivado a seguro: <span style="color:red;">'.$strSeguro.'</span></div>
+          <div style="font-size:12px;color:#404040;font-weight: bold;text-align:left;margin-top: 15px;width:100%;display:block;">Obseervación: <span style="color:#6d6d6e;">'.(($_POST["observacion"]!=="null")?$_POST["observacion"]:"Sin observación").'</span></div>
+          <div style="font-size:12px;color:#404040;font-weight: bold;text-align:left;margin-top: 15px;width:100%;display:block;">Indicaciones: <span style="color:#6d6d6e;">'.(($consultaAtencionDiaria["datos"][0]["indicaciones"]===NULL)?"":$consultaAtencionDiaria["datos"][0]["indicaciones"]).'</span></div>
+          <div style="font-size:12px;color:#404040;font-weight: bold;text-align:left;margin-top: 15px;width:100%;display:block;">Fecha de alta deportiva: <span style="color:#6d6d6e;">'.$_POST["fecha_estimada_de_alta"].'</span></div>
+          <div style="font-size:12px;color:#404040;font-weight: bold;text-align:left;margin-top: 15px;width:100%;display:block;">Estado jugador: <span style="color:#6d6d6e;">'.$listaEstadoJugador[(int)$consultaAtencionDiaria["datos"][0]["estado_jugador"]].'</span></div>
+          <div style="font-size:12px;color:#404040;font-weight: bold;text-align:left;margin-top: 15px;width:100%;display:block;">% de recuperacón: <span style="color:#6d6d6e;">'.$_POST["porcentaje_recuperacion"].'%</span></div>
+          <div style="font-size:12px;color:#404040;font-weight: bold;text-align:left;margin-top: 15px;width:100%;display:block;">Trabajo readaprador: <span style="color:#6d6d6e;">'.$strTrabajorReadaptador.'</span></div>
+  ';
+}
+if($tipo_atencion==="Control"){
+  $titulo_pdf="REGISTRO DE CONTROL / SESION KINESICA";
+  $mes_y_dia_semana2= date('d-n-Y-N', strtotime($_POST["agregado_fecha_lesion"]) );
+
+  $mes_y_dia_semana_explotado2=explode("-",$mes_y_dia_semana2);
+
+  $dia2=(int)$mes_y_dia_semana_explotado2[0];
+  $mes2=$lista_mes[(int)$mes_y_dia_semana_explotado2[1]-1];
+  $ano2=(int)$mes_y_dia_semana_explotado2[2];
+  $semana2=$lista_dia_semana[(int)$mes_y_dia_semana_explotado2[3]-1];
+
+  $fecha2=$semana2." ".$dia2." de ".$mes2." del ".$ano2;
+
+  // <div style="text-align:left;margin-top: 25px;width:100%;display:block;">Trabajo Readaptor: '.((sizeof($_POST["lista_trbajo_readaptador"])>1)?implode(", ",$_POST["lista_trbajo_readaptador"]):$_POST["lista_trbajo_readaptador"][0]).'</div>
+  // $contador_tratamiento=0;
+  // $lista_tratamiento=[];
+  // while($contador_tratamiento<sizeof($_POST["datos_ayuda"]["tratamiento"])){
+  //   $lista_tratamiento[]=$_POST["datos_ayuda"]["tratamiento"][$contador_tratamiento]["nombre_tratamiento_aplicado"];
+  //   for($contador_2=0;$contador_2<sizeof($_POST["datos_ayuda"].)){
+
+  //   }
+  //   $contador_tratamiento++;
+  // }
+  // (sizeof($_POST["lista_trbajo_readaptador"])>1)?implode(", ",$_POST["lista_trbajo_readaptador"]):$_POST["lista_trbajo_readaptador"][0] <span style="color:#6d6d6e;"></span>
+  $strSeguro=" ";
+  if($_POST["seguro_informe_medico"]!=="null"){
+    $strSeguro=($_POST["seguro_informe_medico"]==="1")?"Si":"No";
+  }
+  // ((sizeof($_POST["lista_tratamiento"])>1)?implode(", ",$_POST["lista_tratamiento"]):$_POST["lista_tratamiento"][0])
+  $strTratamiento=" ";
+  if(sizeof($_POST["lista_tratamiento"])>1){
+    $strTratamiento=implode(", ",$_POST["lista_tratamiento"]);
+  }
+  else if(sizeof($_POST["lista_tratamiento"])===1){
+    $strTratamiento=$_POST["lista_tratamiento"][0];
+  }
+
+  $strRecomendacion=" ";
+  $listaRecomendaciones=[];
+  for($contadorRecomendacion=0;$contadorRecomendacion<sizeof($consultaAtencionDiaria["datos"][0]["recomendaciones"]);$contadorRecomendacion++){
+    if($consultaAtencionDiaria["datos"][0]["recomendaciones"][$contadorRecomendacion]["recomendacion_numero"]==="1" || $consultaAtencionDiaria["datos"][0]["recomendaciones"][$contadorRecomendacion]["recomendacion_numero"]==="2"){
+      $listaRecomendaciones[]=$seRecomienda[(int)$consultaAtencionDiaria["datos"][0]["recomendaciones"][$contadorRecomendacion]["recomendacion_numero"]]." ".$consultaAtencionDiaria["datos"][0]["recomendaciones"][$contadorRecomendacion]["fecha_recomendacion"];
+    }
+    else{
+      $listaRecomendaciones[]=$seRecomienda[(int)$consultaAtencionDiaria["datos"][0]["recomendaciones"][$contadorRecomendacion]["recomendacion_numero"]];
+    }
+  }
+  if(sizeof($listaRecomendaciones)>1){
+    $strRecomendacion=implode(", ",$listaRecomendaciones);
+  }
+  else if(sizeof($listaRecomendaciones)===1){
+    $strRecomendacion=$listaRecomendaciones[0];
+  }
+  
+  $template='
+          <div style="width:100%;height:50px;display:block;"></span></div>
+          <div style="font-size:12px;color:#404040;font-weight: bold;text-align:left;margin-top: 15px;width:100%;display:block;">Atendido por: <span style="color:#6d6d6e;">'.$_POST["nombre_medico"].'</span></div>
+          <div style="font-size:12px;color:#404040;font-weight: bold;text-align:left;margin-top: 15px;width:100%;display:block;">Fecha de la atención: <span style="color:#6d6d6e;">'.$fecha.'</span></div>
+          <div style="font-size:12px;color:#404040;font-weight: bold;text-align:left;margin-top: 15px;width:100%;display:block;">Tipo atención: <span style="color:#6d6d6e;">Control / Sesion kinesica</span></div>
+          <div style="font-size:12px;color:#404040;font-weight: bold;text-align:left;margin-top: 15px;width:100%;display:block;">N° sesion: <span style="color:#6d6d6e;">'.$_POST["numero_sesion"].'</span></div>
+          <div style="font-size:12px;color:#404040;font-weight: bold;text-align:left;margin-top: 15px;width:100%;display:block;">Fecha del incidente: <span style="color:#6d6d6e;">'.$fecha2.'</span></div>
+          <div style="font-size:12px;color:#404040;font-weight: bold;text-align:left;margin-top: 15px;width:100%;display:block;">Diagnostico: <span style="color:#6d6d6e;">'.$_POST["diagnostico_informe"].'</span></div>
+        
+          <div style="font-size:12px;color:#404040;font-weight: bold;text-align:left;margin-top: 15px;width:100%;display:block;">Contexto incidente: <span style="color:#6d6d6e;">'.$_POST["contexto_informe_medico"].'</span></div>
+          <div style="font-size:12px;color:#404040;font-weight: bold;text-align:left;margin-top: 15px;width:100%;display:block;">Examenes solicitados : <span style="color:#6d6d6e;">'.$_POST["examenes_informe_medico"].'</span></div>
+          <div style="font-size:12px;color:#404040;font-weight: bold;text-align:left;margin-top: 15px;width:100%;display:block;">Zona Afectada: <span style="color:#6d6d6e;">'.$_POST["zonas_afectadas"].'</span></div>
+          <div style="font-size:12px;color:#404040;font-weight: bold;text-align:left;margin-top: 15px;width:100%;display:block;">Derivado a seguro: <span style="color:red;">'.$strSeguro.'</span></div>
+          <div style="font-size:12px;color:#404040;font-weight: bold;text-align:left;margin-top: 15px;width:100%;display:block;">Tratamiento: <span style="color:#6d6d6e;">'.$strTratamiento.'</span></div>
+          <div style="font-size:12px;color:#404040;font-weight: bold;text-align:left;margin-top: 15px;width:100%;display:block;">Obseervación: <span style="color:#6d6d6e;">'.(($_POST["observacion_general"]!=="null")?$_POST["observacion_general"]:"Sin observación").'</span></div>
+          <div style="font-size:12px;color:#404040;font-weight: bold;text-align:left;margin-top: 15px;width:100%;display:block;">Indicaciones: <span style="color:#6d6d6e;">'.(($consultaAtencionDiaria["datos"][0]["indicaciones"]===NULL)?"":$consultaAtencionDiaria["datos"][0]["indicaciones"]).'</span></div>
+          <div style="font-size:12px;color:#404040;font-weight: bold;text-align:left;margin-top: 15px;width:100%;display:block;">% de recuperacón: <span style="color:#6d6d6e;">'.$_POST["porcentaje_recuperacion"].'%</span></div>
+          <div style="font-size:12px;color:#404040;font-weight: bold;text-align:left;margin-top: 15px;width:100%;display:block;">Fecha de alta medica: <span style="color:#6d6d6e;">'.$_POST["fecha_estimada_de_alta"].'</span></div>
+          <div style="font-size:12px;color:#404040;font-weight: bold;text-align:left;margin-top: 15px;width:100%;display:block;">Estado jugador: <span style="color:#6d6d6e;">'.$listaEstadoJugador[(int)$consultaAtencionDiaria["datos"][0]["estado_jugador"]].'</span></div>
+          <div style="display:block;margin-top: 15px;font-size:12px;color:#404040;font-weight: bold;text-align:left;">
+              <div style="display:inline;margin-right:25px;">Recomendaciones: <span style="color:#6d6d6e;">'.$strRecomendacion.'</span></div>
           </div>
   ';
 }
@@ -385,7 +629,7 @@ $data.= '
   <!-- ================================ Inicio del cuerpo ================================ -->
   <main>
 
-    <div style="width: 100%; background-color: #0b1972; height: 50px; padding: 5px 5px;">
+    <div style="width: 100%; background-color: #eb595f; height: 50px; padding: 5px 5px;">
 
         <div style="float: left; margin-left: 9px; margin-top: 6px;">
             <p style="text-transform: uppercase; color: white; font-size: 11px; font-weight: bold;">área social</p>
@@ -445,7 +689,7 @@ $data.= '
 
   <!-- ================================ Inicio del footer ================================ -->
   <footer style="height:50px;">
-    <div style="background-color: #0b1972;display:block;height:5px;width:95%;margin-left:2.5%;margin-right:2.5%"></div>
+    <div style="background-color: #eb595f;display:block;height:5px;width:95%;margin-left:2.5%;margin-right:2.5%"></div>
     <span style="font-size:12px;color:#606469;display:block;margin-top:2px;margin-left:20px;">CLUB UNIVERSIDAD DE CHILE</span>
   </footer>
   <!-- ================================ Fin del footer ================================ -->  

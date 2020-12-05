@@ -432,7 +432,7 @@ $data.= '
 
   <!-- ================================ Inicio del cuerpo ================================ -->
   <main>
-    <div style="width: 100%; background-color: #0b1972; height: 50px; padding: 5px 5px;">
+    <div style="width: 100%; background-color: #eb595f; height: 50px; padding: 5px 5px;">
 
         <div style="float: left; margin-left: 9px; margin-top: 6px;padding-top:10px;">
             <p style="text-transform: uppercase; color: white; font-size: 11px; font-weight: bold;">SANTIAGO <span style="font-weight: normal">WANDERERS</span></p>
@@ -554,7 +554,7 @@ $data.= '
 
   <!-- ================================ Inicio del footer ================================ -->
   <footer >
-    <div style="background-color: #0b1972;display:block;height:5px;width:95%;margin-left:2.5%;margin-right:2.5%"></div>
+    <div style="background-color: #eb595f;display:block;height:5px;width:95%;margin-left:2.5%;margin-right:2.5%"></div>
     <span style="font-size:12px;color:#606469;display:block;margin-top:2px;margin-left:20px;">SANTIAGO WANDERERS</span>
   </footer>
   <!-- ================================ Fin del footer ================================ -->  

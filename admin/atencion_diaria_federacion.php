@@ -4802,59 +4802,8 @@ async function descargarPDF(posicion){
                 atencion_diaria.partes_bck_encontradas.push(partes_bck[parseInt(parte.codigo_zonas_lesion.split("-")[1])]);
             }
         }
-
-        let fecha_recomendacion_sesion_actual="";
-        if(atencion_diaria.recomendacion_sesion_actual_atencion_diaria==="1" || atencion_diaria.recomendacion_sesion_actual_atencion_diaria==="7"){
-            let ano3=atencion_diaria.fecha_recomendacion_sesion_actual_atencion_diaria.split("-")[0];
-            let mes3=atencion_diaria.fecha_recomendacion_sesion_actual_atencion_diaria.split("-")[1];
-            let dia3=atencion_diaria.fecha_recomendacion_sesion_actual_atencion_diaria.split("-")[2];
-            let fecha_sesion_actual=new Date();
-            fecha_sesion_actual.setDate(parseInt(dia3));
-            fecha_sesion_actual.setMonth(parseInt(mes3)-1);
-            fecha_sesion_actual.setFullYear(parseInt(ano3));
-
-            let fecha_sesion_actual_modificada=dia_semana[fecha_sesion_actual.getDay()]+' '+fecha_sesion_actual.getDate()+' de '+lista_meses[fecha_sesion_actual.getMonth()]+' '+fecha_sesion_actual.getFullYear();
-            
-            
-            fecha_recomendacion_sesion_actual=", "+fecha_sesion_actual_modificada;
-        }
-        
-        let fecha_recomendacion_sesion_siguiente="";
-        if(atencion_diaria.recomendacion_sesion_siguiente_atencion_diaria ==="1" || atencion_diaria.recomendacion_sesion_siguiente_atencion_diaria ==="7"){
-            let ano4=atencion_diaria.fecha_recomendacion_sesion_siguiente_atencion_diairai.split("-")[0];
-            let mes4=atencion_diaria.fecha_recomendacion_sesion_siguiente_atencion_diairai.split("-")[1];
-            let dia4=atencion_diaria.fecha_recomendacion_sesion_siguiente_atencion_diairai.split("-")[2];
-            let fecha_sesion_siguiente=new Date();
-            fecha_sesion_siguiente.setDate(parseInt(dia4));
-            fecha_sesion_siguiente.setMonth(parseInt(mes4)-1);
-            fecha_sesion_siguiente.setFullYear(parseInt(ano4));
-
-            let fecha_sesion_siguiente_modificada=dia_semana[fecha_sesion_siguiente.getDay()]+' '+fecha_sesion_siguiente.getDate()+' de '+lista_meses[fecha_sesion_siguiente.getMonth()]+' '+fecha_sesion_siguiente.getFullYear();
-            
-            fecha_recomendacion_sesion_siguiente=", "+fecha_sesion_siguiente_modificada;
-        }
-        // lista_sesion[parseInt(atencion_diaria.recomendacion_sesion_siguiente_atencion_diaria)-1]
-        atencion_diaria.recomendacion_sesion_siguiente=lista_sesion[parseInt(atencion_diaria.recomendacion_sesion_siguiente_atencion_diaria)-1]+fecha_recomendacion_sesion_siguiente;
-        atencion_diaria.recomendacion_sesion_actual=lista_sesion[parseInt(atencion_diaria.recomendacion_sesion_actual_atencion_diaria)-1]+fecha_recomendacion_sesion_actual;
-        
     }
-    if(atencion_diaria.tipo_atencion_atencion_diaria==="2"){
-
-
-
-
-
-        let informe_medico=atencion_diaria.informes_medicos.filter(informe => informe.idinforme_medico===atencion_diaria.idinforme_medico);
-        // console.log(informe_medico[0]);
-        // agregado_fecha_lesion
-        atencion_diaria.agregado_fecha_lesion=informe_medico[0].agregado_fecha_lesion;
-        atencion_diaria.lista_tratamiento=[];
-        for(let contador_0=0;contador_0<atencion_diaria.tratamiento_aplicado.length;contador_0++){
-            let tratamiento=atencion_diaria.tratamiento_aplicado[contador_0];
-            // console.log(tratamiento)
-            let tratamiento_filtrados=window.lista_tratamiento_aplicado_modal.filter((tratamiento_filtrado)=> tratamiento.nombre_tratamiento_atencion_diaria===tratamiento_filtrado.idtratamiento_aplicado);
-            atencion_diaria.lista_tratamiento.push(tratamiento_filtrados[0].nombre_tratamiento_aplicado);
-        }
+    if(atencion_diaria.tipo_atencion_atencion_diaria==="5"){
         atencion_diaria.contexto="";
         for(let contador_1=0;contador_1<lista_contexto_incidente_modal.length;contador_1++){
             let contexto=lista_contexto_incidente_modal[contador_1];
@@ -4862,11 +4811,16 @@ async function descargarPDF(posicion){
                 atencion_diaria.contexto=contexto.nombre_contexto_incidente;
             }
         }
-        atencion_diaria.lista_trbajo_readaptador=[];
-        for(let contador_2=0;contador_2<atencion_diaria.trabajo_readaptor.length;contador_2++){
-            let trabajo_readaptador=atencion_diaria.trabajo_readaptor[contador_2];
-            let trabajo_readaptador_filtrados=lista_trabajo_readaptador_modal.filter((trabajo_re=> trabajo_readaptador.trabajo_readaptador_atencion_diaria===trabajo_re.idtrabajo_readatador));
-            atencion_diaria.lista_trbajo_readaptador.push(trabajo_readaptador_filtrados[0].trabajo_readatador);
+        atencion_diaria.lista_examenes=[];
+        if(atencion_diaria.examenes_solicitados.length>0){
+            for(let contador_3=0;contador_3<atencion_diaria.examenes_solicitados.length;contador_3++){
+                let examen=atencion_diaria.examenes_solicitados[contador_3];
+                let examen_filtrados=lista_examenes.filter( examen_filtro =>  examen_filtro.codigo===examen.nombre_examen_atencion_diaria);
+                atencion_diaria.lista_examenes.push(examen_filtrados[0].valor);
+            }
+        }
+        else{
+            atencion_diaria.lista_examenes.push("Ninguno");
         }
         let partes_frt = ["","Cara \/ Cabeza","Hombro derecho","Hombro izquierdo","Torax","Brazo Derecho","Brazo izquierdo","Antebrazo Derecho","Antebrazo izquierdo","Abdomen","Mu\u00f1eca Derecha","Mu\u00f1eca izquierda","Manos \/ Dedos Der","Manos \/ Dedos Izq","Cadera \/ Ingle\/ Pelvis","Muslo Anterior Der","Muslo Anterior Izq","Rodilla Derecha","Rodilla Izquierda","Pierna Derecha","Pierna Izquierda","Tobillo Derecho","Tobillo Izquierdo","Pie Derecho","Pie Izquierdo"];
         let partes_bck = ["","Cuello \/ Cervical","Dorsales","Lumbares","Codo Izquierdo","Codo Derecho","Gluteos","Muslo Posterior Izquierdo","Muslo Posterior Derecho","Pantorrilla Izquierda","Pantorrilla Derecha"];
@@ -4881,44 +4835,189 @@ async function descargarPDF(posicion){
                 atencion_diaria.partes_bck_encontradas.push(partes_bck[parseInt(parte.codigo_zonas_lesion.split("-")[1])]);
             }
         }
-        let fecha_recomendacion_sesion_actual="";
-        if(atencion_diaria.recomendacion_sesion_actual_atencion_diaria==="1" || atencion_diaria.recomendacion_sesion_actual_atencion_diaria==="7"){
-            let ano3=atencion_diaria.fecha_recomendacion_sesion_actual_atencion_diaria.split("-")[0];
-            let mes3=atencion_diaria.fecha_recomendacion_sesion_actual_atencion_diaria.split("-")[1];
-            let dia3=atencion_diaria.fecha_recomendacion_sesion_actual_atencion_diaria.split("-")[2];
-            let fecha_sesion_actual=new Date();
-            fecha_sesion_actual.setDate(parseInt(dia3));
-            fecha_sesion_actual.setMonth(parseInt(mes3)-1);
-            fecha_sesion_actual.setFullYear(parseInt(ano3));
+        console.info(atencion_diaria);
+    }
+    if(atencion_diaria.tipo_atencion_atencion_diaria==="2"){
 
-            let fecha_sesion_actual_modificada=dia_semana[fecha_sesion_actual.getDay()]+' '+fecha_sesion_actual.getDate()+' de '+lista_meses[fecha_sesion_actual.getMonth()]+' '+fecha_sesion_actual.getFullYear();
-            
-            
-            fecha_recomendacion_sesion_actual=", "+fecha_sesion_actual_modificada;
-        }
-        
-        let fecha_recomendacion_sesion_siguiente="";
-        if(atencion_diaria.recomendacion_sesion_siguiente_atencion_diaria ==="1" || atencion_diaria.recomendacion_sesion_siguiente_atencion_diaria ==="7"){
-            let ano4=atencion_diaria.fecha_recomendacion_sesion_siguiente_atencion_diairai.split("-")[0];
-            let mes4=atencion_diaria.fecha_recomendacion_sesion_siguiente_atencion_diairai.split("-")[1];
-            let dia4=atencion_diaria.fecha_recomendacion_sesion_siguiente_atencion_diairai.split("-")[2];
-            let fecha_sesion_siguiente=new Date();
-            fecha_sesion_siguiente.setDate(parseInt(dia4));
-            fecha_sesion_siguiente.setMonth(parseInt(mes4)-1);
-            fecha_sesion_siguiente.setFullYear(parseInt(ano4));
+       
 
-            let fecha_sesion_siguiente_modificada=dia_semana[fecha_sesion_siguiente.getDay()]+' '+fecha_sesion_siguiente.getDate()+' de '+lista_meses[fecha_sesion_siguiente.getMonth()]+' '+fecha_sesion_siguiente.getFullYear();
-            
-            fecha_recomendacion_sesion_siguiente=", "+fecha_sesion_siguiente_modificada;
+        try{
+            let informe_medico=atencion_diaria.informes_medicos.filter(informe => informe.idinforme_medico===atencion_diaria.idinforme_medico);
+            // console.log(informe_medico[0]);
+            // agregado_fecha_lesion
+            atencion_diaria.agregado_fecha_lesion=informe_medico[0].agregado_fecha_lesion;
+            atencion_diaria.lista_tratamiento=[];
+            for(let contador_0=0;contador_0<atencion_diaria.tratamiento_aplicado.length;contador_0++){
+                let tratamiento=atencion_diaria.tratamiento_aplicado[contador_0];
+                // console.log(tratamiento)
+                let tratamiento_filtrados=window.lista_tratamiento_aplicado_modal.filter((tratamiento_filtrado)=> tratamiento.nombre_tratamiento_atencion_diaria===tratamiento_filtrado.idtratamiento_aplicado);
+                atencion_diaria.lista_tratamiento.push(tratamiento_filtrados[0].nombre_tratamiento_aplicado);
+            }
+            atencion_diaria.contexto="";
+            for(let contador_1=0;contador_1<lista_contexto_incidente_modal.length;contador_1++){
+                let contexto=lista_contexto_incidente_modal[contador_1];
+                if(contexto.idcontexto_incidente===atencion_diaria.idcontexto_incidente){
+                    atencion_diaria.contexto=contexto.nombre_contexto_incidente;
+                }
+            }
+            atencion_diaria.nombre_medico=informe_medico[0].nombre_medico;
+            atencion_diaria.diagnostico_informe= informe_medico[0].diagnostico ;
+            atencion_diaria.contexto_informe_medico=array_contexto[parseInt(informe_medico[0].contexto)];
+            atencion_diaria.examenes_informe_medico=informe_medico[0].agregado_examenes_realizados;
+            atencion_diaria.zonas_afectadas=informe_medico[0].agregado_zona_afectada;
+            atencion_diaria.seguro_informe_medico=informe_medico[0].agregado_seguro_medico; 
+            atencion_diaria.fecha_estimada_de_alta=formato_fecha_mes_texto_2(atencion_diaria.fecha_estimada_de_alta); 
+            alert(atencion_diaria.fecha_estimada_de_alta);
         }
-        atencion_diaria.nombre_medico=informe_medico[0].nombre_medico;
-        atencion_diaria.diagnostico_informe= informe_medico[0].diagnostico ;
-        atencion_diaria.contexto_informe_medico=array_contexto[parseInt(informe_medico[0].contexto)];
-        atencion_diaria.examenes_informe_medico=informe_medico[0].agregado_examenes_realizados;
-        atencion_diaria.zonas_afectadas=informe_medico[0].agregado_zona_afectada;
-        atencion_diaria.seguro_informe_medico=informe_medico[0].agregado_seguro_medico; 
-        atencion_diaria.recomendacion_sesion_siguiente=lista_sesion[parseInt(atencion_diaria.recomendacion_sesion_siguiente_atencion_diaria)-1]+fecha_recomendacion_sesion_siguiente;
-        atencion_diaria.recomendacion_sesion_actual=lista_sesion[parseInt(atencion_diaria.recomendacion_sesion_actual_atencion_diaria)-1]+fecha_recomendacion_sesion_actual;
+        catch{
+            atencion_diaria.agregado_fecha_lesion=" ";
+            atencion_diaria.lista_tratamiento=[];
+            for(let contador_0=0;contador_0<atencion_diaria.tratamiento_aplicado.length;contador_0++){
+                let tratamiento=atencion_diaria.tratamiento_aplicado[contador_0];
+                // console.log(tratamiento)
+                let tratamiento_filtrados=window.lista_tratamiento_aplicado_modal.filter((tratamiento_filtrado)=> tratamiento.nombre_tratamiento_atencion_diaria===tratamiento_filtrado.idtratamiento_aplicado);
+                atencion_diaria.lista_tratamiento.push(tratamiento_filtrados[0].nombre_tratamiento_aplicado);
+            }
+            atencion_diaria.contexto="";
+            for(let contador_1=0;contador_1<lista_contexto_incidente_modal.length;contador_1++){
+                let contexto=lista_contexto_incidente_modal[contador_1];
+                if(contexto.idcontexto_incidente===atencion_diaria.idcontexto_incidente){
+                    atencion_diaria.contexto=contexto.nombre_contexto_incidente;
+                }
+            }
+            // atencion_diaria.lista_trbajo_readaptador=[];
+            // for(let contador_2=0;contador_2<atencion_diaria.trabajo_readaptor.length;contador_2++){
+            //     let trabajo_readaptador=atencion_diaria.trabajo_readaptor[contador_2];
+            //     let trabajo_readaptador_filtrados=lista_trabajo_readaptador_modal.filter((trabajo_re=> trabajo_readaptador.trabajo_readaptador_atencion_diaria===trabajo_re.idtrabajo_readatador));
+            //     atencion_diaria.lista_trbajo_readaptador.push(trabajo_readaptador_filtrados[0].trabajo_readatador);
+            // }
+            atencion_diaria.nombre_medico=" ";
+            atencion_diaria.diagnostico_informe= " " ;
+            atencion_diaria.contexto_informe_medico=" ";
+            atencion_diaria.examenes_informe_medico=" ";
+            atencion_diaria.zonas_afectadas=" ";
+            atencion_diaria.seguro_informe_medico="null"; 
+            atencion_diaria.fecha_estimada_de_alta=formato_fecha_mes_texto_2(atencion_diaria.fecha_estimada_de_alta); 
+            alert(atencion_diaria.fecha_estimada_de_alta);
+        }
+        // atencion_diaria
+
+
+
+
+
+
+    }
+    if(atencion_diaria.tipo_atencion_atencion_diaria==="6"){
+
+       
+
+        try{
+            let informe_medico=atencion_diaria.informes_medicos.filter(informe => informe.idinforme_medico===atencion_diaria.idinforme_medico);
+            // console.log(informe_medico[0]);
+            // agregado_fecha_lesion
+            atencion_diaria.agregado_fecha_lesion=informe_medico[0].agregado_fecha_lesion;
+            atencion_diaria.contexto="";
+            for(let contador_1=0;contador_1<lista_contexto_incidente_modal.length;contador_1++){
+                let contexto=lista_contexto_incidente_modal[contador_1];
+                if(contexto.idcontexto_incidente===atencion_diaria.idcontexto_incidente){
+                    atencion_diaria.contexto=contexto.nombre_contexto_incidente;
+                }
+            }
+            atencion_diaria.nombre_medico=informe_medico[0].nombre_medico;
+            atencion_diaria.diagnostico_informe= informe_medico[0].diagnostico ;
+            atencion_diaria.contexto_informe_medico=array_contexto[parseInt(informe_medico[0].contexto)];
+            atencion_diaria.examenes_informe_medico=informe_medico[0].agregado_examenes_realizados;
+            atencion_diaria.zonas_afectadas=informe_medico[0].agregado_zona_afectada;
+            atencion_diaria.seguro_informe_medico=informe_medico[0].agregado_seguro_medico; 
+            atencion_diaria.fecha_estimada_de_alta=formato_fecha_mes_texto_2(atencion_diaria.fecha_estimada_de_alta); 
+        }
+        catch{
+            atencion_diaria.agregado_fecha_lesion=" ";
+            atencion_diaria.contexto="";
+            for(let contador_1=0;contador_1<lista_contexto_incidente_modal.length;contador_1++){
+                let contexto=lista_contexto_incidente_modal[contador_1];
+                if(contexto.idcontexto_incidente===atencion_diaria.idcontexto_incidente){
+                    atencion_diaria.contexto=contexto.nombre_contexto_incidente;
+                }
+            }
+            // atencion_diaria.lista_trbajo_readaptador=[];
+            // for(let contador_2=0;contador_2<atencion_diaria.trabajo_readaptor.length;contador_2++){
+            //     let trabajo_readaptador=atencion_diaria.trabajo_readaptor[contador_2];
+            //     let trabajo_readaptador_filtrados=lista_trabajo_readaptador_modal.filter((trabajo_re=> trabajo_readaptador.trabajo_readaptador_atencion_diaria===trabajo_re.idtrabajo_readatador));
+            //     atencion_diaria.lista_trbajo_readaptador.push(trabajo_readaptador_filtrados[0].trabajo_readatador);
+            // }
+            atencion_diaria.nombre_medico=" ";
+            atencion_diaria.diagnostico_informe= " " ;
+            atencion_diaria.contexto_informe_medico=" ";
+            atencion_diaria.examenes_informe_medico=" ";
+            atencion_diaria.zonas_afectadas=" ";
+            atencion_diaria.seguro_informe_medico="null"; 
+            atencion_diaria.fecha_estimada_de_alta=formato_fecha_mes_texto_2(atencion_diaria.fecha_estimada_de_alta); 
+            // fecha_estimada_de_alta formato_fecha_mes_texto_2
+        }
+        // atencion_diaria
+
+
+
+
+
+
+    }
+    if(atencion_diaria.tipo_atencion_atencion_diaria==="7"){
+
+       
+
+        try{
+            let informe_medico=atencion_diaria.informes_medicos.filter(informe => informe.idinforme_medico===atencion_diaria.idinforme_medico);
+            // console.log(informe_medico[0]);
+            // agregado_fecha_lesion
+            atencion_diaria.agregado_fecha_lesion=informe_medico[0].agregado_fecha_lesion;
+            atencion_diaria.contexto="";
+            for(let contador_1=0;contador_1<lista_contexto_incidente_modal.length;contador_1++){
+                let contexto=lista_contexto_incidente_modal[contador_1];
+                if(contexto.idcontexto_incidente===atencion_diaria.idcontexto_incidente){
+                    atencion_diaria.contexto=contexto.nombre_contexto_incidente;
+                }
+            }
+            atencion_diaria.lista_trbajo_readaptador=[];
+            for(let contador_2=0;contador_2<atencion_diaria.trabajo_readaptor.length;contador_2++){
+                let trabajo_readaptador=atencion_diaria.trabajo_readaptor[contador_2];
+                let trabajo_readaptador_filtrados=lista_trabajo_readaptador_modal.filter((trabajo_re=> trabajo_readaptador.trabajo_readaptador_atencion_diaria===trabajo_re.idtrabajo_readatador));
+                atencion_diaria.lista_trbajo_readaptador.push(trabajo_readaptador_filtrados[0].trabajo_readatador);
+            }
+            atencion_diaria.nombre_medico=informe_medico[0].nombre_medico;
+            atencion_diaria.diagnostico_informe= informe_medico[0].diagnostico ;
+            atencion_diaria.contexto_informe_medico=array_contexto[parseInt(informe_medico[0].contexto)];
+            atencion_diaria.examenes_informe_medico=informe_medico[0].agregado_examenes_realizados;
+            atencion_diaria.zonas_afectadas=informe_medico[0].agregado_zona_afectada;
+            atencion_diaria.seguro_informe_medico=informe_medico[0].agregado_seguro_medico; 
+            atencion_diaria.fecha_estimada_de_alta=formato_fecha_mes_texto_2(atencion_diaria.fecha_estimada_de_alta); 
+        }
+        catch{
+            atencion_diaria.agregado_fecha_lesion=" ";
+            atencion_diaria.contexto="";
+            for(let contador_1=0;contador_1<lista_contexto_incidente_modal.length;contador_1++){
+                let contexto=lista_contexto_incidente_modal[contador_1];
+                if(contexto.idcontexto_incidente===atencion_diaria.idcontexto_incidente){
+                    atencion_diaria.contexto=contexto.nombre_contexto_incidente;
+                }
+            }
+            atencion_diaria.lista_trbajo_readaptador=[];
+            for(let contador_2=0;contador_2<atencion_diaria.trabajo_readaptor.length;contador_2++){
+                let trabajo_readaptador=atencion_diaria.trabajo_readaptor[contador_2];
+                let trabajo_readaptador_filtrados=lista_trabajo_readaptador_modal.filter((trabajo_re=> trabajo_readaptador.trabajo_readaptador_atencion_diaria===trabajo_re.idtrabajo_readatador));
+                atencion_diaria.lista_trbajo_readaptador.push(trabajo_readaptador_filtrados[0].trabajo_readatador);
+            }
+            atencion_diaria.nombre_medico=" ";
+            atencion_diaria.diagnostico_informe= " " ;
+            atencion_diaria.contexto_informe_medico=" ";
+            atencion_diaria.examenes_informe_medico=" ";
+            atencion_diaria.zonas_afectadas=" ";
+            atencion_diaria.seguro_informe_medico="null"; 
+            atencion_diaria.fecha_estimada_de_alta=formato_fecha_mes_texto_2(atencion_diaria.fecha_estimada_de_alta); 
+            // fecha_estimada_de_alta formato_fecha_mes_texto_2
+        }
         // atencion_diaria
 
 
