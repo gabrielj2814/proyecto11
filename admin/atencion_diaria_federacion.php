@@ -4866,8 +4866,9 @@ async function descargarPDF(posicion){
             atencion_diaria.examenes_informe_medico=informe_medico[0].agregado_examenes_realizados;
             atencion_diaria.zonas_afectadas=informe_medico[0].agregado_zona_afectada;
             atencion_diaria.seguro_informe_medico=informe_medico[0].agregado_seguro_medico; 
-            atencion_diaria.fecha_estimada_de_alta=formato_fecha_mes_texto_2(atencion_diaria.fecha_estimada_de_alta); 
-            alert(atencion_diaria.fecha_estimada_de_alta);
+            // atencion_diaria.fecha_estimada_de_alta=formato_fecha_mes_texto_2(atencion_diaria.fecha_estimada_de_alta); 
+            atencion_diaria.fecha_estimada_de_alta_2=formato_fecha_mes_texto_2(atencion_diaria.fecha_estimada_de_alta); 
+            // alert(atencion_diaria.fecha_estimada_de_alta);
         }
         catch{
             atencion_diaria.agregado_fecha_lesion=" ";
@@ -4897,8 +4898,9 @@ async function descargarPDF(posicion){
             atencion_diaria.examenes_informe_medico=" ";
             atencion_diaria.zonas_afectadas=" ";
             atencion_diaria.seguro_informe_medico="null"; 
-            atencion_diaria.fecha_estimada_de_alta=formato_fecha_mes_texto_2(atencion_diaria.fecha_estimada_de_alta); 
-            alert(atencion_diaria.fecha_estimada_de_alta);
+            // atencion_diaria.fecha_estimada_de_alta=formato_fecha_mes_texto_2(atencion_diaria.fecha_estimada_de_alta); 
+            atencion_diaria.fecha_estimada_de_alta_2=formato_fecha_mes_texto_2(atencion_diaria.fecha_estimada_de_alta); 
+            // alert(atencion_diaria.fecha_estimada_de_alta);
         }
         // atencion_diaria
 
@@ -4930,7 +4932,8 @@ async function descargarPDF(posicion){
             atencion_diaria.examenes_informe_medico=informe_medico[0].agregado_examenes_realizados;
             atencion_diaria.zonas_afectadas=informe_medico[0].agregado_zona_afectada;
             atencion_diaria.seguro_informe_medico=informe_medico[0].agregado_seguro_medico; 
-            atencion_diaria.fecha_estimada_de_alta=formato_fecha_mes_texto_2(atencion_diaria.fecha_estimada_de_alta); 
+            // atencion_diaria.fecha_estimada_de_alta=formato_fecha_mes_texto_2(atencion_diaria.fecha_estimada_de_alta); 
+            atencion_diaria.fecha_estimada_de_alta_2=formato_fecha_mes_texto_2(atencion_diaria.fecha_estimada_de_alta); 
         }
         catch{
             atencion_diaria.agregado_fecha_lesion=" ";
@@ -4953,7 +4956,8 @@ async function descargarPDF(posicion){
             atencion_diaria.examenes_informe_medico=" ";
             atencion_diaria.zonas_afectadas=" ";
             atencion_diaria.seguro_informe_medico="null"; 
-            atencion_diaria.fecha_estimada_de_alta=formato_fecha_mes_texto_2(atencion_diaria.fecha_estimada_de_alta); 
+            // atencion_diaria.fecha_estimada_de_alta=formato_fecha_mes_texto_2(atencion_diaria.fecha_estimada_de_alta); 
+            atencion_diaria.fecha_estimada_de_alta_2=formato_fecha_mes_texto_2(atencion_diaria.fecha_estimada_de_alta); 
             // fecha_estimada_de_alta formato_fecha_mes_texto_2
         }
         // atencion_diaria
@@ -4992,7 +4996,8 @@ async function descargarPDF(posicion){
             atencion_diaria.examenes_informe_medico=informe_medico[0].agregado_examenes_realizados;
             atencion_diaria.zonas_afectadas=informe_medico[0].agregado_zona_afectada;
             atencion_diaria.seguro_informe_medico=informe_medico[0].agregado_seguro_medico; 
-            atencion_diaria.fecha_estimada_de_alta=formato_fecha_mes_texto_2(atencion_diaria.fecha_estimada_de_alta); 
+            // atencion_diaria.fecha_estimada_de_alta=formato_fecha_mes_texto_2(atencion_diaria.fecha_estimada_de_alta); 
+            atencion_diaria.fecha_estimada_de_alta_2=formato_fecha_mes_texto_2(atencion_diaria.fecha_estimada_de_alta); 
         }
         catch{
             atencion_diaria.agregado_fecha_lesion=" ";
@@ -5015,7 +5020,8 @@ async function descargarPDF(posicion){
             atencion_diaria.examenes_informe_medico=" ";
             atencion_diaria.zonas_afectadas=" ";
             atencion_diaria.seguro_informe_medico="null"; 
-            atencion_diaria.fecha_estimada_de_alta=formato_fecha_mes_texto_2(atencion_diaria.fecha_estimada_de_alta); 
+            // atencion_diaria.fecha_estimada_de_alta=formato_fecha_mes_texto_2(atencion_diaria.fecha_estimada_de_alta); 
+            atencion_diaria.fecha_estimada_de_alta_2=formato_fecha_mes_texto_2(atencion_diaria.fecha_estimada_de_alta); 
             // fecha_estimada_de_alta formato_fecha_mes_texto_2
         }
         // atencion_diaria

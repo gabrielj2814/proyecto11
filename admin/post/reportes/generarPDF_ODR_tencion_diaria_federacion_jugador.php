@@ -162,7 +162,6 @@ if($numero===5){
   
   $template='
           <div style="width:100%;height:50px;display:block;"></span></div>
-          <div style="font-size:12px;color:#404040;font-weight: bold;text-align:left;margin-top: 15px;width:100%;display:none;">Atendido por: <span style="color:#6d6d6e;">'.$_POST["nombre_medico"].'</span></div>
           <div style="font-size:12px;color:#404040;font-weight: bold;text-align:left;margin-top: 15px;width:100%;display:block;">Fecha de la atención: <span style="color:#6d6d6e;">'.$fecha.'</span></div>
           <div style="font-size:12px;color:#404040;font-weight: bold;text-align:left;margin-top: 15px;width:100%;display:block;">Tipo atención: <span style="color:#6d6d6e;">Nueva Atencion</span></div>
           <div style="font-size:12px;color:#404040;font-weight: bold;text-align:left;margin-top: 15px;width:100%;display:block;">Fecha del incidente: <span style="color:#6d6d6e;">'.$fecha2.'</span></div>
@@ -267,7 +266,6 @@ if($tipo_atencion==="Nueva"){
   
   $template='
           <div style="width:100%;height:50px;display:block;"></span></div>
-          <div style="font-size:12px;color:#404040;font-weight: bold;text-align:left;margin-top: 15px;width:100%;display:none;">Atendido por: <span style="color:#6d6d6e;">'.$_POST["nombre_medico"].'</span></div>
           <div style="font-size:12px;color:#404040;font-weight: bold;text-align:left;margin-top: 15px;width:100%;display:block;">Fecha de la atención: <span style="color:#6d6d6e;">'.$fecha.'</span></div>
           <div style="font-size:12px;color:#404040;font-weight: bold;text-align:left;margin-top: 15px;width:100%;display:block;">Tipo atención: <span style="color:#6d6d6e;">'.$tipo_atencion.'</span></div>
           <div style="font-size:12px;color:#404040;font-weight: bold;text-align:left;margin-top: 15px;width:100%;display:block;">Fecha del incidente: <span style="color:#6d6d6e;">'.$fecha2.'</span></div>
@@ -323,13 +321,13 @@ if($numero===6){
     $strSeguro=($_POST["seguro_informe_medico"]==="1")?"Si":"No";
   }
   // ((sizeof($_POST["lista_tratamiento"])>1)?implode(", ",$_POST["lista_tratamiento"]):$_POST["lista_tratamiento"][0])
-  $strTratamiento=" ";
-  if(sizeof($_POST["lista_tratamiento"])>1){
-    $strTratamiento=implode(", ",$_POST["lista_tratamiento"]);
-  }
-  else if(sizeof($_POST["lista_tratamiento"])===1){
-    $strTratamiento=$_POST["lista_tratamiento"][0];
-  }
+  // $strTratamiento=" ";
+  // if(sizeof($_POST["lista_tratamiento"])>1){
+  //   $strTratamiento=implode(", ",$_POST["lista_tratamiento"]);
+  // }
+  // else if(sizeof($_POST["lista_tratamiento"])===1){
+  //   $strTratamiento=$_POST["lista_tratamiento"][0];
+  // }
 
   $strRecomendacion=" ";
   $listaRecomendaciones=[];
@@ -364,13 +362,10 @@ if($numero===6){
           <div style="font-size:12px;color:#404040;font-weight: bold;text-align:left;margin-top: 15px;width:100%;display:block;">Obseervación: <span style="color:#6d6d6e;">'.(($_POST["observacion"]!=="null")?$_POST["observacion"]:"Sin observación").'</span></div>
           <div style="font-size:12px;color:#404040;font-weight: bold;text-align:left;margin-top: 15px;width:100%;display:block;">Examen fisico: <span style="color:#6d6d6e;">'.(($_POST["examen_fisico"]!=="null")?$_POST["examen_fisico"]:"Sin observación").'</span></div>
           <div style="font-size:12px;color:#404040;font-weight: bold;text-align:left;margin-top: 15px;width:100%;display:block;">Indicaciones: <span style="color:#6d6d6e;">'.(($consultaAtencionDiaria["datos"][0]["indicaciones"]===NULL)?"":$consultaAtencionDiaria["datos"][0]["indicaciones"]).'</span></div>
-          <div style="font-size:12px;color:#404040;font-weight: bold;text-align:left;margin-top: 15px;width:100%;display:block;">Fecha de alta medica: <span style="color:#6d6d6e;">'.$_POST["fecha_estimada_de_alta"].'</span></div>
+          <div style="font-size:12px;color:#404040;font-weight: bold;text-align:left;margin-top: 15px;width:100%;display:block;">Fecha de alta medica: <span style="color:#6d6d6e;">'.$_POST["fecha_estimada_de_alta_2"].'</span></div>
           <div style="font-size:12px;color:#404040;font-weight: bold;text-align:left;margin-top: 15px;width:100%;display:block;">Estado jugador: <span style="color:#6d6d6e;">'.$listaEstadoJugador[(int)$consultaAtencionDiaria["datos"][0]["estado_jugador"]].'</span></div>
           <div style="display:block;margin-top: 15px;font-size:12px;color:#404040;font-weight: bold;text-align:left;">
               <div style="display:inline;margin-right:25px;">Recomendaciones: <span style="color:#6d6d6e;">'.$strRecomendacion.'</span></div>
-          </div>
-          <div style="display:block;margin-top: 15px;font-size:12px;color:#404040;font-weight: bold;text-align:left;">
-              <div style="display:inline;margin-right:25px;">Tratamiento: <span style="color:#6d6d6e;">'.$strTratamiento.'</span></div>
           </div>
   ';
 }
@@ -393,11 +388,13 @@ if($numero===7){
   }
   // ((sizeof($_POST["lista_tratamiento"])>1)?implode(", ",$_POST["lista_tratamiento"]):$_POST["lista_tratamiento"][0])
   $strTrabajorReadaptador=" ";
-  if(sizeof($_POST["lista_trbajo_readaptador"])>1){
-    $strTrabajorReadaptador=implode(", ",$_POST["lista_trbajo_readaptador"]);
-  }
-  else if(sizeof($_POST["lista_trbajo_readaptador"])===1){
-    $strTrabajorReadaptador=$_POST["lista_trbajo_readaptador"][0];
+  if(array_key_exists("lista_trbajo_readaptador",$_POST)){
+    if(sizeof($_POST["lista_trbajo_readaptador"])>1){
+      $strTrabajorReadaptador=implode(", ",$_POST["lista_trbajo_readaptador"]);
+    }
+    else if(sizeof($_POST["lista_trbajo_readaptador"])===1){
+      $strTrabajorReadaptador=$_POST["lista_trbajo_readaptador"][0];
+    }
   }
   
   $template='
@@ -415,7 +412,7 @@ if($numero===7){
           <div style="font-size:12px;color:#404040;font-weight: bold;text-align:left;margin-top: 15px;width:100%;display:block;">Derivado a seguro: <span style="color:red;">'.$strSeguro.'</span></div>
           <div style="font-size:12px;color:#404040;font-weight: bold;text-align:left;margin-top: 15px;width:100%;display:block;">Obseervación: <span style="color:#6d6d6e;">'.(($_POST["observacion"]!=="null")?$_POST["observacion"]:"Sin observación").'</span></div>
           <div style="font-size:12px;color:#404040;font-weight: bold;text-align:left;margin-top: 15px;width:100%;display:block;">Indicaciones: <span style="color:#6d6d6e;">'.(($consultaAtencionDiaria["datos"][0]["indicaciones"]===NULL)?"":$consultaAtencionDiaria["datos"][0]["indicaciones"]).'</span></div>
-          <div style="font-size:12px;color:#404040;font-weight: bold;text-align:left;margin-top: 15px;width:100%;display:block;">Fecha de alta deportiva: <span style="color:#6d6d6e;">'.$_POST["fecha_estimada_de_alta"].'</span></div>
+          <div style="font-size:12px;color:#404040;font-weight: bold;text-align:left;margin-top: 15px;width:100%;display:block;">Fecha de alta deportiva: <span style="color:#6d6d6e;">'.$_POST["fecha_estimada_de_alta_2"].'</span></div>
           <div style="font-size:12px;color:#404040;font-weight: bold;text-align:left;margin-top: 15px;width:100%;display:block;">Estado jugador: <span style="color:#6d6d6e;">'.$listaEstadoJugador[(int)$consultaAtencionDiaria["datos"][0]["estado_jugador"]].'</span></div>
           <div style="font-size:12px;color:#404040;font-weight: bold;text-align:left;margin-top: 15px;width:100%;display:block;">% de recuperacón: <span style="color:#6d6d6e;">'.$_POST["porcentaje_recuperacion"].'%</span></div>
           <div style="font-size:12px;color:#404040;font-weight: bold;text-align:left;margin-top: 15px;width:100%;display:block;">Trabajo readaprador: <span style="color:#6d6d6e;">'.$strTrabajorReadaptador.'</span></div>
@@ -451,11 +448,13 @@ if($tipo_atencion==="Control"){
   }
   // ((sizeof($_POST["lista_tratamiento"])>1)?implode(", ",$_POST["lista_tratamiento"]):$_POST["lista_tratamiento"][0])
   $strTratamiento=" ";
-  if(sizeof($_POST["lista_tratamiento"])>1){
-    $strTratamiento=implode(", ",$_POST["lista_tratamiento"]);
-  }
-  else if(sizeof($_POST["lista_tratamiento"])===1){
-    $strTratamiento=$_POST["lista_tratamiento"][0];
+  if(array_key_exists("lista_tratamiento",$_POST)){
+    if(sizeof($_POST["lista_tratamiento"])>1){
+      $strTratamiento=implode(", ",$_POST["lista_tratamiento"]);
+    }
+    else if(sizeof($_POST["lista_tratamiento"])===1){
+      $strTratamiento=$_POST["lista_tratamiento"][0];
+    }
   }
 
   $strRecomendacion=" ";
@@ -492,7 +491,7 @@ if($tipo_atencion==="Control"){
           <div style="font-size:12px;color:#404040;font-weight: bold;text-align:left;margin-top: 15px;width:100%;display:block;">Obseervación: <span style="color:#6d6d6e;">'.(($_POST["observacion_general"]!=="null")?$_POST["observacion_general"]:"Sin observación").'</span></div>
           <div style="font-size:12px;color:#404040;font-weight: bold;text-align:left;margin-top: 15px;width:100%;display:block;">Indicaciones: <span style="color:#6d6d6e;">'.(($consultaAtencionDiaria["datos"][0]["indicaciones"]===NULL)?"":$consultaAtencionDiaria["datos"][0]["indicaciones"]).'</span></div>
           <div style="font-size:12px;color:#404040;font-weight: bold;text-align:left;margin-top: 15px;width:100%;display:block;">% de recuperacón: <span style="color:#6d6d6e;">'.$_POST["porcentaje_recuperacion"].'%</span></div>
-          <div style="font-size:12px;color:#404040;font-weight: bold;text-align:left;margin-top: 15px;width:100%;display:block;">Fecha de alta medica: <span style="color:#6d6d6e;">'.$_POST["fecha_estimada_de_alta"].'</span></div>
+          <div style="font-size:12px;color:#404040;font-weight: bold;text-align:left;margin-top: 15px;width:100%;display:block;">Fecha de alta medica: <span style="color:#6d6d6e;">'.$_POST["fecha_estimada_de_alta_2"].'</span></div>
           <div style="font-size:12px;color:#404040;font-weight: bold;text-align:left;margin-top: 15px;width:100%;display:block;">Estado jugador: <span style="color:#6d6d6e;">'.$listaEstadoJugador[(int)$consultaAtencionDiaria["datos"][0]["estado_jugador"]].'</span></div>
           <div style="display:block;margin-top: 15px;font-size:12px;color:#404040;font-weight: bold;text-align:left;">
               <div style="display:inline;margin-right:25px;">Recomendaciones: <span style="color:#6d6d6e;">'.$strRecomendacion.'</span></div>
