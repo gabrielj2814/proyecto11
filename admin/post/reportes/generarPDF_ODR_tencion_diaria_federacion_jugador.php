@@ -260,7 +260,7 @@ if($tipo_atencion==="Nueva"){
       }
     }
   }
-
+  
   $lista_partes_bck="";
   if(array_key_exists("partes_bck_encontradas",$_POST)){
     if(sizeof($_POST["partes_bck_encontradas"])>1){
