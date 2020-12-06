@@ -1248,7 +1248,7 @@ function consultarAtencionPdf($id){
         }
         $row_atencion_diaria["trabajo_readaptor"]= $datos_trabajo;
 
-        $SQL_recomendacion="SELECT * FROM recomendacion_alta_atencion_diaria WHERE  idatencion_diaria_federacion=".$row_atencion_diaria["idatencion_diaria_federacion"].";";
+        $SQL_recomendacion="SELECT * FROM recomendacion_alta_atencion_diaria_federacion WHERE  idatencion_diaria_federacion=".$row_atencion_diaria["idatencion_diaria_federacion"].";";
         $result_recomendacion=$link->query($SQL_recomendacion);
         $datos_recomendacion=[];
         while($row_recomendacion=mysqli_fetch_array($result_recomendacion)){
