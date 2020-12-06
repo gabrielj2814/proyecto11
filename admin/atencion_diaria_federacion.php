@@ -1342,13 +1342,9 @@ app.controller("controlador_1",['$scope',function($scope){
                         </div>
                         <div class="modal-header encabezado_modal" style="background-color: #eb595f;">
                             <div style="float:left;width:120px;height: 100%;color:#fff;box-sizing: border-box;padding-top: 19px;">ÁREA <span style="font-weight: bold">MÉDICA</span></div>
-                            <div style="float:right;width:134px;height: 100%;display:flex;flex-direction:row;">
-                                <div style="width:50px;margin-right: 10px;height: 100%;box-sizing: border-box;">
+                            <div style="float:right;width:55px;height: 55px;display:flex;flex-direction:row;">
+                                <div style="width:55px;height: 55px;box-sizing: border-box;">
                                     <img style="width:100%;height: 100%;box-sizing: border-box;" src="../config/logo_equipo.png" >
-                                </div>
-                                <div style="width:40px;box-sizing: border-box;color:#fff;font-weight: bold;">
-                                    <div>FUTBOL</div>
-                                    <div>FORMATIVO</div>
                                 </div>
                             </div>
                         </div>
@@ -1363,10 +1359,10 @@ app.controller("controlador_1",['$scope',function($scope){
                         <div style="margin-bottom:20px;" class="tabla_detalle_atencion_diaria" id="tabla_detalle_atencion_diaria"></div>
                         <div style="width:100%;box-sizing: border-box;">
                             <div style="width:259px;float:right;box-sizing: border-box;display:flex;flex-direction:row;">
-                                    <div style="width: 23px;height: 29px;margin-right: 10px;">
+                                    <div style="width: 29px;height: 29px;margin-right: 10px;">
                                         <img style="width:100%;height: 100%;box-sizing: border-box;" src="../config/logo_equipo.png" >
                                     </div>
-                                    <div style="width:225px;padding-top: 5px;">ÁREA MÉDICA OHIGGINS DE RANCAGUA</div>
+                                    <div style="width:225px;padding-top: 5px;">Área Médica Seleccion Juveniles</div>
                                     
                             </div>
                         </div>

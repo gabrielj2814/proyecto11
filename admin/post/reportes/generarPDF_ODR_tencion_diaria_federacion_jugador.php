@@ -674,7 +674,7 @@ $data.= '
     <div style="width: 100%; background-color: #eb595f; height: 50px; padding: 5px 5px;">
 
         <div style="float: left; margin-left: 9px; margin-top: 6px;">
-            <p style="text-transform: uppercase; color: white; font-size: 11px; font-weight: bold;">área social</p>
+            <p style="text-transform: uppercase; color: white; font-size: 11px; font-weight: bold;">Área Médica</p>
             <p style="text-transform: uppercase; color: white; font-size: 11px; position: relative; top: -4px;"><span style="font-weight: bold;">universidad</span> <span>de chile</span></p>
         </div>
 
