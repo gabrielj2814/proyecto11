@@ -122,38 +122,53 @@ if($numero===5){
   // (sizeof($_POST["lista_trbajo_readaptador"])>1)?implode(", ",$_POST["lista_trbajo_readaptador"]):$_POST["lista_trbajo_readaptador"][0] <span style="color:#6d6d6e;"></span>
 
   $lista_partes_frt="";
-  if(sizeof($_POST["partes_frt_encontradas"])>1){
-    if(sizeof($_POST["partes_bck_encontradas"])>1 ||sizeof($_POST["partes_bck_encontradas"])===1){
-      $lista_partes_frt=''.implode(",",$_POST["partes_frt_encontradas"]).',';
-    }
-    else{
-      $lista_partes_frt=''.implode(",",$_POST["partes_frt_encontradas"]).'';
-    }
-  }
-  else{
-    if(sizeof($_POST["partes_frt_encontradas"])===1){
-      if(sizeof($_POST["partes_bck_encontradas"])>1 ||sizeof($_POST["partes_bck_encontradas"])===1){
-        $lista_partes_frt=''.$_POST["partes_frt_encontradas"][0].',';
+  if(array_key_exists("partes_frt_encontradas",$_POST)){
+    if(sizeof($_POST["partes_frt_encontradas"])>1){
+      if(array_key_exists("partes_bck_encontradas",$_POST)){
+        if(sizeof($_POST["partes_bck_encontradas"])>1 ||sizeof($_POST["partes_bck_encontradas"])===1){
+          $lista_partes_frt=''.implode(",",$_POST["partes_frt_encontradas"]).',';
+        }
+        else{
+          $lista_partes_frt=''.implode(",",$_POST["partes_frt_encontradas"]).'';
+        }
       }
       else{
-        $lista_partes_frt=''.$_POST["partes_frt_encontradas"][0].'';
+        $lista_partes_frt=''.implode(",",$_POST["partes_frt_encontradas"]).'';
       }
     }
     else{
-      $lista_partes_frt='';
+      if(sizeof($_POST["partes_frt_encontradas"])===1){
+        if(array_key_exists("partes_bck_encontradas",$_POST)){
+          if(sizeof($_POST["partes_bck_encontradas"])>1 ||sizeof($_POST["partes_bck_encontradas"])===1){
+            $lista_partes_frt=''.$_POST["partes_frt_encontradas"][0].',';
+          }
+          else{
+            $lista_partes_frt=''.$_POST["partes_frt_encontradas"][0].'';
+          }
+        }
+        else{
+          $lista_partes_frt=''.$_POST["partes_frt_encontradas"][0].'';
+        }
+       
+      }
+      else{
+        $lista_partes_frt='';
+      }
     }
   }
 
   $lista_partes_bck="";
-  if(sizeof($_POST["partes_bck_encontradas"])>1){
-    $lista_partes_bck=''.implode(",",$_POST["partes_bck_encontradas"]).'';
-  }
-  else{
-    if(sizeof($_POST["partes_bck_encontradas"])===1){
-      $lista_partes_bck=''.$_POST["partes_bck_encontradas"][0].'';
+  if(array_key_exists("partes_bck_encontradas",$_POST)){
+    if(sizeof($_POST["partes_bck_encontradas"])>1){
+      $lista_partes_bck=''.implode(",",$_POST["partes_bck_encontradas"]).'';
     }
     else{
-      $lista_partes_bck="";
+      if(sizeof($_POST["partes_bck_encontradas"])===1){
+        $lista_partes_bck=''.$_POST["partes_bck_encontradas"][0].'';
+      }
+      else{
+        $lista_partes_bck="";
+      }
     }
   }
 
@@ -211,38 +226,53 @@ if($tipo_atencion==="Nueva"){
   // }
   // (sizeof($_POST["lista_trbajo_readaptador"])>1)?implode(", ",$_POST["lista_trbajo_readaptador"]):$_POST["lista_trbajo_readaptador"][0] <span style="color:#6d6d6e;"></span>
   $lista_partes_frt="";
-  if(sizeof($_POST["partes_frt_encontradas"])>1){
-    if(sizeof($_POST["partes_bck_encontradas"])>1 ||sizeof($_POST["partes_bck_encontradas"])===1){
-      $lista_partes_frt=''.implode(",",$_POST["partes_frt_encontradas"]).',';
-    }
-    else{
-      $lista_partes_frt=''.implode(",",$_POST["partes_frt_encontradas"]).'';
-    }
-  }
-  else{
-    if(sizeof($_POST["partes_frt_encontradas"])===1){
-      if(sizeof($_POST["partes_bck_encontradas"])>1 ||sizeof($_POST["partes_bck_encontradas"])===1){
-        $lista_partes_frt=''.$_POST["partes_frt_encontradas"][0].',';
+  if(array_key_exists("partes_frt_encontradas",$_POST)){
+    if(sizeof($_POST["partes_frt_encontradas"])>1){
+      if(array_key_exists("partes_bck_encontradas",$_POST)){
+        if(sizeof($_POST["partes_bck_encontradas"])>1 ||sizeof($_POST["partes_bck_encontradas"])===1){
+          $lista_partes_frt=''.implode(",",$_POST["partes_frt_encontradas"]).',';
+        }
+        else{
+          $lista_partes_frt=''.implode(",",$_POST["partes_frt_encontradas"]).'';
+        }
       }
       else{
-        $lista_partes_frt=''.$_POST["partes_frt_encontradas"][0].'';
+        $lista_partes_frt=''.implode(",",$_POST["partes_frt_encontradas"]).'';
       }
     }
     else{
-      $lista_partes_frt='';
+      if(sizeof($_POST["partes_frt_encontradas"])===1){
+        if(array_key_exists("partes_bck_encontradas",$_POST)){
+          if(sizeof($_POST["partes_bck_encontradas"])>1 ||sizeof($_POST["partes_bck_encontradas"])===1){
+            $lista_partes_frt=''.$_POST["partes_frt_encontradas"][0].',';
+          }
+          else{
+            $lista_partes_frt=''.$_POST["partes_frt_encontradas"][0].'';
+          }
+        }
+        else{
+          $lista_partes_frt=''.$_POST["partes_frt_encontradas"][0].'';
+        }
+       
+      }
+      else{
+        $lista_partes_frt='';
+      }
     }
   }
 
   $lista_partes_bck="";
-  if(sizeof($_POST["partes_bck_encontradas"])>1){
-    $lista_partes_bck=''.implode(",",$_POST["partes_bck_encontradas"]).'';
-  }
-  else{
-    if(sizeof($_POST["partes_bck_encontradas"])===1){
-      $lista_partes_bck=''.$_POST["partes_bck_encontradas"][0].'';
+  if(array_key_exists("partes_bck_encontradas",$_POST)){
+    if(sizeof($_POST["partes_bck_encontradas"])>1){
+      $lista_partes_bck=''.implode(",",$_POST["partes_bck_encontradas"]).'';
     }
     else{
-      $lista_partes_bck="";
+      if(sizeof($_POST["partes_bck_encontradas"])===1){
+        $lista_partes_bck=''.$_POST["partes_bck_encontradas"][0].'';
+      }
+      else{
+        $lista_partes_bck="";
+      }
     }
   }
   $strRecomendacion=" ";
