@@ -316,7 +316,7 @@ if($tipo_atencion==="Nueva"){
           <div style="font-size:12px;color:#404040;font-weight: bold;text-align:left;margin-top: 15px;width:100%;display:block;">Anamnesis: <span style="color:#6d6d6e;">'.$_POST["anamnesis_atencion_diaria"].'</span></div>
           <div style="font-size:12px;color:#404040;font-weight: bold;text-align:left;margin-top: 15px;width:100%;display:block;">Contexto incidente: <span style="color:#6d6d6e;">'.$_POST["contexto"].'</span></div>
           <div style="font-size:12px;color:#404040;font-weight: bold;text-align:left;margin-top: 15px;width:100%;display:block;">Zona Afectada: <span style="color:#6d6d6e;">'.$lista_partes_frt.''.$lista_partes_bck.'</span></div>
-          <div style="font-size:12px;color:#404040;font-weight: bold;text-align:left;margin-top: 15px;width:100%;display:block;">Tratamiento: <span style="color:#6d6d6e;">'.((sizeof($_POST["lista_tratamiento"])>1)?implode(", ",$_POST["lista_tratamiento"]):$_POST["lista_tratamiento"][0]).'</span></div>
+          <div style="font-size:12px;color:#404040;font-weight: bold;text-align:left;margin-top: 15px;width:100%;display:block;">Tratamiento: <span style="color:#6d6d6e;">'.$strTratamiento.'</span></div>
           <div style="font-size:12px;color:#404040;font-weight: bold;text-align:left;margin-top: 15px;width:100%;display:block;">Observaciones Kinesiologo: <span style="color:#6d6d6e;">'.(($_POST["observacion_kinesiologo"]!=="null")?$_POST["observacion_kinesiologo"]:"Sin observación").'</span></div>
   
           <div style="display:block;margin-top: 15px;font-size:12px;color:#404040;font-weight: bold;text-align:left;">
