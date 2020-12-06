@@ -1289,7 +1289,7 @@ function consultarTratamientoControl($id){
     $lista_tratamiento_control=[];
     while($row_atencion_diaria=mysqli_fetch_array($result_atencion)){
 
-        $SQL_tratamiento_aplicado="SELECT * FROM tratamiento_aplicado_atencion_diaria WHERE  idatencion_diaria_federacion=".$row_atencion_diaria["idatencion_diaria_federacion"].";";
+        $SQL_tratamiento_aplicado="SELECT * FROM tratamiento_aplicado_atencion_diaria_federacion WHERE  idatencion_diaria_federacion=".$row_atencion_diaria["idatencion_diaria_federacion"].";";
         $result_tratamiento_aplicado=$link->query($SQL_tratamiento_aplicado);
         $datos_tratamiento_aplicado=[];
         while($row_tratamiento_aplicado=mysqli_fetch_array($result_tratamiento_aplicado)){

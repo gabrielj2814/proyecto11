@@ -9,7 +9,7 @@ $data='';
 
 // -------------------------- ARRAYS ------------------------ //
 // 
-include("../../../bd/atencion_diaria_BD.php");
+include("../../../bd/atencion_diaria_federacion_BD.php");
 /*
 
 
@@ -87,9 +87,6 @@ if(array_key_exists("array_id_atencion_diaria",$_POST)){
                     <div style="box-sizing: border-box;display:inline-block;float:left;width:15%;height:25px;/*background:#fff;*/font-size:12px;line-height:10px;">
                         '.strMinimo(concatenarListasImplode(encontrarTratamientos($atencion_diaria["datos"][0]["lista_tratamiento"],$tratamientos["datos"])),25,20).'
                     </div>
-                    <div style="box-sizing: border-box;display:inline-block;float:left;width:15%;height:25px;/*background:#0b1972;*/font-size:8.5px;line-height:10px;">
-                      '.odtenerIndicaciones($atencion_diaria["datos"][0]).'
-                    </div>
                 </div>
                 <div style="clear:left;box-sizing: border-box;width:100%;height:auto;/*background:#0b1972;*/font-size:12px;">
                     <span style="font-weight: bold">Observación Kinesiologo</span>: '.(($atencion_diaria["datos"][0]["observacion_kinesiologo"]!=null)?$atencion_diaria["datos"][0]["observacion_kinesiologo"]:"sin obsevación").'
@@ -99,6 +96,12 @@ if(array_key_exists("array_id_atencion_diaria",$_POST)){
         $contadore_jugadores++;
       }
       elseif($atencion_diaria["datos"][0]["tipo_atencion_atencion_diaria"]==="2"){
+        $srtSeguroMedico="";
+        if(array_key_exists("informe_medico",$atencion_diaria["datos"][0])){
+          $srtSeguroMedico=($atencion_diaria["datos"][0]["informe_medico"][0]["agregado_seguro_medico"]==="1")?"Si":"No";
+        }
+
+
         $fila='
             <div style="box-sizing: border-box;width:95%;height:100px;margin-bottom:15px;margin-left:auto;margin-right:auto;/*background-color:lime;*/border:0;">
                 <div style="box-sizing: border-box;width:100%;height:25px;/*background-color:blue;*/border:0;">
@@ -110,16 +113,13 @@ if(array_key_exists("array_id_atencion_diaria",$_POST)){
                         Control
                     </div>
                     <div style="box-sizing: border-box;display:inline-block;float:left;width:30%;height:25px;/*background:purple;*/font-size:12px;line-height:10px;">
-                        '.strMinimo($atencion_diaria["datos"][0]["informe_medico"][0]["diagnostico"],30,27).'
+                        '.strMinimo(((array_key_exists("informe_medico",$atencion_diaria["datos"][0]))?$atencion_diaria["datos"][0]["informe_medico"][0]["diagnostico"]:"                "),30,27).'
                     </div>
                     <div style="box-sizing: border-box;display:inline-block;float:left;width:10%;height:25px;/*background:lime;*/font-size:12px;line-height:10px;">
-                      '.(($atencion_diaria["datos"][0]["informe_medico"][0]["agregado_seguro_medico"]==="1")?"Si":"No").'
+                      '.$srtSeguroMedico.'
                     </div>
                     <div style="box-sizing: border-box;display:inline-block;float:left;width:15%;height:25px;/*background:#fff;*/font-size:12px;line-height:10px;">
                         '.strMinimo(concatenarListasImplode(encontrarTratamientos($atencion_diaria["datos"][0]["lista_tratamiento"],$tratamientos["datos"])),25,20).'
-                    </div>
-                    <div style="box-sizing: border-box;display:inline-block;float:left;width:15%;height:25px;/*background:#0b1972;*/font-size:8.5px;line-height:10px;">
-                      '.odtenerIndicaciones($atencion_diaria["datos"][0]).'
                     </div>
                 </div>
                 <div style="clear:left;box-sizing: border-box;width:100%;height:auto;/*background:#0b1972;*/font-size:12px;">
@@ -130,9 +130,18 @@ if(array_key_exists("array_id_atencion_diaria",$_POST)){
         $contadore_jugadores++;
       }
       elseif($atencion_diaria["datos"][0]["tipo_atencion_atencion_diaria"]==="3"){
-        $tratamiento_control=consultarTratamientoControl($atencion_diaria["datos"][0]["idinforme_medico"]);
+        $tratamiento_control="";
+        if(array_key_exists("informe_medico",$atencion_diaria["datos"][0])){
+          $tratamiento_control=consultarTratamientoControl($atencion_diaria["datos"][0]["idinforme_medico"]);
+        }
+
+        $srtSeguroMedico="";
+        if(array_key_exists("informe_medico",$atencion_diaria["datos"][0])){
+          $srtSeguroMedico=($atencion_diaria["datos"][0]["informe_medico"][0]["agregado_seguro_medico"]==="1")?"Si":"No";
+        }
+
         //  '.strMinimo(concatenarListasImplode(encontrarTratamientos2(obtenerTratamientosControl($tratamiento_control["lista_tratamientos"]),$tratamientos["datos"])),25,20).'
-        var_export($tratamiento_control["lista_tratamientos"]);
+        // var_export($tratamiento_control["lista_tratamientos"]);
         $fila='
             <div style="box-sizing: border-box;width:95%;height:100px;margin-bottom:15px;margin-left:auto;margin-right:auto;/*background-color:lime;*/border:0;">
                 <div style="box-sizing: border-box;width:100%;height:5px;/*background-color:blue;*/border:0;">
@@ -144,16 +153,13 @@ if(array_key_exists("array_id_atencion_diaria",$_POST)){
                         Medica
                     </div>
                     <div style="box-sizing: border-box;display:inline-block;float:left;width:30%;height:25px;/*background:purple;*/font-size:12px;line-height:10px;">
-                        '.strMinimo($atencion_diaria["datos"][0]["informe_medico"][0]["diagnostico"],30,27).'
+                        '.strMinimo(((array_key_exists("informe_medico",$atencion_diaria["datos"][0]))?$atencion_diaria["datos"][0]["informe_medico"][0]["diagnostico"]:"                "),30,27).'
                     </div>
                     <div style="box-sizing: border-box;display:inline-block;float:left;width:10%;height:25px;/*background:lime;*/font-size:12px;line-height:10px;">
-                      '.(($atencion_diaria["datos"][0]["informe_medico"][0]["agregado_seguro_medico"]==="1")?"Si":"No").'
+                      '.$srtSeguroMedico.'
                     </div>
                     <div style="box-sizing: border-box;display:inline-block;float:left;width:15%;height:25px;/*background:#fff;*/font-size:12px;line-height:10px;">
                     '.strMinimo(concatenarListasImplode(encontrarTratamientos2(obtenerTratamientosControl($tratamiento_control["lista_tratamientos"]),$tratamientos["datos"])),25,20).'
-                    </div>
-                    <div style="box-sizing: border-box;display:inline-block;float:left;width:15%;height:25px;/*background:#0b1972;*/font-size:8.5px;line-height:10px;">
-                      '.odtenerIndicaciones($atencion_diaria["datos"][0]).'
                     </div>
                 </div>
                 <div style="clear:left;box-sizing: border-box;width:100%;height:auto;/*background:#0b1972;*/font-size:12px;">
@@ -164,9 +170,17 @@ if(array_key_exists("array_id_atencion_diaria",$_POST)){
         
       }
       elseif($atencion_diaria["datos"][0]["tipo_atencion_atencion_diaria"]==="4"){
-        $tratamiento_control=consultarTratamientoControl($atencion_diaria["datos"][0]["idinforme_medico"]);
+        $tratamiento_control="";
+        if(array_key_exists("informe_medico",$atencion_diaria["datos"][0])){
+          $tratamiento_control=consultarTratamientoControl($atencion_diaria["datos"][0]["idinforme_medico"]);
+        }
+        
+        $srtSeguroMedico="";
+        if(array_key_exists("informe_medico",$atencion_diaria["datos"][0])){
+          $srtSeguroMedico=($atencion_diaria["datos"][0]["informe_medico"][0]["agregado_seguro_medico"]==="1")?"Si":"No";
+        }
         //  '.strMinimo(concatenarListasImplode(encontrarTratamientos2(obtenerTratamientosControl($tratamiento_control["lista_tratamientos"]),$tratamientos["datos"])),25,20).'
-        var_export($tratamiento_control["lista_tratamientos"]);
+        // var_export($tratamiento_control["lista_tratamientos"]);
         $fila='
             <div style="box-sizing: border-box;width:95%;height:100px;margin-bottom:15px;margin-left:auto;margin-right:auto;/*background-color:lime;*/border:0;">
                 <div style="box-sizing: border-box;width:100%;height:25px;/*background-color:blue;*/border:0;">
@@ -178,16 +192,13 @@ if(array_key_exists("array_id_atencion_diaria",$_POST)){
                         Deportiva
                     </div>
                     <div style="box-sizing: border-box;display:inline-block;float:left;width:30%;height:25px;/*background:purple;*/font-size:12px;line-height:10px;">
-                        '.strMinimo($atencion_diaria["datos"][0]["informe_medico"][0]["diagnostico"],30,27).'
+                        '.strMinimo(((array_key_exists("informe_medico",$atencion_diaria["datos"][0]))?$atencion_diaria["datos"][0]["informe_medico"][0]["diagnostico"]:"                "),30,27).'
                     </div>
                     <div style="box-sizing: border-box;display:inline-block;float:left;width:10%;height:25px;/*background:lime;*/font-size:12px;line-height:10px;">
-                      '.(($atencion_diaria["datos"][0]["informe_medico"][0]["agregado_seguro_medico"]==="1")?"Si":"No").'
+                      '.$srtSeguroMedico.'
                     </div>
                     <div style="box-sizing: border-box;display:inline-block;float:left;width:15%;height:25px;/*background:#fff;*/font-size:12px;line-height:10px;">
                     '.strMinimo(concatenarListasImplode(encontrarTratamientos2(obtenerTratamientosControl($tratamiento_control["lista_tratamientos"]),$tratamientos["datos"])),25,20).'
-                    </div>
-                    <div style="box-sizing: border-box;display:inline-block;float:left;width:15%;height:25px;/*background:#0b1972;*/font-size:8.5px;line-height:10px;">
-                      '.odtenerIndicaciones($atencion_diaria["datos"][0]).'
                     </div>
                 </div>
                 <div style="clear:left;box-sizing: border-box;width:100%;height:auto;/*background:#0b1972;*/font-size:12px;">
@@ -387,9 +398,6 @@ $emcabezado_tabla='
         <div style="box-sizing: border-box;display:inline-block;float:left;width:15%;height:15px;background:#fff;font-weight: bold;font-size:12px;line-height:10px;">
           TRATAMIENTO           
         </div>
-        <div style="box-sizing: border-box;display:inline-block;float:left;width:15%;height:15px;background:#fff;font-weight: bold;font-size:12px;line-height:10px;">
-          INDICACIONES
-        </div>
   </div>
 
 ';
@@ -432,7 +440,7 @@ $data.= '
 
   <!-- ================================ Inicio del cuerpo ================================ -->
   <main>
-    <div style="width: 100%; background-color: #eb595f; height: 50px; padding: 5px 5px;">
+    <div style="width: 100%; background-color: #0b1972; height: 50px; padding: 5px 5px;">
 
         <div style="float: left; margin-left: 9px; margin-top: 6px;padding-top:10px;">
             <p style="text-transform: uppercase; color: white; font-size: 11px; font-weight: bold;">SANTIAGO <span style="font-weight: normal">WANDERERS</span></p>
@@ -466,7 +474,7 @@ $data.= '
 
         <div style="float: right; position: relative; top: 3px; margin-right: 10px;">
             <div style="display: inline-block; margin-top: 3px;">
-                <img src="../../../config/logo_equipo.png" style="position: relative; top: 0px; height: 35px; margin-right: 10px;">
+                <img src="../../../config/logo_equipo.png" style="position: relative; top: 0px; width:35px;height: 35px; margin-right: 10px;">
             </div>
             <div style="display: inline-block; margin-top: 4px;">
                 <p class="text-cabecera" style="position: relative; top: 4px;">Fútbol</p>
@@ -488,7 +496,7 @@ $data.= '
             
             <!-- VERSIÓN QUE FUNCIONA EN LOCAL -->
             
-            <img src="../../../config/logo_equipo.png" style="width: 80px; height: 100px; background-color: white;">
+            <img src="../../../config/logo_equipo.png" style="width: 100px; height: 100px; background-color: white;">
             
 
             <!-- VERSIÓN QUE FUNCIONA EN EL SERVIDOR -->
@@ -554,7 +562,7 @@ $data.= '
 
   <!-- ================================ Inicio del footer ================================ -->
   <footer >
-    <div style="background-color: #eb595f;display:block;height:5px;width:95%;margin-left:2.5%;margin-right:2.5%"></div>
+    <div style="background-color: #0b1972;display:block;height:5px;width:95%;margin-left:2.5%;margin-right:2.5%"></div>
     <span style="font-size:12px;color:#606469;display:block;margin-top:2px;margin-left:20px;">SANTIAGO WANDERERS</span>
   </footer>
   <!-- ================================ Fin del footer ================================ -->  
