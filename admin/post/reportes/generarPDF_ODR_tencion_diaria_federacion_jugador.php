@@ -225,6 +225,19 @@ if($tipo_atencion==="Nueva"){
   //   $contador_tratamiento++;
   // }
   // (sizeof($_POST["lista_trbajo_readaptador"])>1)?implode(", ",$_POST["lista_trbajo_readaptador"]):$_POST["lista_trbajo_readaptador"][0] <span style="color:#6d6d6e;"></span>
+  
+  
+  $strTratamiento=" ";
+  if(array_key_exists("lista_tratamiento",$_POST)){
+    if(sizeof($_POST["lista_tratamiento"])>1){
+      $strTratamiento=implode(", ",$_POST["lista_tratamiento"]);
+    }
+    else if(sizeof($_POST["lista_tratamiento"])===1){
+      $strTratamiento=$_POST["lista_tratamiento"][0];
+    }
+  }
+  
+  
   $lista_partes_frt="";
   if(array_key_exists("partes_frt_encontradas",$_POST)){
     if(sizeof($_POST["partes_frt_encontradas"])>1){
