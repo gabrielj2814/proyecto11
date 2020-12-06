@@ -750,7 +750,7 @@ function consultarAtencionDiariaJugador($POST){
 
 function eliminarAtencionDiaria($GET){
     include("conexion.php");
-    $SQL="DELETE FROM atencion_diaria WHERE	idatencion_diaria=".$GET["idatencion_diaria"].";";
+    $SQL="DELETE FROM atencion_diaria WHERE	idatencion_diaria=".$GET["id_atencion_diaria"].";";
     $link->query($SQL);
     // print($SQL);
     $link->close();
