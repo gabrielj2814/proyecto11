@@ -1,7 +1,7 @@
 <?php 
 // include('../../../bd/udc_ficha_social_BD.php');
 
-// $data='';
+$data='';
 
 // $datos_informe = buscar_datosPDF( $_POST['idudc_visita_social'] );
 
