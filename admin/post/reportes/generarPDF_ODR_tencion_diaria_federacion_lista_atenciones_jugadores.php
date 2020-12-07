@@ -49,6 +49,7 @@ $mensaje_sin_registros='
     </div>
 ';
 $contadore_jugadores=0;
+$fila_tabla_serie_99="";
 $fila_tabla_serie_20="";
 $fila_tabla_serie_17="";
 $fila_tabla_serie_16="";
@@ -210,6 +211,7 @@ if(array_key_exists("array_id_atencion_diaria",$_POST)){
         
       }
       switch($atencion_diaria["datos"][0]["serieActual"]){
+        case "99":$fila_tabla_serie_99.=$fila;break;
         case "20":$fila_tabla_serie_20.=$fila;break;
         case "17":$fila_tabla_serie_17.=$fila;break;
         case "16":$fila_tabla_serie_16.=$fila;break;
@@ -395,7 +397,7 @@ $emcabezado_tabla='
         <div style="box-sizing: border-box;display:inline-block;float:left;width:10%;height:15px;background:#fff;font-weight: bold;font-size:12px;line-height:10px;">
           A SEGURO
         </div>
-        <div style="box-sizing: border-box;display:inline-block;float:left;width:15%;height:15px;background:#fff;font-weight: bold;font-size:12px;line-height:10px;">
+        <div style="box-sizing: border-box;display:inline-block;float:left;width:30%;height:15px;background:#fff;font-weight: bold;font-size:12px;line-height:10px;">
           TRATAMIENTO           
         </div>
   </div>
@@ -432,7 +434,11 @@ $platilla_tabla_datos='
 ';
 
 
+/*
 
+
+
+*/
 
 $data.= '
 
@@ -508,7 +514,12 @@ $data.= '
     </div>
     <!-- ================================ Fin del class="txCenter" ================================ -->
     <!-- <div style="width:100%;height:50px"></div> -->
-    <!--    SERIE 20         -->
+    <!--    SERIE 99         -->
+    <div style="box-sizing: border-box;font-size:12px;width:95%;height:15px;margin-bottom:15px;margin-left:auto;margin-right:auto;text-align:center;line-height:10px;background-color:#4e4e4e;font-weight: bold;color:#fff;">
+        Primer Equipo
+    </div>
+    '.(($fila_tabla_serie_99!="")?$emcabezado_tabla:"").'
+    '.(($fila_tabla_serie_99!="")?$fila_tabla_serie_99:$mensaje_sin_registros).'
     <div style="box-sizing: border-box;font-size:12px;width:95%;height:15px;margin-bottom:15px;margin-left:auto;margin-right:auto;text-align:center;line-height:10px;background-color:#4e4e4e;font-weight: bold;color:#fff;">
         SUB 20
     </div>
@@ -557,6 +568,7 @@ $data.= '
     </div>
     '.(($fila_tabla_serie_11!="")?$emcabezado_tabla:"").'
     '.(($fila_tabla_serie_11!="")?$fila_tabla_serie_11:$mensaje_sin_registros).'
+    
   
   </main>
 
