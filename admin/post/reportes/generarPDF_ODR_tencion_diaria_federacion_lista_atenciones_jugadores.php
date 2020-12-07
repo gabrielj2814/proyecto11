@@ -384,7 +384,7 @@ function obtenerTratamientosControl($tratamientos){
 
 
 $emcabezado_tabla='
-<div style="box-sizing: border-box;width:95%;height:15px;margin-bottom:15px;margin-left:auto;margin-right:auto;background-color:blue;border:0;color:#4e4e4e;">
+<div style="box-sizing: border-box;width:95%;height:15px;margin-bottom:15px;margin-left:auto;margin-right:auto;border:0;color:#4e4e4e;">
         <div style="box-sizing: border-box;display:inline-block;float:left;width:17%;height:15px;background:#fff;font-weight: bold;font-size:12px;line-height:10px;">
           JUGADOR
         </div>
