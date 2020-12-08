@@ -271,7 +271,7 @@ function consultarJugadores(){
 
 function consultarJugadoresSerie($serie,$sexo){
     include("conexion.php");
-    $SQL="SELECT * FROM fichaJugador,club WHERE (fichaJugador.serieActual='$serie' AND sexo= $sexo ) AND (fichaJugador.idclub=club.idclub);";
+    $SQL="SELECT * FROM fichaJugador WHERE (serieActual='$serie' AND sexo= $sexo );";
     // print($SQL);
     $result_jugador=$link->query($SQL);
     $array_datos=[];
@@ -285,7 +285,7 @@ function consultarJugadoresSerie($serie,$sexo){
 
 function consultarJugador($id){
     include("conexion.php");
-    $SQL="SELECT * FROM fichaJugador,club WHERE fichaJugador.idfichaJugador=$id AND (fichaJugador.idclub=club.idclub);";
+    $SQL="SELECT * FROM fichaJugador WHERE idfichaJugador=$id;";
     // print($SQL);
     $result_jugador=$link->query($SQL);
     $array_datos=[];
