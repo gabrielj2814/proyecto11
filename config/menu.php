@@ -85,6 +85,14 @@
               <?php
               }
               ?>
+            <?php 
+              if($menu_lateral['centro_medico_f']){
+              ?>
+              <li><a href="<?php echo $menu_link['centro_medico_f'];?>" onClick="colocar_icono_cargando(this)"><?php if($submenu_actual=='centro_medico_f'){?><i class="icon-chevron-right" style="text-decoration: none;"></i><?php }?> <?php if(!$software_demo || ($software_demo && $demo['centro_medico_f'])){?>centro médico f<?php }else{?><strike style="color:white;"><span>&nbsp;centro medico f&nbsp;</span></strike><?php }?></a></li>
+
+              <?php
+              }
+              ?>
             
             <!-- FIN SUBMENU -->
           </ul>

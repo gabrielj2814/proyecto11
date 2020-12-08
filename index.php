@@ -103,7 +103,13 @@ if(isset($GET_['cerrar_sesion'])){
       <a class="selectOne" style="margin-left:100px;" target="_BLANK" href="RELACIONES/atención diaria.mwb">WORKBENCH</a><br /><!-- despues relacionar con modelo -->
     </div>
     <div class="contenedores">
-      <a class="selectOne" href="admin/centro medico.php">CENTRO MEDICO</a>
+      <a class="selectOne" href="admin/centro medico.php.php">CENTRO MEDICO</a>
+    </div>
+    <div class="contenedores_wb">
+      <a class="selectOne" style="margin-left:100px;" target="_BLANK" href="#">WORKBENCH</a><br /><!-- despues relacionar con modelo -->
+    </div>
+    <div class="contenedores">
+      <a class="selectOne" href="admin/centro_medico_f.php">CENTRO MEDICO FEDERACION</a>
     </div>
     <div class="contenedores_wb">
       <a class="selectOne" style="margin-left:100px;" target="_BLANK" href="#">WORKBENCH</a><br /><!-- despues relacionar con modelo -->

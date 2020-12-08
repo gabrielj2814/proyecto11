@@ -144,3 +144,14 @@
     $menu_link['test_ocular_jugador']                               = 'test_ocular.php';
     ////////////////////// COMENTARIOS //////////////////////////
     $comentarios['test_ocular_jugador']                             = 36;  
+    ////////////////////////// MODULO 12 - CENTOR MEDICO FEDERACION //////////////////////////////
+    ////////////////////////////////////////////////////////////////
+    $menu_lateral['centro_m']                                         = true;
+    $menu_lateral['centro_medico_f']                            = true;
+    /////////////////////////// DEMO /////////////////////////////
+    $demo['centro_m']                                                 = true;
+    $demo['centro_medico_f']                                    = true;
+    ////////////////////////// URL //////////////////////////////
+    $menu_link['centro_medico_f']                               = 'centro_medico_f.php';
+    ////////////////////// COMENTARIOS //////////////////////////
+    $comentarios['centro_medico_f']                             = 36;   
