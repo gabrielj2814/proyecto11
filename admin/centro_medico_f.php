@@ -1177,7 +1177,7 @@ app.controller("controlador_1",['$scope',function($scope){
                                                         <div class="nombre_seleccion"><b><?php echo $valor; ?></b></div>
                                                         <?php $numero = 0;
                                                         ?>
-                                                        <i class='icon-male'></i><b style="font-size:12px;">(<?php print(consultarBajasSerie($arreglo_serie[0],$arreglo_serie[1]));?>) Evaluaciones este mes</b>
+                                                        <i class='icon-male'></i><b style="font-size:12px;">(<?php print(consultarBajasSerie($arreglo_serie[0],$arreglo_serie[1]));?>) Jugadores de baja</b>
                                                     </div>
                                                 </div>
                                         <?php } ?>
@@ -1205,7 +1205,7 @@ app.controller("controlador_1",['$scope',function($scope){
                                                                 <div class="nombre_seleccion"><b><?php echo $valor; ?></b></div>
                                                                 <?php $numero = 0;
                                                                 ?>
-                                                                <i class='icon-female'></i><b style="font-size:12px;" >(<?php print(consultarBajasSerie($arreglo_serie[0],$arreglo_serie[1]))?>) Evaluaciones este mes</b>
+                                                                <i class='icon-female'></i><b style="font-size:12px;" >(<?php print(consultarBajasSerie($arreglo_serie[0],$arreglo_serie[1]))?>) Jugadores de baja</b>
                                                             </div>
                                                         </div>
                                                 <?php } ?>
