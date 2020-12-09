@@ -1,6 +1,6 @@
 <?PHP
 include('../config/datos.php');
-include('../bd/centro_medico_f_db.php');
+include('../bd/centro_medico_f_DB.php');
 session_start();
 if(!(isset($_SESSION["nombre_usuario_software"]))){
     session_destroy();
