@@ -1,5 +1,6 @@
 <?PHP
 include('../config/datos.php');
+include('../bd/centro_medico_f_db.php');
 session_start();
 if(!(isset($_SESSION["nombre_usuario_software"]))){
     session_destroy();
@@ -21,6 +22,41 @@ else{
     $ano_actual =  date("Y");
     $mes_actual =  date("m");
     
+}
+// club
+// $series = [ 
+//     '8_1'  => 'SUB-8',
+//     '9_1'  => 'SUB-9',
+//     '10_1' => 'SUB-10',
+//     '11_1' => 'SUB-11',
+//     '12_1' => 'SUB-12',
+//     '13_1' => 'SUB-13',
+//     '14_1' => 'SUB-14',
+//     '15_1' => 'SUB-15',
+//     '16_1' => 'SUB-16',
+//     '17_1' => 'SUB-17',
+//     '20_1' => 'SUB-20',
+//     '99_1' => 'Primer Equipo',
+    
+//     '15_2' => 'SUB-15',
+//     '17_2' => 'SUB-17',
+//     '99_2' => 'Primer Equipo'
+// ];
+// federacion
+$series = [
+    '13_1' => 'SUB-13',
+    '15_1' => 'SUB-15',
+    '17_1' => 'SUB-17',
+    '20_1' => 'SUB-20',
+    
+    '15_2' => 'SUB-15',
+    '17_2' => 'SUB-17',
+    '20_2' => 'SUB-20',
+    '99_2' => 'Adulta femenina'
+];
+function t_serie ($serie){
+    $arreglo = explode('_', $serie);
+    return $arreglo;
 }
 ?>
 <!DOCTYPE html> 
@@ -881,9 +917,23 @@ else{
         <style>
             #pagina{
                 background-image: url("../config/fondoTemaOcuro.jpeg");
-                min-height: 626px;
+                /* min-height: 390px; */
                 background-repeat: no-repeat;
                 background-size: 100%;
+                overflow: scroll;
+                overflow-x: hidden;
+                max-height: 93.5%;
+            }
+
+            #content2{
+                background: none repeat scroll 0 0 #2E363F;
+                margin-left: 220px;
+                margin-right: 0;
+                padding-bottom: 25px;
+                position: relative;
+                /* min-height: 100%; */
+                width: auto;
+                height: 93.5%;
             }
         </style>
                     
@@ -1066,7 +1116,7 @@ app.controller("controlador_1",['$scope',function($scope){
             <!--sidebar-menu-->
 
             <!--main-container-part-->
-        <div id="content" style="padding-bottom:0px;">
+        <div id="content2" style="padding-bottom:0px;">
             <!--breadcrumbs--><!-- migas de pan-->
             <div id="content-header">
                 <div id="breadcrumb"> 
@@ -1088,6 +1138,105 @@ app.controller("controlador_1",['$scope',function($scope){
             </div>
             <div  style="display:none;" id="pagina" style="padding:0px;">
                 <?php if(($software_demo && $demo_seccion) || !$software_demo){?>
+
+                    <div id="inicioModuloSerie" style="padding-top:15px;">
+                        <div style="box-sizing: border-box;border:0;width:45%;height:100px;margin-left:auto;margin-right:auto;margin-bottom:15px;">
+                            <img style="box-sizing: border-box;border:0;float:left;width:21%;height:100px;" src="../config/logo_equipo.png" alt="logo equipo"/>
+                            <div style="box-sizing: border-box;border:0;float:left;width:79%;height:100px;padding-top:15px;color:#fff;text-align:center;" >
+                                <h3 style="margin-bottom:0;">MÓDULO ESTADO PANEL</h3>
+                                <div >SELECCIONES JUVENILES</div>
+                            </div>
+                        </div>
+
+
+
+                        <center>
+                            <div style="margin:0px; height:20px;"><img src="img/cargando_buscar.gif" id="cargando_buscar" style=" display:none;">
+                                <span style="color:#dc4e4e; display:none;" id="error_conexion"><b>Error:</b> conexión a internet deficiente.</span>
+                                <span style="color:#28b779; display:none;" id="sin_resultados">Busqueda sin resultados.</span>
+                            </div>
+                        </center>
+                            <div class="container-fluid" style="margin-top:0px;">    
+                                <div class="row-fluid" style="margin-top: 10px;">     
+                                    <div class="span12 titulo_masculino" style="margin-top: 10px; margin-left: 0px; margin-bottom: 10px;">
+                                        <h4 style="text-align: center; color:#fff;">SERIES MASCULINAS</h4>
+                                    </div>
+                            
+                                    <div class="span12">
+                                        <?php
+                                        $titulo_masculino=false;     
+                                        foreach ($series AS $indice => $valor) {
+                                            $arreglo_serie = t_serie($indice);
+                                            // var_dump($arreglo_serie);
+                                            if ($arreglo_serie[1] == 1) { 
+                                            $titulo_masculino=true;     
+                                            ?>
+                                                <div class="span3" style="text-align: center; margin: 0px; padding: 10px;">
+                                                    <div class="cuadro_serie" style="background-color:#445f7a;color:#fff;"   onclick="consultarJugadorPorSerie('<?php print($arreglo_serie[0]."_".$arreglo_serie[1]);  ?>')">
+                                                        <div style="margin-bottom: 10px;"><img src="../config/logo_equipo.png" style="height: 120px"></div>
+                                                        <div class="nombre_seleccion"><b><?php echo $valor; ?></b></div>
+                                                        <?php $numero = 0;
+                                                        ?>
+                                                        <i class='icon-male'></i><b style="font-size:12px;">(<?php print(consultarBajasSerie($arreglo_serie[0],$arreglo_serie[1]));?>) Evaluaciones este mes</b>
+                                                    </div>
+                                                </div>
+                                        <?php } ?>
+                                    <?php } ?>
+                                    </div>  
+                            
+                
+                                    <div class="row-fluid titulo_femenino" style="margin-top: 10px;">     
+                                        <div class="span12" style="margin-left: 0px; margin-bottom: 20px; <?php if($titulo_masculino==true){?> margin-top: 20px; border-top: 4px solid <?php echo "#445f7a"; ?>;<?php }?>">
+                                            <h4 style="text-align: center; color:#fff;">SERIES FEMENINAS</h4>
+                                        </div>
+                                        <div class="span12">
+                                        
+                                                <?php
+                                                $titulo_femenino=false;     
+                                                foreach ($series AS $indice => $valor) {
+                                                    $arreglo_serie = t_serie($indice);
+                                                    if ($arreglo_serie[1] == 2 ) { 
+                                                    $titulo_femenino=true;     
+                                                    ?>
+                                                        <div class="span3" style="text-align: center; margin: 0px; padding: 10px;">
+                                                        <!-- aqui -->
+                                                            <div class="cuadro_serie" style="background-color:#263844;color:#fff;"   onclick="consultarJugadorPorSerie('<?php print($arreglo_serie[0]."_".$arreglo_serie[1]);  ?>')">
+                                                                <div style="margin-bottom: 10px;"><img src="../config/logo_equipo.png" style="height: 120px"></div>
+                                                                <div class="nombre_seleccion"><b><?php echo $valor; ?></b></div>
+                                                                <?php $numero = 0;
+                                                                ?>
+                                                                <i class='icon-female'></i><b style="font-size:12px;" >(<?php print(consultarBajasSerie($arreglo_serie[0],$arreglo_serie[1]))?>) Evaluaciones este mes</b>
+                                                            </div>
+                                                        </div>
+                                                <?php } ?>
+                                            <?php } ?>
+                                        </div>  
+                                        
+                                    
+                                        <br><br><br><br>
+                                        
+                                    </div>
+                                
+                                </div>        
+                                        
+                                
+                        
+                                <?php 
+                                if($titulo_masculino==false){
+                                    echo "<script>$('.titulo_masculino').hide();</script>";
+                                }  
+                                if($titulo_femenino==false){
+                                    echo "<script>$('.titulo_femenino').hide();</script>";
+                                }                                            
+                                                                            
+                                ?>            
+
+
+
+
+
+
+                        </div>
                     
                     
                     
@@ -1108,6 +1257,47 @@ var nombre_usuario_software='<?php echo utf8_encode($_SESSION["nombre_usuario_so
 </script>
 <script>
 // functiones
+
+// function consultarJugadorPorSerie(serie_sexo){
+//     let serie=serie_sexo.split("_")[0],
+//     sexo=serie_sexo.split("_")[1];
+//     let datos=[
+//         {name:"serie",value:serie},
+//         {name:"sexo",value:sexo}
+//     ];
+//     console.log(datos);
+
+//     $.ajax({
+//         url: 'post/evaluacion_jugador_consultar_jugadores_por_serie.php',
+//         type: "post",
+//         data:datos,
+//         success: function(respuesta) {
+//             $("#content").css("min-height","1700px");
+//             var json=JSON.parse(respuesta);
+//             // console.log(json)
+//             let texto_serie="";
+//             if(serie==="99"){
+//                 $("#serie_seleccionada").css("font-size","1.2em");
+//                 texto_serie="Primer Equipo";
+//             }
+//             else{
+//                 $("#serie_seleccionada").css("font-size","1.5em");
+//                 texto_serie="Sub"+serie;
+//             }
+//             window.sexo=sexo;
+//             window.serie=serie;
+//             $("#serie_seleccionada").text(texto_serie);
+//             $("#vista_series").css("display","none");
+//             $("#vista_serie_jugadores").css("display","block");
+//             traerJugadores();
+
+//         },error: function(){// will fire when timeout is reached
+//             // alert("errorXXXXX");
+//             $('#error_conexion').show();
+            
+//         }, timeout: 10000 // sets timeout to 3 seconds
+//     });
+// }
 
 </script>
 <script type="text/javascript" src="bootstrap-datetimepicker/js/bootstrap-datetimepicker.js" charset="UTF-8"></script>
