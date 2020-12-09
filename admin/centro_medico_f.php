@@ -1251,53 +1251,45 @@ app.controller("controlador_1",['$scope',function($scope){
 // variables globales
 var nombre_usuario_software='<?php echo utf8_encode($_SESSION["nombre_usuario_software"]);?>';
 
+var sexo=null;
 
+var serie=null;
 
 
 </script>
 <script>
 // functiones
 
-// function consultarJugadorPorSerie(serie_sexo){
-//     let serie=serie_sexo.split("_")[0],
-//     sexo=serie_sexo.split("_")[1];
-//     let datos=[
-//         {name:"serie",value:serie},
-//         {name:"sexo",value:sexo}
-//     ];
-//     console.log(datos);
+function consultarJugadorPorSerie(serie_sexo){
+    let serie=serie_sexo.split("_")[0],
+    sexo=serie_sexo.split("_")[1];
+    let datos=[
+        {name:"serie",value:serie},
+        {name:"sexo",value:sexo}
+    ];
+    console.log(datos);
 
-//     $.ajax({
-//         url: 'post/evaluacion_jugador_consultar_jugadores_por_serie.php',
-//         type: "post",
-//         data:datos,
-//         success: function(respuesta) {
-//             $("#content").css("min-height","1700px");
-//             var json=JSON.parse(respuesta);
-//             // console.log(json)
-//             let texto_serie="";
-//             if(serie==="99"){
-//                 $("#serie_seleccionada").css("font-size","1.2em");
-//                 texto_serie="Primer Equipo";
-//             }
-//             else{
-//                 $("#serie_seleccionada").css("font-size","1.5em");
-//                 texto_serie="Sub"+serie;
-//             }
-//             window.sexo=sexo;
-//             window.serie=serie;
-//             $("#serie_seleccionada").text(texto_serie);
-//             $("#vista_series").css("display","none");
-//             $("#vista_serie_jugadores").css("display","block");
-//             traerJugadores();
+    $.ajax({
+        url: 'post/centro_medico_f_consultar_jugadores_serie.php',
+        type: "post",
+        data:datos,
+        success: function(respuesta) {
+            $("#content").css("min-height","1700px");
+            var json=JSON.parse(respuesta);
+            console.log(json)
+            window.sexo=sexo;
+            window.serie=serie;
+            // $("#serie_seleccionada").text(texto_serie);
+            // $("#vista_series").css("display","none");
+            // $("#vista_serie_jugadores").css("display","block");
 
-//         },error: function(){// will fire when timeout is reached
-//             // alert("errorXXXXX");
-//             $('#error_conexion').show();
+        },error: function(){// will fire when timeout is reached
+            // alert("errorXXXXX");
+            $('#error_conexion').show();
             
-//         }, timeout: 10000 // sets timeout to 3 seconds
-//     });
-// }
+        }, timeout: 10000 // sets timeout to 3 seconds
+    });
+}
 
 </script>
 <script type="text/javascript" src="bootstrap-datetimepicker/js/bootstrap-datetimepicker.js" charset="UTF-8"></script>

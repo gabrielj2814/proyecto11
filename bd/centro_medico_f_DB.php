@@ -20,6 +20,38 @@ function utf8_converter($array){
     return $array;
 }
 
+function consultarUltimaAtencionJugadorSerie($serie,$sexo){
+    $jugadoreUltimaAtencion=[];
+    $jugadores=consultarJugadoresSerie($serie,$sexo);
+    for($contador=0;$contador<sizeof($jugadores);$contador++){
+        $jugador=$jugadores[$contador];
+        $atencionesDiariasJugador=consultarAtencionesDiariaJugador($jugador["idfichaJugador"]);
+        $atencion=obtenerUltimaAtencion($atencionesDiariasJugador);
+        if(!empty($atencion)){
+            $jugador["ultimaAtencion"]=$atencion;
+            $jugador["numeroTotalDeAtenciones"]=sizeof($atencionesDiariasJugador);
+            $jugadoreUltimaAtencion[]=$jugador;
+        }
+    }
+    // print  $contadorJugadoresDeBaja;
+    return $jugadoreUltimaAtencion;
+}
+
+function consultarJugadoreDeBajasSerie($serie,$sexo){
+    $jugadoreDeBaja=[];
+    $jugadores=consultarJugadoresSerie($serie,$sexo);
+    for($contador=0;$contador<sizeof($jugadores);$contador++){
+        $jugador=$jugadores[$contador];
+        $atencionesDiariasJugador=consultarAtencionesDiariaJugador($jugador["idfichaJugador"]);
+        $baja=obtenerUltimaBajaJugador($atencionesDiariasJugador,1);
+        if(!empty($baja)){
+            $jugador["atencionDiariaBaja"]=$baja;
+            $jugadoreDeBaja[]=$jugador;
+        }
+    }
+    // print  $contadorJugadoresDeBaja;
+    return $jugadoreDeBaja;
+}
 
 function consultarBajasSerie($serie,$sexo){
     $contadorJugadoresDeBaja=0;
@@ -27,7 +59,7 @@ function consultarBajasSerie($serie,$sexo){
     for($contador=0;$contador<sizeof($jugadores);$contador++){
         $jugador=$jugadores[$contador];
         $atencionesDiariasJugador=consultarAtencionesDiariaJugador($jugador["idfichaJugador"]);
-        $estado=analizarEstadoDeAtencionesDiarias($atencionesDiariasJugador);
+        $estado=analizarEstadoDeAtencionesDiarias($atencionesDiariasJugador,1);
         if(!$estado){
             $contadorJugadoresDeBaja++;
         }
@@ -36,24 +68,71 @@ function consultarBajasSerie($serie,$sexo){
     return $contadorJugadoresDeBaja;
 }
 
+function consultarReintegroDeportivo($serie,$sexo){
+    $contadorJugadoresReintegro=0;
+    $jugadores=consultarJugadoresSerie($serie,$sexo);
+    for($contador=0;$contador<sizeof($jugadores);$contador++){
+        $jugador=$jugadores[$contador];
+        $atencionesDiariasJugador=consultarAtencionesDiariaJugador($jugador["idfichaJugador"]);
+        $estado=analizarEstadoDeAtencionesDiarias($atencionesDiariasJugador,3);
+        if($estado){
+            $contadorJugadoresReintegro++;
+        }
+    }
+    // print  $contadorJugadoresReintegro;
+    return $contadorJugadoresReintegro;
+}
+
+function consultarAptoParaJugar($serie,$sexo){
+    $contadorJugadoresAptoParaJugar=0;
+    $jugadores=consultarJugadoresSerie($serie,$sexo);
+    for($contador=0;$contador<sizeof($jugadores);$contador++){
+        $jugador=$jugadores[$contador];
+        $atencionesDiariasJugador=consultarAtencionesDiariaJugador($jugador["idfichaJugador"]);
+        $estado=analizarEstadoDeAtencionesDiarias($atencionesDiariasJugador,1);
+        if($estado){
+            $contadorJugadoresAptoParaJugar++;
+        }
+    }
+    // print  $contadorJugadoresAptoParaJugar;
+    return $contadorJugadoresAptoParaJugar;
+}
+
+function consultarAptoParaEntrenar($serie,$sexo){
+    $contadorJugadoresAptoParaEntrenar=0;
+    $jugadores=consultarJugadoresSerie($serie,$sexo);
+    for($contador=0;$contador<sizeof($jugadores);$contador++){
+        $jugador=$jugadores[$contador];
+        $atencionesDiariasJugador=consultarAtencionesDiariaJugador($jugador["idfichaJugador"]);
+        $estado=analizarEstadoDeAtencionesDiarias($atencionesDiariasJugador,2);
+        if($estado){
+            $contadorJugadoresAptoParaEntrenar++;
+        }
+    }
+    // print  $contadorJugadoresAptoParaEntrenar;
+    return $contadorJugadoresAptoParaEntrenar;
+}
+
 function consultarJugadoresSerie($serie,$sexo){
     include("conexion.php");
-    $SQL="SELECT * FROM fichaJugador WHERE (fichaJugador.serieActual='$serie' AND sexo= $sexo );";
+    $SQL="SELECT * FROM fichaJugador WHERE serieActual='".$serie."' AND sexo= $sexo;";
     // print($SQL);
     $result_jugador=$link->query($SQL);
     $array_datos=[];
     while($row=mysqli_fetch_array($result_jugador)){
-        // $row["posicion"]=calcular_posicion_jugador($row["idfichaJugador"]);
+        // $posicion=consultarListaPosicionesJugador();
+        $posicion=consultarListaPosicionesJugador($row["idfichaJugador"]);
+        // print_r($posicion);
+        $row["posicionTexto"]=(empty($posicion))?[]:$posicion[0]["texto_posicion"];
         $array_datos[]=utf8_converter($row);
     }
     $link->close();
     return $array_datos;
-
 }
 
 function consultarAtencionesDiariaJugador($id){
     include("conexion.php");
-    $SQL="SELECT * FROM atencion_diaria_federacion,fichaJugador WHERE atencion_diaria_federacion.idatencion_diaria_federacion=".$id." AND fichaJugador.idfichaJugador=atencion_diaria_federacion.idfichaJugador;";
+    $SQL="SELECT * FROM atencion_diaria_federacion WHERE idfichaJugador=".$id.";";
     $result_atencion=$link->query($SQL);
     $datos=[];
     while($row_atencion_diaria=mysqli_fetch_array($result_atencion)){
@@ -106,11 +185,11 @@ function consultarAtencionesDiariaJugador($id){
     return (sizeof($datos)>0)? $datos: [];
 }
 
-function analizarEstadoDeAtencionesDiarias($atenciones){
+function analizarEstadoDeAtencionesDiarias($atenciones,$estadoJugador){
     $estado=false;
     for($contador=0;$contador<sizeof($atenciones);$contador++){
         $atencion=$atenciones[$contador];
-        if($atencion["estado_jugador"]===1){
+        if($atencion["estado_jugador"]===$estadoJugador){
             $estado=true;
         }
         else{
@@ -118,5 +197,124 @@ function analizarEstadoDeAtencionesDiarias($atenciones){
         }
     }
     return $estado;
-
 }
+
+function obtenerUltimaBajaJugador($atenciones,$estadoJugador){
+    $estado=[];
+    for($contador=0;$contador<sizeof($atenciones);$contador++){
+        $atencion=$atenciones[$contador];
+        if($atencion["estado_jugador"]===$estadoJugador){
+            $estado=[];
+        }
+        else{
+            $estado=$atencion;
+        }
+    }
+    // print($contador);
+    return $estado;
+}
+
+function obtenerUltimaAtencion($atenciones){
+    // return $atenciones[sizeof($atenciones)-1];
+    return (sizeof($atenciones)>0)?$atenciones[sizeof($atenciones)-1]:[];
+}
+
+function consultarEstadoJugadoresSerie($serie,$sexo){
+    $infoSerie=[];
+    $infoSerie["jugadores"]=consultarJugadoresSerie($serie,$sexo);
+    $infoSerie["bajas"]=consultarBajasSerie($serie,$sexo);
+    $infoSerie["reintegro"]=consultarReintegroDeportivo($serie,$sexo);
+    $infoSerie["aptoParaJugar"]=consultarAptoParaJugar($serie,$sexo);
+    $infoSerie["aptoParaEntrenar"]=consultarAptoParaEntrenar($serie,$sexo);
+    $infoSerie["jugadoreDeBaja"]=consultarJugadoreDeBajasSerie($serie,$sexo);
+    $infoSerie["ultimaAtencionjugadores"]=consultarUltimaAtencionJugadorSerie($serie,$sexo);
+    return $infoSerie;
+}
+
+function consultarListaPosicionesJugador($id){
+    
+	$jugador['portero'] = 0; 			//1
+	$jugador['defensorCentral'] = 0;	//3,4,5,7,  Defensas
+	$jugador['lateralIzquierdo'] = 0;            //2,6,      Defensas
+	$jugador['lateralDerecho'] = 0;	//9,10,11,14,15,16  Mediocampistas
+	$jugador['volanteDefensivo'] = 0;		//8,12,13,17,18,22, Med 
+    $jugador['volanteIzquierdo'] = 0;		//8,12,13,17,18,22, Med 
+    $jugador['volanteDerecho'] = 0;		//8,12,13,17,18,22,     Med 
+	$jugador['volanteMixto'] = 0;	//19,20,21,			Med
+	$jugador['volanteOfensivo'] = 0;			//23,27,            Delanteros
+	$jugador['extremoIzquierdo'] = 0;	//24,25,26,28,29   
+	$jugador['extremoDerecho'] = 0;	//24,25,26,28,29   
+	$jugador['delanteroCentro'] = 0;	//24,25,26,28,29   
+	$jugador['posicionPrincipal'] = '';	//24,25,26,28,29
+	include("conexion.php");
+	$resultado = $link->query("SELECT posicion, numero_posicion FROM posicionCancha WHERE idfichaJugador like ".$id." ORDER BY posicionCancha.numero_posicion DESC");
+	$posicion="";
+	$datos=[];
+	while($row = mysqli_fetch_array($resultado)){
+		$posicion=$row['posicion'];
+		if($row['posicion']==1){
+			$jugador['portero']=1;
+			$jugador['posicionPrincipal']='Arquero';
+			
+		}else if($row['posicion']==2){
+			$jugador['defensorCentral']=1;
+			//if($jugador['posicionPrincipal']==''){
+				$jugador['posicionPrincipal']='Defensor Central';
+			//}
+		}else if($row['posicion']==3){
+			$jugador['lateralIzquierdo']=1;
+			//if($jugador['posicionPrincipal']==''){
+				$jugador['posicionPrincipal']='Lateral Izquierdo';
+			//}
+		}else if($row['posicion']==4){
+			$jugador['lateralDerecho']=1;
+			//if($jugador['posicionPrincipal']==''){
+				$jugador['posicionPrincipal']='Lateral Derecho';
+			//}
+		}else if($row['posicion']==5){
+			$jugador['volanteDefensivo']=1;
+			//if($jugador['posicionPrincipal']==''){
+				$jugador['posicionPrincipal']='Volante Defensivo';
+			//}
+		}else if($row['posicion']==6){
+			$jugador['volanteIzquierdo']=1;
+			//if($jugador['posicionPrincipal']==''){
+				$jugador['posicionPrincipal']='Volante Izquierdo';
+			//}
+		}else if($row['posicion']==7){
+			$jugador['volanteDerecho']=1;
+			//if($jugador['posicionPrincipal']==''){
+				$jugador['posicionPrincipal']='Volante Derecho';
+			//}
+		}else if($row['posicion']==8){
+			$jugador['volanteMixto']=1;
+			//if($jugador['posicionPrincipal']==''){
+				$jugador['posicionPrincipal']='Volante Mixto';
+			//}
+		}else if($row['posicion']==9){
+			$jugador['volanteOfensivo']=1;
+			//if($jugador['posicionPrincipal']==''){
+				$jugador['posicionPrincipal']='Volante Ofensivo';
+			//}
+		}else if($row['posicion']==10){
+			$jugador['extremoIzquierdo']=1;
+			//if($jugador['posicionPrincipal']==''){
+				$jugador['posicionPrincipal']='Extremo Izquierdo';
+			//}
+		}else if($row['posicion']==11){
+			$jugador['extremoDerecho']=1;
+			//if($jugador['posicionPrincipal']==''){
+				$jugador['posicionPrincipal']='Extremo Derecho';
+			//}
+		}else if($row['posicion']==12){
+			$jugador['delanteroCentro']=1;
+			//if($jugador['posicionPrincipal']==''){
+				$jugador['posicionPrincipal']='Delantero Centro';
+		}
+		$datos[]=["texto_posicion" => $jugador['posicionPrincipal'],"codigo_posicion" => $posicion];
+	}
+	return $datos;
+    
+}
+
+
