@@ -1322,7 +1322,7 @@ app.controller("controlador_1",['$scope',function($scope){
                         </div>
                         <div id="tabla_bajas" style="box-sizing: border-box;border:0;width:100%;height:200px;max-height:200px;">
                             <!-- fila inicio tabla  -->
-                            <div class="filaTabla" style="box-sizing: border-box;border:0;width:95%;height:100px;margin-left:auto;margin-right:auto;position: relative;">
+                            <!-- <div class="filaTabla" style="box-sizing: border-box;border:0;width:95%;height:100px;margin-left:auto;margin-right:auto;position: relative;">
                                 
                                 <div style="box-sizing: border-box;border:2px solid #fff;display:block;float:left;width:70px;height:70px;margin-top: 15px;border-radius: 35px;overflow:hidden;position: relative;background-color:#fff;">
                                     <img style="box-sizing: border-box;border:0;display:block;width:70px;height:70px;" src="./foto_jugadores/12.png"/>
@@ -1347,7 +1347,7 @@ app.controller("controlador_1",['$scope',function($scope){
                                     <div style="color:#fff;">Diagnóstico: sssssss</div>
                                 </div>
 
-                            </div>
+                            </div> -->
                             <!-- fila fin tabla  -->
                             
                     
@@ -1356,7 +1356,16 @@ app.controller("controlador_1",['$scope',function($scope){
                 
                 
                     </div>
-                    <div style="box-sizing: border-box;border:1px solid #111;float:left;width:47.5%;height:230px;"></div>
+                    <div style="box-sizing: border-box;border:0;float:left;width:47.5%;height:230px;background-color:#2c444f;">
+                    
+                        <div style="box-sizing: border-box;border:0;width:100%;height:30px;background-color:#445f7a;text-align:center;color:#fff;font-weight: bold;line-height: 30px;">
+                               PORCENTAJE DE DISPONIBILIDAD DEL PLANTEL
+                        </div>
+                        <div style="box-sizing: border-box;border:0;width:100%;height:200px;max-height:200px;">
+ 
+                        </div>
+                    
+                    </div>
 
 
                 </div>
@@ -1469,7 +1478,7 @@ function insertarDatosTabla(jugadoresDebaja){
                     </div>\
                     <div style="box-sizing: border-box;border:0;width: 33.3%;height: 55px;float:left;">\
                         <div style="color:#fff;text-align: center;">Estado</div>\
-                        <div style="font-weight: bold;color: #d42d2d;text-align: center;">No apto, '+listaEstadoJugador[parseInt(baja.atencionDiariaBaja.estado_jugador)]+'</div>\
+                        <div style="font-weight: bold;color: #d42d2d;text-align: center;overflow: hidden;text-overflow: ellipsis;height: 37px;">No apto, '+listaEstadoJugador[parseInt(baja.atencionDiariaBaja.estado_jugador)]+'</div>\
                     </div>\
                     <div style="box-sizing: border-box;border:0;width: 33.3%;height: 55px;float:left;position:relative;">\
                         <div style="color:#fff;text-align: center;">Fecha estimada alta</div>\
