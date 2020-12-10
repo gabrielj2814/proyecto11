@@ -1247,9 +1247,24 @@ app.controller("controlador_1",['$scope',function($scope){
             amarillo -> #f7ad49
             verde -> #3bb292
             azul -> #2882ce
+
+
+            #445f7a
+
+            #2f4253
+
+            #233340
+
+            #465e79
+
+            #2c444f
+
+            #ea5863
+
+            #fbb017
             -->
 
-            <div id="panel" style="height:87.2vh;padding-top:15px;">
+            <div id="panel" style="height:87.2vh;padding-top:15px;display:none;">
                 <button class="boton_volver" onclick="mostrarInicio()" style="margin-left:2.5%;margin-bottom:15px;"><i class="icon-arrow-left"></i> volver</button>
                 <div style="box-sizing: border-box;border:0;width:95%;height:130px;margin-bottom:30px;margin-left:auto;margin-right:auto;">
                     <img style="box-sizing: border-box;border:0;display:block;width:130px;height:130px;margin-right: 5%;float:left;" src="../config/logo_equipo.png" alt="logo_equipo">
@@ -1299,9 +1314,55 @@ app.controller("controlador_1",['$scope',function($scope){
                     </div>
                 </div>
 
+                <div style="box-sizing: border-box;border:0;width:95%;height:230px;margin-bottom:30px;margin-left:auto;margin-right:auto;">
+                    
+                    <div style="box-sizing: border-box;border:0;float:left;width:47.5%;height:230px;margin-right:5%;background-color:#2f4253">
+                        <div style="box-sizing: border-box;border:0;width:100%;height:30px;background-color:#445f7a;text-align:center;color:#fff;font-weight: bold;line-height: 30px;">
+                                <img style="height: 25px;margin-right: 5px;" src="../config/debaja.png" alt="icon de baja">  JUGADORES DE BAJA
+                        </div>
+                        <div id="tabla_bajas" style="box-sizing: border-box;border:0;width:100%;height:200px;max-height:200px;">
+                            <!-- fila inicio tabla  -->
+                            <div class="filaTabla" style="box-sizing: border-box;border:0;width:95%;height:100px;margin-left:auto;margin-right:auto;position: relative;">
+                                
+                                <div style="box-sizing: border-box;border:2px solid #fff;display:block;float:left;width:70px;height:70px;margin-top: 15px;border-radius: 35px;overflow:hidden;position: relative;background-color:#fff;">
+                                    <img style="box-sizing: border-box;border:0;display:block;width:70px;height:70px;" src="./foto_jugadores/12.png"/>
+                                </div>
+                                <img style="box-sizing: border-box;border:0;display:block;width:12px;height:12px;position: absolute;top: 18px;left: 53px;z-index: 100;" src="../config/lesionicon.png" alt="icon lesion">
+                                <div style="box-sizing: border-box;border:0;width: 83.2%;height: 84px;margin-top: 15px;float: left;padding-left: 10px;">
+                                    <div style="box-sizing: border-box;border:0px;width: 100%;height: 55px;">
+                                        <div style="box-sizing: border-box;border:0;width: 33.3%;height: 55px;float:left;">
+                                            <div style="color:#fff;">Nombre</div>
+                                            <div style="font-weight: bold;color: #fff;font-size: 14px;">Apellido</div>
+                                        </div>
+                                        <div style="box-sizing: border-box;border:0;width: 33.3%;height: 55px;float:left;">
+                                            <div style="color:#fff;text-align: center;">Estado</div>
+                                            <div style="font-weight: bold;color: #d42d2d;text-align: center;">estado jugador</div>
+                                        </div>
+                                        <div style="box-sizing: border-box;border:0;width: 33.3%;height: 55px;float:left;position:relative;">
+                                            <div style="color:#fff;text-align: center;">Fecha estimada alta</div>
+                                            <div style="font-weight: bold;color: #fff;text-align: center;">00-00-0000</div>
+                                            <img style="box-sizing: border-box;border:0;display:block;width:15px;height:15px;position: absolute;    top: 21px;left: 0;z-index: 100;" src="../config/calenicon.png" alt="icon lesion">
+                                        </div>
+                                    </div>
+                                    <div style="color:#fff;">Diagnóstico: sssssss</div>
+                                </div>
 
+                            </div>
+                            <!-- fila fin tabla  -->
+                            
+                    
+                        </div>
+                
+                
+                
+                    </div>
+                    <div style="box-sizing: border-box;border:1px solid #111;float:left;width:47.5%;height:230px;"></div>
+
+
+                </div>
 
             </div>
+           
                     
                 <?php } ?>
             </div>
