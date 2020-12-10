@@ -238,8 +238,8 @@ function t_serie ($serie){
                 padding-right: 7px;
                 text-shadow: none; 
                 background-color: transparent;
-                border: 1px solid #0b3b99; 
-                color: #0b3b99;
+                border: 1px solid #fff; 
+                color: #fff;
                 border-radius:10px;
             }
             .boton_volver:hover{
@@ -247,8 +247,8 @@ function t_serie ($serie){
                 padding-right: 7px;
                 text-shadow: none; 
                 background-color: transparent;
-                border: 1px solid black; 
-                color: black;
+                border: 1px solid #555; 
+                color: #555;
                 border-radius:10px;
             }
             
@@ -1241,6 +1241,67 @@ app.controller("controlador_1",['$scope',function($scope){
                     
                     
             </div>
+            <!--
+
+            rojo -> #ea5865
+            amarillo -> #f7ad49
+            verde -> #3bb292
+            azul -> #2882ce
+            -->
+
+            <div id="panel" style="height:87.2vh;padding-top:15px;">
+                <button class="boton_volver" onclick="mostrarInicio()" style="margin-left:2.5%;margin-bottom:15px;"><i class="icon-arrow-left"></i> volver</button>
+                <div style="box-sizing: border-box;border:0;width:95%;height:130px;margin-bottom:30px;margin-left:auto;margin-right:auto;">
+                    <img style="box-sizing: border-box;border:0;display:block;width:130px;height:130px;margin-right: 5%;float:left;" src="../config/logo_equipo.png" alt="logo_equipo">
+                    
+                    <div style="box-sizing: border-box;border:0;display:block;width:18.5%;height:80px;background-color:#ea5865;margin-right: 2%;float:left;margin-top:25px;border-radius:2px;">
+                        
+                        <img style="box-sizing: border-box;border:0;display:block;width:40px;height:40px;float:left;margin-top:15px;margin-left:10px;" src="../config/jugadoresdebajaicon.png" alt="botiquin_contador"/>
+                        <div style="box-sizing: border-box;border:0;width: 67%;height:80px;float:left;margin-left:10px;padding-top: 5px;padding-right: 10px;">
+                            <div style="color:#fff;font-size:10px;text-align:right;margin-bottom: 5px;">jugadores de baja</div>
+                            <div style="color:#fff;font-size:25px;text-align:right;" id="contadorBaja">0</div>
+                    
+                        </div>
+
+                    </div>
+
+                    <div style="box-sizing: border-box;border:0;display:block;width:18.5%;height:80px;background-color:#f7ad49;margin-right: 2%;float:left;margin-top:25px;border-radius:2px;">
+                        
+                        <img style="box-sizing: border-box;border:0;display:block;width:40px;height:40px;float:left;margin-top:15px;margin-left:10px;" src="../config/enreintegroicon.png" alt="reintegro"/>
+                        <div style="box-sizing: border-box;border:0;width: 67%;height:80px;float:left;margin-left:10px;padding-top: 5px;padding-right: 10px;">
+                            <div style="color:#fff;font-size:10px;text-align:right;margin-bottom: 5px;">En reintegro deportivo</div>
+                            <div style="color:#fff;font-size:25px;text-align:right;" id="contadorReintegro">0</div>
+                    
+                        </div>
+
+                    </div>
+                    
+                    <div style="box-sizing: border-box;border:0;display:block;width:18.5%;height:80px;background-color:#3bb292;margin-right: 2%;float:left;margin-top:25px;border-radius:2px;">
+                        
+                        <img style="box-sizing: border-box;border:0;display:block;width:40px;height:40px;float:left;margin-top:15px;margin-left:10px;" src="../config/aptoparajugaricon.png" alt="checked"/>
+                        <div style="box-sizing: border-box;border:0;width: 67%;height:80px;float:left;margin-left:10px;padding-top: 5px;padding-right: 10px;">
+                            <div style="color:#fff;font-size:10px;text-align:right;margin-bottom: 5px;">Apto para jugar</div>
+                            <div style="color:#fff;font-size:25px;text-align:right;" id="contadorJugadoresDisponibles">0</div>
+                    
+                        </div>
+                
+                    </div>
+                    
+                    <div style="box-sizing: border-box;border:0;display:block;width:18.5%;height:80px;background-color:#2882ce;margin-right: 0;float:left;margin-top:25px;border-radius:2px;">
+                
+                        <img style="box-sizing: border-box;border:0;display:block;width:40px;height:40px;float:left;margin-top:15px;margin-left:10px;" src="../config/TICKET.png" alt="TICKET"/>
+                        <div style="box-sizing: border-box;border:0;width: 67%;height:80px;float:left;margin-left:10px;padding-top: 5px;padding-right: 10px;">
+                            <div style="color:#fff;font-size:10px;text-align:right;margin-bottom: 5px;">Apto para entrenar</div>
+                            <div style="color:#fff;font-size:25px;text-align:right;" id="contadorJugadoresEntramiento">0</div>
+                    
+                        </div>
+
+                    </div>
+                </div>
+
+
+
+            </div>
                     
                 <?php } ?>
             </div>
@@ -1259,6 +1320,11 @@ var serie=null;
 </script>
 <script>
 // functiones
+
+function mostrarInicio(){
+    $("#panel").hide(500)
+    $("#inicioModuloSerie").show(500)
+}
 
 function consultarJugadorPorSerie(serie_sexo){
     let serie=serie_sexo.split("_")[0],
@@ -1282,6 +1348,12 @@ function consultarJugadorPorSerie(serie_sexo){
             // $("#serie_seleccionada").text(texto_serie);
             // $("#vista_series").css("display","none");
             // $("#vista_serie_jugadores").css("display","block");
+            $("#inicioModuloSerie").hide(500)
+            $("#panel").show(500)
+            $("#contadorBaja").text(json.bajas);
+            $("#contadorReintegro").text(json.reintegro);
+            $("#contadorJugadoresEntramiento").text(json.reintegro);
+            $("#contadorJugadoresDisponibles").text(json.aptoParaJugar);
 
         },error: function(){// will fire when timeout is reached
             // alert("errorXXXXX");
@@ -1290,6 +1362,10 @@ function consultarJugadorPorSerie(serie_sexo){
         }, timeout: 10000 // sets timeout to 3 seconds
     });
 }
+
+// function insertarDatosTabla(){
+
+// }
 
 </script>
 <script type="text/javascript" src="bootstrap-datetimepicker/js/bootstrap-datetimepicker.js" charset="UTF-8"></script>
