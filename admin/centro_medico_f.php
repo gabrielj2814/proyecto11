@@ -1403,18 +1403,16 @@ function consultarJugadorPorSerie(serie_sexo){
         success: function(respuesta) {
             $("#content").css("min-height","1700px");
             var json=JSON.parse(respuesta);
-            console.log(json)
+            console.log(json);
             window.sexo=sexo;
             window.serie=serie;
-            // $("#serie_seleccionada").text(texto_serie);
-            // $("#vista_series").css("display","none");
-            // $("#vista_serie_jugadores").css("display","block");
             $("#inicioModuloSerie").hide(500)
             $("#panel").show(500)
             $("#contadorBaja").text(json.bajas);
             $("#contadorReintegro").text(json.reintegro);
-            $("#contadorJugadoresEntramiento").text(json.reintegro);
+            $("#contadorJugadoresEntramiento").text(json.aptoParaEntrenar);
             $("#contadorJugadoresDisponibles").text(json.aptoParaJugar);
+            insertarDatosTabla(json.jugadoreDeBaja)
 
         },error: function(){// will fire when timeout is reached
             // alert("errorXXXXX");
@@ -1424,9 +1422,96 @@ function consultarJugadorPorSerie(serie_sexo){
     });
 }
 
-// function insertarDatosTabla(){
+function insertarDatosTabla(jugadoresDebaja){
+    let listaEstadoJugador=[
+        "sin estado",
+        "",
+        "apto para entrenar",
+        "en reintegro deportivo",
+        "en rehabilitación kinésica",
+        "en espera de revisión médica",
+        "en espera de resultado de examenes",
+        "en post operatorio",
+        "en espera de cirugia",
+        "en reposo",
+        "en reintegro"
+    ];
+    let listaBajas=[];
+    $("#tabla_bajas").empty();
+    for(baja of jugadoresDebaja){
+        console.log(baja);
+        let fecha="-";
+        if(baja.atencionDiariaBaja.fecha_estimada_de_alta!=null){
+            fecha=fecha_formato_ddmmaaa(baja.atencionDiariaBaja.fecha_estimada_de_alta);
+        }
+        let diagnostico="";
+        if(baja.atencionDiariaBaja.diagnostico_atencion_diaria!=null){
+            diagnostico=baja.atencionDiariaBaja.diagnostico_atencion_diaria;
+        }
+        else{
+            if(baja.atencionDiariaBaja.idinforme_medico!=null){
+                diagnostico=(baja.atencionDiariaBaja.informe_medico.diagnostico!=null)?baja.atencionDiariaBaja.informe_medico.diagnostico:"";
+            }
+        }
 
-// }
+
+        let plantilla='\
+        <div class="filaTabla" style="box-sizing: border-box;border:0;width:95%;height:100px;margin-left:auto;margin-right:auto;position: relative;">\
+            <div style="box-sizing: border-box;border:2px solid #fff;display:block;float:left;width:70px;height:70px;margin-top: 15px;border-radius: 35px;overflow:hidden;position: relative;background-color:#fff;">\
+                <img style="box-sizing: border-box;border:0;display:block;width:70px;height:70px;" src="./foto_jugadores/'+baja.idfichaJugador+'.png?idea='+new Date().getTime()+'"/>\
+            </div>\
+            <img style="box-sizing: border-box;border:0;display:block;width:12px;height:12px;position: absolute;top: 18px;left: 53px;z-index: 100;" src="../config/lesionicon.png" alt="icon lesion">\
+            <div style="box-sizing: border-box;border:0;width: 83.2%;height: 84px;margin-top: 15px;float: left;padding-left: 10px;">\
+                <div style="box-sizing: border-box;border:0px;width: 100%;height: 55px;">\
+                    <div style="box-sizing: border-box;border:0;width: 33.3%;height: 55px;float:left;text-tranfrom:uppercase;">\
+                        <div style="color:#fff;">'+baja.nombre+'</div>\
+                        <div style="font-weight: bold;color: #fff;font-size: 14px;">'+baja.apellido1+'</div>\
+                    </div>\
+                    <div style="box-sizing: border-box;border:0;width: 33.3%;height: 55px;float:left;">\
+                        <div style="color:#fff;text-align: center;">Estado</div>\
+                        <div style="font-weight: bold;color: #d42d2d;text-align: center;">No apto, '+listaEstadoJugador[parseInt(baja.atencionDiariaBaja.estado_jugador)]+'</div>\
+                    </div>\
+                    <div style="box-sizing: border-box;border:0;width: 33.3%;height: 55px;float:left;position:relative;">\
+                        <div style="color:#fff;text-align: center;">Fecha estimada alta</div>\
+                        <div style="font-weight: bold;color: #fff;text-align: center;">'+fecha+'</div>\
+                        <img style="box-sizing: border-box;border:0;display:block;width:15px;height:15px;position: absolute;    top: 21px;left: 0;z-index: 100;" src="../config/calenicon.png" alt="icon lesion">\
+                    </div>\
+                </div>\
+                <div style="color:#fff;">Diagnóstico: '+diagnostico+'</div>\
+            </div>\
+        </div>';
+        listaBajas.push(plantilla);
+    }
+
+    let strListaBaja="";
+    if(listaBajas.length>1){
+        strListaBaja=listaBajas.join("");
+    }
+    else if(listaBajas.length===1){
+        strListaBaja=listaBajas[0];
+    }
+
+    if(listaBajas.length>2){
+        $("#tabla_bajas").css("overflow","scroll");
+        $("#tabla_bajas").css("overflow-x","hidden");
+    }
+    else{
+        $("#tabla_bajas").css("overflow","none");
+    }
+    $("#tabla_bajas").append(strListaBaja);
+}
+
+function fecha_formato_ddmmaaa( fecha ) {
+    // Día:
+    var dia = fecha.substring(8, 10); 
+    // Mes:
+    var mes = fecha.substring(5, 7);     
+    // Año:
+    var anio = fecha.substring(0, 4); 
+    // Resultado:
+    return fecha = dia + "-" + mes + "-" + anio;
+}
+
 
 </script>
 <script type="text/javascript" src="bootstrap-datetimepicker/js/bootstrap-datetimepicker.js" charset="UTF-8"></script>

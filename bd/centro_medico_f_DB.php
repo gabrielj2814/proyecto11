@@ -43,7 +43,7 @@ function consultarJugadoreDeBajasSerie($serie,$sexo){
     for($contador=0;$contador<sizeof($jugadores);$contador++){
         $jugador=$jugadores[$contador];
         $atencionesDiariasJugador=consultarAtencionesDiariaJugador($jugador["idfichaJugador"]);
-        $baja=obtenerUltimaBajaJugador($atencionesDiariasJugador,1);
+        $baja=obtenerUltimaBajaJugador($atencionesDiariasJugador,"1");
         if(!empty($baja)){
             $jugador["atencionDiariaBaja"]=$baja;
             $jugadoreDeBaja[]=$jugador;
@@ -59,8 +59,8 @@ function consultarBajasSerie($serie,$sexo){
     for($contador=0;$contador<sizeof($jugadores);$contador++){
         $jugador=$jugadores[$contador];
         $atencionesDiariasJugador=consultarAtencionesDiariaJugador($jugador["idfichaJugador"]);
-        $estado=analizarEstadoDeAtencionesDiarias($atencionesDiariasJugador,1);
-        if(!$estado){
+        $estado=analizarEstadoDeAtencionesDiarias($atencionesDiariasJugador,"1");
+        if(!$estado && $estado!==0){
             $contadorJugadoresDeBaja++;
         }
     }
@@ -74,8 +74,8 @@ function consultarReintegroDeportivo($serie,$sexo){
     for($contador=0;$contador<sizeof($jugadores);$contador++){
         $jugador=$jugadores[$contador];
         $atencionesDiariasJugador=consultarAtencionesDiariaJugador($jugador["idfichaJugador"]);
-        $estado=analizarEstadoDeAtencionesDiarias($atencionesDiariasJugador,3);
-        if($estado){
+        $estado=analizarEstadoDeAtencionesDiarias($atencionesDiariasJugador,"3");
+        if($estado && $estado!==0){
             $contadorJugadoresReintegro++;
         }
     }
@@ -89,10 +89,12 @@ function consultarAptoParaJugar($serie,$sexo){
     for($contador=0;$contador<sizeof($jugadores);$contador++){
         $jugador=$jugadores[$contador];
         $atencionesDiariasJugador=consultarAtencionesDiariaJugador($jugador["idfichaJugador"]);
-        $estado=analizarEstadoDeAtencionesDiarias($atencionesDiariasJugador,1);
-        if($estado){
+        $estado=analizarEstadoDeAtencionesDiarias($atencionesDiariasJugador,"1");
+        
+        if($estado && $estado!==0){
             $contadorJugadoresAptoParaJugar++;
         }
+        
     }
     // print  $contadorJugadoresAptoParaJugar;
     return $contadorJugadoresAptoParaJugar;
@@ -104,8 +106,8 @@ function consultarAptoParaEntrenar($serie,$sexo){
     for($contador=0;$contador<sizeof($jugadores);$contador++){
         $jugador=$jugadores[$contador];
         $atencionesDiariasJugador=consultarAtencionesDiariaJugador($jugador["idfichaJugador"]);
-        $estado=analizarEstadoDeAtencionesDiarias($atencionesDiariasJugador,2);
-        if($estado){
+        $estado=analizarEstadoDeAtencionesDiarias($atencionesDiariasJugador,"2");
+        if($estado && $estado!==0){
             $contadorJugadoresAptoParaEntrenar++;
         }
     }
@@ -161,15 +163,15 @@ function consultarAtencionesDiariaJugador($id){
         // }
         // $row_atencion_diaria["lista_recomendacion"]=$datos_recomendacion;
 
-        // if($row_atencion_diaria["idinforme_medico"]!=null){
-        //     $SQL_informe_medico="SELECT * FROM informe_medico WHERE  idinforme_medico=".$row_atencion_diaria["idinforme_medico"].";";
-        //     $result_informe_medico=$link->query($SQL_informe_medico);
-        //     $datos_informe_medico=[];
-        //     while($row_informe_medico=mysqli_fetch_array($result_informe_medico)){
-        //         $datos_informe_medico[]=utf8_converter($row_informe_medico);
-        //     }
-        //     $row_atencion_diaria["informe_medico"]=$datos_informe_medico;
-        // }
+        if($row_atencion_diaria["idinforme_medico"]!==NULL){
+            $SQL_informe_medico="SELECT * FROM informe_medico WHERE  idinforme_medico=".$row_atencion_diaria["idinforme_medico"].";";
+            $result_informe_medico=$link->query($SQL_informe_medico);
+            $datos_informe_medico=[];
+            while($row_informe_medico=mysqli_fetch_array($result_informe_medico)){
+                $datos_informe_medico[]=utf8_converter($row_informe_medico);
+            }
+            $row_atencion_diaria["informe_medico"]=$datos_informe_medico;
+        }
         
         // $SQL_recomendacion="SELECT * FROM recomendaciones_atencion_diaria_federacion WHERE idatencion_diaria_federacion=".$row_atencion_diaria["idatencion_diaria_federacion"]."";
         // $result_recomendacion=$link->query($SQL_recomendacion);
@@ -186,7 +188,7 @@ function consultarAtencionesDiariaJugador($id){
 }
 
 function analizarEstadoDeAtencionesDiarias($atenciones,$estadoJugador){
-    $estado=false;
+    $estado=0;
     for($contador=0;$contador<sizeof($atenciones);$contador++){
         $atencion=$atenciones[$contador];
         if($atencion["estado_jugador"]===$estadoJugador){
