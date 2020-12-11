@@ -155,3 +155,14 @@
     $menu_link['centro_medico_f']                               = 'centro_medico_f.php';
     ////////////////////// COMENTARIOS //////////////////////////
     $comentarios['centro_medico_f']                             = 36;   
+    ////////////////////////// MODULO 13 - CENTOR MEDICO CLUB //////////////////////////////
+    ////////////////////////////////////////////////////////////////
+    $menu_lateral['centro_m']                                         = true;
+    $menu_lateral['centro_medico_c']                            = true;
+    /////////////////////////// DEMO /////////////////////////////
+    $demo['centro_m']                                                 = true;
+    $demo['centro_medico_c']                                    = true;
+    ////////////////////////// URL //////////////////////////////
+    $menu_link['centro_medico_c']                               = 'centro_medico_c.php';
+    ////////////////////// COMENTARIOS //////////////////////////
+    $comentarios['centro_medico_c']                             = 36;   

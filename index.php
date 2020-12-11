@@ -115,6 +115,12 @@ if(isset($GET_['cerrar_sesion'])){
       <a class="selectOne" style="margin-left:100px;" target="_BLANK" href="#">WORKBENCH</a><br /><!-- despues relacionar con modelo -->
     </div>
     <div class="contenedores">
+      <a class="selectOne" href="admin/centro_medico_c.php">CENTRO MEDICO CLUB</a>
+    </div>
+    <div class="contenedores_wb">
+      <a class="selectOne" style="margin-left:100px;" target="_BLANK" href="#">WORKBENCH</a><br /><!-- despues relacionar con modelo -->
+    </div>
+    <div class="contenedores">
       <a class="selectOne" href="admin/perfil_fisico.php">PERFIL FISICO</a>
     </div>
     <div class="contenedores_wb">
