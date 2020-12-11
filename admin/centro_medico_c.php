@@ -1573,8 +1573,8 @@ function insertarDatosTabla(jugadoresDebaja){
             <div style="box-sizing: border-box;border:0;width: 83.2%;height: 84px;margin-top: 15px;float: left;padding-left: 10px;">\
                 <div style="box-sizing: border-box;border:0px;width: 100%;height: 55px;">\
                     <div style="box-sizing: border-box;border:0;width: 33.3%;height: 55px;float:left;text-tranfrom:capitalize;">\
-                        <div style="color:#fff;">'+baja.nombre+'</div>\
-                        <div style="font-weight: bold;color: #fff;font-size: 14px;">'+baja.apellido1+'</div>\
+                        <div style="color:#fff;text-transform: capitalize;">'+baja.nombre+'</div>\
+                        <div style="font-weight: bold;color: #fff;font-size: 14px;text-transform: capitalize;">'+baja.apellido1+'</div>\
                     </div>\
                     <div style="box-sizing: border-box;border:0;width: 33.3%;height: 55px;float:left;" class="tooltip-customized">\
                         <div style="color:#fff;text-align: center;">Estado</div>\
@@ -1733,14 +1733,20 @@ function insertarDisponibilidadJugadores(noDisponible,siDisponible){
     credits:{
         enabled:false
     },
+    legend: {
+        itemStyle: {
+            color: 'white',
+            fontWeight: 'bold'
+        }
+    },
 
     series: [{
         name: 'Jugadores',
         keys: ['name', 'y', 'color', 'label'],
         data: [
             
-            ['<span style="color:#fff;">No disponibles</span>', noDisponible, '#EB001F' ],
-            ['<span style="color:#fff;">Disponibles</span>', siDisponible, '#50c878'],
+            ['No disponibles', noDisponible, '#EB001F'],
+            ['Disponibles', siDisponible, '#50c878'],
         
         ],
         dataLabels: {
