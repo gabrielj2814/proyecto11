@@ -1336,7 +1336,7 @@ app.controller("controlador_1",['$scope',function($scope){
                     
                     <div style="box-sizing: border-box;border:0;display:block;width:18.5%;height:80px;background-color:#3bb292;margin-right: 2%;float:left;margin-top:25px;border-radius:2px;">
                         
-                        <img style="box-sizing: border-box;border:0;display:block;width:40px;height:40px;float:left;margin-top:15px;margin-left:10px;" src="../config/aptoparajugaricon.png" alt="checked"/>
+                        <img style="box-sizing: border-box;border:0;display:block;width:37px;height:40px;float:left;margin-top:15px;margin-left:10px;" src="../config/aptoparajugaricon.png" alt="checked"/>
                         <div style="box-sizing: border-box;border:0;width: 67%;height:80px;float:left;margin-left:10px;padding-top: 5px;padding-right: 10px;">
                             <div style="color:#fff;font-size:10px;text-align:right;margin-bottom: 5px;">Apto para jugar</div>
                             <div style="color:#fff;font-size:25px;text-align:right;" id="contadorJugadoresDisponibles">0</div>
@@ -1389,8 +1389,8 @@ app.controller("controlador_1",['$scope',function($scope){
                 <h4 style="color:#fff;margin-left: 2.2%;">ESTADO ACTUAL DE LA PLANTILLA</h4>
 
                 <div style="box-sizing: border-box;border:0;width:95%;height:30px;margin-left:auto;margin-right:auto;margin-bottom:15px;line-height: 30px;font-size: 10px;">
-                    <div style="box-sizing: border-box;border:0;float:left;height:30px;color:#fff;margin-right:10px;"><img style="box-sizing: border-box;border:0;width:20px;height:20px;margin-right:5px;" src="../config/APTO PARA JUGAR VERDE.png" alt="checkedVerde"> Apto para jugar</div>
-                    <div style="box-sizing: border-box;border:0;float:left;height:30px;color:#fff;margin-right:10px;"><img style="box-sizing: border-box;border:0;width:20px;height:20px;margin-right:5px;" src="../config/apto para entrenaricon.png" alt="checkedAmarillo"> Apto para entrenar</div>
+                    <div style="box-sizing: border-box;border:0;float:left;height:30px;color:#fff;margin-right:10px;"><img style="box-sizing: border-box;border:0;width:17px;height:20px;margin-right:5px;" src="../config/APTO PARA JUGAR VERDE.png" alt="checkedVerde"> Apto para jugar</div>
+                    <div style="box-sizing: border-box;border:0;float:left;height:30px;color:#fff;margin-right:10px;"><img style="box-sizing: border-box;border:0;width:17px;height:20px;margin-right:5px;" src="../config/apto para entrenaricon.png" alt="checkedAmarillo"> Apto para entrenar</div>
                     <div style="box-sizing: border-box;border:0;float:left;height:30px;color:#fff;margin-right:10px;"><img style="box-sizing: border-box;border:0;display:inline-block;width: 30px;height:20px;margin-right:5px;background-color:#ea5863;padding-left: 4px;padding-right: 4px;" src="../config/jugadoresdebajaicon.png" alt="botiquin"> En reposo, En rehabilitación kinésica, En espera de cirugía, En espera de resultador examenes, En post operatorio</div>
                     <div style="box-sizing: border-box;border:0;float:left;height:30px;color:#fff;margin-right:10px;"><img style="box-sizing: border-box;border:0;display:inline-block;width: 30px;height:20px;margin-right:5px;background-color:#f7ad49;padding-left: 4px;padding-right: 4px;" src="../config/enreintegroicon.png" alt="run"> En reintegro deportivo</div>
                     
@@ -1601,11 +1601,11 @@ function insertarJugadoresPlantilla(jugadores){
         let iconEstado="";
         if(atencion.estado_jugador==="1"){
             colorFila="background-color:#2c444f;color:#fff;";
-            iconEstado='<img style="box-sizing: border-box;border:0;width:20px;height:20px;margin-right:5px;" src="../config/APTO PARA JUGAR VERDE.png" alt="checkedVerde">'
+            iconEstado='<img style="box-sizing: border-box;border:0;width:17px;height:20px;margin-right:5px;" src="../config/APTO PARA JUGAR VERDE.png" alt="checkedVerde">'
         }
         else if(atencion.estado_jugador==="2"){
             colorFila="background-color:#2c444f;color:#fff;";
-            iconEstado='<img style="box-sizing: border-box;border:0;width:20px;height:20px;margin-right:5px;" src="../config/apto para entrenaricon.png" alt="checkedAmarillo">'
+            iconEstado='<img style="box-sizing: border-box;border:0;width:17px;height:20px;margin-right:5px;" src="../config/apto para entrenaricon.png" alt="checkedAmarillo">'
         }
         else if(atencion.estado_jugador==="3" || atencion.estado_jugador==="10"){
             colorFila="background-color:#fbb017;color:#111;";
