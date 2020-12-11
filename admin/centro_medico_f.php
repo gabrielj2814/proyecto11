@@ -1421,7 +1421,7 @@ app.controller("controlador_1",['$scope',function($scope){
                         <div style="box-sizing: border-box;border:0;width:100%;height:30px;background-color:#445f7a;text-align:center;color:#fff;font-weight: bold;line-height: 30px;">
                                PORCENTAJE DE DISPONIBILIDAD DEL PLANTEL
                         </div>
-                        <div style="box-sizing: border-box;border:0;width:100%;height:200px;max-height:200px;padding-left:80px;">
+                        <div style="box-sizing: border-box;border:0;width:100%;height:200px;max-height:200px;padding-left:18%;">
 
                             <figure class="highcharts-figure" style="height: 100%;width: 100%;">
                                 <div id="container" style="height: 100%;width: 100%;"></div>
