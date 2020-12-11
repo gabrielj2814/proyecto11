@@ -936,6 +936,49 @@ function t_serie ($serie){
                 height: 93.5%;
             }
         </style>
+        <style>
+            /* Tooltip container */
+            .tooltip-customized {
+                position: relative;
+                display: inline-block;
+            }
+
+            /* Tooltip text */
+            .tooltip-customized .tooltiptext {
+            visibility: hidden;
+            width: 120px;
+            background-color: black;
+            color: #fff;
+            text-align: center;
+            padding: 5px 5px;
+            border-radius: 6px;
+            
+            /* Position the tooltip text - see examples below! */
+            position: absolute;
+            z-index: 1;
+
+            /* /Top/ */
+            bottom: 61%;
+            left: 50%;
+            margin-left: -60px; /* Use half of the width (120/2 = 60), to center the tooltip */  
+            }
+
+            /* Show the tooltip text when you mouse over the tooltip container */
+            .tooltip-customized:hover .tooltiptext {
+            visibility: visible;
+            }
+
+            .tooltip-customized .tooltiptext::after {
+            content: " ";
+            position: absolute;
+            top: 100%; /* At the bottom of the tooltip */
+            left: 50%;
+            margin-left: -5px;
+            border-width: 5px;
+            border-style: solid;
+            border-color: black transparent transparent transparent;
+            }
+        </style>
                     
                     <link rel="stylesheet" href="flags/flags.css" />
                     <link rel="stylesheet" href="flags/flags.min.css" />
@@ -1264,7 +1307,7 @@ app.controller("controlador_1",['$scope',function($scope){
             #fbb017
             -->
 
-            <div id="panel" style="height:87.2vh;padding-top:15px;display:none;">
+            <div id="panel" style="height:87.2vh;padding-top:15px;display:none;padding-bottom:15px;">
                 <button class="boton_volver" onclick="mostrarInicio()" style="margin-left:2.5%;margin-bottom:15px;"><i class="icon-arrow-left"></i> volver</button>
                 <div style="box-sizing: border-box;border:0;width:95%;height:130px;margin-bottom:30px;margin-left:auto;margin-right:auto;">
                     <img style="box-sizing: border-box;border:0;display:block;width:130px;height:130px;margin-right: 5%;float:left;" src="../config/logo_equipo.png" alt="logo_equipo">
@@ -1314,41 +1357,13 @@ app.controller("controlador_1",['$scope',function($scope){
                     </div>
                 </div>
 
-                <div style="box-sizing: border-box;border:0;width:95%;height:230px;margin-bottom:30px;margin-left:auto;margin-right:auto;">
+                <div style="box-sizing: border-box;border:0;width:95%;height:230px;margin-bottom:60px;margin-left:auto;margin-right:auto;">
                     
                     <div style="box-sizing: border-box;border:0;float:left;width:47.5%;height:230px;margin-right:5%;background-color:#2f4253">
                         <div style="box-sizing: border-box;border:0;width:100%;height:30px;background-color:#445f7a;text-align:center;color:#fff;font-weight: bold;line-height: 30px;">
                                 <img style="height: 25px;margin-right: 5px;" src="../config/debaja.png" alt="icon de baja">  JUGADORES DE BAJA
                         </div>
-                        <div id="tabla_bajas" style="box-sizing: border-box;border:0;width:100%;height:200px;max-height:200px;">
-                            <!-- fila inicio tabla  -->
-                            <!-- <div class="filaTabla" style="box-sizing: border-box;border:0;width:95%;height:100px;margin-left:auto;margin-right:auto;position: relative;">
-                                
-                                <div style="box-sizing: border-box;border:2px solid #fff;display:block;float:left;width:70px;height:70px;margin-top: 15px;border-radius: 35px;overflow:hidden;position: relative;background-color:#fff;">
-                                    <img style="box-sizing: border-box;border:0;display:block;width:70px;height:70px;" src="./foto_jugadores/12.png"/>
-                                </div>
-                                <img style="box-sizing: border-box;border:0;display:block;width:12px;height:12px;position: absolute;top: 18px;left: 53px;z-index: 100;" src="../config/lesionicon.png" alt="icon lesion">
-                                <div style="box-sizing: border-box;border:0;width: 83.2%;height: 84px;margin-top: 15px;float: left;padding-left: 10px;">
-                                    <div style="box-sizing: border-box;border:0px;width: 100%;height: 55px;">
-                                        <div style="box-sizing: border-box;border:0;width: 33.3%;height: 55px;float:left;">
-                                            <div style="color:#fff;">Nombre</div>
-                                            <div style="font-weight: bold;color: #fff;font-size: 14px;">Apellido</div>
-                                        </div>
-                                        <div style="box-sizing: border-box;border:0;width: 33.3%;height: 55px;float:left;">
-                                            <div style="color:#fff;text-align: center;">Estado</div>
-                                            <div style="font-weight: bold;color: #d42d2d;text-align: center;">estado jugador</div>
-                                        </div>
-                                        <div style="box-sizing: border-box;border:0;width: 33.3%;height: 55px;float:left;position:relative;">
-                                            <div style="color:#fff;text-align: center;">Fecha estimada alta</div>
-                                            <div style="font-weight: bold;color: #fff;text-align: center;">00-00-0000</div>
-                                            <img style="box-sizing: border-box;border:0;display:block;width:15px;height:15px;position: absolute;    top: 21px;left: 0;z-index: 100;" src="../config/calenicon.png" alt="icon lesion">
-                                        </div>
-                                    </div>
-                                    <div style="color:#fff;">Diagnóstico: sssssss</div>
-                                </div>
-
-                            </div> -->
-                            <!-- fila fin tabla  -->
+                        <div id="tabla_bajas" style="box-sizing: border-box;border:0;width:100%;height:200px;max-height:200px;padding-top:15px;">
                             
                     
                         </div>
@@ -1368,6 +1383,38 @@ app.controller("controlador_1",['$scope',function($scope){
                     </div>
 
 
+                </div>
+<!-- estado -->
+
+                <h4 style="color:#fff;margin-left: 2.2%;">ESTADO ACTUAL DE LA PLANTILLA</h4>
+
+                <div style="box-sizing: border-box;border:0;width:95%;height:30px;margin-left:auto;margin-right:auto;margin-bottom:15px;line-height: 30px;font-size: 10px;">
+                    <div style="box-sizing: border-box;border:0;float:left;height:30px;color:#fff;margin-right:10px;"><img style="box-sizing: border-box;border:0;width:20px;height:20px;margin-right:5px;" src="../config/APTO PARA JUGAR VERDE.png" alt="checkedVerde"> Apto para jugar</div>
+                    <div style="box-sizing: border-box;border:0;float:left;height:30px;color:#fff;margin-right:10px;"><img style="box-sizing: border-box;border:0;width:20px;height:20px;margin-right:5px;" src="../config/apto para entrenaricon.png" alt="checkedAmarillo"> Apto para entrenar</div>
+                    <div style="box-sizing: border-box;border:0;float:left;height:30px;color:#fff;margin-right:10px;"><img style="box-sizing: border-box;border:0;display:inline-block;width: 30px;height:20px;margin-right:5px;background-color:#ea5863;padding-left: 4px;padding-right: 4px;" src="../config/jugadoresdebajaicon.png" alt="botiquin"> En reposo, En rehabilitación kinésica, En espera de cirugía, En espera de resultador examenes, En post operatorio</div>
+                    <div style="box-sizing: border-box;border:0;float:left;height:30px;color:#fff;margin-right:10px;"><img style="box-sizing: border-box;border:0;display:inline-block;width: 30px;height:20px;margin-right:5px;background-color:#f7ad49;padding-left: 4px;padding-right: 4px;" src="../config/enreintegroicon.png" alt="run"> En reintegro deportivo</div>
+                    
+                </div>
+
+                <div style="box-sizing: border-box;border:0;width:95%;height:auto;margin-left:auto;margin-right:auto;padding-bottom:45px;">
+                    <div style="box-sizing: border-box;border:0;width:100%;height:20px;background-color:#2c444f;color:#fff;">
+                        <div style="box-sizing: border-box;border:0;width: 4%;height: 20px;line-height: 20px;text-align: center;font-weight: bold;float:left;">#</div>
+                        <div style="box-sizing: border-box;border:0;width: 17%;height: 20px;line-height: 20px;font-weight: bold;float:left;">JUGADOR</div>
+                        <div style="box-sizing: border-box;border:0;width: 4%;height: 20px;line-height: 20px;text-align: center;font-weight: bold;float:left;">NAC</div>
+                        <div style="box-sizing: border-box;border:0;width: 9%;height: 20px;line-height: 20px;font-weight: bold;float:left;">POSICION</div>
+                        <div style="box-sizing: border-box;border:0;width: 7%;height: 20px;line-height: 20px;font-weight: bold;float:left;text-align:center;">LESIONES</div>
+                        <div style="box-sizing: border-box;border:0;width: 11%;height: 20px;line-height: 20px;font-weight: bold;float:left;text-align:center;">DIAS DE BAJA</div>
+                        <div style="box-sizing: border-box;border:0;width: 18%;height: 20px;line-height: 20px;font-weight: bold;float:left;">STATUS ACTUAL</div>
+                        <div style="box-sizing: border-box;border:0;width: 18%;height: 20px;line-height: 20px;font-weight: bold;float:left;text-align:center;">FECHA ESTIMADA ALTA</div>
+                        <div style="box-sizing: border-box;border:0;width: 12%;height: 20px;line-height: 20px;font-weight: bold;float:left;">N° DE ATENCIONES</div>
+                    </div>
+                    <div id="contenedor_tabla_plantilla" style="box-sizing: border-box;border:0;width:100%;height:auto;">
+
+
+
+                    </div>
+                    <div style="box-sizing: border-box;border:0;width:100%;height:20px;background-color:#2c444f;border-bottom-left-radius: 5px;border-bottom-right-radius: 5px;"></div>
+    
                 </div>
 
             </div>
@@ -1422,6 +1469,7 @@ function consultarJugadorPorSerie(serie_sexo){
             $("#contadorJugadoresEntramiento").text(json.aptoParaEntrenar);
             $("#contadorJugadoresDisponibles").text(json.aptoParaJugar);
             insertarDatosTabla(json.jugadoreDeBaja)
+            insertarJugadoresPlantilla(json.ultimaAtencionjugadores);
 
         },error: function(){// will fire when timeout is reached
             // alert("errorXXXXX");
@@ -1472,13 +1520,14 @@ function insertarDatosTabla(jugadoresDebaja){
             <img style="box-sizing: border-box;border:0;display:block;width:12px;height:12px;position: absolute;top: 18px;left: 53px;z-index: 100;" src="../config/lesionicon.png" alt="icon lesion">\
             <div style="box-sizing: border-box;border:0;width: 83.2%;height: 84px;margin-top: 15px;float: left;padding-left: 10px;">\
                 <div style="box-sizing: border-box;border:0px;width: 100%;height: 55px;">\
-                    <div style="box-sizing: border-box;border:0;width: 33.3%;height: 55px;float:left;text-tranfrom:uppercase;">\
+                    <div style="box-sizing: border-box;border:0;width: 33.3%;height: 55px;float:left;text-tranfrom:capitalize;">\
                         <div style="color:#fff;">'+baja.nombre+'</div>\
                         <div style="font-weight: bold;color: #fff;font-size: 14px;">'+baja.apellido1+'</div>\
                     </div>\
-                    <div style="box-sizing: border-box;border:0;width: 33.3%;height: 55px;float:left;">\
+                    <div style="box-sizing: border-box;border:0;width: 33.3%;height: 55px;float:left;" class="tooltip-customized">\
                         <div style="color:#fff;text-align: center;">Estado</div>\
-                        <div style="font-weight: bold;color: #d42d2d;text-align: center;overflow: hidden;text-overflow: ellipsis;height: 37px;">No apto, '+listaEstadoJugador[parseInt(baja.atencionDiariaBaja.estado_jugador)]+'</div>\
+                        <div style="font-weight: bold;color: #d42d2d;text-align: center;overflow: hidden;text-overflow: ellipsis;height: 37px;" >No apto, '+listaEstadoJugador[parseInt(baja.atencionDiariaBaja.estado_jugador)]+'</div>\
+                        <span class="tooltiptext">No apto, '+listaEstadoJugador[parseInt(baja.atencionDiariaBaja.estado_jugador)]+'</span>\
                     </div>\
                     <div style="box-sizing: border-box;border:0;width: 33.3%;height: 55px;float:left;position:relative;">\
                         <div style="color:#fff;text-align: center;">Fecha estimada alta</div>\
@@ -1500,7 +1549,7 @@ function insertarDatosTabla(jugadoresDebaja){
         strListaBaja=listaBajas[0];
     }
 
-    if(listaBajas.length>2){
+    if(listaBajas.length>1){
         $("#tabla_bajas").css("overflow","scroll");
         $("#tabla_bajas").css("overflow-x","hidden");
     }
@@ -1519,6 +1568,91 @@ function fecha_formato_ddmmaaa( fecha ) {
     var anio = fecha.substring(0, 4); 
     // Resultado:
     return fecha = dia + "-" + mes + "-" + anio;
+}
+
+function capturarTexto(texto,desde,hasta){
+    return texto.substring(desde,hasta)+"..."
+}
+
+function insertarJugadoresPlantilla(jugadores){
+    $("#contenedor_tabla_plantilla").empty();
+    let listaEstadoJugador=[
+        "sin estado",
+        "Apto para jugar",
+        "Apto para entrenar",
+        "En reintegro deportivo",
+        "En rehabilitación kinésica",
+        "En espera de revisión médica",
+        "En espera de resultado de examEnes",
+        "En post operatorio",
+        "En espera de cirugia",
+        "En reposo",
+        "En reintegro"
+    ];
+    let filaJugadores=[];
+    let contandor=0;
+    for(let jugador of jugadores){
+        let atencion=jugador.ultimaAtencion;
+        let fechaEstimadaDeAlta="-";
+        if(atencion.fecha_estimada_de_alta!=null){
+            fechaEstimadaDeAlta='<img style="box-sizing: border-box;border:0;display:inline-block;width:15px;height:15px;margin-right: 10px;" src="../config/calenicon.png" alt="icon lesion">'+fecha_formato_ddmmaaa(atencion.fecha_estimada_de_alta);
+        }
+        let colorFila="";
+        let iconEstado="";
+        if(atencion.estado_jugador==="1"){
+            colorFila="background-color:#2c444f;color:#fff;";
+            iconEstado='<img style="box-sizing: border-box;border:0;width:20px;height:20px;margin-right:5px;" src="../config/APTO PARA JUGAR VERDE.png" alt="checkedVerde">'
+        }
+        else if(atencion.estado_jugador==="2"){
+            colorFila="background-color:#2c444f;color:#fff;";
+            iconEstado='<img style="box-sizing: border-box;border:0;width:20px;height:20px;margin-right:5px;" src="../config/apto para entrenaricon.png" alt="checkedAmarillo">'
+        }
+        else if(atencion.estado_jugador==="3" || atencion.estado_jugador==="10"){
+            colorFila="background-color:#fbb017;color:#111;";
+            iconEstado='<img style="box-sizing: border-box;border:0;display:inline-block;width: 30px;height:20px;margin-right:5px;background-color:#f7ad49;padding-left: 4px;padding-right: 4px;" src="../config/enreintegroicon.png" alt="run">'
+        }
+        else{
+            colorFila="background-color:#ea5863;color:#fff;";
+            iconEstado='<img style="box-sizing: border-box;border:0;display:inline-block;width: 30px;height:20px;margin-right:5px;background-color:#ea5863;padding-left: 4px;padding-right: 4px;" src="../config/jugadoresdebajaicon.png" alt="botiquin">'
+        }
+        let diasDeBaja="-";
+        let lesiones=atencion.informesMedico.length;;
+        if(atencion.informe_medico){
+            diasDeBaja=atencion.informe_medico[0].agregado_dias_de_baja+" dias";
+        }
+
+
+        let plantilla='\
+        <div style="box-sizing: border-box;border:0;width:100%;height:50px;'+colorFila+'">\
+            <div style="box-sizing: border-box;border:0;width: 4%;height: 50px;line-height: 50px;text-align: center;font-weight: bold;float:left;">'+(contandor+1)+'</div>\
+            <div style="box-sizing: border-box;border:0;width: 17%;height: 50px;line-height: 50px;font-weight: bold;float:left;">\
+                <div style="box-sizing: border-box;border:2px solid #fff;display:block;float:left;width:41px;height:41px;margin-top: 3px;border-radius: 35px;overflow:hidden;background-color:#fff;">\
+                    <img style="box-sizing: border-box;border:0;display:block;width:41px;height:41px;" src="./foto_jugadores/'+jugador.idfichaJugador+'.png?idea='+new Date().getTime()+'">\
+                </div>\
+                <div style="box-sizing: border-box;width: 75%;float: left;padding-left: 10px;font-size: 10px;font-weight: normal;overflow: hidden;text-overflow: ellipsis;height: 45px;text-transform:capitalize;">\
+                        '+jugador.nombre+' '+jugador.apellido1+' '+jugador.apellido2+'\
+                </div>\
+            </div>\
+            <div style="box-sizing: border-box;border:0;width: 4%;height: 50px;line-height: 50px;text-align: center;font-weight: bold;float:left;"><img src="flags/blank.gif" class="flag flag-'+(jugador.nacionalidad1.toLowerCase())+'"></div>\
+            <div style="box-sizing: border-box;border:0;width: 9%;height: 50px;line-height: 50px;font-weight: bold;float:left;font-size: 10px;font-weight: normal;">'+jugador.posicionTexto+'</div>\
+            <div style="box-sizing: border-box;border:0;width: 7%;height: 50px;line-height: 50px;font-weight: bold;float:left;font-size: 10px;font-weight: normal;text-align:center;"> '+lesiones+' lesiones</div>\
+            <div style="box-sizing: border-box;border:0;width: 11%;height: 50px;line-height: 50px;font-weight: bold;float:left;font-size: 10px;font-weight: normal;text-align:center;"> '+diasDeBaja+'</div>\
+            <div style="box-sizing: border-box;border:0;width: 18%;height: 50px;line-height: 50px;font-weight: bold;float:left;font-size: 10px;font-weight: normal;" class="tooltip-customized"> '+iconEstado+' <span class="tooltiptext" style="line-height: 16px;"> '+listaEstadoJugador[parseInt(atencion.estado_jugador)]+'</span> '+capturarTexto(listaEstadoJugador[parseInt(atencion.estado_jugador)],0,20)+'</div>\
+            <div style="box-sizing: border-box;border:0;width: 18%;height: 50px;line-height: 50px;font-weight: bold;float:left;font-size: 10px;font-weight: normal;text-align:center;"> '+fechaEstimadaDeAlta+' </div>\
+            <div style="box-sizing: border-box;border:0;width: 12%;height: 50px;line-height: 50px;font-weight: bold;float:left;font-size: 10px;font-weight: normal;"> '+jugador.numeroTotalDeAtenciones+' atenciones</div>\
+        </div>';
+        contandor++
+        filaJugadores.push(plantilla);
+    }
+    let strFila="";
+    if(filaJugadores.length>1){
+        strFila=filaJugadores.join("");
+    }
+    else{
+        strFila=filaJugadores[0];
+    }
+    $("#contenedor_tabla_plantilla").append(strFila);
+
 }
 
 

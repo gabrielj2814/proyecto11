@@ -172,6 +172,14 @@ function consultarAtencionesDiariaJugador($id){
             }
             $row_atencion_diaria["informe_medico"]=$datos_informe_medico;
         }
+
+        $SQL_informe_medico2="SELECT * FROM informe_medico WHERE  idfichaJugador=".$row_atencion_diaria["idfichaJugador"].";";
+        $result_informe_medico2=$link->query($SQL_informe_medico2);
+        $datos_informe_medico2=[];
+        while($row_informe_medico2=mysqli_fetch_array($result_informe_medico2)){
+            $datos_informe_medico2[]=utf8_converter($row_informe_medico2);
+        }
+        $row_atencion_diaria["informesMedico"]=$datos_informe_medico2;
         
         // $SQL_recomendacion="SELECT * FROM recomendaciones_atencion_diaria_federacion WHERE idatencion_diaria_federacion=".$row_atencion_diaria["idatencion_diaria_federacion"]."";
         // $result_recomendacion=$link->query($SQL_recomendacion);
