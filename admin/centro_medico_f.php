@@ -979,6 +979,48 @@ function t_serie ($serie){
             border-color: black transparent transparent transparent;
             }
         </style>
+        <style>
+        
+        .highcharts-figure, .highcharts-data-table table {
+            min-width: 320px; 
+            max-width: 800px;
+            margin: 1em auto;
+        }
+
+        .highcharts-data-table table {
+            font-family: Verdana, sans-serif;
+            border-collapse: collapse;
+            border: 1px solid #EBEBEB;
+            margin: 10px auto;
+            text-align: center;
+            width: 100%;
+            max-width: 500px;
+        }
+        .highcharts-data-table caption {
+            padding: 1em 0;
+            font-size: 1.2em;
+            color: #555;
+        }
+        .highcharts-data-table th {
+            font-weight: 600;
+            padding: 0.5em;
+        }
+        .highcharts-data-table td, .highcharts-data-table th, .highcharts-data-table caption {
+            padding: 0.5em;
+        }
+        .highcharts-data-table thead tr, .highcharts-data-table tr:nth-child(even) {
+            background: #f8f8f8;
+        }
+        .highcharts-data-table tr:hover {
+            background: #f1f7ff;
+        }
+
+
+        input[type="number"] {
+            min-width: 50px;
+        }
+        
+        </style>
                     
                     <link rel="stylesheet" href="flags/flags.css" />
                     <link rel="stylesheet" href="flags/flags.min.css" />
@@ -990,8 +1032,11 @@ function t_serie ($serie){
 <script src="js/angular.min.js" type="application/javascript"></script>
 <script type="text/javascript" src="graficos/jquery-3.1.1.min.js"></script>
 <script type="text/javascript" src="graficos/highcharts-3d.js"></script>
-<script type="text/javascript" src="graficos/highcharts.js"></script>
-<script type="text/javascript" src="graficos/exporting.js"></script>
+<!-- <script type="text/javascript" src="graficos/highcharts.js"></script> -->
+<!-- <script type="text/javascript" src="graficos/exporting.js"></script> -->
+<!-- <script type="text/javascript" src="graficos/accessibility.js"></script>
+<script type="text/javascript" src="graficos/item-series.js"></script>
+<script type="text/javascript" src="graficos/export-data.js"></script> -->
 <!--<script type="text/javascript" src="graficos/highcharts-3d.js"></script>-->
 <script type="text/javascript" src="graficos/highcharts-more.js"></script>
 <script type="text/javascript" src="graficos/series-label.js"></script>
@@ -1376,9 +1421,16 @@ app.controller("controlador_1",['$scope',function($scope){
                         <div style="box-sizing: border-box;border:0;width:100%;height:30px;background-color:#445f7a;text-align:center;color:#fff;font-weight: bold;line-height: 30px;">
                                PORCENTAJE DE DISPONIBILIDAD DEL PLANTEL
                         </div>
-                        <div style="box-sizing: border-box;border:0;width:100%;height:200px;max-height:200px;">
+                        <div style="box-sizing: border-box;border:0;width:100%;height:200px;max-height:200px;padding-left:80px;">
+
+                            <figure class="highcharts-figure" style="height: 100%;width: 100%;">
+                                <div id="container" style="height: 100%;width: 100%;"></div>
+                                <p class="highcharts-description"></p>
+                            </figure>
  
                         </div>
+
+                       
                     
                     </div>
 
@@ -1470,6 +1522,7 @@ function consultarJugadorPorSerie(serie_sexo){
             $("#contadorJugadoresDisponibles").text(json.aptoParaJugar);
             insertarDatosTabla(json.jugadoreDeBaja)
             insertarJugadoresPlantilla(json.ultimaAtencionjugadores);
+            insertarDisponibilidadJugadores(json.bajas,json.aptoParaJugar);
 
         },error: function(){// will fire when timeout is reached
             // alert("errorXXXXX");
@@ -1655,12 +1708,118 @@ function insertarJugadoresPlantilla(jugadores){
 
 }
 
+function insertarDisponibilidadJugadores(noDisponible,siDisponible){
+
+
+    
+    Highcharts.chart('container', {
+
+    chart: {
+        type: 'item',
+        backgroundColor:null,
+        
+    },
+
+    title: {
+        text: null
+    },
+
+    subtitle: {
+        text: null
+    },
+    tooltip: {
+        pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y}</b> ({point.percentage:.0f}%)<br/>',
+
+    },
+    credits:{
+        enabled:false
+    },
+
+    series: [{
+        name: 'Jugadores',
+        keys: ['name', 'y', 'color', 'label'],
+        data: [
+            
+            ['<span style="color:#fff;">No disponibles</span>', noDisponible, '#EB001F' ],
+            ['<span style="color:#fff;">Disponibles</span>', siDisponible, '#50c878'],
+        
+        ],
+        dataLabels: {
+            enabled: true,
+            format: '{point.y}',
+            color: '#FCFFFD',
+        },
+
+        // Circular options
+        center: ['50%', '88%'],
+        size: '170%',
+        startAngle: -100,
+        endAngle: 100
+    }]
+    });
+}
+
 
 </script>
 <script type="text/javascript" src="bootstrap-datetimepicker/js/bootstrap-datetimepicker.js" charset="UTF-8"></script>
 <script type="text/javascript" src="bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.es.js" charset="UTF-8"></script>
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/item-series.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/modules/export-data.js"></script>
+<script src="https://code.highcharts.com/modules/accessibility.js"></script>
+
 <script>
 // scripts 
     mostrar_al_cargar_pagina();
+
+//     Highcharts.chart('container', {
+
+// chart: {
+//     type: 'item',
+//     backgroundColor:null
+// },
+
+// title: {
+//     text: null
+// },
+
+// subtitle: {
+//     text: null
+// },
+// tooltip: {
+//     pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y}</b> ({point.percentage:.0f}%)<br/>',
+
+// },
+// credits:{
+//     enabled:false
+// },
+
+// series: [{
+//     name: 'Jugadores',
+//     keys: ['name', 'y', 'color', 'label'],
+//     data: [
+        
+//         ['No disponibles', 5, '#EB001F' ],
+//         ['Disponibles', 22, '#50c878'],
+    
+//     ],
+//     dataLabels: {
+//         enabled: true,
+//         format: '{point.y}',
+//         color: '#FCFFFD',
+//     },
+
+//     // Circular options
+//     center: ['50%', '88%'],
+//     size: '170%',
+//     startAngle: -100,
+//     endAngle: 100
+// }]
+// });
+
+
+
+
 
 </script>
