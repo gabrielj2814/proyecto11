@@ -96,6 +96,103 @@ if(array_key_exists("array_id_atencion_diaria",$_POST)){
         ';
         $contadore_jugadores++;
       }
+
+
+
+
+      if($atencion_diaria["datos"][0]["tipo_atencion_atencion_diaria"]==="5"){
+        $fila='
+            <div style="box-sizing: border-box;width:95%;height:100px;margin-bottom:15px;margin-left:auto;margin-right:auto;/*background-color:lime;*/border:0;">
+                <div style="box-sizing: border-box;width:100%;height:25px;/*background-color:blue;*/border:0;">
+                    <div style="box-sizing: border-box;display:inline-block;float:left;width:17%;height:25px;/*background:red;*/font-size:12px;">
+                      <img style="display:inline-block;height:25px;width:20%;border:1px solid #555;border-radius:13px;" src="../../foto_jugadores/'.$atencion_diaria["datos"][0]["idfichaJugador"].'.png">
+                      <div style="display:inline-block;height:25px;width:80%;line-height:14px;">'.$my_string.'</div>
+                    </div>
+                    <div style="box-sizing: border-box;display:inline-block;float:left;width:13%;height:25px;/*background:grey;*/font-size:12px;line-height:10px;">
+                        Nuevo Atencion
+                    </div>
+                    <div style="box-sizing: border-box;display:inline-block;float:left;width:30%;height:25px;/*background:purple;*/font-size:12px;line-height:10px;">
+                        '.strMinimo($atencion_diaria["datos"][0]["diagnostico_atencion_diaria"],30,27).'
+                    </div>
+                    <div style="box-sizing: border-box;display:inline-block;float:left;width:10%;height:25px;/*background:lime;*/font-size:12px;line-height:10px;">
+                      '.(($atencion_diaria["datos"][0]["derivado_seguro_atencion_diaria"]==="1")?"Si":"No").'
+                    </div>
+                    <div style="box-sizing: border-box;display:inline-block;float:left;width:15%;height:25px;/*background:#fff;*/font-size:12px;line-height:10px;">
+                        '.strMinimo(concatenarListasImplode(encontrarTratamientos($atencion_diaria["datos"][0]["lista_tratamiento"],$tratamientos["datos"])),25,20).'
+                    </div>
+                </div>
+                <div style="clear:left;box-sizing: border-box;width:100%;height:auto;/*background:#0b1972;*/font-size:12px;">
+                    <span style="font-weight: bold">Observación Kinesiologo</span>: '.(($atencion_diaria["datos"][0]["observacion_kinesiologo"]!=null)?$atencion_diaria["datos"][0]["observacion_kinesiologo"]:"sin obsevación").'
+                </div>
+            </div>
+        ';
+        $contadore_jugadores++;
+      }
+
+      if($atencion_diaria["datos"][0]["tipo_atencion_atencion_diaria"]==="6"){
+        $fila='
+        <div style="box-sizing: border-box;width:95%;height:100px;margin-bottom:15px;margin-left:auto;margin-right:auto;/*background-color:lime;*/border:0;">
+        <div style="box-sizing: border-box;width:100%;height:25px;/*background-color:blue;*/border:0;">
+            <div style="box-sizing: border-box;display:inline-block;float:left;width:17%;height:25px;/*background:red;*/font-size:12px;">
+              <img style="display:inline-block;height:25px;width:20%;border:1px solid #555;border-radius:13px;" src="../../foto_jugadores/'.$atencion_diaria["datos"][0]["idfichaJugador"].'.png">
+              <div style="display:inline-block;height:25px;width:80%;line-height:14px;">'.$my_string.'</div>
+            </div>
+            <div style="box-sizing: border-box;display:inline-block;float:left;width:13%;height:25px;/*background:grey;*/font-size:12px;line-height:10px;">
+                Control Médico
+            </div>
+            <div style="box-sizing: border-box;display:inline-block;float:left;width:30%;height:25px;/*background:purple;*/font-size:12px;line-height:10px;">
+                '.strMinimo(((array_key_exists("informe_medico",$atencion_diaria["datos"][0]))?$atencion_diaria["datos"][0]["informe_medico"][0]["diagnostico"]:"                "),30,27).'
+            </div>
+            <div style="box-sizing: border-box;display:inline-block;float:left;width:10%;height:25px;/*background:lime;*/font-size:12px;line-height:10px;">
+              '.$srtSeguroMedico.'
+            </div>
+            <div style="box-sizing: border-box;display:inline-block;float:left;width:15%;height:25px;/*background:#fff;*/font-size:12px;line-height:10px;">
+                '.strMinimo(concatenarListasImplode(encontrarTratamientos($atencion_diaria["datos"][0]["lista_tratamiento"],$tratamientos["datos"])),25,20).'
+            </div>
+        </div>
+        <div style="clear:left;box-sizing: border-box;width:100%;height:auto;/*background:#0b1972;*/font-size:12px;">
+            <span style="font-weight: bold">Observación General</span>: '.(($atencion_diaria["datos"][0]["observacion_general"]!=null)?$atencion_diaria["datos"][0]["observacion_general"]:"sin obsevación").'
+        </div>
+    </div>
+        ';
+        $contadore_jugadores++;
+      }
+      if($atencion_diaria["datos"][0]["tipo_atencion_atencion_diaria"]==="7"){
+        $fila='
+        <div style="box-sizing: border-box;width:95%;height:100px;margin-bottom:15px;margin-left:auto;margin-right:auto;/*background-color:lime;*/border:0;">
+        <div style="box-sizing: border-box;width:100%;height:25px;/*background-color:blue;*/border:0;">
+            <div style="box-sizing: border-box;display:inline-block;float:left;width:17%;height:25px;/*background:red;*/font-size:12px;">
+              <img style="display:inline-block;height:25px;width:20%;border:1px solid #555;border-radius:13px;" src="../../foto_jugadores/'.$atencion_diaria["datos"][0]["idfichaJugador"].'.png">
+              <div style="display:inline-block;height:25px;width:80%;line-height:14px;">'.$my_string.'</div>
+            </div>
+            <div style="box-sizing: border-box;display:inline-block;float:left;width:13%;height:25px;/*background:grey;*/font-size:12px;line-height:10px;">
+                Sesion Readaptador
+            </div>
+            <div style="box-sizing: border-box;display:inline-block;float:left;width:30%;height:25px;/*background:purple;*/font-size:12px;line-height:10px;">
+                '.strMinimo(((array_key_exists("informe_medico",$atencion_diaria["datos"][0]))?$atencion_diaria["datos"][0]["informe_medico"][0]["diagnostico"]:"                "),30,27).'
+            </div>
+            <div style="box-sizing: border-box;display:inline-block;float:left;width:10%;height:25px;/*background:lime;*/font-size:12px;line-height:10px;">
+              '.$srtSeguroMedico.'
+            </div>
+            <div style="box-sizing: border-box;display:inline-block;float:left;width:15%;height:25px;/*background:#fff;*/font-size:12px;line-height:10px;">
+                '.strMinimo(concatenarListasImplode(encontrarTratamientos($atencion_diaria["datos"][0]["lista_tratamiento"],$tratamientos["datos"])),25,20).'
+            </div>
+        </div>
+        <div style="clear:left;box-sizing: border-box;width:100%;height:auto;/*background:#0b1972;*/font-size:12px;">
+            <span style="font-weight: bold">Observación General</span>: '.(($atencion_diaria["datos"][0]["observacion_general"]!=null)?$atencion_diaria["datos"][0]["observacion_general"]:"sin obsevación").'
+        </div>
+    </div>
+        ';
+        $contadore_jugadores++;
+      }
+
+
+
+
+
+
+
+
       elseif($atencion_diaria["datos"][0]["tipo_atencion_atencion_diaria"]==="2"){
         $srtSeguroMedico="";
         if(array_key_exists("informe_medico",$atencion_diaria["datos"][0])){
@@ -111,7 +208,7 @@ if(array_key_exists("array_id_atencion_diaria",$_POST)){
                       <div style="display:inline-block;height:25px;width:80%;line-height:14px;">'.$my_string.'</div>
                     </div>
                     <div style="box-sizing: border-box;display:inline-block;float:left;width:13%;height:25px;/*background:grey;*/font-size:12px;line-height:10px;">
-                        Control
+                        Control / sesion kinesica
                     </div>
                     <div style="box-sizing: border-box;display:inline-block;float:left;width:30%;height:25px;/*background:purple;*/font-size:12px;line-height:10px;">
                         '.strMinimo(((array_key_exists("informe_medico",$atencion_diaria["datos"][0]))?$atencion_diaria["datos"][0]["informe_medico"][0]["diagnostico"]:"                "),30,27).'
