@@ -1527,7 +1527,7 @@ app.controller("controlador_1",['$scope',function($scope){
                                                         <p class="ellipsis-text" style="font-weight: normal;">Serie Jugador</p>
                                                     </div>
                                                 </a>
-                                                <select style="width:50%; height: 30px;background:#fff;border:2px solid #001b73" class="" id="serie_test_ocular" name="serie_test_ocular" onchange="consultarJugadoresSerieAgregarTestOcular(this.value)">
+                                                <select style="width:50%; height: 30px;background:#fff;border:2px solid #001b73" class="" id="serie_test" name="serie_test" onchange="consultarJugadoresSerieAgregarTestOcular(this.value)">
                                                     <option value="null">Seleccione</option>
                                                     <option value="99_1">Primer equipo masculino</option>
                                                     <option value="20_1">Sub 20</option>
@@ -1547,13 +1547,13 @@ app.controller("controlador_1",['$scope',function($scope){
                                                 </select>
                                                 <!-- <input type="text" readonly  style="width:50%; height: 18px;background:#fff;" class="grey-input date_fechaNacimiento fecha_inicio" id="fecha_atencion" name="fecha_atencion" onchange="" />                    -->
                                             </div>
-                                            <div id="contendor_jugadores_test_ocular" style="display: none;margin-left:auto;margin-right:auto;width:50%;">
+                                            <div id="contendor_jugadores_test" style="display: none;margin-left:auto;margin-right:auto;width:50%;">
                                                 <a class="btn btn-md btn-primary green-a" style="width: 50%;height: 20px;background:#001b73">
                                                     <div>
                                                         <p class="ellipsis-text" style="font-weight: normal;">Jugador</p>
                                                     </div>
                                                 </a>
-                                                <select style="width:50%; height: 30px;background:#fff;border:2px solid #001b73" class="" id="jugador_test_ocular" name="jugador_test_ocular" onchange="">
+                                                <select style="width:50%; height: 30px;background:#fff;border:2px solid #001b73" class="" id="jugador_test" name="jugador_test" onchange="">
                                                 </select>
                                                 <!-- <input type="text" readonly  style="width:50%; height: 18px;background:#fff;" class="grey-input date_fechaNacimiento fecha_inicio" id="fecha_atencion" name="fecha_atencion" onchange="" />                    -->
                                             </div>
@@ -2091,6 +2091,11 @@ function eliminarFilaJugadorTest($boton){
     let promedios=promedioTestFormulario();
     document.getElementById("promedio_1_test").textContent=promedios.tiempo_1.toFixed(2).toString();
     reordenarListaFormularioTestOcular(numero_fila_removida);
+    // se encarga de actuaizar el ranking despues de eliminar a un jugador
+    for(let jugador of rankingOrdenTest()){
+            // console.log("->>",jugador)
+            document.getElementById("ranking_test_formulario_"+jugador.id).textContent=jugador.rank.toString();
+        }
     // validarCampoFormulario();
 }
 
@@ -2225,6 +2230,113 @@ function obtenerPieHabil(pie){
     ];
 
     return pieHabil[pie];
+}
+
+function abrirModalAgregarJugadorTestOcular(){
+    $("#modalAgregarJugadorTestOcular").modal("show");
+}
+
+function cerrarModalAgregarJugadorTestOcular(){
+    $("#modalAgregarJugadorTestOcular").modal("hide");
+    $("#jugador_test").empty();
+    $("#contendor_jugadores_test").css("display","none");
+    $("#serie_test").val("null");
+}
+
+async function consultarJugadoresSerieAgregarTestOcular(valor){
+    // consultar jugadores por la serie en base al tipo de test del formulario
+    if(valor!=="null"){
+        let serie=valor.split("_")[0],
+        sexo=valor.split("_")[1];
+        await $.ajax({
+            url: 'post/test_consultar_Jugadores_reaccion.php',
+            type: "post",
+            data:[
+                {name:"serie",value:serie},
+                {name:"sexo",value:sexo}
+            ],
+            success: function(respuesta) {
+                let json=JSON.parse(respuesta);
+                window.listaJugadores=JSON.parse(JSON.stringify(json.datos));
+                insertarJugadoresSelect(window.listaJugadores);
+                
+            },error: function(){// will fire when timeout is reached
+                // alert("errorXXXXX");
+            }, timeout: 10000 // sets timeout to 3 seconds
+        });
+    }
+    else{
+        $("#jugador_test").empty();
+        $("#contendor_jugadores_test").css("display","none");
+    }
+}
+
+
+function insertarJugadoresSelect(jugadores=[]){
+    $("#jugador_test").empty();
+    let listaJugadores=[{id:null,nombre:"Seleccione jugador"}];
+    if(jugadores.length>0){
+        for(let jugador of jugadores){
+            let nombre_jugador=jugador.nombre+" "+jugador.apellido1+" "+jugador.apellido2
+            listaJugadores.push({id:jugador.idfichaJugador,nombre:nombre_jugador});
+        }
+    }else{
+        listaJugadores[0].nombre="Sin Jugadores";
+    }
+    $("#contendor_jugadores_test").css("display","flex");
+    for(let optionJugador of listaJugadores){
+        $("#jugador_test").append("<option value='"+optionJugador.id+"'>"+optionJugador.nombre+"</option>");
+    }
+}
+
+function agregarJugadorTestOcular(){
+    let jugadorSeleccionado=window.listaJugadores.filter(jugador => jugador.idfichaJugador===$("#jugador_test").val())[0];
+    agregarJugadorNuevoAlTestOcular(jugadorSeleccionado);
+}
+
+function agregarJugadorNuevoAlTestOcular(jugador){
+    let $indeces=document.querySelectorAll(".index_formulario_test");
+    let numero_fila=parseInt($indeces[$indeces.length-1].textContent)+1;
+    let plantilla='\
+        <div id="fila_formulario_test_ocular_'+jugador.idfichaJugador+'" class="panel_buscar" style="box-sizing:border-box;border:0;width:100%;height:34px;padding-top:2px;padding-bottom:2px;">\
+            <div class="index_formulario_test" style="box-sizing:border-box;border:0;width:2%;height:30px;float:left;font-weight: bold;/*border-right:1px solid red;*/line-height: 30px;font-size: 11px;text-align:center;">'+(numero_fila)+'</div>\
+            <div style="box-sizing:border-box;border:0;width:9%;height:30px;float:left;font-weight: bold;/*border-right:1px solid red;*/line-height: 30px;font-size: 11px;text-transform: Capitalize" class="ellipsis-text">\
+                <img src="flags/blank.gif" class="flag flag-'+jugador.nacionalidad1.toLowerCase()+'"/> '+obtenerInicialDelPosicion(window.lista_posiciones[parseInt(jugador.posicion)-1])+'\
+            </div>\
+            <div style="box-sizing:border-box;border:0;width:16%;height:30px;float:left;font-weight: bold;/*border-right:1px solid red;*/line-height: 30px;font-size: 11px;" >\
+                <div style="box-sizing:border-box;border:0;float:left;width:20%;height:30px;border-radius: 26px;overflow: hidden;border: 2px solid #555;" >\
+                    <img style="width:100%;height:32px" src="./foto_jugadores/'+jugador.idfichaJugador+'.png"/>\
+                </div>\
+                <div style="box-sizing:border-box;border:0;float:left;width:80%;height:30px;padding-left:5px;color:#555;font-weight: bold;line-height: 30px;text-transform: Capitalize" class="ellipsis-text">'+jugador.nombre+' '+jugador.apellido1+' '+jugador.apellido2+'</div>\
+            </div>\
+                    <div style="box-sizing:border-box;border:0;width:8%;height:30px;float:left;font-weight: bold;/*border-right:1px solid red;*/line-height: 30px;font-size: 11px;padding-left:5px;padding-right:5px;">\
+                        <input style="box-sizing:border-box;width:100%;height:100%;border:1px solid #acacac;" type="text" name="array_velocidad[]"  class="campo_velocidad" id="tiempo_1_'+jugador.idfichaJugador+'" data-id-jugador="'+jugador.idfichaJugador+'" onKeyup="sumarAlRankingTestOcular(this)"/>\
+                    </div>\
+                    <div style="box-sizing:border-box;border:0;width:8%;height:30px;float:left;font-weight: bold;/*border-right:1px solid red;*/line-height: 30px;font-size: 11px;padding-left:5px;padding-right:5px;">\
+                        <input style="box-sizing:border-box;width:100%;height:100%;border:1px solid #acacac;" type="text" name="array_velocidad[]"  class="campo_velocidad" id="tiempo_2_'+jugador.idfichaJugador+'" data-id-jugador="'+jugador.idfichaJugador+'" onKeyup="sumarAlRankingTestOcular(this)"/>\
+                    </div>\
+                    <div style="box-sizing:border-box;border:0;width:8%;height:30px;float:left;font-weight: bold;/*border-right:1px solid red;*/line-height: 30px;font-size: 11px;padding-left:5px;padding-right:5px;">\
+                        <input style="box-sizing:border-box;width:100%;height:100%;border:1px solid #acacac;" type="text" name="array_velocidad[]"  class="campo_velocidad" id="tiempo_3_'+jugador.idfichaJugador+'" data-id-jugador="'+jugador.idfichaJugador+'" onKeyup="sumarAlRankingTestOcular(this)"/>\
+                    </div>\
+                    <div style="box-sizing:border-box;border:0;width:8%;height:30px;float:left;font-weight: bold;/*border-right:1px solid red;*/line-height: 30px;font-size: 11px;padding-left:5px;padding-right:5px;">\
+                        <input style="box-sizing:border-box;width:100%;height:100%;border:1px solid #acacac;" type="text" name="array_velocidad[]"  class="campo_velocidad" id="tiempo_4_'+jugador.idfichaJugador+'" data-id-jugador="'+jugador.idfichaJugador+'" onKeyup="sumarAlRankingTestOcular(this)"/>\
+                    </div>\
+                    <div style="box-sizing:border-box;border:0;width:8%;height:30px;float:left;font-weight: bold;/*border-right:1px solid red;*/line-height: 30px;font-size: 11px;text-align:center;">\
+                        <div id="ranking_test_formulario_'+jugador.idfichaJugador+'" style="box-sizing:border-box;border:0;width:100%;height:100%;line-height:30px;background-color:#f4f86f;font-weight: bold;">-</div>\
+                    </div>\
+                    <div style="box-sizing:border-box;border:0;width:28%;height:30px;float:left;font-weight: bold;/*border-right:1px solid red;*/line-height: 30px;font-size: 11px;padding-left:5px;padding-right:5px;">\
+                        <input style="box-sizing:border-box;width:100%;height:100%;border:1px solid #acacac;" type="text" name="array_comentario[]"  class="campo_comentario" id="comentario_test_ocular_'+jugador.idfichaJugador+'"/>\
+                    </div>\
+            <div style="box-sizing:border-box;border:0;width:5%;height:30px;float:left;font-weight: bold;/*border-right:1px solid red;*/line-height: 30px;">\
+                <center>\
+                    <a class="boton_eliminar" id="'+jugador.idfichaJugador+'" onClick="eliminarFilaJugadorTest(this)">\
+                        <i class="icon-remove"></i>\
+                    </a>\
+                </center>\
+            </div>\
+        </div>';
+        $("#contenedor_fila_tabla_formulario_test").append(plantilla);
+        cerrarModalAgregarJugadorTestOcular();
 }
 
 
