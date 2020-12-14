@@ -1,0 +1,1586 @@
+<?PHP
+include('../config/datos.php');
+session_start();
+if(!(isset($_SESSION["nombre_usuario_software"]))){
+    session_destroy();
+    header('Location: ../index.php?cerrar_sesion=1');
+}
+else{
+    $menu_actual="test";
+    $submenu_actual="test_reaccion_jugador";
+    $seccion_comentarios = $comentarios['test_reaccion_jugador'];//mis cuotas
+    $demo_seccion = $demo['test_reaccion_jugador'];
+    $nombre_pestana_navegador='Test';
+
+    $datetime_now = new DateTime();
+    $date_hoy = new DateTime();
+    $datetime_now = $datetime_now->format('Y-m-d H:i:s');
+    $year = $date_hoy->format('Y');
+    $date_hoy = $date_hoy->format('Y-m-d');
+    $data = explode(" ", $datetime_now);
+    $ano_actual =  date("Y");
+    $mes_actual =  date("m");
+    
+}
+?>
+<!DOCTYPE html> 
+<html lang="es"> 
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"> 
+        <title><?php echo $nombre_pestana_navegador;?> | Reaccion</title>
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="css/bootstrap.min.css" />
+        <link rel="stylesheet" href="css/bootstrap-responsive.min.css" />
+        <link rel="stylesheet" href="css/fullcalendar.css" />
+        <link rel="stylesheet" href="css/matrix-style.css" />
+        <link rel="stylesheet" href="css/matrix-media.css" />
+        <link rel="stylesheet" href="font-awesome_3.2.1/css/font-awesome.css" />
+        <link rel="stylesheet" href="css/jquery.gritter.css" />
+        <link rel='stylesheet' href='css/font_googleapis.css' type='text/css'>
+        <link rel='stylesheet' href='css/comentarios.css' type='text/css'>
+        <link rel='stylesheet' href='../print_js/print.min.css' type='text/css'>
+        <link href="bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css" rel="stylesheet" media="screen">
+
+        <style type="text/css">
+            .sin_fondo:hover{
+            background-color:transparent; 
+            } 
+
+            .boton_eliminar2{
+                padding-left: 3px;
+                padding-right: 3px;
+                text-shadow: none; 
+                background-color: transparent;
+                border: 3px solid #fb973e; 
+                color: #fb973e;
+                border-radius:2px;
+                cursor:pointer;
+                margin-right:8px;
+            }
+            .boton_eliminar2:hover{
+                padding-left: 3px;
+                padding-right: 3px;
+                text-shadow: none; 
+                background-color: transparent;
+                border: 3px solid #6e6d6c; 
+                color: #6e6d6c;
+                border-radius:2px;
+                cursor:pointer;
+                margin-right:8px;
+            }
+            .boton_refresh{
+                padding-left: 7px;
+                padding-right: 7px;
+                text-shadow: none; 
+                background-color: transparent;
+                border:3px solid #e19830; 
+                color: #e19830;
+                border-radius:2px;
+            } 
+            .boton_refresh:hover{
+                padding-left: 7px;
+                padding-right: 7px;
+                text-shadow: none; 
+                background-color: transparent;
+                border: 3px solid #8f5708; 
+                color: #8f5708;
+                border-radius:2px;
+            } 
+
+        .table-striped tbody>tr:nth-child(odd):hover {
+                background-color:#ffbb00; 
+                color:white; 
+        }
+            
+            .panel_seleccionar_serie:hover{ 
+                background-color:#f7b48b; 
+                color:white; 
+            } 
+            .panel_seleccionar_serie_inhabilitada{ 
+                background-color:#ffa42d; 
+                color:black; 
+            } 
+            .panel_seleccionar_serie{ 
+                background-color:#ffa42d; 
+                color:black; 
+            } 
+            
+            .tabla_1_sin_efecto{
+                border: 2px solid white; 
+                color:white; 
+                background-color:black; 
+                opacity:0.5;
+            }
+            .tabla_1_sin_efecto:hover{
+                border: 2px solid white; 
+                color:white; 
+                background-color:black; 
+                opacity:0.5;
+            }
+            .tabla_2_sin_efecto{
+                background-color:transparent;
+                color:white; 
+            }
+            .tabla_2_sin_efecto:hover{
+                background-color:transparent;
+                color:white; 
+            }
+
+            .boton-abrir-formulario{
+                padding-left: 7px;
+                padding-right: 7px;
+                text-shadow: none; 
+                background-color: transparent;
+                border: 3px solid #555; 
+                color: #555;
+                border-radius:5px;
+            }
+            .boton-abrir-formulario:hover{
+                padding-left: 7px;
+                padding-right: 7px;
+                text-shadow: none; 
+                background-color: transparent;
+                border: 3px solid #8f8f8f; 
+                color: #8f8f8f;
+                border-radius:5px;
+            }
+            .boton_menu_desactivado{
+                padding-left: 7px;
+                padding-right: 7px;
+                text-shadow: none; 
+                background-color: <?php echo $color_fondo; ?>;
+                border: 3px solid black; 
+                color: black;
+                border-radius:5px;
+            }
+            .boton_menu{
+                padding-left: 7px;
+                padding-right: 7px;
+                text-shadow: none; 
+                background-color: transparent;
+                border: 3px solid <?php echo $color_fondo; ?>; 
+                color: <?php echo $color_fondo; ?>;
+                border-radius:5px;
+            }
+            .boton_menu:hover{
+                padding-left: 7px;
+                padding-right: 7px;
+                text-shadow: none; 
+                background-color: <?php echo $color_fondo; ?>;
+                border: 3px solid black; 
+                color: black;
+                border-radius:5px;
+            }
+            .boton_menu:disabled{
+                padding-left: 7px;
+                padding-right: 7px;
+                text-shadow: none; 
+                background-color: transparent;
+                border: 5px solid black; 
+                color: black;
+                border-radius:2px;
+            }
+            .checkeado {
+                color: orange;
+            }
+            .panel_seleccionar_serie:hover .checkeado {
+                color: <?php echo $color_fondo; ?>;
+            }
+
+            .panel_buscar:hover{
+                background-color:#ffbb00;
+                /* color:white; */
+            }
+
+            .table-striped tbody tr:hover {
+                background-color:#ffbb00;
+                color:white;
+            }    
+            .boton_volver{
+                padding-left: 7px;
+                padding-right: 7px;
+                text-shadow: none; 
+                background-color: transparent;
+                border: 1px solid #0b3b99; 
+                color: #0b3b99;
+                border-radius:10px;
+            }
+            .boton_volver:hover{
+                padding-left: 7px;
+                padding-right: 7px;
+                text-shadow: none; 
+                background-color: transparent;
+                border: 1px solid black; 
+                color: black;
+                border-radius:10px;
+            }
+            
+            .boton_eliminar4{
+                cursor: pointer;
+                position: absolute;
+                margin-left: -18px;
+                margin-top: -7px;
+                border: solid 1px red;
+                padding: 1px 5px 2px 5px;
+                border-radius: 50px;
+                background-color: red;
+                color: #E8E6E6;
+                font-size: 16px;
+            }
+
+            .boton_eliminar4:hover {
+                cursor: pointer;
+                position: absolute;
+                margin-left: -18px;
+                margin-top: -7px;
+                border: solid 1px red;
+                padding: 1px 5px 2px 5px;
+                border-radius: 50px;
+                background-color: red;
+                color: #fff;
+                font-size: 17px;
+            }
+            .boton_eliminar4:disabled{
+                cursor: pointer;
+                position: absolute;
+                margin-left: -18px;
+                margin-top: -7px;
+                border: solid 1px red;
+                padding: 1px 5px 2px 5px;
+                border-radius: 50px;
+                background-color: red;
+                color: #E8E6E6;
+                font-size: 16px;
+            }
+            
+            /* -------------------------- Botón de Eliminar -------------------------- */
+            .boton_eliminar{
+                padding-left: 3px;
+                padding-right: 3px;
+                text-shadow: none; 
+                background-color: #f44336;
+                border-left:1px solid  #f44336; 
+                border-right: 1px solid  #f44336;
+                font-size:16px;
+                text-align: center;
+                color: #fff;
+                border-radius:5px;
+                width: 20px;
+                height:20px;
+            }
+            
+            
+            .boton_eliminar:hover{
+                padding-left: 3px;
+                padding-right: 3px;
+                text-shadow: none; 
+                background-color: #D83F25;
+                border-left:1px solid  #D83F25; 
+                border-right: 1px solid  #D83F25;
+                font-size:16px;
+                color: #ffffff;
+                border-radius:5px;
+                width: 20px;
+                height:20px;
+            }
+            .boton_eliminar:disabled{
+                padding-left: 7px;
+                padding-right: 7px;
+                text-shadow: none; 
+                background-color: #28b779;
+                border: 3px solid rgba(0, 0, 0, .2);    
+                color: #fff;
+                border-radius:2px;
+            }
+            .boton_menu_desactivado{
+                padding-left: 7px;
+                padding-right: 7px;
+                text-shadow: none; 
+                background-color: <?php echo $color_fondo; ?>;
+                border: 3px solid black; 
+                color: black;
+                border-radius:5px;
+            }
+
+            /* -------------------------- Botón de Editar -------------------------- */
+            .boton_editar{
+                padding-left: 3px;
+                padding-right: 3px;
+                text-shadow: none; 
+                background-color: #1d9663;
+                border-left:1px solid  #1d9663; 
+                border-right: 1px solid  #1d9663;
+                font-size:16px;
+                text-align: center;
+                color: #fff;
+                border-radius:5px;
+                width: 20px;
+                height:20px;
+            }
+            .boton_editar:hover{
+                padding-left: 3px;
+                padding-right: 3px;
+                text-shadow: none; 
+                background-color: #45b384;
+                border-left:1px solid  #45b384; 
+                border-right: 1px solid  #45b384;
+                font-size:16px;
+                color: #ffffff;
+                border-radius:5px;
+                width: 20px;
+                height:20px;
+            }
+            .boton_editar:disabled{
+                padding-left: 7px;
+                padding-right: 7px;
+                text-shadow: none; 
+                background-color: #28b779;
+                border: 3px solid rgba(0, 0, 0, .2);    
+                color: #fff;
+                border-radius:2px;
+            }
+            
+            .boton_ver{
+                padding-left: 7px;
+                padding-right: 7px;
+                text-shadow: none; 
+                background-color: transparent;
+                border: 3px solid <?php echo $color_fondo; ?>; 
+                color: <?php echo $color_fondo; ?>;
+                border-radius:2px;
+            }
+            .boton_ver:hover{
+                padding-left: 7px;
+                padding-right: 7px;
+                text-shadow: none; 
+                background-color: transparent;
+                border: 3px solid #1aa0d8; 
+                color: #1aa0d8;
+                border-radius:2px;
+            }
+            .boton_ver:disabled{
+                padding-left: 7px;
+                padding-right: 7px;
+                text-shadow: none; 
+                background-color: transparent;
+                border: 3px solid rgba(0, 0, 0, .2);    
+                color: rgba(0, 0, 0, .2);
+                border-radius:2px;
+            }
+            
+            /* -------------------------- Botón de Agregar -------------------------- */
+            .boton_add{
+                padding-left: 3px;
+                padding-right: 3px;
+                text-shadow: none; 
+                background-color: #007bff;
+                border-left:1px solid  #007bff; 
+                border-right: 1px solid  #007bff;
+                font-size:16px;
+                text-align: center;
+                color: #fff;
+                border-radius:5px;
+                width: 20px;
+                height:20px;
+            }
+            .boton_add:hover{
+                padding-left: 3px;
+                padding-right: 3px;
+                text-shadow: none; 
+                background-color: #59a9ff;
+                border-left:1px solid  #59a9ff; 
+                border-right: 1px solid  #59a9ff;
+                font-size:16px;
+                color: #ffffff;
+                border-radius:5px;
+                width: 20px;
+                height:20px;
+            }
+            .boton_add:disabled{
+                padding-left: 7px;
+                padding-right: 7px;
+                text-shadow: none; 
+                background-color: #28b779;
+                border: 3px solid rgba(0, 0, 0, .2);    
+                color: #fff;
+                border-radius:2px;
+            }
+
+            .boton_remove{
+                padding-left: 7px;
+                padding-right: 7px;
+                text-shadow: none; 
+                background-color: transparent;
+                border: 3px solid #f26027; 
+                color: #f26027;
+                border-radius:2px;
+            }
+            .boton_remove:hover{
+                padding-left: 7px;
+                padding-right: 7px;
+                text-shadow: none; 
+                background-color: transparent;
+                border: 3px solid black; 
+                color: black;
+                border-radius:2px;
+            }
+            .boton_modal{
+                padding-left: 7px;
+                padding-right: 7px;
+                text-shadow: none; 
+                background-color: transparent;
+                border: 3px solid white; 
+                color: white;
+                border-radius:2px;
+            }
+            .boton_modal:hover{
+                padding-left: 7px;
+                padding-right: 7px;
+                text-shadow: none; 
+                background-color: transparent;
+                border: 3px solid black; 
+                color: black;
+                border-radius:2px;
+            }
+            
+            .boton_guardar_informe{
+                padding-left: 7px;
+                padding-right: 7px;
+                text-shadow: none; 
+                background-color: transparent;
+                border: 3px solid #0b3b99; 
+                color: #0b3b99;
+                border-radius:2px;
+                font-size:0.9em;
+            }
+            .boton_guardar_informe:hover{
+                padding-left: 7px;
+                padding-right: 7px;
+                text-shadow: none; 
+                background-color: transparent;
+                border: 3px solid black; 
+                color: black;
+                border-radius:2px;
+            }
+            .boton_guardar_informe_eliminar{
+                padding-left: 7px;
+                padding-right: 7px;
+                text-shadow: none; 
+                background-color: transparent;
+                border: 3px solid <?php echo $color_fondo; ?>; 
+                color: <?php echo $color_fondo; ?>;
+                border-radius:2px;
+            }
+            .boton_guardar_informe_eliminar:hover{
+                padding-left: 7px;
+                padding-right: 7px;
+                text-shadow: none; 
+                background-color: transparent;
+                border: 3px solid #D83F25; 
+                color: #D83F25;
+                border-radius:2px;
+            }
+            .boton_guardar_informe:disabled{
+                padding-left: 7px;
+                padding-right: 7px;
+                text-shadow: none; 
+                background-color: transparent;
+                border: 3px solid rgba(0, 0, 0, .2);    
+                color: rgba(0, 0, 0, .2);
+                border-radius:2px;
+            }
+            .botonAgregar{
+                padding-left: 10px;
+                padding-right: 10px;
+                text-shadow: none; 
+                background-color: <?php echo $color_fondo; ?>;
+                border: 1px solid <?php echo $color_fondo; ?>; 
+                color: #fff;
+                border-radius:5px;
+                padding-bottom: 2px;
+                padding-top: 2px;
+            }
+            .botonAgregar:hover{
+                padding-left: 10px;
+                padding-right: 10px;
+                text-shadow: none; 
+                color: black;
+                border-radius:5px;
+                padding-bottom: 2px;
+                padding-top: 2px;
+            }
+
+            .ph-center::-webkit-input-placeholder{
+            text-align: center;
+            }
+
+            .bootstrap-datetimepicker-widget table td.today:before {
+            content: '';
+            display: inline-block;
+            border: solid transparent;
+            border-width: 0 0 7px 7px;
+            border-bottom-color: #337ab7;
+            border-top-color: rgba(0, 0, 0, 0.2);
+            position: absolute;
+            bottom: 4px;
+            right: 4px;
+        }
+        .btn-upload{
+            border: 2px solid <?php echo $color_fondo; ?>;
+            color: <?php echo $color_fondo; ?>;
+            width: 40px;
+            height:28px;
+            margin-left: 10px;
+        }
+        .btn-upload:hover{
+            border: 2px solid #000;
+            color: #000;
+        }
+        .boton-abrir-formulario{
+                padding-left: 7px;
+                padding-right: 7px;
+                text-shadow: none; 
+                background-color: transparent;
+                border: 3px solid #555555; 
+                color: #555555;
+                border-radius:5px;
+            }
+            .boton-abrir-formulario:hover{
+                padding-left: 7px;
+                padding-right: 7px;
+                text-shadow: none; 
+                background-color: transparent;
+                border: 3px solid #8f8f8f; 
+                color: #8f8f8f;
+                border-radius:5px;
+            }
+            .ph-center::-webkit-input-placeholder{
+            text-align: center;
+            }
+
+        .colorNegro{
+                color: #000;
+            }
+        .doubleTable{
+            background-color: #fff;
+            height:40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding:4px;
+            border:solid #666666 2px;
+            margin: -2px;
+
+        }
+
+        .doubleTable_min{
+            background-color: #fff;
+            height:25px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding:0px;
+            border:solid #666666 2px;
+            margin: -2px;
+
+        }
+        .boton-abrir-formulario:disabled{
+            opacity: 0.5;
+            cursor: no-drop;
+        }
+
+        /* ---------------- Estilos (Edgar Aldana) -------------------*/
+
+        .cuadro_serie {
+            display: inline-block;
+            background: <?php echo $color_fondo; ?>;
+            padding: 15px;
+            color: white;
+            text-align: center;
+            border-radius: 5px;
+            width: 100%;
+            box-sizing: border-box;
+            cursor: pointer;
+        }
+        .cuadro_serie:hover {
+            background: <?php echo $color_fondo_suave; ?>;
+        }
+        .cuadro_serie .nombre_seleccion {
+            width: 100%;
+            display: inline-block;
+            border-top: 2px solid #ffffff;
+            border-bottom: 2px solid #ffffff;
+            padding: 5px;
+            box-sizing: border-box;
+        }
+
+            .boton_volver_a_series{
+                position: absolute;
+                text-shadow: none; 
+                background-color: <?php echo $color_fondo; ?>;
+                border: 5px solid white;     
+                color: white;
+                border-radius: 50%;
+                padding: 13px;
+            }
+            .boton_volver_a_series:hover{
+                position: absolute;
+                text-shadow: none; 
+                background-color: <?php echo $color_fondo; ?>;
+                border: 5px solid white;     
+                color: white;
+                border-radius: 50%;
+                padding: 13px;
+            }
+
+            input[name^='ingresar_peso_ideal_informe_carga']::placeholder {
+                color: white;
+            }   
+
+
+            input[name^='ingresar_peso_ideal_informe_carga_ja']::placeholder {
+                color: white;
+            }   
+
+            #tabla_ver_informes_todos tbody tr {
+                text-align: center;
+            }
+
+            #tabla_ver_informes_todos thead tr {
+                text-align: center;
+            }   
+
+            .boton_crud_informe_carga{
+                padding-left: 7px;
+                padding-right: 7px;
+                text-shadow: none; 
+                background-color: transparent;
+                border: 3px solid #e19830; 
+                color: #e19830;
+                border-radius:2px;
+            }
+            .boton_crud_informe_carga:hover{
+                padding-left: 7px;
+                padding-right: 7px;
+                text-shadow: none; 
+                background-color: transparent;
+                border: 3px solid #fda101; 
+                color: #fda101;
+                border-radius:2px;
+            }       
+
+
+        .hr-line {
+            position: relative;
+            display: inline-block;
+            margin-left: 5px;
+            margin-right: 5px;
+            width: 100%;
+            border-bottom: 1px solid #7A7A7A;
+        }
+
+        .black-placeholder::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+        color: black;
+        }
+
+        .agregar_semanales {
+            color: #555555;
+            background: #FFCD44;
+            border-bottom: 1px solid transparent;
+            box-sizing: border-box;
+        }
+
+        .agregar_semanales:hover {
+            background: #ffbb00;
+            cursor: pointer;
+        }
+
+        #selecciones_cajas {
+            margin-left: 5%;
+            width: 97%;
+        }
+
+        @media (max-width: 980px) {
+            .seleccion_test {
+                width: calc(100% - 20px) !important;
+            }
+            .seleccion_test:hover {
+                width: calc(100% - 0px) !important;
+            }
+            #selecciones_cajas {
+                margin-left: 0px;
+                width: 100%;
+            }
+            .titulo_series {
+                width: 100%;
+            }
+        }
+
+        .img-next-to-text {
+            float:left;
+            display:block;
+            position:relative;
+            width:20%;
+        }
+
+        .imagen-jugador {
+            background-color: white;
+        }
+
+        .ellipsis-text {
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;    
+            margin-bottom: 0px;
+            font-weight: bold;
+        }
+
+        .table-striped tbody tr.hovered td {
+            background-color: #000000;
+            color:#ffffff;
+            }
+
+        .table-hover>tbody>tr:hover>td, .table-hover>tbody>tr:hover>th {
+        background-color: #550055;
+        color:#eeeeee;
+        }
+
+        table.table-striped tbody tr.hovered td {
+        background-color: #000000;
+        color:#ffffff;
+        }    
+
+        /* ------------------ INPUT VERDE ------------------ */
+        .green-a {
+        margin:0px; border-bottom-left-radius:2px; border-top-left-radius:2px; margin-left: 0px; margin-right: 0px; width: 90px; margin-top:0px; background-color:<?php echo $color_fondo; ?>; font-size: 10px; margin-bottom:0px;
+        }
+
+        .green-a:hover{
+            background-color:<?php echo $color_fondo; ?>;   
+        }
+
+        .green-input {
+        margin:0px; width:52%; -webkit-appearance: none; -moz-appearance : none; border: 1px solid <?php echo $color_fondo; ?>; margin-left: 0px; margin-right: 0px; border-bottom-right-radius:2px; border-top-right-radius:2px; border-bottom-left-radius:0px;  border-top-left-radius:0px; margin-bottom:0px; text-align:center;
+        }
+        .grey-input {
+            margin:0px;
+            width:52%; 
+            -webkit-appearance: none; 
+            -moz-appearance : none; 
+            border: 2px solid #001b73!important;
+            margin-left: 0px; 
+            margin-right: 0px; 
+            border-bottom-right-radius:2px; 
+            border-top-right-radius:2px; 
+            border-bottom-left-radius:0px;  
+            border-top-left-radius:0px; 
+            margin-bottom:0px; 
+            text-align:center;
+        }
+        
+        .btn-group .dropdown-menu a, .btn-group .dropdown-menu a:active {
+            background: transparent;
+            color: grey;
+        }
+        .btn-group .dropdown-menu {
+            margin: 0px;
+            box-shadow: none;
+            width: calc(100% - 2px);
+            max-height: 300px;
+            overflow-x: auto;
+            padding: 0px;
+        }
+        .btn-group .dropdown-menu .option {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            padding: 2px 8px;
+            box-sizing: border-box;
+            color: #494949;
+            margin: 0px;
+        }
+        .btn-group .dropdown-menu .option:hover {
+            background: #1E90FF;
+            color: white;
+        }
+        .btn-group .dropdown-menu .option input[type="checkbox"] {
+            margin-left: 3px;
+        }
+        .btn-group .dropdown-menu a, .btn-group .dropdown-menu a:active {
+            left: 3px;
+            padding-left: 3px;
+            padding-right: 3px;
+            text-shadow: none;
+            background-color: #1d9663;
+            border-left: 1px solid #1d9663;
+            border-right: 1px solid #1d9663;
+            /* font-size: 16px; */
+            text-align: center;
+            color: #fff;
+            border-radius: 5px;
+            width: 10px;
+            height: 20px;
+            position: relative;
+            top: 10px;
+        }
+        .btn-group .dropdown-menu {
+            width: auto;
+        }
+        /*   estilos modal   */
+        .text-cabecera {
+            color: #bfbfbf;
+            margin: 0;
+            font-size: 12px;
+        }
+
+        .titulo-club {
+            text-transform: uppercase;
+            letter-spacing: 0px;
+            font-stretch: condensed;
+            transform: scaleY(1.3);
+            word-spacing: 4px;
+            font-size: 5.5px;
+        }
+
+        .left-div-title {
+            height: 2px; border-bottom: solid 2px #e3e3e3; 
+            width: 35%; 
+            float: left;
+        }
+
+        .right-div-title {
+            height: 2px; 
+            border-bottom: solid 2px #e3e3e3; 
+            width: 35%; 
+            float: right;
+        }
+
+        .middle-div-title {
+            width: 30%; 
+            float:left;
+        }
+
+        .middle-div-title p {
+            text-align: center; 
+            text-transform: uppercase;
+            font-size: 11px; 
+            position: relative; 
+            top: -10px;
+            color: #656565;
+            
+        }
+        /*------------------------------------*/
+        .textarea-text-align-left{
+            text-align:left!important;
+            white-space: normal!important;
+        }
+
+        
+        </style>
+        <style>/* estilo modal jugador*/
+                        .contenedor_modal_formulario{
+                            width: 75%;
+                            height: 50%;
+                            left: 0%;
+                            background-color: #fff;
+                            margin-left: 20%;
+                            /* margin-right: 20%; */
+                            border-radius: 0px;
+                            margin-top:70px;
+                            border-radius: 5px;
+                            box-sizing: border-box;
+                            
+                        }
+                        .encabezado_modal{
+                            width: 100%;
+                            height: 70px;
+                            box-sizing: border-box;
+                        }
+                        .contenedor_nombre_jugador{
+                            /* background-color: grey; */
+                            width: 100%;
+                            height: 140px;
+                            box-sizing: border-box;
+                            padding-top: 90px;
+                        }
+                        .contenedor_foto_jugador{
+                            background-color: #fff;
+                            width: 126px;
+                            height: 126px;
+                            box-sizing: border-box;
+                            position: absolute;
+                            margin-left: 43.5%;
+                            margin-right: 43.5%;
+                            margin-top: 24px;
+                            border-radius: 67px;
+                            border:2px solid #dcdcdc;
+                        }
+                        .caja_nombre_jugador{
+                            background-color: #fff;
+                            width: 15%;
+                            margin-left: 42.5%;
+                            margin-right: 42.5%;
+                            text-align: center;
+                            border-top: 2px solid #555;
+                            box-sizing: border-box;
+                            border-bottom: 2px solid #555;
+                        }
+                        .nombre_jugador{
+                            font-weight: bold;
+                            display: block;
+                        }
+                        .serie_jugador{
+                            font-weight: bold;
+                            display: block;
+                        }
+                        .tabla_detalle_atencion_seguimiento{
+                            /* background-color: grey; */
+                            width: 70%;
+                            /* height: 500px; */
+                            margin-left: 15%;
+                            margin-right: 15%;
+                            border: 2px solid #555;
+                        }
+                        .row_tabla{
+                            width: 100%;
+                            height: 30px;
+                            box-sizing: border-box;
+                            border-bottom: 2px solid #555;
+                            display: flex;
+                            flex-direction: row;
+
+                        }
+                        .celda_propiedad{
+                            width: 30%;
+                            height: 100%;
+                            background-color: #2099f4;
+                            border-right: 2px solid #555;
+                            box-sizing: border-box;
+                            color: #fff;
+                            padding-left: 5px;
+                        }
+                        .celda_valor{
+                            width: 70%;
+                            height: 100%;
+                            background-color: #fff;
+                            box-sizing: border-box;
+                            padding-left: 5px;
+                        }
+                    .test-box-model{
+                        box-sizing: border-box;
+                        border:1px solid #111;
+                    }
+                    </style>
+                    <style>
+                        /* estilos graficos */
+                        .highcharts-figure, .highcharts-data-table table {
+                            /* min-width: 310px; 
+                            max-width: 800px; */
+                            width: 100%;
+                            height: 300px;
+                            margin: 1em auto;
+                        }
+
+                        #container {
+                            height: 100%;
+                        }
+
+                        .highcharts-data-table table {
+                            font-family: Verdana, sans-serif;
+                            border-collapse: collapse;
+                            border: 1px solid #EBEBEB;
+                            margin: 10px auto;
+                            text-align: center;
+                            width: 100%;
+                            max-width: 500px;
+                        }
+                        .highcharts-data-table caption {
+                        padding: 1em 0;
+                        font-size: 1.2em;
+                        color: #555;
+                        }
+                        .highcharts-data-table th {
+                            font-weight: 600;
+                        padding: 0.5em;
+                        }
+                        .highcharts-data-table td, .highcharts-data-table th, .highcharts-data-table caption {
+                        padding: 0.5em;
+                        }
+                        .highcharts-data-table thead tr, .highcharts-data-table tr:nth-child(even) {
+                        background: #f8f8f8;
+                        }
+                        .highcharts-data-table tr:hover {
+                        background: #f1f7ff;
+                        }
+                                            </style>
+                    
+                    <link rel="stylesheet" href="flags/flags.css" />
+                    <link rel="stylesheet" href="flags/flags.min.css" />
+        <script type="text/javascript">
+            var imagen_cargando = new Image();
+            imagen_cargando.src = "../config/cargando_final_2.gif";
+        </script>
+<script src="../print_js/print.min.js"></script>
+<script src="js/angular.min.js" type="application/javascript"></script>
+<script type="text/javascript" src="graficos/jquery-3.1.1.min.js"></script>
+<script type="text/javascript" src="graficos/highcharts-3d.js"></script>
+<script type="text/javascript" src="graficos/highcharts.js"></script>
+<script type="text/javascript" src="graficos/exporting.js"></script>
+<!--<script type="text/javascript" src="graficos/highcharts-3d.js"></script>-->
+<script type="text/javascript" src="graficos/highcharts-more.js"></script>
+<script type="text/javascript" src="graficos/series-label.js"></script>
+<script src="js/excanvas.min.js"></script> 
+<script src="js/jquery.min.js"></script> 
+<script src="js/jquery.ui.custom.js"></script> 
+<script src="js/bootstrap.min.js"></script> 
+<script src="js/jquery.flot.min.js"></script> 
+<script src="js/jquery.flot.resize.min.js"></script> 
+<script src="js/jquery.peity.min.js"></script> 
+<script src="js/fullcalendar.min.js"></script> 
+<script src="js/matrix.js"></script> 
+<script src="js/matrix.dashboard.js"></script> 
+<script src="js/jquery.gritter.min.js"></script> 
+<!--<script src="js/matrix.interface.js"></script> -->
+<script src="js/matrix.chat.js"></script> 
+<script src="js/jquery.validate.js"></script> 
+<script src="js/matrix.form_validation.js"></script> 
+<script src="js/jquery.wizard.js"></script> 
+<script src="js/jquery.uniform.js"></script> 
+<script src="js/select2.min.js"></script> 
+<script src="js/matrix.popover.js"></script> 
+<script src="js/jquery.dataTables.min.js"></script> 
+<script src="js/matrix.tables.js"></script> 
+<link   href="subir_imagen3/croppie.css" rel="stylesheet"/>
+<script src="subir_imagen3/croppie.js"></script>
+<script type="text/javascript">
+
+
+var id_semanal = "";
+var id_informe = "";
+var cierra_ventana=0;
+
+var id_matricula="";
+var id_mensualidad="";
+var edicion_informe = false;
+var agregar_informe = true;
+var linea_actual=0;
+var pagina_actual=0;
+
+var error_foto = 0;
+var jugadores_scouting = {};
+var ano_actual = '<?php echo $ano_actual;?>';
+var mes_actual = parseInt('<?php echo $mes_actual;?>');
+let fechaA = '<?php echo $date_hoy; ?>';
+
+function goPage (newURL) {
+    if (newURL != "") {
+        if (newURL == 0 ) {
+            resetMenu();            
+        }   
+        else {  
+            document.location.href = newURL;
+        }
+    }
+}
+
+function resetMenu() {
+    document.gomenu.selector.selectedIndex = 2;
+}
+
+function refrescar(){
+    $("#search").load("post/consultar_datetime.php");
+}
+
+function colocar_icono_cargando(opcionMenu){
+    var texto_opcion="<i class='icon-spinner icon-spin icon-large'></i> "+opcionMenu.innerHTML;
+    opcionMenu.innerHTML = texto_opcion;
+}
+
+function mostrar_al_cargar_pagina(){
+    $('#pagina').slideDown("slow");
+    $('#error_conexion').hide();
+	$('#sin_resultados').hide();
+    $('#cargando_buscar').hide();
+    $('#cargando_pagina').hide(500);
+}
+
+//Angular//
+/*
+//////////////////////Expresiones regulares//////////////////////
+?     0 o 1 vez
+*     0 o muchas veces
++     1 o muchas veces
+\s    espacio en blanco
+{n}   n veces
+{n,m} n a m veces
+//////////////////////Angular JS//////////////////////////
+ng-trim    false-->     elimina espacios en blanco al comienzo y al final
+*/
+var app= angular.module("App_Angular",[]);
+app.controller("controlador_1",['$scope',function($scope){
+    
+    $scope.ER_alfaNumericoConEspacios=/^([a-zA-Z0-9\x7f-\xff](\s[a-zA-Z0-9\x7f-\xff])*)+$/;
+    $scope.ER_email=/^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+    $scope.ER_alfaNumericoSinEspacios=/^([a-zA-Z0-9])+$/;
+    $scope.ER_numericoSinEspacios=/^[0-9]+$/;
+    $scope.ER_caracteresConEspacios=/^([a-zA-Z\x7f-\xff](\s[a-zA-Z\x7f-\xff])*)+$/;
+    $scope.ER_altura=/^([1-2]{1}[0-9]{2})$/;
+    $scope.ER_peso=/^((([1]{1}[0-4]{1}[0-9]{1})|([3-9]{1}[0-9]{1}))(\.[1-9])?)$/;
+    $scope.ER_telefono=/^[0-9]+$/;
+    $scope.ER_rut=/^(([1-2]{1}[0-9]?)|([1-9]{1}))[0-9]{6}-([0-9]|k){1}$/;
+    $scope.ER_rut_empresa=/^(([1-9]{1}[0-9]{1,2})|([1-9]{1}))[0-9]{6}-([0-9]|k){1}$/;
+    
+    $scope.ER_valorMonto=/^[1-9]{1}[0-9]*[0]{1}$/;
+    
+    $scope.ER_alfaNumericoConEspaciosAcentos=/^([a-zA-Z0-9\x7f-\xff](\s[a-zA-Z0-9])*)+$/;
+    
+    $scope.clickFunction = function() {
+        $scope.buttonClicks=1;
+    };
+    
+    $scope.aplicar = function() {
+        $scope.ingresar_nombre = 'value here';
+    }
+    
+    $scope.desactivarBoton = function() {
+        $('#boton_comentario').attr('disabled', true);
+        //$scope.isDisabled = true;
+        return false;
+    }
+    
+    $scope.activarBoton = function() {
+        $('#boton_comentario').attr('disabled', false);
+        //$scope.isDisabled = true;
+        return false;
+    }
+    $scope.desactivarBoton2 = function() {
+        $('#boton_agregar_Fertilizante').attr('disabled', true);    
+        //$scope.isDisabled = true;
+        return false;
+    }
+    
+    
+    $scope.desactivarBotonAgregarProveedor = function() {
+        $('#boton_agregar_informe_carga').attr('disabled', true);   
+        //$scope.isDisabled = true;
+        return false;
+    }
+    $scope.desactivarBotonEliminarProveedor = function() {
+        $('#boton_eliminar_proveedor').attr('disabled', true);  
+        //$scope.isDisabled = true;
+        return false;
+    }
+    }]);
+</script>
+    </head>
+    <body onload="setInterval(refrescar, 1000)" ng-controller="controlador_1" ng-app="App_Angular" id="angularData" >
+        <!--Header-part-->
+        <div id="header">
+            <h1><a href="dashboard.html"><?php echo $abreviacion_dominio;?></a></h1>
+        </div>
+        <!--close-Header-part--> 
+        <!--start-top-serch-->
+        <div id="search" style="font-size:15px; font-weight: bold; color: white; padding-top:3px; padding-right:5px;">
+            <?php 
+                echo $data[0]."&nbsp;&nbsp;&nbsp;".$data[1];
+            ?>
+        </div>
+        <!--close-top-serch-->
+        <!--sidebar-menu-->
+        <div id="sidebar"><a href="#" class="visible-phone"><i class="icon-truck"></i> Estudios <i class="icon-chevron-right"></i> Registro</a>
+            <?php include('../config/menu.php');?>
+        </div>
+            <!--sidebar-menu-->
+
+            <!--main-container-part-->
+        <div id="content" style="min-height: auto;">
+            <!--breadcrumbs--><!-- migas de pan-->
+            <div id="content-header">
+                <div id="breadcrumb"> 
+                        <a title="Go to Home" class="tip-bottom">
+                            <i class="icon-home"></i> Inicio
+                        </a> 
+                        <a class="tip-bottom">
+                            <i class="icon-truck"></i>Primera A
+                        </a> 
+                </div>
+            </div>
+            <!-- End-breadcrumbs-->
+            <!-- gif de carga -->
+            <div class="container-fluid" id="cargando_pagina">
+                <center>
+                <img src="" style="margin-top:100px;" id="cargando_final">
+                <script>$('#cargando_final').attr('src',imagen_cargando.src);</script>
+                </center>
+            </div>
+            <div  style="display:none;" id="pagina" style="padding:0px;height: auto;">
+                <?php if(($software_demo && $demo_seccion) || !$software_demo){?>
+                    <!-- #303030 -->
+                    <!-- #25282a -->
+                    <!-- #39b682 -->
+                    <!-- #ff5b4d -->
+                    <!-- #404040 -->
+                    <!-- #a2a2a2 -->
+                    <!-- #0b3b99 -->
+                    <!-- ======================================================================= -->
+                    <!-- INICIO TEST OCULAR -->
+                    <div id="vista_test_reaccion" style="height:auto;" >
+                        <!--------------------------------  MODAL INFORME PDF INICIO-------------------------------------------->
+                        <div id="descargarPDF" class="modal hide" style="border-radius:10px;">
+                            <div class="modal-header" style="background-color: <?php echo $color_fondo; ?>; border-top-right-radius: 5px; border-top-left-radius: 5px;">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                <center><h4 class="modal-title"><img src="img/logo3.png" style="height:30px; width:265px;"></h4></center>
+                            </div>
+                            <div class="modal-body" style="color:black; font-family:Arial, Helvetica, sans-serif;">
+                                <center>
+                                        <br>
+                                        <div id="mensaje_agregar_descargarPDF">
+                                        <h5>¿Estás seguro que quieres generar un reporte excel?</h5>
+                                        </div>
+                                        <br>
+                                </center>
+                            </div>
+                            <div class="modal-footer" style="background-color:<?php echo $color_fondo; ?>; border-bottom-left-radius:10px; border-bottom-right-radius:10px;">     
+                            </div>
+                        </div>
+                        <!--------------------------------  MODAL INFORME PDF FIN-------------------------------------------->
+                        <div id="modalInicioTestOcular" class="modal hide" style="border-radius:10px;">
+                                <div class="modal-header" style="background-color: <?php echo $color_fondo; ?>; border-top-right-radius: 5px; border-top-left-radius: 5px;">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <center><h4 class="modal-title"><img src="img/logo3.png" style="height:30px; width:265px;"></h4></center>
+                                </div>
+                                <div class="modal-body" style="color:black; font-family:Arial, Helvetica, sans-serif;">
+                                <center>
+                                        <br>
+                                        <div id="mensaje_agregar_DescargarBoleta_inicio_test_ocular">
+                                        <h5><!--mensaje modal --></h5>
+                                        </div>
+                                        <br>
+                                </center>
+                                </div>
+                                <div class="modal-footer" style="background-color: <?php echo $color_fondo; ?>; border-bottom-left-radius:10px; border-bottom-right-radius:10px;">
+                                    
+                                    <center>
+                                        <div id="contendor_botones_modal_inicio_test_ocular">
+                                            <button type="button" class="btn btn-default boton_modal" onClick="cerrarModalAtencionDiariaNuevo()"  id="boton_cerrar_alerta" style="margin-right:20px; border-radius:5px;"><span class="icon"><i class="icon-remove"></i></span> No</button>
+                                            <button type="button" id="guardar" class="btn btn-default boton_modal " onClick="agregarNuevoTratamiento()" ng-click="desactivarBotonAgregarBoleta()" style="border-radius:5px;"><span class="icon"><i class="icon-ok"></i></span> Si</button>
+                                        </div>
+                                    </center>
+                                    
+                                </div>
+                        </div>
+<!-- ================================================================= -->
+                        <div id="modalInicioTestOcularInfo" class="modal hide" style="border-radius:10px;width: 74%;margin-left: -365px;margin-top:-30px;">
+                                <div class="modal-header" style="background-color: #1c438c; border-top-right-radius: 5px; border-top-left-radius: 5px;height: 75px;">
+                                    <!-- <button type="button" class="close" data-dismiss="modal">&times;</button> -->
+                                    <div style="box-sizing: border-box;border:0;width:100%;height: 75px;display:inline-flex;flex-direction:row;flex-wrap:wrap;">
+                                    
+                                        <div style="box-sizing: border-box;border:0;width:20%;height: 75px;">
+                                        </div>
+
+                                        <div style="box-sizing: border-box;border:0;width:60%;height: 75px;padding-top:21px;">
+
+                                            <div style="box-sizing: border-box;border:0;color:#fff;font-size:15px;font-weight: bold;text-align:center;margin-bottom:10px;">EVALUACIÓN VELOCIDAD OCULAR</div>
+                                            <div style="box-sizing: border-box;border:0;width:80%;height: 29px;color:#fff;margin-left:auto;margin-right:auto;">
+                                                <div style="box-sizing: border-box;border:0;width:60%;height: 29px;float:left;font-weight: bold;">
+                                                    Fecha: <span id="fechaModalInfo" style="font-weight: normal;">xxxxxx</span>
+                                                </div>
+                                                <div style="box-sizing: border-box;border:0;width:40%;height: 29px;float:right;text-align:right;font-weight: bold;">
+                                                    Categoría: <span style="font-weight: normal;">Primer Equipo</span>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                        <div style="box-sizing: border-box;border:0;width:20%;height: 75px;color:#fff;text-align:center;line-height:75px;font-weight: bold;">
+
+                                            Neurociencias
+
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                                <img src="../config/logo_equipo.png" alt="logo_equipo" style="box-sizing: border-box;border:0;display:block;position:absolute;top: 10px;left: 15px;width:150px;height:150px;z-index: 1;">
+                                <div class="modal-body" style="color:black; font-family:Arial, Helvetica, sans-serif;padding-top:70px;">
+                                    <div style="box-sizing: border-box;border:0;margin-left:auto;margin-right:auto;color:#555;font-weight: bold;text-align:center;margin-bottom:10px;">RESULTADO</div>
+                                    <div style="box-sizing: border-box;border:0;height: 125px;overflow: scroll;overflow-x: hidden;">
+
+                                        <table style="box-sizing:border-box;border:0;width:100%;">
+                                            <thead>
+                                            <tr style="box-sizing:border-box;border:0;width:100%;height:20px;background-color:#555;text-transform:uppercase;font-size:10px;color:#fff;font-weight: bold;">
+                                                <th  style="border:0;height:20px;line-height:20px;/*border-right:1px solid #111;*/text-align: center; max-width: 2px;" >
+                                                    RANK
+                                                </th>
+                                                <th style="border:0;height:20px;line-height:20px;/*border-right:1px solid #111;*/text-align: center;max-width: 18px;" >JUGADOR</th>
+                                                <th style="border:0;height:20px;line-height:20px;/*border-right:1px solid #111;*/text-align: center;max-width: 10px;" >ERESULTADO</th>
+                                                <th style="border:0;height:20px;line-height:20px;/*border-right:1px solid #111;*/text-align: center;max-width: 10px;" >EV.ANTERIOR</th>
+                                                <th style="border:0;height:20px;line-height:20px;/*border-right:1px solid #111;*/max-width: 36px;    text-align: left;" >POSICIÓN</th>
+                                            </tr>
+                                                
+                                            </thead>
+                                            
+                                            <tbody id="tabla_info" style="font-size: 10px;background-color:#fff;">
+                                            
+                                                <!-- <tr style="box-sizing:border-box;border:0;height:50px;color:#555;font-size:10px;">
+                                                    <th  id="numero_rank_tabla" style="border:0;height:50px;line-height:50px;/*border-right:1px solid #111;*/text-align: center; max-width: 10px;font-weight: bold;" >
+                                                        RANK
+                                                    </th>
+                                                    <th style="border:0;height:50px;line-height:50px;/*border-right:1px solid #111;*/text-align: center; max-width: 10px;font-weight: bold;" >
+                                                        <div style="box-sizing:border-box;border:0;float:left;width:40px;height:40px;border:2px solid #555;border-radius:100px;overflow:hidden;">
+                                                            <img style="box-sizing:border-box;display:block;width:40px;height:40px;" src="" alt="foto_jugador_tabla">
+                                                        </div>
+                                                        <div id="nombre_jugador_tabla" style="box-sizing:border-box;border:0;float:left;height:40px;line-height:40px;margin-left:10px;">nombre jugador</div>
+                                                    
+                                                    </th>
+                                                    <th style="border:0;height:50px;line-height:50px;/*border-right:1px solid #111;*/text-align: center;max-width: 10px;font-weight: normal;" >seg</th>
+                                                    <th style="border:0;height:50px;line-height:50px;/*border-right:1px solid #111;*/text-align: center;max-width: 10px;font-weight: normal;" >-</th>
+                                                    <th style="border:0;height:50px;line-height:50px;/*border-right:1px solid #111;*/max-width: 10px;    text-align: left;font-weight: normal;" >POSICIÓN</th>
+                                                </tr> -->
+                                            
+                                            </tbody>
+
+                                        </table>
+                                    </div>
+                                    
+
+
+                                <hr>
+
+                                    <div style="box-sizing: border-box;border:0;width:100%;height:400px;">
+
+                                        <div style="box-sizing: border-box;border:0;width:50%;height:200px;float:left;">
+                                    
+                                            <figure class="highcharts-figure">
+                                                <div id="container"></div>
+                                            </figure>
+                                    
+                                    
+                                    
+                                        </div>
+                                        
+                                        
+                                        <div style="box-sizing: border-box;border:0;width:50%;height:200px;float:right;">
+
+                                        <div style="box-sizing: border-box;border:0;width:100%;height:100px;padding-top:10px;padding-bottom:10px;">
+                                            
+                                            <div style="box-sizing: border-box;border:0;float:left;height:80px;color:#555;line-height:80px;font-weight: bold;margin-left:15px;margin-right:15px;width: 88px;">
+                                                Mejor evaluado
+                                            </div>
+                                            <div id="velocidad_mejor_evaluador" style="box-sizing: border-box;border:0;float:left;width: 63px;height:80px;color:#555;line-height:80px;font-weight: bold;margin-right:15px;">
+                                                0 seg
+                                            </div>
+                                            <div id="nombre_mejor_evaluador" style="box-sizing: border-box;border:0;float:left;height:80px;color:#555;line-height:80px;margin-right:15px;">
+                                                nombre
+                                            </div>
+                                            <div style="box-sizing: border-box;border:0;background-color:#FFF;width:80px;height:80px;float:right;border-radius:100px;border:2px solid #555;overflow:hidden;">
+                                                <img id="img_foto_mejor_jugador" src="" alt="foto_jugador_mejor_tiempo" style="box-sizing: border-box;border:0;display:block;width:80px;height:80px;">
+                                            </div>
+                                        
+                                        </div>
+                                        
+                                        <div style="box-sizing: border-box;border:0;width:100%;height:100px;padding-top:10px;padding-bottom:10px;">
+                                            
+                                            <div style="box-sizing: border-box;border:0;float:left;height:80px;color:#555;line-height:80px;font-weight: bold;margin-left:15px;margin-right:15px;width: 88px;">
+                                                Peor evaluado
+                                            </div>
+                                            <div id="velocidad_peor_evaluador" style="box-sizing: border-box;border:0;float:left;width: 63px;height:80px;color:#555;line-height:80px;font-weight: bold;margin-right:15px;">
+                                                0 seg
+                                            </div>
+                                            <div id="nombre_peor_evaluador" style="box-sizing: border-box;border:0;float:left;height:80px;color:#555;line-height:80px;margin-right:15px;">
+                                                nombre
+                                            </div>
+                                            <div style="box-sizing: border-box;border:0;background-color:#FFF;width:80px;height:80px;float:right;border-radius:100px;border:2px solid #555;overflow:hidden;">
+                                                <img id="img_foto_peor_jugador" src="" alt="foto_jugador_peor_tiempo" style="box-sizing: border-box;border:0;display:block;width:80px;height:80px;">
+                                            </div>
+                                        
+                                        </div>
+
+                                        
+                                        
+                                        </div>
+                                
+                                
+                                    </div>
+
+                                </div>
+                               
+                        </div>
+
+
+                        <!-- <button class="boton_volver" onclick="botonVolverAInicio(this);" style="margin-left:10px"><i class="icon-arrow-left"></i> volver</button> -->
+                        <div style="box-sizing: border-box;border:0;width:45%;height:100px;margin-left:auto;margin-right:auto;margin-bottom:15px;">
+                            <img style="box-sizing: border-box;border:0;float:left;width:20%;height:100px;" src="../config/logo_equipo.png" alt="logo equipo"/>
+                            <div style="box-sizing: border-box;border:0;float:left;width:80%;height:100px;padding-top:15px;color:#404040;text-align:center;" >
+                                <h4 >EVALUACIONES NEUROCIENCIAS</h4>
+                                <div style="font-weight: 800;">Primer Equipo</div>
+                            </div>
+                        </div>
+                        <div style="box-sizing: border-box;border:0;width:90%;height:15px;margin-left:auto;margin-right:auto;background-color:#0b3b99 ;margin-bottom:60px;"></div>
+                        <!-- <h1>VITSA OCULAR</h1> -->
+                        <div style="box-sizing:border-box;border:0;width:109px;margin-left:auto;margin-right:25px;margin-bottom:15px;">
+                            <button data-boton-abrir-formulario-test="ocular" class="boton-abrir-formulario" onClick="abrirFormularioTest()"><b style="font-size:10px;"><i class="icon-plus"></i> Agregar informe</b></button>
+                        </div>
+
+                        
+
+                        <div style="box-sizing: border-box;border:0;margin-right:auto;margin-left:auto;width:40%;height: 30px;margin-bottom:15px;">
+                            <div style="margin-right:10%;width:45%;height: 30px;display:flex;float:left;">
+                                <a class="btn btn-md btn-primary green-a" style="width: 36%;height: 20px;background:#0b3b99">
+                                    <div>
+                                        <p class="ellipsis-text" style="font-weight: normal;">Año</p>
+                                    </div>
+                                </a>
+                                <select style="width:60%; height: 30px;background:#fff;border:2px solid #0b3b99" id="filtro_ano_test_ocular" name="filtro_ano_test_ocular" onchange="filtrarTestOcular()">
+                                    
+                                </select>
+                            </div>
+
+                            <div style="width:45%;height: 30px;display:flex;float:left;">
+                                <a class="btn btn-md btn-primary green-a" style="width: 36%;height: 20px;background:#0b3b99">
+                                    <div>
+                                        <p class="ellipsis-text" style="font-weight: normal;">Mes</p>
+                                    </div>
+                                </a>
+                                <select style="width:60%; height: 30px;background:#fff;border:2px solid #0b3b99" id="filtro_mes_test_ocular" name="filtro_mes_test_ocular" onchange="filtrarTestOcular()">
+                                    <option value="01">Enero</option>
+                                    <option value="02">Febrero</option>
+                                    <option value="03">Marzo</option>
+                                    <option value="04">Abril</option>
+                                    <option value="05">Mayo</option>
+                                    <option value="06">Junio</option>
+                                    <option value="07">Julio</option>
+                                    <option value="08">Agosto</option>
+                                    <option value="09">Septiembre</option>
+                                    <option value="10">Octubre</option>
+                                    <option value="11">Noviembre</option>
+                                    <option value="12">Diciembre</option>
+                                </select>
+                            </div>
+                        </div>
+
+                            <div id="tabla_html_inicio_test_ocular" style="box-sizing:border-box;border:0;width:95%;height:200px;margin-left:auto;margin-right:auto;margin-bottom:50px;">
+                                <div style="box-sizing:border-box;border:0;width:100%;height:30px;background-color:#555;border-top-left-radius: 5px;border-top-right-radius: 5px;">
+                                    <div style="box-sizing:border-box;border:0;width:2%;height:30px;float:left;color:#fff;font-weight: 600;/*border-right:1px solid red;*/line-height: 30px;font-size: 12px;padding-left:5px;text-align:center">#</div>
+                                    <div style="box-sizing:border-box;border:0;width:12%;height:30px;float:left;color:#fff;font-weight: 600;/*border-right:1px solid red;*/line-height: 30px;font-size: 12px;padding-left:5px;">Fecha Evaluación</div>
+                                    <div style="box-sizing:border-box;border:0;width:6%;height:30px;float:left;color:#fff;font-weight: 600;/*border-right:1px solid red;*/line-height: 30px;font-size: 12px;padding-left:5px;">Año</div>
+                                    <div style="box-sizing:border-box;border:0;width:10%;height:30px;float:left;color:#fff;font-weight: 600;/*border-right:1px solid red;*/line-height: 30px;font-size: 12px;padding-left:5px;">N° informe</div>
+                                    <div style="box-sizing:border-box;border:0;width:11%;height:30px;float:left;color:#fff;font-weight: 600;/*border-right:1px solid red;*/line-height: 30px;font-size: 12px;text-align:center">Evaluados</div>
+                                    <div style="box-sizing:border-box;border:0;width:20%;height:30px;float:left;color:#fff;font-weight: 600;/*border-right:1px solid red;*/line-height: 30px;font-size: 12px;text-align:center">Mejor tiempo</div>
+                                    <div style="box-sizing:border-box;border:0;width:20%;height:30px;float:left;color:#fff;font-weight: 600;/*border-right:1px solid red;*/line-height: 30px;font-size: 12px;text-align:center">Peor tiempo</div>
+                                    <div style="box-sizing:border-box;border:0;width:7%;height:30px;float:left;color:#fff;font-weight: 600;/*border-right:1px solid red;*/line-height: 30px;font-size: 12px;padding-left:5px;">Media</div>
+                                    <div style="box-sizing:border-box;border:0;width:4%;height:30px;float:left;color:#fff;font-weight: 600;/*border-right:1px solid red;*/line-height:30px;"></div>
+                                    <div style="box-sizing:border-box;border:0;width:4%;height:30px;float:left;color:#fff;font-weight: 600;/*border-right:1px solid red;*/line-height:30px;"></div>
+                                    <div style="box-sizing:border-box;border:0;width:4%;height:30px;float:left;color:#fff;font-weight: 600;/*border-right:1px solid red;*/line-height:30px;"></div>
+                                    
+                                </div>
+                                <div id="contenedor_fila_tabla_inicio_test_ocular" style="box-sizing:border-box;border:0;width:100%;color:#555;">
+
+                                </div>
+                                <div style="box-sizing:border-box;border:0;width:100%;height:10px;background-color:#555;border-bottom-left-radius: 5px;border-bottom-right-radius: 5px;"></div>
+                            </div>
+                    </div>
+                    
+                    
+                    <!-- FIN TEST REACCION -->
+                    <!-- ===================================================================== -->
+                    
+                    
+                    
+                    
+
+                    
+
+            </div>
+                    
+                <?php } ?>
+            </div>
+        </div>
+    </body>
+</html>
+<script>
+// variables globales
+var nombre_usuario_software='<?php echo utf8_encode($_SESSION["nombre_usuario_software"]);?>';
+
+var tipo_test=null;
+
+var tipo_formulario=null;
+
+var datos_test={
+    ocular:{
+        tipo_fomrulario:false,
+        lista_inicio_test:[],
+        jugadores_test:[]
+    },
+    reaccion:{
+        tipo_fomrulario:false,
+        lista_inicio_test:[],
+        jugadores_test:[]
+    },
+    cerebral:{
+        tipo_fomrulario:false,
+        lista_inicio_test:[],
+        jugadores_test:[]
+    },
+    decisiones:{
+        tipo_fomrulario:false,
+        lista_inicio_test:[],
+        jugadores_test:[]
+    }
+    
+}
+
+
+var ranking_test_ocular=[];
+
+var ranking_test_cerabral=[];
+
+var ranking_test_reaccion=[];
+
+var ranking_test_decisiones=[];
+/*
+id
+rank
+velocidad
+comentario
+*/
+
+var ano_actual_servidor=null;
+
+var lista_posiciones=[
+    "Arquero",
+    "Defensor Central",
+    "Lateral Izquierdo",
+    "Lateral Derecho",
+    "Volante Defensivo",
+    "Volante Izquierdo",
+    "Volante Derecho",
+    "Volante Mixto",
+    "Volante Ofensivo",
+    "Extremo Izquierdo",
+    "Extremo Derecho",
+    "Centro Delantero"
+];
+
+var listaJugadores=[];
+
+var idtest_ocular=null;
+
+
+
+</script>
+<script>
+
+
+
+
+</script>
+<script type="text/javascript" src="bootstrap-datetimepicker/js/bootstrap-datetimepicker.js" charset="UTF-8"></script>
+<script type="text/javascript" src="bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.es.js" charset="UTF-8"></script>
+<script>
+// scripts 
+    mostrar_al_cargar_pagina();
+    cargarVentanaInicioTest();
+    // ===================================================
+
+</script>

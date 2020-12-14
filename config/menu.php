@@ -179,6 +179,14 @@
               <?php
               }
               ?>
+              <?php 
+              if($menu_lateral['test_reaccion_jugador']){
+              ?>
+              <li><a href="<?php echo $menu_link['test_reaccion_jugador'];?>" onClick="colocar_icono_cargando(this)"><?php if($submenu_actual=='test_reaccion_jugador'){?><i class="icon-chevron-right" style="text-decoration: none;"></i><?php }?> <?php if(!$software_demo || ($software_demo && $demo['test_reaccion_jugador'])){?>test reaccion<?php }else{?><strike style="color:white;"><span>&nbsp;test reaccion&nbsp;</span></strike><?php }?></a></li>
+
+              <?php
+              }
+              ?>
               
             
             <!-- FIN SUBMENU -->

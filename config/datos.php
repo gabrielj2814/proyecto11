@@ -165,4 +165,16 @@
     ////////////////////////// URL //////////////////////////////
     $menu_link['centro_medico_c']                               = 'centro_medico_c.php';
     ////////////////////// COMENTARIOS //////////////////////////
-    $comentarios['centro_medico_c']                             = 36;   
+    $comentarios['centro_medico_c']                             = 36; 
+    ////////////////////////// MODULO 14 - TEST REACCION //////////////////////////////
+    ////////////////////////////////////////////////////////////////
+    $menu_lateral['test']                                         = true;
+    $menu_lateral['test_reaccion_jugador']                            = true;
+    /////////////////////////// DEMO /////////////////////////////
+    $demo['test']                                                 = true;
+    $demo['test_reaccion_jugador']                                    = true;
+    ////////////////////////// URL //////////////////////////////
+    $menu_link['test_reaccion_jugador']                               = 'test_reaccion.php';
+    ////////////////////// COMENTARIOS //////////////////////////
+    $comentarios['test_reaccion_jugador']                             = 36;  
+      
