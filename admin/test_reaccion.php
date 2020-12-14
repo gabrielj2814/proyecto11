@@ -1623,9 +1623,12 @@ app.controller("controlador_1",['$scope',function($scope){
                                 </div>
                                 <div style="box-sizing:border-box;border:0;width:100%;height:10px;background-color:#555;border-bottom-left-radius: 5px;border-bottom-right-radius: 5px;"></div>
                             </div>
-                            <div style="box-sizing:border-box;border:0;width:176px;height:30px;margin-left:auto;margin-right:auto;margin-bottom:15px;">
+                            <div style="box-sizing:border-box;border:0;width:411px;height:30px;margin-left:auto;margin-right:auto;margin-bottom:15px;">
                                 <span style="box-sizing:border-box;float:left;width:85px;height:30px;font-size:12px;color:#111;font-weight: 800;margin-right:15px;line-height:30px;">PROMEDIO</span>
                                 <div id="promedio_1_test" style="box-sizing:border-box;float:left;width:70px;height:30px;background-color:#555;border:2px solid #acacac;text-align:right;font-size:12px;font-weight: 800;color:#fff;line-height:30px;padding-right:5px;border-radius:5px;">xxx</div>
+                                <div id="promedio_2_test" style="box-sizing:border-box;float:left;width:70px;height:30px;background-color:#555;border:2px solid #acacac;text-align:right;font-size:12px;font-weight: 800;color:#fff;line-height:30px;padding-right:5px;border-radius:5px;margin-left: 10px;">xxx</div>
+                                <div id="promedio_3_test" style="box-sizing:border-box;float:left;width:70px;height:30px;background-color:#555;border:2px solid #acacac;text-align:right;font-size:12px;font-weight: 800;color:#fff;line-height:30px;padding-right:5px;border-radius:5px;margin-left: 10px;">xxx</div>
+                                <div id="promedio_4_test" style="box-sizing:border-box;float:left;width:70px;height:30px;background-color:#555;border:2px solid #acacac;text-align:right;font-size:12px;font-weight: 800;color:#fff;line-height:30px;padding-right:5px;border-radius:5px;margin-left: 10px;">xxx</div>
                             </div>
 
                             <div style="box-sizing:border-box;border:0;width: 140px;margin-left: auto;margin-right:auto;">
@@ -1823,6 +1826,9 @@ function formularioTestCrear(){
     fechaTestEvaluacion();
     $("#observacion_test").val("");
     document.getElementById("promedio_1_test").textContent="0.00";
+    document.getElementById("promedio_2_test").textContent="0.00";
+    document.getElementById("promedio_3_test").textContent="0.00";
+    document.getElementById("promedio_4_test").textContent="0.00";
 }
 
 // function formularioTestOcularEditar(indice){
@@ -1934,17 +1940,80 @@ function insertarFilaJugadoresTestOcular(jugadores=[]){
 function sumarAlRankingTestOcular($inputVelocidad){
     // calcular ranking y calcular promedio velocidad
     // let exprexion=/[0-9]||[0-9]{1,1}.[0-9]{1,1}/g;
-    let exprexion=/[a-zA-z]/;
-    if($inputVelocidad.value!=="" && !exprexion.test($inputVelocidad.value)){
-        if(window.ranking_test_reaccion.length===0){
+    // let exprexion=/[a-zA-z]/;
+    // if($inputVelocidad.value!=="" && !exprexion.test($inputVelocidad.value)){
+    //     if(window.ranking_test_reaccion.length===0){
+    //         window.ranking_test_reaccion.push({
+    //             id:$inputVelocidad.getAttribute("data-id-jugador"),
+    //             rank:0,
+    //             // velocidad:(parseFloat($inputVelocidad.value)!=="")?parseFloat($inputVelocidad.value):"",
+    //             tiempo_1:(parseFloat(document.getElementById("tiempo_1_"+$inputVelocidad.getAttribute("data-id-jugador")).value)!=="")?parseFloat(document.getElementById("tiempo_1_"+$inputVelocidad.getAttribute("data-id-jugador")).value):0,
+    //             tiempo_2:(parseFloat(document.getElementById("tiempo_2_"+$inputVelocidad.getAttribute("data-id-jugador")).value)!=="")?parseFloat(document.getElementById("tiempo_2_"+$inputVelocidad.getAttribute("data-id-jugador")).value):0,
+    //             tiempo_3:(parseFloat(document.getElementById("tiempo_3_"+$inputVelocidad.getAttribute("data-id-jugador")).value)!=="")?parseFloat(document.getElementById("tiempo_3_"+$inputVelocidad.getAttribute("data-id-jugador")).value):0,
+    //             tiempo_4:(parseFloat(document.getElementById("tiempo_4_"+$inputVelocidad.getAttribute("data-id-jugador")).value)!=="")?parseFloat(document.getElementById("tiempo_4_"+$inputVelocidad.getAttribute("data-id-jugador")).value):0,
+
+    //             comentario:""
+    //         });
+    //     }
+    //     else{
+    //         let posicion=0;
+    //         let econtrado=false;
+    //         for(let jugador of window.ranking_test_reaccion){
+    //             if(jugador.id===$inputVelocidad.getAttribute("data-id-jugador")){
+    //                     window.ranking_test_reaccion[posicion]={
+    //                     id:$inputVelocidad.getAttribute("data-id-jugador"),
+    //                     rank:0,
+    //                     // velocidad:(parseFloat($inputVelocidad.value)!=="")?parseFloat($inputVelocidad.value):"",
+    //                     tiempo_1:(parseFloat(document.getElementById("tiempo_1_"+$inputVelocidad.getAttribute("data-id-jugador")).value)!=="")?parseFloat(document.getElementById("tiempo_1_"+$inputVelocidad.getAttribute("data-id-jugador")).value):0,
+    //                     tiempo_2:(parseFloat(document.getElementById("tiempo_2_"+$inputVelocidad.getAttribute("data-id-jugador")).value)!=="")?parseFloat(document.getElementById("tiempo_2_"+$inputVelocidad.getAttribute("data-id-jugador")).value):0,
+    //                     tiempo_3:(parseFloat(document.getElementById("tiempo_3_"+$inputVelocidad.getAttribute("data-id-jugador")).value)!=="")?parseFloat(document.getElementById("tiempo_3_"+$inputVelocidad.getAttribute("data-id-jugador")).value):0,
+    //                     tiempo_4:(parseFloat(document.getElementById("tiempo_4_"+$inputVelocidad.getAttribute("data-id-jugador")).value)!=="")?parseFloat(document.getElementById("tiempo_4_"+$inputVelocidad.getAttribute("data-id-jugador")).value):0,
+    //                     comentario:""
+    //                 }
+    //                 econtrado=true;
+    //             }
+    //             posicion++;
+    //         }
+    //         if(!econtrado){
+    //             window.ranking_test_reaccion.push({
+    //                 id:$inputVelocidad.getAttribute("data-id-jugador"),
+    //                 rank:0,
+    //                 // velocidad:(parseFloat($inputVelocidad.value)!=="")?parseFloat($inputVelocidad.value):"",
+    //                 tiempo_1:(parseFloat(document.getElementById("tiempo_1_"+$inputVelocidad.getAttribute("data-id-jugador")).value)!=="")?parseFloat(document.getElementById("tiempo_1_"+$inputVelocidad.getAttribute("data-id-jugador")).value):0,
+    //                 tiempo_2:(parseFloat(document.getElementById("tiempo_2_"+$inputVelocidad.getAttribute("data-id-jugador")).value)!=="")?parseFloat(document.getElementById("tiempo_2_"+$inputVelocidad.getAttribute("data-id-jugador")).value):0,
+    //                 tiempo_3:(parseFloat(document.getElementById("tiempo_3_"+$inputVelocidad.getAttribute("data-id-jugador")).value)!=="")?parseFloat(document.getElementById("tiempo_3_"+$inputVelocidad.getAttribute("data-id-jugador")).value):0,
+    //                 tiempo_4:(parseFloat(document.getElementById("tiempo_4_"+$inputVelocidad.getAttribute("data-id-jugador")).value)!=="")?parseFloat(document.getElementById("tiempo_4_"+$inputVelocidad.getAttribute("data-id-jugador")).value):0,
+    //                 comentario:""
+    //             });
+    //         }
+    //     }
+    //     console.log(window.ranking_test_reaccion);
+    //     for(let jugador of rankingOrdenTest()){
+    //         // console.log("->>",jugador)
+    //         document.getElementById("ranking_test_formulario_"+jugador.id).textContent=jugador.rank.toString();
+    //     }
+    //     let promedios=promedioTestFormulario();
+    //     document.getElementById("promedio_1_test").textContent=(promedios.tiempo_1.toFixed(2).toString()==="Infinity")?"0.00":promedios.tiempo_1.toFixed(2).toString();
+    // }
+    // else{
+    //     for(let jugador of window.ranking_test_reaccion){
+    //             if(jugador.id===$inputVelocidad.getAttribute("data-id-jugador")){
+    //                 document.getElementById("ranking_test_formulario_"+$inputVelocidad.getAttribute("data-id-jugador")).textContent="-";
+    //             }
+    //         }
+    //         document.getElementById("promedio_1_test").textContent="";
+    // }
+    let id=$inputVelocidad.getAttribute("data-id-jugador");
+    if(window.ranking_test_reaccion.length===0){
             window.ranking_test_reaccion.push({
                 id:$inputVelocidad.getAttribute("data-id-jugador"),
+                
                 rank:0,
                 // velocidad:(parseFloat($inputVelocidad.value)!=="")?parseFloat($inputVelocidad.value):"",
-                tiempo_1:(parseFloat(document.getElementById("tiempo_1_"+$inputVelocidad.getAttribute("data-id-jugador")).value)!=="")?parseFloat(document.getElementById("tiempo_1_"+$inputVelocidad.getAttribute("data-id-jugador")).value):"",
-                tiempo_2:(parseFloat(document.getElementById("tiempo_2_"+$inputVelocidad.getAttribute("data-id-jugador")).value)!=="")?parseFloat(document.getElementById("tiempo_2_"+$inputVelocidad.getAttribute("data-id-jugador")).value):"",
-                tiempo_3:(parseFloat(document.getElementById("tiempo_3_"+$inputVelocidad.getAttribute("data-id-jugador")).value)!=="")?parseFloat(document.getElementById("tiempo_3_"+$inputVelocidad.getAttribute("data-id-jugador")).value):"",
-                tiempo_4:(parseFloat(document.getElementById("tiempo_4_"+$inputVelocidad.getAttribute("data-id-jugador")).value)!=="")?parseFloat(document.getElementById("tiempo_4_"+$inputVelocidad.getAttribute("data-id-jugador")).value):"",
+                tiempo_1:(document.getElementById("tiempo_1_"+id).value!=="")?parseFloat(document.getElementById("tiempo_1_"+id).value):0,
+                tiempo_2:(document.getElementById("tiempo_2_"+id).value!=="")?parseFloat(document.getElementById("tiempo_2_"+id).value):0,
+                tiempo_3:(document.getElementById("tiempo_3_"+id).value!=="")?parseFloat(document.getElementById("tiempo_3_"+id).value):0,
+                tiempo_4:(document.getElementById("tiempo_4_"+id).value!=="")?parseFloat(document.getElementById("tiempo_4_"+id).value):0,
 
                 comentario:""
             });
@@ -1958,10 +2027,10 @@ function sumarAlRankingTestOcular($inputVelocidad){
                         id:$inputVelocidad.getAttribute("data-id-jugador"),
                         rank:0,
                         // velocidad:(parseFloat($inputVelocidad.value)!=="")?parseFloat($inputVelocidad.value):"",
-                        tiempo_1:(parseFloat(document.getElementById("tiempo_1_"+$inputVelocidad.getAttribute("data-id-jugador")).value)!=="")?parseFloat(document.getElementById("tiempo_1_"+$inputVelocidad.getAttribute("data-id-jugador")).value):"",
-                        tiempo_2:(parseFloat(document.getElementById("tiempo_2_"+$inputVelocidad.getAttribute("data-id-jugador")).value)!=="")?parseFloat(document.getElementById("tiempo_2_"+$inputVelocidad.getAttribute("data-id-jugador")).value):"",
-                        tiempo_3:(parseFloat(document.getElementById("tiempo_3_"+$inputVelocidad.getAttribute("data-id-jugador")).value)!=="")?parseFloat(document.getElementById("tiempo_3_"+$inputVelocidad.getAttribute("data-id-jugador")).value):"",
-                        tiempo_4:(parseFloat(document.getElementById("tiempo_4_"+$inputVelocidad.getAttribute("data-id-jugador")).value)!=="")?parseFloat(document.getElementById("tiempo_4_"+$inputVelocidad.getAttribute("data-id-jugador")).value):"",
+                        tiempo_1:(document.getElementById("tiempo_1_"+id).value!=="")?parseFloat(document.getElementById("tiempo_1_"+id).value):0,
+                        tiempo_2:(document.getElementById("tiempo_2_"+id).value!=="")?parseFloat(document.getElementById("tiempo_2_"+id).value):0,
+                        tiempo_3:(document.getElementById("tiempo_3_"+id).value!=="")?parseFloat(document.getElementById("tiempo_3_"+id).value):0,
+                        tiempo_4:(document.getElementById("tiempo_4_"+id).value!=="")?parseFloat(document.getElementById("tiempo_4_"+id).value):0,
                         comentario:""
                     }
                     econtrado=true;
@@ -1973,29 +2042,24 @@ function sumarAlRankingTestOcular($inputVelocidad){
                     id:$inputVelocidad.getAttribute("data-id-jugador"),
                     rank:0,
                     // velocidad:(parseFloat($inputVelocidad.value)!=="")?parseFloat($inputVelocidad.value):"",
-                    tiempo_1:(parseFloat(document.getElementById("tiempo_1_"+$inputVelocidad.getAttribute("data-id-jugador")).value)!=="")?parseFloat(document.getElementById("tiempo_1_"+$inputVelocidad.getAttribute("data-id-jugador")).value):"",
-                    tiempo_2:(parseFloat(document.getElementById("tiempo_2_"+$inputVelocidad.getAttribute("data-id-jugador")).value)!=="")?parseFloat(document.getElementById("tiempo_2_"+$inputVelocidad.getAttribute("data-id-jugador")).value):"",
-                    tiempo_3:(parseFloat(document.getElementById("tiempo_3_"+$inputVelocidad.getAttribute("data-id-jugador")).value)!=="")?parseFloat(document.getElementById("tiempo_3_"+$inputVelocidad.getAttribute("data-id-jugador")).value):"",
-                    tiempo_4:(parseFloat(document.getElementById("tiempo_4_"+$inputVelocidad.getAttribute("data-id-jugador")).value)!=="")?parseFloat(document.getElementById("tiempo_4_"+$inputVelocidad.getAttribute("data-id-jugador")).value):"",
+                    tiempo_1:(document.getElementById("tiempo_1_"+id).value!=="")?parseFloat(document.getElementById("tiempo_1_"+id).value):0,
+                    tiempo_2:(document.getElementById("tiempo_2_"+id).value!=="")?parseFloat(document.getElementById("tiempo_2_"+id).value):0,
+                    tiempo_3:(document.getElementById("tiempo_3_"+id).value!=="")?parseFloat(document.getElementById("tiempo_3_"+id).value):0,
+                    tiempo_4:(document.getElementById("tiempo_4_"+id).value!=="")?parseFloat(document.getElementById("tiempo_4_"+id).value):0,
                     comentario:""
                 });
             }
         }
+        // console.log(window.ranking_test_reaccion);
         for(let jugador of rankingOrdenTest()){
             // console.log("->>",jugador)
             document.getElementById("ranking_test_formulario_"+jugador.id).textContent=jugador.rank.toString();
         }
         let promedios=promedioTestFormulario();
-        document.getElementById("promedio_1_test").textContent=promedios.tiempo_1.toFixed(2).toString();
-    }
-    else{
-        for(let jugador of window.ranking_test_reaccion){
-                if(jugador.id===$inputVelocidad.getAttribute("data-id-jugador")){
-                    document.getElementById("ranking_test_formulario_"+$inputVelocidad.getAttribute("data-id-jugador")).textContent="-";
-                }
-            }
-            document.getElementById("promedio_1_test").textContent="";
-    }
+        document.getElementById("promedio_1_test").textContent=(promedios.tiempo_1.toFixed(2).toString()==="Infinity")?"0.00":promedios.tiempo_1.toFixed(2).toString();
+        document.getElementById("promedio_2_test").textContent=(promedios.tiempo_2.toFixed(2).toString()==="Infinity")?"0.00":promedios.tiempo_2.toFixed(2).toString();
+        document.getElementById("promedio_3_test").textContent=(promedios.tiempo_3.toFixed(2).toString()==="Infinity")?"0.00":promedios.tiempo_3.toFixed(2).toString();
+        document.getElementById("promedio_4_test").textContent=(promedios.tiempo_4.toFixed(2).toString()==="Infinity")?"0.00":promedios.tiempo_4.toFixed(2).toString();
     
     // validarCampoFormulario();
 }
@@ -2089,7 +2153,10 @@ function eliminarFilaJugadorTest($boton){
     }
     console.log("eliminando ->>>",lista);
     let promedios=promedioTestFormulario();
-    document.getElementById("promedio_1_test").textContent=promedios.tiempo_1.toFixed(2).toString();
+    document.getElementById("promedio_1_test").textContent=(promedios.tiempo_1.toFixed(2).toString()==="Infinity")?"0.00":promedios.tiempo_1.toFixed(2).toString();
+    document.getElementById("promedio_2_test").textContent=(promedios.tiempo_2.toFixed(2).toString()==="Infinity")?"0.00":promedios.tiempo_2.toFixed(2).toString();
+    document.getElementById("promedio_3_test").textContent=(promedios.tiempo_3.toFixed(2).toString()==="Infinity")?"0.00":promedios.tiempo_3.toFixed(2).toString();
+    document.getElementById("promedio_4_test").textContent=(promedios.tiempo_4.toFixed(2).toString()==="Infinity")?"0.00":promedios.tiempo_4.toFixed(2).toString();
     reordenarListaFormularioTestOcular(numero_fila_removida);
     // se encarga de actuaizar el ranking despues de eliminar a un jugador
     for(let jugador of rankingOrdenTest()){
@@ -2298,7 +2365,7 @@ function agregarJugadorNuevoAlTestOcular(jugador){
     let $indeces=document.querySelectorAll(".index_formulario_test");
     let numero_fila=parseInt($indeces[$indeces.length-1].textContent)+1;
     let plantilla='\
-        <div id="fila_formulario_test_ocular_'+jugador.idfichaJugador+'" class="panel_buscar" style="box-sizing:border-box;border:0;width:100%;height:34px;padding-top:2px;padding-bottom:2px;">\
+        <div id="fila_formulario_test_'+jugador.idfichaJugador+'" class="panel_buscar" style="box-sizing:border-box;border:0;width:100%;height:34px;padding-top:2px;padding-bottom:2px;">\
             <div class="index_formulario_test" style="box-sizing:border-box;border:0;width:2%;height:30px;float:left;font-weight: bold;/*border-right:1px solid red;*/line-height: 30px;font-size: 11px;text-align:center;">'+(numero_fila)+'</div>\
             <div style="box-sizing:border-box;border:0;width:9%;height:30px;float:left;font-weight: bold;/*border-right:1px solid red;*/line-height: 30px;font-size: 11px;text-transform: Capitalize" class="ellipsis-text">\
                 <img src="flags/blank.gif" class="flag flag-'+jugador.nacionalidad1.toLowerCase()+'"/> '+obtenerInicialDelPosicion(window.lista_posiciones[parseInt(jugador.posicion)-1])+'\
