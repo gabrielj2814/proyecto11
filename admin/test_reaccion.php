@@ -1618,7 +1618,7 @@ app.controller("controlador_1",['$scope',function($scope){
                                     <div style="box-sizing:border-box;border:0;width:28%;height:30px;float:left;color:#fff;font-weight: 800;/*border-right:1px solid red;*/line-height: 30px;font-size: 12px;text-align:center;"></div>
                                     <div style="box-sizing:border-box;border:0;width:5%;height:30px;float:left;color:#fff;font-weight: 800;/*border-right:1px solid red;*/"></div>
                                 </div>
-                                <div id="contenedor_fila_tabla_formulario_test_ocular" style="box-sizing:border-box;border:0;width:100%;color:#555;">
+                                <div id="contenedor_fila_tabla_formulario_test" style="box-sizing:border-box;border:0;width:100%;color:#555;">
 
                                 </div>
                                 <div style="box-sizing:border-box;border:0;width:100%;height:10px;background-color:#555;border-bottom-left-radius: 5px;border-bottom-right-radius: 5px;"></div>
@@ -1868,7 +1868,7 @@ async function consultarJugadoresSerie(valor){
             }
             else{
                 let plantilla='<div class="panel_buscar" style="box-sizing:border-box;border:0;width:100%;height:34px;padding-top:2px;padding-bottom:2px;text-align:center;font-weight: 800;font-size:12px;line-height:30px;">Sin Jugadores</div>';
-                $("#contenedor_fila_tabla_formulario_test_ocular").append(plantilla);
+                $("#contenedor_fila_tabla_formulario_test").append(plantilla);
             }
         },error: function(){// will fire when timeout is reached
             // alert("errorXXXXX");
@@ -1878,13 +1878,13 @@ async function consultarJugadoresSerie(valor){
 
 function insertarFilaJugadoresTestOcular(jugadores=[]){
     let lista_str_filas_jugadores=[]
-    $("#contenedor_fila_tabla_formulario_test_ocular").empty();
+    $("#contenedor_fila_tabla_formulario_test").empty();
     if(jugadores.length>0){
         let contador=0;
         for(let jugador of jugadores){
             let plantilla='\
-                <div id="fila_formulario_test_ocular_'+jugador.idfichaJugador+'" class="panel_buscar" style="box-sizing:border-box;border:0;width:100%;height:34px;padding-top:2px;padding-bottom:2px;">\
-                    <div class="index_formulario_test_ocular" style="box-sizing:border-box;border:0;width:2%;height:30px;float:left;font-weight: bold;/*border-right:1px solid red;*/line-height: 30px;font-size: 11px;text-align:center;">'+(contador+1)+'</div>\
+                <div id="fila_formulario_test_'+jugador.idfichaJugador+'" class="panel_buscar" style="box-sizing:border-box;border:0;width:100%;height:34px;padding-top:2px;padding-bottom:2px;">\
+                    <div class="index_formulario_test" style="box-sizing:border-box;border:0;width:2%;height:30px;float:left;font-weight: bold;/*border-right:1px solid red;*/line-height: 30px;font-size: 11px;text-align:center;">'+(contador+1)+'</div>\
                     <div style="box-sizing:border-box;border:0;width:9%;height:30px;float:left;font-weight: bold;/*border-right:1px solid red;*/line-height: 30px;font-size: 11px;text-transform: Capitalize" class="ellipsis-text">\
                         <img src="flags/blank.gif" class="flag flag-'+jugador.nacionalidad1.toLowerCase()+'"/> '+obtenerInicialDelPosicion(lista_posiciones[parseInt(jugador.posicion)-1])+'\
                     </div>\
@@ -1923,10 +1923,10 @@ function insertarFilaJugadoresTestOcular(jugadores=[]){
                 contador++;
                 lista_str_filas_jugadores.push(plantilla);
         }
-        // contenedor_fila_tabla_formulario_test_ocular
+        // contenedor_fila_tabla_formulario_test
         if(lista_str_filas_jugadores.length!==0){
             let filas_join=lista_str_filas_jugadores.join("");
-            $("#contenedor_fila_tabla_formulario_test_ocular").append(filas_join);
+            $("#contenedor_fila_tabla_formulario_test").append(filas_join);
         }
     }
 }
@@ -2058,8 +2058,49 @@ function rankingOrdenTest(){
             lista_ranking.push(tmp);
         }
     }
-    console.log(lista_ranking);
+    console.log("-->>>",lista_ranking);
     return lista_ranking;
+}
+
+function eliminarFilaJugadorTest($boton){
+    // este codigo se encarga de eliminar los jugadores del test en el te encuentras
+    // actualiza el ranking
+    let id=$boton.id;
+    let $fila=document.getElementById("fila_formulario_test_"+id);
+    let $contenedorFilasTablaTest=document.getElementById("contenedor_fila_tabla_formulario_test");
+    let $contenedorIndex=$fila.children[0];
+    let numero_fila_removida=parseInt($contenedorIndex.textContent)
+
+    $contenedorFilasTablaTest.removeChild($fila);
+    let contador=0;
+    for(let jugador of window.datos_test[window.tipo_test].jugadores_test){
+        if(jugador.idfichaJugador===id){
+            window.datos_test[window.tipo_test].jugadores_test.splice(contador,1);
+        }
+        contador++;
+    }
+    let lista=window.ranking_test_reaccion;
+    let contador2=0;
+    for(let jugador of lista){
+        if(jugador.id===id){
+            lista.splice(contador2,1);
+        }
+        contador2++;
+    }
+    console.log("eliminando ->>>",lista);
+    let promedios=promedioTestFormulario();
+    document.getElementById("promedio_1_test").textContent=promedios.tiempo_1.toFixed(2).toString();
+    reordenarListaFormularioTestOcular(numero_fila_removida);
+    // validarCampoFormulario();
+}
+
+function reordenarListaFormularioTestOcular(numero){
+    $indicesTestOcularFormulario=document.querySelectorAll(".index_formulario_test");
+    for(let indice of $indicesTestOcularFormulario){
+        if(numero<parseInt(indice.textContent)){
+            indice.textContent=(parseInt(indice.textContent)-1).toString();
+        }
+    }
 }
 
 
