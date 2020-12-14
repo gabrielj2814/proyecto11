@@ -1431,7 +1431,7 @@ app.controller("controlador_1",['$scope',function($scope){
                                         <p class="ellipsis-text" style="font-weight: normal;">Año</p>
                                     </div>
                                 </a>
-                                <select style="width:60%; height: 30px;background:#fff;border:2px solid #0b3b99" id="filtro_ano_test_ocular" name="filtro_ano_test_ocular" onchange="filtrarTestOcular()">
+                                <select style="width:60%; height: 30px;background:#fff;border:2px solid #0b3b99" id="filtro_ano_test" name="filtro_ano_test" onchange="filtrarTestOcular()">
                                     
                                 </select>
                             </div>
@@ -1442,7 +1442,7 @@ app.controller("controlador_1",['$scope',function($scope){
                                         <p class="ellipsis-text" style="font-weight: normal;">Mes</p>
                                     </div>
                                 </a>
-                                <select style="width:60%; height: 30px;background:#fff;border:2px solid #0b3b99" id="filtro_mes_test_ocular" name="filtro_mes_test_ocular" onchange="filtrarTestOcular()">
+                                <select style="width:60%; height: 30px;background:#fff;border:2px solid #0b3b99" id="filtro_mes_test" name="filtro_mes_test" onchange="filtrarTestOcular()">
                                     <option value="01">Enero</option>
                                     <option value="02">Febrero</option>
                                     <option value="03">Marzo</option>
@@ -1578,7 +1578,7 @@ app.controller("controlador_1",['$scope',function($scope){
                             <div style="box-sizing: border-box;border:0;width:100%;box-sizing: border-box;border:0;width:100%;height:200px;margin-left:auto;margin-right:auto;margin-bottom:15px;/*background-color:lime;*/padding-left:15px;padding-right:15px;">
                                 <img src="../config/logo_equipo.png" alt="logo equipo" style="box-sizing: border-box;border:0;width:20%;height:200px;float:left;"/>
                                 <div style="box-sizing: border-box;border:0;width:80%;height:200px;float:left;" >
-                                    <div style="box-sizing: border-box;border:0;color:#404040;font-size:13px;font-weight: 800;padding-left:27%;margin-bottom:15px;">TEST DE VELOCIDAD OCULAR</div>
+                                    <div style="box-sizing: border-box;border:0;color:#404040;font-size:13px;font-weight: 800;padding-left:27%;margin-bottom:15px;">TEST TIEMPO DE REACCIÓN</div>
                                     
                                     <div style="margin-left:25%;width:26%;height: 30px;display:flex;margin-bottom:30px;">
                                         <a class="btn btn-md btn-primary green-a" style="width: 40%;height: 20px;background:#001b73">
@@ -1625,7 +1625,7 @@ app.controller("controlador_1",['$scope',function($scope){
                             </div>
                             <div style="box-sizing:border-box;border:0;width:176px;height:30px;margin-left:auto;margin-right:auto;margin-bottom:15px;">
                                 <span style="box-sizing:border-box;float:left;width:85px;height:30px;font-size:12px;color:#111;font-weight: 800;margin-right:15px;line-height:30px;">PROMEDIO</span>
-                                <div id="promedio_test_ocular" style="box-sizing:border-box;float:left;width:70px;height:30px;background-color:#555;border:2px solid #acacac;text-align:right;font-size:12px;font-weight: 800;color:#fff;line-height:30px;padding-right:5px;border-radius:5px;">xxx</div>
+                                <div id="promedio_1_test" style="box-sizing:border-box;float:left;width:70px;height:30px;background-color:#555;border:2px solid #acacac;text-align:right;font-size:12px;font-weight: 800;color:#fff;line-height:30px;padding-right:5px;border-radius:5px;">xxx</div>
                             </div>
 
                             <div style="box-sizing:border-box;border:0;width: 140px;margin-left: auto;margin-right:auto;">
@@ -1735,16 +1735,74 @@ var idtest_reaccion=null;
 </script>
 <script>
 
+async function cargarVentanaInicioTest(){
+    await consultarAnoActual();
+    window.tipo_test="reaccion";
+    insertarOptionSelectFiltroTest();
+    $("#filtro_mes_test").val("01");
+    // await consultarTests($("#filtro_ano_test").val(),$("#filtro_mes_test").val());
+}
+
+async function consultarAnoActual(){
+    await $.ajax({
+        url: 'post/test_año_actual_test_reaccion.php',
+        type: "post",
+        data:[],
+        success: function(respuesta) {
+            var json=JSON.parse(respuesta);
+            window.ano_actual_servidor=parseInt(json.ano_actual);
+            
+        },error: function(){// will fire when timeout is reached
+        }, timeout: 10000 // sets timeout to 3 seconds
+    });
+}
+
+function insertarOptionSelectFiltroTest(){
+    let list_option=[];
+    for(let contador=window.ano_actual;contador>=window.ano_actual-5;contador--){
+        let option_str="<option value='"+contador+"'>"+contador+"</option>";
+        list_option.push(option_str);
+    }
+    let str_list_option=list_option.join("");
+    document.getElementById("filtro_ano_test").innerHTML=str_list_option;
+}
+
+async function filtrarTestOcular (){
+    await consultarTests($("#filtro_ano_test").val(),$("#filtro_mes_test").val());
+}
+
+
+async function consultarTests(ano="2020",mes="01"){
+    $("#contenedor_fila_tabla_inicio_test_ocular").empty();
+    window.datos_test[window.tipo_test].lista_inicio_test=[];
+    await $.ajax({
+        url: 'post/test_consultar_test_ocular_año_mes.php',
+        type: "post",
+        data:[
+            {name:"ano_test_oculares",value:ano},
+            {name:"mes_test_oculares",value:mes},
+        ],
+        success: function(respuesta) {
+            var json=JSON.parse(respuesta);
+            window.datos_test[window.tipo_test].lista_inicio_test=json.datos;
+            // console.log("listando test oculares",window.datos_test[window.tipo_test].lista_inicio_test);
+            insertarFilaInicioTestOculares(window.datos_test[window.tipo_test].lista_inicio_test);
+        },error: function(){// will fire when timeout is reached
+            // alert("errorXXXXX");
+        }, timeout: 10000 // sets timeout to 3 seconds
+    });
+}
+
 function abrirFormularioTest(){
     $("#vista_test").hide(500);
     $("#vista_test_formulario").show(500);
-    formularioTest()
+    formularioTest();
 }
 
 function abrirFormularioTestEditar(indice){
     $("#vista_test").hide(500);
     $("#vista_test_formulario").show(500);
-    formularioTest(true,indice)
+    formularioTest(true,indice);
 }
 
 function formularioTest(tipo=false,index=null){
@@ -1764,7 +1822,7 @@ function formularioTestCrear(){
     window.datos_test[window.tipo_test].jugadores_test=[];
     fechaTestEvaluacion();
     $("#observacion_test").val("");
-    document.getElementById("promedio_test_ocular").textContent="0.00";
+    document.getElementById("promedio_1_test").textContent="0.00";
 }
 
 // function formularioTestOcularEditar(indice){
@@ -1780,13 +1838,257 @@ function formularioTestCrear(){
 
 // }
 
-// async function volverInicioModuloTest($botonCerrarFormularioTest){
-//     $("#vista_test_formulario").hide(500);
-//     $("#vista_test").show(500);
-//     insertarOptionSelectFiltroTestOcular();
-//     $("#filtro_mes_test_ocular").val("01");
-//     await consultarTestsOculares($("#filtro_ano_test_ocular").val(),$("#filtro_mes_test_ocular").val());
-// }
+async function volverInicioModuloTest($botonCerrarFormularioTest){
+    $("#vista_test_formulario").hide(500);
+    $("#vista_test").show(500);
+    insertarOptionSelectFiltroTest();
+    $("#filtro_mes_test").val("01");
+    // await consultarTests($("#filtro_ano_test").val(),$("#filtro_mes_test").val());
+}
+
+async function consultarJugadoresSerie(valor){
+    // consultar jugadores por la serie en base al tipo de test del formulario
+    let serie=valor.split("_")[0],
+    sexo=valor.split("_")[1];
+    window.datos_test[window.tipo_test].jugadores_test=[];
+    await $.ajax({
+        url: 'post/test_consultar_Jugadores_reaccion.php',
+        type: "post",
+        data:[
+            {name:"serie",value:serie},
+            {name:"sexo",value:sexo}
+        ],
+        success: function(respuesta) {
+            var json=JSON.parse(respuesta);
+            window.datos_test[window.tipo_test].jugadores_test=json.datos;
+            // console.log("->>",window.datos_test[window.tipo_test].jugadores_test);
+            if(json.respuesta){
+                insertarFilaJugadoresTestOcular(window.datos_test[window.tipo_test].jugadores_test);
+                // validarCampoFormulario();
+            }
+            else{
+                let plantilla='<div class="panel_buscar" style="box-sizing:border-box;border:0;width:100%;height:34px;padding-top:2px;padding-bottom:2px;text-align:center;font-weight: 800;font-size:12px;line-height:30px;">Sin Jugadores</div>';
+                $("#contenedor_fila_tabla_formulario_test_ocular").append(plantilla);
+            }
+        },error: function(){// will fire when timeout is reached
+            // alert("errorXXXXX");
+        }, timeout: 10000 // sets timeout to 3 seconds
+    });
+}
+
+function insertarFilaJugadoresTestOcular(jugadores=[]){
+    let lista_str_filas_jugadores=[]
+    $("#contenedor_fila_tabla_formulario_test_ocular").empty();
+    if(jugadores.length>0){
+        let contador=0;
+        for(let jugador of jugadores){
+            let plantilla='\
+                <div id="fila_formulario_test_ocular_'+jugador.idfichaJugador+'" class="panel_buscar" style="box-sizing:border-box;border:0;width:100%;height:34px;padding-top:2px;padding-bottom:2px;">\
+                    <div class="index_formulario_test_ocular" style="box-sizing:border-box;border:0;width:2%;height:30px;float:left;font-weight: bold;/*border-right:1px solid red;*/line-height: 30px;font-size: 11px;text-align:center;">'+(contador+1)+'</div>\
+                    <div style="box-sizing:border-box;border:0;width:9%;height:30px;float:left;font-weight: bold;/*border-right:1px solid red;*/line-height: 30px;font-size: 11px;text-transform: Capitalize" class="ellipsis-text">\
+                        <img src="flags/blank.gif" class="flag flag-'+jugador.nacionalidad1.toLowerCase()+'"/> '+obtenerInicialDelPosicion(lista_posiciones[parseInt(jugador.posicion)-1])+'\
+                    </div>\
+                    <div style="box-sizing:border-box;border:0;width:16%;height:30px;float:left;font-weight: bold;/*border-right:1px solid red;*/line-height: 30px;font-size: 11px;" >\
+                        <div style="box-sizing:border-box;border:0;float:left;width:20%;height:30px;border-radius: 26px;overflow: hidden;border: 2px solid #555;" >\
+                            <img style="width:100%;height:32px" src="./foto_jugadores/'+jugador.idfichaJugador+'.png"/>\
+                        </div>\
+                        <div style="box-sizing:border-box;border:0;float:left;width:80%;height:30px;padding-left:5px;color:#555;font-weight: bold;line-height: 30px;text-transform: Capitalize" class="ellipsis-text">'+jugador.nombre+' '+jugador.apellido1+' '+jugador.apellido2+'</div>\
+                    </div>\
+                    <div style="box-sizing:border-box;border:0;width:8%;height:30px;float:left;font-weight: bold;/*border-right:1px solid red;*/line-height: 30px;font-size: 11px;padding-left:5px;padding-right:5px;">\
+                        <input style="box-sizing:border-box;width:100%;height:100%;border:1px solid #acacac;" type="text" name="array_velocidad[]"  class="campo_velocidad" id="tiempo_1_'+jugador.idfichaJugador+'" data-id-jugador="'+jugador.idfichaJugador+'" onKeyup="sumarAlRankingTestOcular(this)"/>\
+                    </div>\
+                    <div style="box-sizing:border-box;border:0;width:8%;height:30px;float:left;font-weight: bold;/*border-right:1px solid red;*/line-height: 30px;font-size: 11px;padding-left:5px;padding-right:5px;">\
+                        <input style="box-sizing:border-box;width:100%;height:100%;border:1px solid #acacac;" type="text" name="array_velocidad[]"  class="campo_velocidad" id="tiempo_2_'+jugador.idfichaJugador+'" data-id-jugador="'+jugador.idfichaJugador+'" onKeyup="sumarAlRankingTestOcular(this)"/>\
+                    </div>\
+                    <div style="box-sizing:border-box;border:0;width:8%;height:30px;float:left;font-weight: bold;/*border-right:1px solid red;*/line-height: 30px;font-size: 11px;padding-left:5px;padding-right:5px;">\
+                        <input style="box-sizing:border-box;width:100%;height:100%;border:1px solid #acacac;" type="text" name="array_velocidad[]"  class="campo_velocidad" id="tiempo_3_'+jugador.idfichaJugador+'" data-id-jugador="'+jugador.idfichaJugador+'" onKeyup="sumarAlRankingTestOcular(this)"/>\
+                    </div>\
+                    <div style="box-sizing:border-box;border:0;width:8%;height:30px;float:left;font-weight: bold;/*border-right:1px solid red;*/line-height: 30px;font-size: 11px;padding-left:5px;padding-right:5px;">\
+                        <input style="box-sizing:border-box;width:100%;height:100%;border:1px solid #acacac;" type="text" name="array_velocidad[]"  class="campo_velocidad" id="tiempo_4_'+jugador.idfichaJugador+'" data-id-jugador="'+jugador.idfichaJugador+'" onKeyup="sumarAlRankingTestOcular(this)"/>\
+                    </div>\
+                    <div style="box-sizing:border-box;border:0;width:8%;height:30px;float:left;font-weight: bold;/*border-right:1px solid red;*/line-height: 30px;font-size: 11px;text-align:center;">\
+                        <div id="ranking_test_formulario_'+jugador.idfichaJugador+'" style="box-sizing:border-box;border:0;width:100%;height:100%;line-height:30px;background-color:#f4f86f;font-weight: bold;">-</div>\
+                    </div>\
+                    <div style="box-sizing:border-box;border:0;width:28%;height:30px;float:left;font-weight: bold;/*border-right:1px solid red;*/line-height: 30px;font-size: 11px;padding-left:5px;padding-right:5px;">\
+                        <input style="box-sizing:border-box;width:100%;height:100%;border:1px solid #acacac;" type="text" name="array_comentario[]"  class="campo_comentario" id="comentario_test_ocular_'+jugador.idfichaJugador+'"/>\
+                    </div>\
+                    <div style="box-sizing:border-box;border:0;width:5%;height:30px;float:left;font-weight: bold;/*border-right:1px solid red;*/line-height: 30px;">\
+                        <center>\
+                            <a class="boton_eliminar" id="'+jugador.idfichaJugador+'" onClick="eliminarFilaJugadorTest(this)">\
+                                <i class="icon-remove"></i>\
+                            </a>\
+                        </center>\
+                    </div>\
+                </div>';
+                contador++;
+                lista_str_filas_jugadores.push(plantilla);
+        }
+        // contenedor_fila_tabla_formulario_test_ocular
+        if(lista_str_filas_jugadores.length!==0){
+            let filas_join=lista_str_filas_jugadores.join("");
+            $("#contenedor_fila_tabla_formulario_test_ocular").append(filas_join);
+        }
+    }
+}
+
+function sumarAlRankingTestOcular($inputVelocidad){
+    // calcular ranking y calcular promedio velocidad
+    // let exprexion=/[0-9]||[0-9]{1,1}.[0-9]{1,1}/g;
+    let exprexion=/[a-zA-z]/;
+    if($inputVelocidad.value!=="" && !exprexion.test($inputVelocidad.value)){
+        if(window.ranking_test_reaccion.length===0){
+            window.ranking_test_reaccion.push({
+                id:$inputVelocidad.getAttribute("data-id-jugador"),
+                rank:0,
+                // velocidad:(parseFloat($inputVelocidad.value)!=="")?parseFloat($inputVelocidad.value):"",
+                tiempo_1:(parseFloat(document.getElementById("tiempo_1_"+$inputVelocidad.getAttribute("data-id-jugador")).value)!=="")?parseFloat(document.getElementById("tiempo_1_"+$inputVelocidad.getAttribute("data-id-jugador")).value):"",
+                tiempo_2:(parseFloat(document.getElementById("tiempo_2_"+$inputVelocidad.getAttribute("data-id-jugador")).value)!=="")?parseFloat(document.getElementById("tiempo_2_"+$inputVelocidad.getAttribute("data-id-jugador")).value):"",
+                tiempo_3:(parseFloat(document.getElementById("tiempo_3_"+$inputVelocidad.getAttribute("data-id-jugador")).value)!=="")?parseFloat(document.getElementById("tiempo_3_"+$inputVelocidad.getAttribute("data-id-jugador")).value):"",
+                tiempo_4:(parseFloat(document.getElementById("tiempo_4_"+$inputVelocidad.getAttribute("data-id-jugador")).value)!=="")?parseFloat(document.getElementById("tiempo_4_"+$inputVelocidad.getAttribute("data-id-jugador")).value):"",
+
+                comentario:""
+            });
+        }
+        else{
+            let posicion=0;
+            let econtrado=false;
+            for(let jugador of window.ranking_test_reaccion){
+                if(jugador.id===$inputVelocidad.getAttribute("data-id-jugador")){
+                        window.ranking_test_reaccion[posicion]={
+                        id:$inputVelocidad.getAttribute("data-id-jugador"),
+                        rank:0,
+                        // velocidad:(parseFloat($inputVelocidad.value)!=="")?parseFloat($inputVelocidad.value):"",
+                        tiempo_1:(parseFloat(document.getElementById("tiempo_1_"+$inputVelocidad.getAttribute("data-id-jugador")).value)!=="")?parseFloat(document.getElementById("tiempo_1_"+$inputVelocidad.getAttribute("data-id-jugador")).value):"",
+                        tiempo_2:(parseFloat(document.getElementById("tiempo_2_"+$inputVelocidad.getAttribute("data-id-jugador")).value)!=="")?parseFloat(document.getElementById("tiempo_2_"+$inputVelocidad.getAttribute("data-id-jugador")).value):"",
+                        tiempo_3:(parseFloat(document.getElementById("tiempo_3_"+$inputVelocidad.getAttribute("data-id-jugador")).value)!=="")?parseFloat(document.getElementById("tiempo_3_"+$inputVelocidad.getAttribute("data-id-jugador")).value):"",
+                        tiempo_4:(parseFloat(document.getElementById("tiempo_4_"+$inputVelocidad.getAttribute("data-id-jugador")).value)!=="")?parseFloat(document.getElementById("tiempo_4_"+$inputVelocidad.getAttribute("data-id-jugador")).value):"",
+                        comentario:""
+                    }
+                    econtrado=true;
+                }
+                posicion++;
+            }
+            if(!econtrado){
+                window.ranking_test_reaccion.push({
+                    id:$inputVelocidad.getAttribute("data-id-jugador"),
+                    rank:0,
+                    // velocidad:(parseFloat($inputVelocidad.value)!=="")?parseFloat($inputVelocidad.value):"",
+                    tiempo_1:(parseFloat(document.getElementById("tiempo_1_"+$inputVelocidad.getAttribute("data-id-jugador")).value)!=="")?parseFloat(document.getElementById("tiempo_1_"+$inputVelocidad.getAttribute("data-id-jugador")).value):"",
+                    tiempo_2:(parseFloat(document.getElementById("tiempo_2_"+$inputVelocidad.getAttribute("data-id-jugador")).value)!=="")?parseFloat(document.getElementById("tiempo_2_"+$inputVelocidad.getAttribute("data-id-jugador")).value):"",
+                    tiempo_3:(parseFloat(document.getElementById("tiempo_3_"+$inputVelocidad.getAttribute("data-id-jugador")).value)!=="")?parseFloat(document.getElementById("tiempo_3_"+$inputVelocidad.getAttribute("data-id-jugador")).value):"",
+                    tiempo_4:(parseFloat(document.getElementById("tiempo_4_"+$inputVelocidad.getAttribute("data-id-jugador")).value)!=="")?parseFloat(document.getElementById("tiempo_4_"+$inputVelocidad.getAttribute("data-id-jugador")).value):"",
+                    comentario:""
+                });
+            }
+        }
+        for(let jugador of rankingOrdenTest()){
+            // console.log("->>",jugador)
+            document.getElementById("ranking_test_formulario_"+jugador.id).textContent=jugador.rank.toString();
+        }
+        let promedios=promedioTestFormulario();
+        document.getElementById("promedio_1_test").textContent=promedios.tiempo_1.toFixed(2).toString();
+    }
+    else{
+        for(let jugador of window.ranking_test_reaccion){
+                if(jugador.id===$inputVelocidad.getAttribute("data-id-jugador")){
+                    document.getElementById("ranking_test_formulario_"+$inputVelocidad.getAttribute("data-id-jugador")).textContent="-";
+                }
+            }
+            document.getElementById("promedio_1_test").textContent="";
+    }
+    
+    // validarCampoFormulario();
+}
+
+function promedioTestFormulario(){
+    let numeroDeJugadores=window.ranking_test_reaccion.length;
+    let tiempo_1_total=0;
+    let tiempo_2_total=0;
+    let tiempo_3_total=0;
+    let tiempo_4_total=0;
+    for(let jugador of window.ranking_test_reaccion){
+        tiempo_1_total+=jugador.tiempo_1
+        tiempo_2_total+=jugador.tiempo_2
+        tiempo_3_total+=jugador.tiempo_3
+        tiempo_4_total+=jugador.tiempo_4
+    }
+    return {
+        tiempo_1:numeroDeJugadores/tiempo_1_total,
+        tiempo_2:numeroDeJugadores/tiempo_2_total,
+        tiempo_3:numeroDeJugadores/tiempo_3_total,
+        tiempo_4:numeroDeJugadores/tiempo_4_total
+    };
+
+}
+
+function rankingOrdenTest(){
+    // ordenar ranking de menor a mayor
+    let numero_ranking=1;
+    let total_jugadores=window.datos_test[window.tipo_test].jugadores_test.length;
+    let lista_jugadores =window.ranking_test_reaccion.slice();
+    let lista_ranking=[];
+    for(let contador=0;contador<window.datos_test[window.tipo_test].jugadores_test.length;contador++){
+        if(lista_jugadores.length===0){
+            break;
+        }
+        else{
+            let tmp={
+                id:0,
+                rank:0,
+                tiempo_1:9999999,
+                tiempo_2:9999999,
+                tiempo_3:9999999,
+                tiempo_4:9999999,
+                comentario:""
+            }
+            let posicion=0;
+            let posicion_eliminar=0;
+            for(let jugador of lista_jugadores){
+                let total_jugador=jugador.tiempo_1+jugador.tiempo_2+jugador.tiempo_3+jugador.tiempo_4;
+                let total_tmp=tmp.tiempo_1+tmp.tiempo_2+tmp.tiempo_3+tmp.tiempo_4;
+                if(total_jugador<=total_tmp){
+                    tmp=JSON.parse(JSON.stringify(jugador));
+                    posicion_eliminar=posicion;
+                }
+                posicion++;
+            }
+            tmp.rank=numero_ranking;
+            numero_ranking++;
+            lista_jugadores.splice(posicion_eliminar,1);
+            lista_ranking.push(tmp);
+        }
+    }
+    console.log(lista_ranking);
+    return lista_ranking;
+}
+
+
+function validarCampoFormulario(){
+    let $listaInputCampoVelocidadFormulario=document.querySelectorAll(".campo_velocidad");
+    // let $listaInputCampoComentarioFormulario=document.querySelectorAll(".campo_comentario");
+    let exprecionRegular=/[a-zA-Z]/g;
+    // console.log("listando nodos input velocidad ->>>",$listaInputCampoVelocidadFormulario);
+    let estadoInputVelocidad=false;
+    for($inputVelocidad of $listaInputCampoVelocidadFormulario){
+        if($inputVelocidad.value!==""){
+            if(exprecionRegular.test($inputVelocidad.value)){
+                estadoInputVelocidad=true;
+                break;
+            }
+        }
+        else{
+            estadoInputVelocidad=true;
+            break;
+        }
+    }
+    // boton_guardar_test_ocular
+    if(!estadoInputVelocidad){
+        $("#boton_guardar_test_ocular").prop("disabled",false);
+    }
+    else{
+        $("#boton_guardar_test_ocular").prop("disabled",true);
+    }
+}
 
 function fechaTestEvaluacion(){
     $('#fecha_evaluacion_test').datetimepicker({
@@ -1804,6 +2106,84 @@ function fechaTestEvaluacion(){
         useCurrent: false
     });
     $('#fecha_evaluacion_test').datetimepicker('setDate', new Date() );
+}
+
+function obtenerInicialDelPosicion(posicion){
+    // volante mixto -> V. Mixto
+    let exprecion=/\s/;
+    if(exprecion.test(posicion)){
+        let inicial=posicion[0];
+        let InicialMasPosicion=inicial+". "+posicion.split(" ")[1];
+        return InicialMasPosicion;
+    }
+    else{
+        return posicion;
+    }
+
+}
+
+function calcularEdad( fecha_nacimiento_param ) {
+
+var date = new Date();
+var anioActual = date.getFullYear();
+
+var date_actual_str = date.toString();
+    
+var anio_actual = date_actual_str.substring(11, 15); 
+var mes_actual_str = date_actual_str.substring(4, 7);
+var dia_actual = date_actual_str.substring(8, 10);
+
+var anio_actual_int = parseInt( anio_actual ); 
+var mes_actual_int = parseInt( mes_actual_str );
+var dia_actual = parseInt( dia_actual );
+
+let fecha_nacimiento = fecha_nacimiento_param;
+
+// Día de Nacimiento:
+let dia_nacimiento = fecha_nacimiento.substring(8, 10);
+dia_nacimiento = parseInt( dia_nacimiento ); 
+
+// Mes de Nacimiento:
+let mes_nacimiento = fecha_nacimiento.substring(5, 7);
+mes_nacimiento = parseInt( mes_nacimiento );     
+
+// Año de Nacimiento:
+let anio_nacimiento = fecha_nacimiento.substring(0, 4);
+anio_nacimiento = parseInt( anio_nacimiento ); 
+
+
+// Calculando edad:
+let edad = anio_actual_int - anio_nacimiento;
+
+if( mes_actual_int < mes_nacimiento ) {
+edad--;
+}
+
+if( mes_actual_int > mes_nacimiento ) {
+edad;
+}    
+
+if( mes_actual_int === mes_nacimiento ) {
+// Comparamos los días:
+if( dia_actual >= dia_nacimiento ) {
+    edad;
+} else {
+    edad--;
+}
+}
+
+return edad;
+
+}
+
+function obtenerPieHabil(pie){
+    let pieHabil=[
+        "Derecho",
+        "Izquierdo",
+        "Ambidiestro"
+    ];
+
+    return pieHabil[pie];
 }
 
 
