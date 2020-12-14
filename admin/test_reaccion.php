@@ -1225,7 +1225,7 @@ app.controller("controlador_1",['$scope',function($scope){
                     <!-- #0b3b99 -->
                     <!-- ======================================================================= -->
                     <!-- INICIO TEST OCULAR -->
-                    <div id="vista_test_reaccion" style="height:auto;" >
+                    <div id="vista_test" style="height:auto;" >
                         <!--------------------------------  MODAL INFORME PDF INICIO-------------------------------------------->
                         <div id="descargarPDF" class="modal hide" style="border-radius:10px;">
                             <div class="modal-header" style="background-color: <?php echo $color_fondo; ?>; border-top-right-radius: 5px; border-top-left-radius: 5px;">
@@ -1481,9 +1481,177 @@ app.controller("controlador_1",['$scope',function($scope){
                             </div>
                     </div>
                     
+                    <div id="vista_test_formulario" style="display:none;">
+                        <button data-boton-cerrar-formulario-test="ocular" class="boton_volver" onclick="volverInicioModuloTest(this);" style="margin-left:10px"><i class="icon-arrow-left"></i> volver</button>
+                        
+                        <!--    MODAL FORMULARIO TEST OCULAR INICIO  modalFormularioTestOcular -->
+                        <div id="modalFormularioTestOcular" class="modal hide" style="border-radius:10px;">
+                                <div class="modal-header" style="background-color: <?php echo $color_fondo; ?>; border-top-right-radius: 5px; border-top-left-radius: 5px;">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <center><h4 class="modal-title"><img src="img/logo3.png" style="height:30px; width:265px;"></h4></center>
+                                </div>
+                                <div class="modal-body" style="color:black; font-family:Arial, Helvetica, sans-serif;">
+                                <center>
+                                        <br>
+                                        <div id="mensaje_agregar_DescargarBoleta">
+                                        <h5><!--mensaje modal --></h5>
+                                        </div>
+                                        <br>
+                                </center>
+                                </div>
+                                <div class="modal-footer" style="background-color: <?php echo $color_fondo; ?>; border-bottom-left-radius:10px; border-bottom-right-radius:10px;">
+                                    
+                                    <center>
+                                        <div id="contendor_botones_modal">
+                                            <button type="button" class="btn btn-default boton_modal" onClick="cerrarModalAtencionDiariaNuevo()"  id="boton_cerrar_alerta" style="margin-right:20px; border-radius:5px;"><span class="icon"><i class="icon-remove"></i></span> No</button>
+                                            <button type="button" id="guardar" class="btn btn-default boton_modal " onClick="agregarNuevoTratamiento()" ng-click="desactivarBotonAgregarBoleta()" style="border-radius:5px;"><span class="icon"><i class="icon-ok"></i></span> Si</button>
+                                        </div>
+                                    </center>
+                                    
+                                </div>
+                        </div>
+                        <!--    MODAL FORMULARIO TEST OCULAR FIN     -->
+                         <!--    MODAL AGREGAR JUGADOR TEST OCULAR INICIO  modalFormularioTestOcular -->
+                         <div id="modalAgregarJugadorTestOcular" class="modal hide" style="border-radius:10px;">
+                                <div class="modal-header" style="background-color: <?php echo $color_fondo; ?>; border-top-right-radius: 5px; border-top-left-radius: 5px;">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <center><h4 class="modal-title"><img src="img/logo3.png" style="height:30px; width:265px;"></h4></center>
+                                </div>
+                                <div class="modal-body" style="color:black; font-family:Arial, Helvetica, sans-serif;">
+                                <center>
+                                        <br>
+                                        <div id="mensaje_agregar_DescargarBoletaAgregarJugador">
+                                            <div style="display: flex;margin-left:auto;margin-right:auto;width:50%;margin-bottom:15px;">
+                                                <a class="btn btn-md btn-primary green-a" style="width: 50%;height: 20px;background:#001b73">
+                                                    <div>
+                                                        <p class="ellipsis-text" style="font-weight: normal;">Serie Jugador</p>
+                                                    </div>
+                                                </a>
+                                                <select style="width:50%; height: 30px;background:#fff;border:2px solid #001b73" class="" id="serie_test_ocular" name="serie_test_ocular" onchange="consultarJugadoresSerieAgregarTestOcular(this.value)">
+                                                    <option value="null">Seleccione</option>
+                                                    <option value="99_1">Primer equipo masculino</option>
+                                                    <option value="20_1">Sub 20</option>
+                                                    <option value="17_1">Sub 17</option>
+                                                    <option value="16_1">Sub 16</option>
+                                                    <option value="15_1">Sub 15</option>
+                                                    <option value="14_1">Sub 14</option>
+                                                    <option value="13_1">Sub 13</option>
+                                                    <option value="12_1">Sub 12</option>
+                                                    <option value="11_1">Sub 11</option>
+                                                    <option value="10_1">Sub 10</option>
+                                                    <option value="9_1">Sub 9</option>
+                                                    <option value="8_1">Sub 8</option>
+                                                    <option value="99_2">Primer equipo femenino</option>
+                                                    <option value="17_2">Sub 17</option>
+                                                    <option value="15_2">Sub 15</option>
+                                                </select>
+                                                <!-- <input type="text" readonly  style="width:50%; height: 18px;background:#fff;" class="grey-input date_fechaNacimiento fecha_inicio" id="fecha_atencion" name="fecha_atencion" onchange="" />                    -->
+                                            </div>
+                                            <div id="contendor_jugadores_test_ocular" style="display: none;margin-left:auto;margin-right:auto;width:50%;">
+                                                <a class="btn btn-md btn-primary green-a" style="width: 50%;height: 20px;background:#001b73">
+                                                    <div>
+                                                        <p class="ellipsis-text" style="font-weight: normal;">Jugador</p>
+                                                    </div>
+                                                </a>
+                                                <select style="width:50%; height: 30px;background:#fff;border:2px solid #001b73" class="" id="jugador_test_ocular" name="jugador_test_ocular" onchange="">
+                                                </select>
+                                                <!-- <input type="text" readonly  style="width:50%; height: 18px;background:#fff;" class="grey-input date_fechaNacimiento fecha_inicio" id="fecha_atencion" name="fecha_atencion" onchange="" />                    -->
+                                            </div>
+                                        </div>
+                                        <br>
+                                </center>
+                                </div>
+                                <div class="modal-footer" style="background-color: <?php echo $color_fondo; ?>; border-bottom-left-radius:10px; border-bottom-right-radius:10px;">
+                                    
+                                    <center>
+                                        <div id="contendor_botones_modal_AgregarJugador">
+                                            <button type="button" class="btn btn-default boton_modal" onClick="cerrarModalAgregarJugadorTestOcular()"  id="boton_cerrar_alerta" style="margin-right:20px; border-radius:5px;"><span class="icon"><i class="icon-remove"></i></span> No</button>
+                                            <button type="button" id="guardar" class="btn btn-default boton_modal " onClick="agregarJugadorTestOcular()" ng-click="desactivarBotonAgregarBoleta()" style="border-radius:5px;"><span class="icon"><i class="icon-ok"></i></span> Si</button>
+                                        </div>
+                                    </center>
+                                    
+                                </div>
+                        </div>
+                        <!--    MODAL AGREGAR JUGADOR TEST OCULAR FIN     -->
+
+                        <form id="formulario-ocular" style="box-sizing: border-box;border:0;padding-top:15px;">
+                            <div style="box-sizing: border-box;border:0;width:100%;box-sizing: border-box;border:0;width:100%;height:200px;margin-left:auto;margin-right:auto;margin-bottom:15px;/*background-color:lime;*/padding-left:15px;padding-right:15px;">
+                                <img src="../config/logo_equipo.png" alt="logo equipo" style="box-sizing: border-box;border:0;width:20%;height:200px;float:left;"/>
+                                <div style="box-sizing: border-box;border:0;width:80%;height:200px;float:left;" >
+                                    <div style="box-sizing: border-box;border:0;color:#404040;font-size:13px;font-weight: 800;padding-left:27%;margin-bottom:15px;">TEST DE VELOCIDAD OCULAR</div>
+                                    
+                                    <div style="margin-left:25%;width:26%;height: 30px;display:flex;margin-bottom:30px;">
+                                        <a class="btn btn-md btn-primary green-a" style="width: 40%;height: 20px;background:#001b73">
+                                            <div>
+                                                <p class="ellipsis-text" style="font-weight: normal;">Fecha evaluación</p>
+                                            </div>
+                                        </a>
+                                        <input type="text" readonly style="width:60%; height: 18px;background:#fff;" class="grey-input" id="fecha_evaluacion_test" name="fecha_evaluacion_test" />                   
+                                    </div>
+
+                                    <div style="box-sizing: border-box;border:0;width: 100%;height: 104px;" >
+                                        <div style="box-sizing: border-box;border:0;width: 100%;height: 20px;font-size:12px;font-weight: 800;">Observaciones</div>
+                                        <textarea name="observacion_test" id="observacion_test"  style="box-sizing: border-box;border:0;width: 100%;height: 84px;resize: none;display:block;border-radius:5px;border:1px solid #acacac;" ></textarea>
+                                
+                                    </div>
+                                </div>
+                            </div>
+                            <hr>
+
+                            <div style="box-sizing:border-box;border:0;color:#555;width:50%;font-size: 12px;margin-left:auto;margin-right:auto;text-align:center;font-weight: 800;">JUGADORES ACTIVOS</div>
+                            
+                            <div style="box-sizing:border-box;border:0;width:109px;margin-left:auto;margin-right:25px;margin-bottom:5px;">
+                                <button data-boton-abrir-formulario-test="ocular" class="boton-abrir-formulario" onClick="abrirModalAgregarJugadorTestOcular()"><b style="font-size:10px;"><i class="icon-plus"></i> Agregar jugador</b></button>
+                            </div>
+
+                            <div id="tabla_html_formulario_test" style="box-sizing:border-box;border:0;width:95%;margin-left:auto;margin-right:auto;margin-bottom:15px;">
+                                <div style="box-sizing:border-box;border:0;width:100%;height:30px;background-color:#555;border-top-left-radius: 5px;border-top-right-radius: 5px;">
+                                    <div style="box-sizing:border-box;border:0;width:2%;height:30px;float:left;color:#fff;font-weight: 800;/*border-right:1px solid red;*/line-height: 30px;font-size: 12px;text-align:center">#</div>
+                                    <div style="box-sizing:border-box;border:0;width:9%;height:30px;float:left;color:#fff;font-weight: 800;/*border-right:1px solid red;*/line-height: 30px;font-size: 12px;">POSICION</div>
+
+                                    <div style="box-sizing:border-box;border:0;width:16%;height:30px;float:left;color:#fff;font-weight: 800;/*border-right:1px solid red;*/line-height: 30px;font-size: 12px;">NOMBRE</div>
+                                    <div style="box-sizing:border-box;border:0;width:8%;height:30px;float:left;color:#fff;font-weight: 800;/*border-right:1px solid red;*/line-height: 30px;font-size: 12px;text-align:center;">1</div>
+                                    <div style="box-sizing:border-box;border:0;width:8%;height:30px;float:left;color:#fff;font-weight: 800;/*border-right:1px solid red;*/line-height: 30px;font-size: 12px;text-align:center;">2</div>
+                                    <div style="box-sizing:border-box;border:0;width:8%;height:30px;float:left;color:#fff;font-weight: 800;/*border-right:1px solid red;*/line-height: 30px;font-size: 12px;text-align:center;">3</div>
+                                    <div style="box-sizing:border-box;border:0;width:8%;height:30px;float:left;color:#fff;font-weight: 800;/*border-right:1px solid red;*/line-height: 30px;font-size: 12px;text-align:center;">4</div>
+                                    <div style="box-sizing:border-box;border:0;width:8%;height:30px;float:left;color:#fff;font-weight: 800;/*border-right:1px solid red;*/line-height: 30px;font-size: 12px;text-align:center;">RANK</div>
+                                    <div style="box-sizing:border-box;border:0;width:28%;height:30px;float:left;color:#fff;font-weight: 800;/*border-right:1px solid red;*/line-height: 30px;font-size: 12px;text-align:center;"></div>
+                                    <div style="box-sizing:border-box;border:0;width:5%;height:30px;float:left;color:#fff;font-weight: 800;/*border-right:1px solid red;*/"></div>
+                                </div>
+                                <div id="contenedor_fila_tabla_formulario_test_ocular" style="box-sizing:border-box;border:0;width:100%;color:#555;">
+
+                                </div>
+                                <div style="box-sizing:border-box;border:0;width:100%;height:10px;background-color:#555;border-bottom-left-radius: 5px;border-bottom-right-radius: 5px;"></div>
+                            </div>
+                            <div style="box-sizing:border-box;border:0;width:176px;height:30px;margin-left:auto;margin-right:auto;margin-bottom:15px;">
+                                <span style="box-sizing:border-box;float:left;width:85px;height:30px;font-size:12px;color:#111;font-weight: 800;margin-right:15px;line-height:30px;">PROMEDIO</span>
+                                <div id="promedio_test_ocular" style="box-sizing:border-box;float:left;width:70px;height:30px;background-color:#555;border:2px solid #acacac;text-align:right;font-size:12px;font-weight: 800;color:#fff;line-height:30px;padding-right:5px;border-radius:5px;">xxx</div>
+                            </div>
+
+                            <div style="box-sizing:border-box;border:0;width: 140px;margin-left: auto;margin-right:auto;">
+                                    <button type="button" ng-disabled="" class="boton_guardar_informe" onClick="mostrarModalEnviarDatosTestOcular();" id="boton_guardar_test_ocular"><i class="icon-save"></i> GUARDAR CAMBIOS</button>
+                            </div>
+                            
                     
-                    <!-- FIN TEST REACCION -->
-                    <!-- ===================================================================== -->
+                            <button data-boton-cerrar-formulario-test="ocular" class="boton_volver" onclick="volverInicioModuloTest(this);" style="margin-left:10px"><i class="icon-arrow-left"></i> volver</button>
+                    
+
+
+
+
+
+
+                    
+                    
+                        </form>
+
+
+
+
+
+
+
+                    </div>
                     
                     
                     
@@ -1530,9 +1698,6 @@ var datos_test={
     
 }
 
-
-var ranking_test_ocular=[];
-
 var ranking_test_cerabral=[];
 
 var ranking_test_reaccion=[];
@@ -1564,12 +1729,82 @@ var lista_posiciones=[
 
 var listaJugadores=[];
 
-var idtest_ocular=null;
-
+var idtest_reaccion=null;
 
 
 </script>
 <script>
+
+function abrirFormularioTest(){
+    $("#vista_test").hide(500);
+    $("#vista_test_formulario").show(500);
+    formularioTest()
+}
+
+function abrirFormularioTestEditar(indice){
+    $("#vista_test").hide(500);
+    $("#vista_test_formulario").show(500);
+    formularioTest(true,indice)
+}
+
+function formularioTest(tipo=false,index=null){
+    if(!tipo){
+        formularioTestCrear();
+        consultarJugadoresSerie("99_1");
+    }
+    else{
+        formularioTestEditar(index);
+    }
+}
+
+function formularioTestCrear(){
+    window.idtest_reaccion=null;
+    window.datos_test[window.tipo_test].tipo_fomrulario=false;
+    window.ranking_test_reaccion=[];
+    window.datos_test[window.tipo_test].jugadores_test=[];
+    fechaTestEvaluacion();
+    $("#observacion_test").val("");
+    document.getElementById("promedio_test_ocular").textContent="0.00";
+}
+
+// function formularioTestOcularEditar(indice){
+//     let test=window.datos_test[window.tipo_test].lista_inicio_test[indice];
+//     window.idtest_reaccion=test.idtest_ocular;
+//     window.ranking_test_reaccion=[];
+//     // console.log(test);
+//     window.datos_test[window.tipo_test].tipo_fomrulario=true;
+//     fechaTestEvaluacion();
+//     $("#fecha_evaluacion_test").val(test.fecha_evaluacuion_test_ocular);
+//     $("#observacion_test").val(test.observacion_test);
+//     insertarFilaJugadoresTestOcularEditar(test.detalles_test_ocular);
+
+// }
+
+// async function volverInicioModuloTest($botonCerrarFormularioTest){
+//     $("#vista_test_formulario").hide(500);
+//     $("#vista_test").show(500);
+//     insertarOptionSelectFiltroTestOcular();
+//     $("#filtro_mes_test_ocular").val("01");
+//     await consultarTestsOculares($("#filtro_ano_test_ocular").val(),$("#filtro_mes_test_ocular").val());
+// }
+
+function fechaTestEvaluacion(){
+    $('#fecha_evaluacion_test').datetimepicker({
+        language:  'es',
+        format: 'yyyy-mm-dd',
+        //startDate: '2014-12-01',
+        weekStart: 1,
+        todayBtn:  1,
+        autoclose: 1,
+        todayHighlight: 1,
+        startView: 2,
+        minView: 2,
+        forceParse: 0,
+        autoclose: true,
+        useCurrent: false
+    });
+    $('#fecha_evaluacion_test').datetimepicker('setDate', new Date() );
+}
 
 
 
