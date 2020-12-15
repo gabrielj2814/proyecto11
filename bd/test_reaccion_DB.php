@@ -209,7 +209,33 @@ function registrarTestReaccion($POST){
 }
 
 function actualizarTestReaccion($POST){
+	include("conexion.php");
+	$fecha=datetime_futbolJoven();
+	$SQL="UPDATE test_reaccion SET 
+		fecha_evaluacion_test='".$POST["fecha_evaluacion_test"]."',
+		observacion_test='".$POST["observacion_test"]."',
+		promedio_1='".$POST["promedio_1_test"]."',
+		promedio_2='".$POST["promedio_2_test"]."',
+		promedio_3='".$POST["promedio_3_test"]."',
+		promedio_4='".$POST["promedio_4_test"]."',
+		numeros_evaluados_test='".$POST["numeros_jugadores_evaluados_test"]."',
+		ano_test='".$POST["ano_test"]."',
+		fecha_software='$fecha',
+		nombre_usuario_software='".$POST["nombre_usuario_software"]."'
+		WHERE 
+		idtest_reaccion=".$POST["idtest_reaccion"].";";
+	$link->query($SQL);
+    $id=$POST["idtest_reaccion"];
+	$link->close();
+	eliminarDetallesTest($id);
+    return ($id!==0)?["respuesta" => true,"id" => $id]:["respuesta" => false,"id" => 0];
+}
 
+function eliminarDetallesTest($id){
+	include("conexion.php");
+	$SQL="DELETE FROM detalle_test_reaccion WHERE idtest_reaccion=$id;";
+	$link->query($SQL);
+    $link->close();
 }
 
 function registrarDetallesTesteaccion($idReaccion,$idJugador,$tiempo_1,$tiempo_2,$tiempo_3,$tiempo_4,$ranking,$comentario,$nombre_usuario_software){

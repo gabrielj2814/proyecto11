@@ -1964,16 +1964,16 @@ function insertarFilaJugadoresTestOcularEditar(detallesTest=[]){
                             <div style="box-sizing:border-box;border:0;float:left;width:80%;height:30px;padding-left:5px;color:#555;font-weight: bold;line-height: 30px;text-transform: Capitalize" class="ellipsis-text">'+jugador.nombre+' '+jugador.apellido1+' '+jugador.apellido2+'</div>\
                         </div>\
                         <div style="box-sizing:border-box;border:0;width:8%;height:30px;float:left;font-weight: bold;/*border-right:1px solid red;*/line-height: 30px;font-size: 11px;padding-left:5px;padding-right:5px;">\
-                            <input style="box-sizing:border-box;width:100%;height:100%;border:1px solid #acacac;" type="text" name="array_velocidad[]"  class="campo_velocidad" id="tiempo_1_'+jugador.idfichaJugador+'" data-id-jugador="'+jugador.idfichaJugador+'" onKeyup="sumarAlRankingTestOcular(this)" value="'+detalle.tiempo_1+'"/>\
+                            <input style="box-sizing:border-box;width:100%;height:100%;border:1px solid #acacac;" type="text" name="array_velocidad[]"  class="campo_velocidad" id="tiempo_1_'+jugador.idfichaJugador+'" data-id-jugador="'+jugador.idfichaJugador+'" onKeyup="sumarAlRankingTestOcular(this)" value="'+((detalle.tiempo_1==="0")?"":detalle.tiempo_1)+'"/>\
                         </div>\
                         <div style="box-sizing:border-box;border:0;width:8%;height:30px;float:left;font-weight: bold;/*border-right:1px solid red;*/line-height: 30px;font-size: 11px;padding-left:5px;padding-right:5px;">\
-                            <input style="box-sizing:border-box;width:100%;height:100%;border:1px solid #acacac;" type="text" name="array_velocidad[]"  class="campo_velocidad" id="tiempo_2_'+jugador.idfichaJugador+'" data-id-jugador="'+jugador.idfichaJugador+'" onKeyup="sumarAlRankingTestOcular(this)" value="'+detalle.tiempo_2+'"/>\
+                            <input style="box-sizing:border-box;width:100%;height:100%;border:1px solid #acacac;" type="text" name="array_velocidad[]"  class="campo_velocidad" id="tiempo_2_'+jugador.idfichaJugador+'" data-id-jugador="'+jugador.idfichaJugador+'" onKeyup="sumarAlRankingTestOcular(this)" value="'+((detalle.tiempo_2==="0")?"":detalle.tiempo_2)+'"/>\
                         </div>\
                         <div style="box-sizing:border-box;border:0;width:8%;height:30px;float:left;font-weight: bold;/*border-right:1px solid red;*/line-height: 30px;font-size: 11px;padding-left:5px;padding-right:5px;">\
-                            <input style="box-sizing:border-box;width:100%;height:100%;border:1px solid #acacac;" type="text" name="array_velocidad[]"  class="campo_velocidad" id="tiempo_3_'+jugador.idfichaJugador+'" data-id-jugador="'+jugador.idfichaJugador+'" onKeyup="sumarAlRankingTestOcular(this)" value="'+detalle.tiempo_3+'"/>\
+                            <input style="box-sizing:border-box;width:100%;height:100%;border:1px solid #acacac;" type="text" name="array_velocidad[]"  class="campo_velocidad" id="tiempo_3_'+jugador.idfichaJugador+'" data-id-jugador="'+jugador.idfichaJugador+'" onKeyup="sumarAlRankingTestOcular(this)" value="'+((detalle.tiempo_3==="0")?"":detalle.tiempo_3)+'"/>\
                         </div>\
                         <div style="box-sizing:border-box;border:0;width:8%;height:30px;float:left;font-weight: bold;/*border-right:1px solid red;*/line-height: 30px;font-size: 11px;padding-left:5px;padding-right:5px;">\
-                            <input style="box-sizing:border-box;width:100%;height:100%;border:1px solid #acacac;" type="text" name="array_velocidad[]"  class="campo_velocidad" id="tiempo_4_'+jugador.idfichaJugador+'" data-id-jugador="'+jugador.idfichaJugador+'" onKeyup="sumarAlRankingTestOcular(this)" value="'+detalle.tiempo_4+'"/>\
+                            <input style="box-sizing:border-box;width:100%;height:100%;border:1px solid #acacac;" type="text" name="array_velocidad[]"  class="campo_velocidad" id="tiempo_4_'+jugador.idfichaJugador+'" data-id-jugador="'+jugador.idfichaJugador+'" onKeyup="sumarAlRankingTestOcular(this)" value="'+((detalle.tiempo_4==="0")?"":detalle.tiempo_4)+'"/>\
                         </div>\
                         <div style="box-sizing:border-box;border:0;width:8%;height:30px;float:left;font-weight: bold;/*border-right:1px solid red;*/line-height: 30px;font-size: 11px;text-align:center;">\
                             <div id="ranking_test_formulario_'+jugador.idfichaJugador+'" style="box-sizing:border-box;border:0;width:100%;height:100%;line-height:30px;background-color:#f4f86f;font-weight: bold;">-</div>\
@@ -2067,7 +2067,7 @@ async function volverInicioModuloTest($botonCerrarFormularioTest){
     $("#vista_test").show(500);
     insertarOptionSelectFiltroTest();
     $("#filtro_mes_test").val("01");
-    // await consultarTests($("#filtro_ano_test").val(),$("#filtro_mes_test").val());
+    await consultarTests($("#filtro_ano_test").val(),$("#filtro_mes_test").val());
 }
 
 async function consultarJugadoresSerie(valor){
@@ -2683,6 +2683,8 @@ function enviarDatosTest(){
     }
 
     for(let contador=0;contador<lista_ranking.length;contador++){
+        let total_tiempo=lista_ranking[contador].tiempo_1+lista_ranking[contador].tiempo_2+lista_ranking[contador].tiempo_3+lista_ranking[contador].tiempo_4;
+        if(total_tiempo===0) lista_ranking[contador].rank=0;
         lista_ranking[contador].comentario=document.getElementById("comentario_test_"+lista_ranking[contador].id).value;
     }
     
@@ -2737,12 +2739,11 @@ function enviarDatosTest(){
             data:datosFormulario,
             success: function(respuesta) {
                 var json=JSON.parse(respuesta);
-                // console.log(json)
                 // console.log(json);
                 $("#modalFormularioTestOcular").modal("hide");
                 $("#vista_test_formulario").hide(500);
                 $("#vista_test").show(500);
-                // consultarTestsOculares($("#filtro_ano_test_ocular").val(),$("#filtro_mes_test_ocular").val());
+                consultarTests($("#filtro_ano_test").val(),$("#filtro_mes_test").val());
                 
             },error: function(){// will fire when timeout is reached
                 // $('#error_conexion').show();
