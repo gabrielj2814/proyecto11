@@ -143,6 +143,83 @@ function calcular_posicion_jugador2($id){
     
 }
 
+function operacionTestReaccion($POST){
+	if($POST["tipo_formulario"]==="false"){
+        return registrarTestReaccion($POST);
+    }
+    else{
+        return actualizarTestReaccion($POST);
+    }
+}
 
+function registrarTestReaccion($POST){
+	include("conexion.php");
+	$fecha=datetime_futbolJoven();
+	$SQL="INSERT INTO test_reaccion(
+		fecha_evaluacion_test,
+		observacion_test,
+		promedio_1,
+		promedio_2,
+		promedio_3,
+		promedio_4,
+		numeros_evaluados_test,
+		ano_test,
+		fecha_software,
+		nombre_usuario_software
+	)
+	VALUES(
+		'".$POST["fecha_evaluacion_test"]."',
+		'".$POST["observacion_test"]."',
+		'".$POST["promedio_1_test"]."',
+		'".$POST["promedio_2_test"]."',
+		'".$POST["promedio_3_test"]."',
+		'".$POST["promedio_4_test"]."',
+		'".$POST["numeros_jugadores_evaluados_test"]."',
+		'".$POST["ano_test"]."',
+		'$fecha',
+		'".$POST["nombre_usuario_software"]."'
+	);";
+	$link->query($SQL);
+    $id=$link->insert_id;
+    $link->close();
+    return ($id!==0)?["respuesta" => true,"id" => $id]:["respuesta" => false,"id" => 0];
+}
+
+function actualizarTestReaccion($POST){
+
+}
+
+function registrarDetallesTesteaccion($idReaccion,$idJugador,$tiempo_1,$tiempo_2,$tiempo_3,$tiempo_4,$ranking,$comentario,$nombre_usuario_software){
+	include("conexion.php");
+	$fecha=datetime_futbolJoven();
+	$SQL="INSERT INTO detalle_test_reaccion(
+		idtest_reaccion,
+		idfichaJugador,
+		tiempo_1,
+		tiempo_2,
+		tiempo_3,
+		tiempo_4,
+		comentario,
+		ranking,
+		fecha_software,
+		nombre_usuario_software
+	)
+	VALUES(
+		".$idReaccion.",
+		".$idJugador.",
+		'".$tiempo_1."',
+		'".$tiempo_2."',
+		'".$tiempo_3."',
+		'".$tiempo_4."',
+		'".$comentario."',
+		'".$ranking."',
+		'".$fecha."',
+		'".$nombre_usuario_software."'
+	);";
+
+	$link->query($SQL);
+    $id=$link->insert_id;
+    $link->close();
+}
 
 ?>

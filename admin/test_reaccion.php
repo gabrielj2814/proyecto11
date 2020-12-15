@@ -2431,25 +2431,11 @@ function enviarDatosTest(){
 	}else{
         $('#mensaje_agregar_DescargarBoleta').html('<h5><i class="icon-spinner icon-spin icon-large"></i> Editando test ...</h5><br><img src="../config/agregar_archivo.png">');
 	}
-    let lista_ranking=rankingOrdenTest();
-    for(let contador=0;contador<lista_ranking.length;contador++){
-        lista_ranking[contador].comentario=document.getElementById("comentario_test_"+lista_ranking[contador].id).value;
-    }
-    console.log(lista_ranking);
     let expresion_fecha=/-/g;
     let datosFormulario=[];
-    // Obteniendo datos generales test
-    datosFormulario.push({name:"tipo_formulario",value:window.datos_test[window.tipo_test].tipo_fomrulario});
-    datosFormulario.push({name:"idtest_reaccion",value: window.idtest_reaccion});
-    datosFormulario.push({name:"fecha_evaluacion_test",value:$("#fecha_evaluacion_test").val()});
-    datosFormulario.push({name:"ano_test",value:$("#fecha_evaluacion_test").val().split(expresion_fecha)[0]});
-    datosFormulario.push({name:"observacion_test",value:$("#observacion_test_ocular").val()});
-    datosFormulario.push({name:"nombre_usuario_software",value:window.nombre_usuario_software});
-    datosFormulario.push({name:"numeros_jugadores_evaluados_test_ocular",value:lista_ranking.length});
-    datosFormulario.push({name:"promedio_1_test",value:document.getElementById("promedio_1_test").textContent});
-    datosFormulario.push({name:"promedio_2_test",value:document.getElementById("promedio_2_test").textContent});
-    datosFormulario.push({name:"promedio_3_test",value:document.getElementById("promedio_3_test").textContent});
-    datosFormulario.push({name:"promedio_4_test",value:document.getElementById("promedio_4_test").textContent});
+   
+
+    let lista_ranking=rankingOrdenTest();
     // obteniendo los id de los jugadores wue no estan en el ranking en pocas palabras los
     // que no tiene nigun tiempo
     let listIdJugadoresFueraDelRank=[];
@@ -2477,6 +2463,11 @@ function enviarDatosTest(){
             tiempo_4: 0
         })
     }
+
+    for(let contador=0;contador<lista_ranking.length;contador++){
+        lista_ranking[contador].comentario=document.getElementById("comentario_test_"+lista_ranking[contador].id).value;
+    }
+    
 
     // obteniendo datos detallados del test
     // obteniendo ids jugadores 
@@ -2507,25 +2498,38 @@ function enviarDatosTest(){
     for(let {comentario} of lista_ranking){
         datosFormulario.push({name:"array_comentario[]",value:comentario});
     }
+
+     // Obteniendo datos generales test
+    datosFormulario.push({name:"tipo_formulario",value:window.datos_test[window.tipo_test].tipo_fomrulario});
+    datosFormulario.push({name:"idtest_reaccion",value: window.idtest_reaccion});
+    datosFormulario.push({name:"fecha_evaluacion_test",value:$("#fecha_evaluacion_test").val()});
+    datosFormulario.push({name:"ano_test",value:$("#fecha_evaluacion_test").val().split(expresion_fecha)[0]});
+    datosFormulario.push({name:"observacion_test",value:$("#observacion_test").val()});
+    datosFormulario.push({name:"nombre_usuario_software",value:window.nombre_usuario_software});
+    datosFormulario.push({name:"numeros_jugadores_evaluados_test",value:lista_ranking.length});
+    datosFormulario.push({name:"promedio_1_test",value:document.getElementById("promedio_1_test").textContent});
+    datosFormulario.push({name:"promedio_2_test",value:document.getElementById("promedio_2_test").textContent});
+    datosFormulario.push({name:"promedio_3_test",value:document.getElementById("promedio_3_test").textContent});
+    datosFormulario.push({name:"promedio_4_test",value:document.getElementById("promedio_4_test").textContent});
     console.log(datosFormulario);
 
-    // $.ajax({
-    //         url: "post/test_guardar_test_ocular.php",
-    //         type: "post",
-    //         data:datosFormulario,
-    //         success: function(respuesta) {
-    //             var json=JSON.parse(respuesta);
-    //             // console.log(json)
-    //             // console.log(json);
-    //             $("#modalFormularioTestOcular").modal("hide");
-    //             $("#vista_test_formulario").hide(500);
-    //             $("#vista_test").show(500);
-    //             // consultarTestsOculares($("#filtro_ano_test_ocular").val(),$("#filtro_mes_test_ocular").val());
+    $.ajax({
+            url: "post/test_guardar_test_reaccion.php",
+            type: "post",
+            data:datosFormulario,
+            success: function(respuesta) {
+                var json=JSON.parse(respuesta);
+                // console.log(json)
+                // console.log(json);
+                $("#modalFormularioTestOcular").modal("hide");
+                $("#vista_test_formulario").hide(500);
+                $("#vista_test").show(500);
+                // consultarTestsOculares($("#filtro_ano_test_ocular").val(),$("#filtro_mes_test_ocular").val());
                 
-    //         },error: function(){// will fire when timeout is reached
-    //             // $('#error_conexion').show();
-    //         }, timeout: 10000 // sets timeout to 3 seconds
-    //     });
+            },error: function(){// will fire when timeout is reached
+                // $('#error_conexion').show();
+            }, timeout: 10000 // sets timeout to 3 seconds
+        });
 
 }
 
