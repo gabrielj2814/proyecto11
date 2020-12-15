@@ -1431,7 +1431,7 @@ app.controller("controlador_1",['$scope',function($scope){
                                         <p class="ellipsis-text" style="font-weight: normal;">Año</p>
                                     </div>
                                 </a>
-                                <select style="width:60%; height: 30px;background:#fff;border:2px solid #0b3b99" id="filtro_ano_test" name="filtro_ano_test" onchange="filtrarTestOcular()">
+                                <select style="width:60%; height: 30px;background:#fff;border:2px solid #0b3b99" id="filtro_ano_test" name="filtro_ano_test" onchange="filtrarTest()">
                                     
                                 </select>
                             </div>
@@ -1442,7 +1442,7 @@ app.controller("controlador_1",['$scope',function($scope){
                                         <p class="ellipsis-text" style="font-weight: normal;">Mes</p>
                                     </div>
                                 </a>
-                                <select style="width:60%; height: 30px;background:#fff;border:2px solid #0b3b99" id="filtro_mes_test" name="filtro_mes_test" onchange="filtrarTestOcular()">
+                                <select style="width:60%; height: 30px;background:#fff;border:2px solid #0b3b99" id="filtro_mes_test" name="filtro_mes_test" onchange="filtrarTest()">
                                     <option value="01">Enero</option>
                                     <option value="02">Febrero</option>
                                     <option value="03">Marzo</option>
@@ -1743,7 +1743,7 @@ async function cargarVentanaInicioTest(){
     window.tipo_test="reaccion";
     insertarOptionSelectFiltroTest();
     $("#filtro_mes_test").val("01");
-    // await consultarTests($("#filtro_ano_test").val(),$("#filtro_mes_test").val());
+    await consultarTests($("#filtro_ano_test").val(),$("#filtro_mes_test").val());
 }
 
 async function consultarAnoActual(){
@@ -1770,7 +1770,7 @@ function insertarOptionSelectFiltroTest(){
     document.getElementById("filtro_ano_test").innerHTML=str_list_option;
 }
 
-async function filtrarTestOcular (){
+async function filtrarTest (){
     await consultarTests($("#filtro_ano_test").val(),$("#filtro_mes_test").val());
 }
 
@@ -1779,7 +1779,7 @@ async function consultarTests(ano="2020",mes="01"){
     $("#contenedor_fila_tabla_inicio_test_ocular").empty();
     window.datos_test[window.tipo_test].lista_inicio_test=[];
     await $.ajax({
-        url: 'post/test_consultar_test_ocular_año_mes.php',
+        url: 'post/test_consultar_test_reaccion_año_mes.php',
         type: "post",
         data:[
             {name:"ano_test_oculares",value:ano},
@@ -1788,8 +1788,8 @@ async function consultarTests(ano="2020",mes="01"){
         success: function(respuesta) {
             var json=JSON.parse(respuesta);
             window.datos_test[window.tipo_test].lista_inicio_test=json.datos;
-            // console.log("listando test oculares",window.datos_test[window.tipo_test].lista_inicio_test);
-            insertarFilaInicioTestOculares(window.datos_test[window.tipo_test].lista_inicio_test);
+            console.log("listando test ->>>",window.datos_test[window.tipo_test].lista_inicio_test);
+            // insertarFilaInicioTestOculares(window.datos_test[window.tipo_test].lista_inicio_test);
         },error: function(){// will fire when timeout is reached
             // alert("errorXXXXX");
         }, timeout: 10000 // sets timeout to 3 seconds

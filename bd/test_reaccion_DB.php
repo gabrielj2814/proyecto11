@@ -37,27 +37,50 @@ function consultarJugadoresSerie($serie,$sexo){
     return (sizeof($jugadores_data)>0)?["respuesta"=>true,"datos"=>$jugadores_data]:["respuesta"=>false,"datos"=>[]];
 }
 
-function consultarTestOcularesMensual(){
-    $fecha=date_futbolJoven();
-    $ano=explode("-",$fecha)[0];
-    $mes=explode("-",$fecha)[1];
+function consultarTestMensual($ano,$mes){
     include("conexion.php");
-    $SQL="SELECT * FROM test_ocular WHERE fecha_evaluacuion_test_ocular LIKE '%$ano-$mes%'";
-    $result_test_ocular=$link->query($SQL);
+    $SQL="SELECT * FROM test_reaccion WHERE fecha_evaluacion_test LIKE '%$ano-$mes%'";
+    $result_test=$link->query($SQL);
     $test_data=[];
-    while($row = mysqli_fetch_array($result_test_ocular)){
+    while($row = mysqli_fetch_array($result_test)){
+		$row["detalle_test"]=consultarDestalleTest($row["idtest_reaccion"]);
         $test_data[]=utf8_converter($row);
     }
     $link->close();
-    return (sizeof($test_data)>0)?["test"=>"ocular","respuesta"=>true,"datos"=>$test_data]:["test"=>"ocular","respuesta"=>false,"datos"=>[]];
+    return (sizeof($test_data)>0)?["respuesta" => true , "datos" => $test_data]:["respuesta" => false , "datos" => []];
 
 } 
 
-function obtenerTotaltestMensuales(){
-    $totalTestOcular=consultarTestOcularesMensual();
-    return ["ocular" => $totalTestOcular];
-
+function consultarDestalleTest($id){
+    include("conexion.php");
+    $SQL="SELECT * FROM detalle_test_reaccion WHERE idtest_reaccion=$id";
+    $result_detalle_test=$link->query($SQL);
+    $test_data=[];
+    while($row = mysqli_fetch_array($result_detalle_test)){
+		$row["infoJugador"]=consultarJugadorTestDetalle($row["idfichaJugador"]);
+        $test_data[]=utf8_converter($row);
+    }
+    $link->close();
+    return (sizeof($test_data)>0)?$test_data:[];
 }
+
+function consultarJugadorTestDetalle($id){
+	include("conexion.php");
+    $SQL="SELECT * FROM fichaJugador WHERE idfichaJugador=$id";
+    $result_ficha_jugador=$link->query($SQL);
+    $jugadores_data=[];
+    while($row = mysqli_fetch_array($result_ficha_jugador)){
+        $posicon=calcular_posicion_jugador2($row["idfichaJugador"]);
+        $row["posicion"]=$posicon["codigo_posicion"];
+        $row["texto_posicion"]=$posicon["texto_posicion"];
+        if($row["estado"]!=="0"){
+            $jugadores_data[]=utf8_converter($row);
+        }
+    }
+    $link->close();
+    return (sizeof($jugadores_data)>0)?$jugadores_data[0]:[];
+}
+
 
 function calcular_posicion_jugador2($id){
     
@@ -221,5 +244,6 @@ function registrarDetallesTesteaccion($idReaccion,$idJugador,$tiempo_1,$tiempo_2
     $id=$link->insert_id;
     $link->close();
 }
+
 
 ?>
