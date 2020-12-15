@@ -1194,7 +1194,7 @@ app.controller("controlador_1",['$scope',function($scope){
             <!--sidebar-menu-->
 
             <!--main-container-part-->
-        <div id="content" style="min-height: auto;">
+        <div id="content" style="min-height: 100vh;">
             <!--breadcrumbs--><!-- migas de pan-->
             <div id="content-header">
                 <div id="breadcrumb"> 
@@ -1459,22 +1459,23 @@ app.controller("controlador_1",['$scope',function($scope){
                             </div>
                         </div>
 
-                            <div id="tabla_html_inicio_test_ocular" style="box-sizing:border-box;border:0;width:95%;height:200px;margin-left:auto;margin-right:auto;margin-bottom:50px;">
+                            <div id="tabla_html_inicio_test_ocular" style="box-sizing:border-box;border:0;width:95%;margin-left:auto;margin-right:auto;margin-bottom:50px;">
                                 <div style="box-sizing:border-box;border:0;width:100%;height:30px;background-color:#555;border-top-left-radius: 5px;border-top-right-radius: 5px;">
                                     <div style="box-sizing:border-box;border:0;width:2%;height:30px;float:left;color:#fff;font-weight: 600;/*border-right:1px solid red;*/line-height: 30px;font-size: 12px;padding-left:5px;text-align:center">#</div>
                                     <div style="box-sizing:border-box;border:0;width:12%;height:30px;float:left;color:#fff;font-weight: 600;/*border-right:1px solid red;*/line-height: 30px;font-size: 12px;padding-left:5px;">Fecha Evaluación</div>
                                     <div style="box-sizing:border-box;border:0;width:6%;height:30px;float:left;color:#fff;font-weight: 600;/*border-right:1px solid red;*/line-height: 30px;font-size: 12px;padding-left:5px;">Año</div>
                                     <div style="box-sizing:border-box;border:0;width:10%;height:30px;float:left;color:#fff;font-weight: 600;/*border-right:1px solid red;*/line-height: 30px;font-size: 12px;padding-left:5px;">N° informe</div>
-                                    <div style="box-sizing:border-box;border:0;width:11%;height:30px;float:left;color:#fff;font-weight: 600;/*border-right:1px solid red;*/line-height: 30px;font-size: 12px;text-align:center">Evaluados</div>
-                                    <div style="box-sizing:border-box;border:0;width:20%;height:30px;float:left;color:#fff;font-weight: 600;/*border-right:1px solid red;*/line-height: 30px;font-size: 12px;text-align:center">Mejor tiempo</div>
-                                    <div style="box-sizing:border-box;border:0;width:20%;height:30px;float:left;color:#fff;font-weight: 600;/*border-right:1px solid red;*/line-height: 30px;font-size: 12px;text-align:center">Peor tiempo</div>
-                                    <div style="box-sizing:border-box;border:0;width:7%;height:30px;float:left;color:#fff;font-weight: 600;/*border-right:1px solid red;*/line-height: 30px;font-size: 12px;padding-left:5px;">Media</div>
+                                    <div style="box-sizing:border-box;border:0;width:10%;height:30px;float:left;color:#fff;font-weight: 600;/*border-right:1px solid red;*/line-height: 30px;font-size: 12px;text-align:center">Evaluados</div>
+                                    <div style="box-sizing:border-box;border:0;width:12%;height:30px;float:left;color:#fff;font-weight: 600;/*border-right:1px solid red;*/text-align:center;line-height: 30px;font-size: 12px;padding-left:5px;">MEDIA 1</div>
+                                    <div style="box-sizing:border-box;border:0;width:12%;height:30px;float:left;color:#fff;font-weight: 600;/*border-right:1px solid red;*/text-align:center;line-height: 30px;font-size: 12px;padding-left:5px;">MEDIA 2</div>
+                                    <div style="box-sizing:border-box;border:0;width:12%;height:30px;float:left;color:#fff;font-weight: 600;/*border-right:1px solid red;*/text-align:center;line-height: 30px;font-size: 12px;padding-left:5px;">MEDIA 3</div>
+                                    <div style="box-sizing:border-box;border:0;width:12%;height:30px;float:left;color:#fff;font-weight: 600;/*border-right:1px solid red;*/text-align:center;line-height: 30px;font-size: 12px;padding-left:5px;">MEDIA 4</div>
                                     <div style="box-sizing:border-box;border:0;width:4%;height:30px;float:left;color:#fff;font-weight: 600;/*border-right:1px solid red;*/line-height:30px;"></div>
                                     <div style="box-sizing:border-box;border:0;width:4%;height:30px;float:left;color:#fff;font-weight: 600;/*border-right:1px solid red;*/line-height:30px;"></div>
                                     <div style="box-sizing:border-box;border:0;width:4%;height:30px;float:left;color:#fff;font-weight: 600;/*border-right:1px solid red;*/line-height:30px;"></div>
                                     
                                 </div>
-                                <div id="contenedor_fila_tabla_inicio_test_ocular" style="box-sizing:border-box;border:0;width:100%;color:#555;">
+                                <div id="contenedor_fila_tabla_inicio_test" style="box-sizing:border-box;border:0;width:100%;color:#555;">
 
                                 </div>
                                 <div style="box-sizing:border-box;border:0;width:100%;height:10px;background-color:#555;border-bottom-left-radius: 5px;border-bottom-right-radius: 5px;"></div>
@@ -1776,7 +1777,7 @@ async function filtrarTest (){
 
 
 async function consultarTests(ano="2020",mes="01"){
-    $("#contenedor_fila_tabla_inicio_test_ocular").empty();
+    $("#contenedor_fila_tabla_inicio_test").empty();
     window.datos_test[window.tipo_test].lista_inicio_test=[];
     await $.ajax({
         url: 'post/test_consultar_test_reaccion_año_mes.php',
@@ -1789,11 +1790,74 @@ async function consultarTests(ano="2020",mes="01"){
             var json=JSON.parse(respuesta);
             window.datos_test[window.tipo_test].lista_inicio_test=json.datos;
             console.log("listando test ->>>",window.datos_test[window.tipo_test].lista_inicio_test);
-            // insertarFilaInicioTestOculares(window.datos_test[window.tipo_test].lista_inicio_test);
+            insertarFilaInicioTestOculares(window.datos_test[window.tipo_test].lista_inicio_test);
         },error: function(){// will fire when timeout is reached
             // alert("errorXXXXX");
         }, timeout: 10000 // sets timeout to 3 seconds
     });
+}
+
+function insertarFilaInicioTestOculares(tests=[]){
+    if(tests.length!==0){
+        let lista_test_ocular=[];
+        let contador=0;
+        for(let test of tests){
+
+            let str_fila_registro='\
+            <div class="panel_buscar" style="box-sizing:border-box;border:0;width:100%;height:30px;padding-top:2px;padding-bottom:2px;">\
+                <div onClick="mostrarModalInfoTest('+contador+')" style="box-sizing:border-box;border:0;width:2%;height:26px;float:left;color:#555;font-weight: 600;/*border-right:1px solid red;*/line-height: 26px;font-size: 11px;padding-left:5px;text-align:center">'+(contador+1)+'</div>\
+                <div onClick="mostrarModalInfoTest('+contador+')" style="box-sizing:border-box;border:0;width:12%;height:26px;float:left;color:#555;font-weight: 600;/*border-right:1px solid red;*/line-height: 26px;font-size: 11px;padding-left:5px;">'+fecha_formato_ddmmaaa(test.fecha_evaluacion_test)+'</div>\
+                <div onClick="mostrarModalInfoTest('+contador+')" style="box-sizing:border-box;border:0;width:6%;height:26px;float:left;color:#555;font-weight: 600;/*border-right:1px solid red;*/line-height: 26px;font-size: 11px;padding-left:5px;">'+test.ano_test+'</div>\
+                <div onClick="mostrarModalInfoTest('+contador+')" style="box-sizing:border-box;border:0;width:10%;height:26px;float:left;color:#555;font-weight: 400;/*border-right:1px solid red;*/line-height: 26px;font-size: 11px;padding-left:5px;">Informe N°'+test.idtest_reaccion+'</div>\
+                <div onClick="mostrarModalInfoTest('+contador+')" style="box-sizing:border-box;border:0;width:10%;height:26px;float:left;color:#555;font-weight: 400;/*border-right:1px solid red;*/line-height: 26px;font-size: 11px;text-align:center">'+test.numeros_evaluados_test+' Jugadores</div>\
+                <div onClick="mostrarModalInfoTest('+contador+')" style="box-sizing:border-box;border:0;width:12%;height:26px;float:left;color:#555;font-weight: 400;/*border-right:1px solid red;*/line-height: 26px;font-size: 11px;padding-left:5px;text-align:center;">'+test.promedio_1+' seg</div>\
+                <div onClick="mostrarModalInfoTest('+contador+')" style="box-sizing:border-box;border:0;width:12%;height:26px;float:left;color:#555;font-weight: 400;/*border-right:1px solid red;*/line-height: 26px;font-size: 11px;padding-left:5px;text-align:center;">'+test.promedio_2+' seg</div>\
+                <div onClick="mostrarModalInfoTest('+contador+')" style="box-sizing:border-box;border:0;width:12%;height:26px;float:left;color:#555;font-weight: 400;/*border-right:1px solid red;*/line-height: 26px;font-size: 11px;padding-left:5px;text-align:center;">'+test.promedio_3+' seg</div>\
+                <div onClick="mostrarModalInfoTest('+contador+')" style="box-sizing:border-box;border:0;width:12%;height:26px;float:left;color:#555;font-weight: 400;/*border-right:1px solid red;*/line-height: 26px;font-size: 11px;padding-left:5px;text-align:center;">'+test.promedio_4+' seg</div>\
+                <div style="box-sizing:border-box;border:0;width:4%;height:26px;float:left;color:#555;font-weight: 600;/*border-right:1px solid red;*/line-height:26px;">\
+                    <center>\
+                            <a class="boton_editar" onClick="abrirFormularioTestEditar('+contador+')">\
+                                <i class="icon-pencil"></i>\
+                            </a>\
+                    </center>\
+                </div>\
+                <div style="box-sizing:border-box;border:0;width:4%;height:26px;float:left;color:#555;font-weight: 600;/*border-right:1px solid red;*/line-height:26px;">\
+                    <center>\
+                            <a class="boton_add" onClick="descargarPDF('+test.idtest_reaccion+')">\
+                                <i class="icon-download-alt"></i>\
+                            </a>\
+                    </center>\
+                </div>\
+                <div style="box-sizing:border-box;border:0;width:4%;height:26px;float:left;color:#555;font-weight: 600;/*border-right:1px solid red;*/line-height:26px;">\
+                    <center>\
+                            <a class="boton_eliminar" onClick="mostrarModalEliminarTestOcular('+test.idtest_reaccion+')">\
+                                <i class="icon-remove"></i>\
+                            </a>\
+                    </center>\
+                </div>\
+            </div>';
+            lista_test_ocular.push(str_fila_registro);
+            contador++
+        }
+        let string_list_option_join=lista_test_ocular.join("");
+        $("#contenedor_fila_tabla_inicio_test").append(string_list_option_join);
+
+    }
+    else{
+        let str_fila_registro='<div class="panel_buscar" style="box-sizing:border-box;border:0;width:100%;height:34px;padding-top:2px;padding-bottom:2px;text-align:center;font-weight: 800;font-size:12px;line-height:30px;">Sin Test</div>';
+        $("#contenedor_fila_tabla_inicio_test").append(str_fila_registro);
+    }
+}
+
+function fecha_formato_ddmmaaa( fecha ) {
+    // Día:
+    var dia = fecha.substring(8, 10); 
+    // Mes:
+    var mes = fecha.substring(5, 7);     
+    // Año:
+    var anio = fecha.substring(0, 4); 
+    // Resultado:
+    return fecha = dia + "-" + mes + "-" + anio;
 }
 
 function abrirFormularioTest(){
