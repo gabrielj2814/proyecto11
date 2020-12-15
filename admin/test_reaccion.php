@@ -1245,7 +1245,7 @@ app.controller("controlador_1",['$scope',function($scope){
                             </div>
                         </div>
                         <!--------------------------------  MODAL INFORME PDF FIN-------------------------------------------->
-                        <div id="modalInicioTestOcular" class="modal hide" style="border-radius:10px;">
+                        <div id="modalInicioTest" class="modal hide" style="border-radius:10px;">
                                 <div class="modal-header" style="background-color: <?php echo $color_fondo; ?>; border-top-right-radius: 5px; border-top-left-radius: 5px;">
                                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                                     <center><h4 class="modal-title"><img src="img/logo3.png" style="height:30px; width:265px;"></h4></center>
@@ -1253,7 +1253,7 @@ app.controller("controlador_1",['$scope',function($scope){
                                 <div class="modal-body" style="color:black; font-family:Arial, Helvetica, sans-serif;">
                                 <center>
                                         <br>
-                                        <div id="mensaje_agregar_DescargarBoleta_inicio_test_ocular">
+                                        <div id="mensaje_agregar_DescargarBoleta_inicio_test">
                                         <h5><!--mensaje modal --></h5>
                                         </div>
                                         <br>
@@ -1262,7 +1262,7 @@ app.controller("controlador_1",['$scope',function($scope){
                                 <div class="modal-footer" style="background-color: <?php echo $color_fondo; ?>; border-bottom-left-radius:10px; border-bottom-right-radius:10px;">
                                     
                                     <center>
-                                        <div id="contendor_botones_modal_inicio_test_ocular">
+                                        <div id="contendor_botones_modal_inicio_test">
                                             <button type="button" class="btn btn-default boton_modal" onClick="cerrarModalAtencionDiariaNuevo()"  id="boton_cerrar_alerta" style="margin-right:20px; border-radius:5px;"><span class="icon"><i class="icon-remove"></i></span> No</button>
                                             <button type="button" id="guardar" class="btn btn-default boton_modal " onClick="agregarNuevoTratamiento()" ng-click="desactivarBotonAgregarBoleta()" style="border-radius:5px;"><span class="icon"><i class="icon-ok"></i></span> Si</button>
                                         </div>
@@ -1271,7 +1271,7 @@ app.controller("controlador_1",['$scope',function($scope){
                                 </div>
                         </div>
 <!-- ================================================================= -->
-                        <div id="modalInicioTestOcularInfo" class="modal hide" style="border-radius:10px;width: 74%;margin-left: -365px;margin-top:-30px;">
+                        <div id="modalInicioTestInfo" class="modal hide" style="border-radius:10px;width: 74%;margin-left: -365px;margin-top:-30px;">
                                 <div class="modal-header" style="background-color: #1c438c; border-top-right-radius: 5px; border-top-left-radius: 5px;height: 75px;">
                                     <!-- <button type="button" class="close" data-dismiss="modal">&times;</button> -->
                                     <div style="box-sizing: border-box;border:0;width:100%;height: 75px;display:inline-flex;flex-direction:row;flex-wrap:wrap;">
@@ -1830,7 +1830,7 @@ function insertarFilaInicioTestOculares(tests=[]){
                 </div>\
                 <div style="box-sizing:border-box;border:0;width:4%;height:26px;float:left;color:#555;font-weight: 600;/*border-right:1px solid red;*/line-height:26px;">\
                     <center>\
-                            <a class="boton_eliminar" onClick="mostrarModalEliminarTestOcular('+test.idtest_reaccion+')">\
+                            <a class="boton_eliminar" onClick="mostrarModalEliminarTest('+test.idtest_reaccion+')">\
                                 <i class="icon-remove"></i>\
                             </a>\
                     </center>\
@@ -1858,6 +1858,38 @@ function fecha_formato_ddmmaaa( fecha ) {
     var anio = fecha.substring(0, 4); 
     // Resultado:
     return fecha = dia + "-" + mes + "-" + anio;
+}
+
+function mostrarModalEliminarTest(id){
+    $("#mensaje_agregar_DescargarBoleta_inicio_test").html('<h5>¿Estás seguro que quieres eliminar este test?</h5>*Al borrarlo se perderán todos los datos asociados!<br><img src="../config/remover_archivo.png">');
+    const html_botones=' <button type="button" class="btn btn-default boton_modal" data-dismiss="modal" onClick="cerrarModalEliminarTest()" id="boton_cerrar_alerta" style="margin-right:20px; border-radius:5px;"><span class="icon"><i class="icon-remove"></i></span> No</button>\
+        <button type="button" id="eliminar_modal" class="btn btn-default boton_modal " onClick="eliminarTest('+id+');" ng-click="desactivarBotonAgregarBoleta()" style="border-radius:5px;"><span class="icon"><i class="icon-ok"></i></span> Si</button>';
+    $("#contendor_botones_modal_inicio_test").html(html_botones);
+    $("#modalInicioTest").modal("show");
+}
+
+function cerrarModalEliminarTest(){
+    $("#modalInicioTest").modal("hide");
+}
+
+function eliminarTest(id){
+    // alert(id);
+    $.ajax({
+        url: "post/test_eliminar_test_reaccion.php",
+        type: "post",
+        data:[{name:"id",value:id}],
+        success: function(respuesta) {
+            var json=JSON.parse(respuesta);
+            // console.log(json)
+            cerrarModalEliminarTest();
+            consultarTests($("#filtro_ano_test").val(),$("#filtro_mes_test").val());
+            
+        },error: function(){// will fire when timeout is reached
+            // alert("errorXXXXX");
+            // $('#error_conexion').show();
+        }, timeout: 10000 // sets timeout to 3 seconds
+    });
+
 }
 
 function abrirFormularioTest(){

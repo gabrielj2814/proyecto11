@@ -245,5 +245,13 @@ function registrarDetallesTesteaccion($idReaccion,$idJugador,$tiempo_1,$tiempo_2
     $link->close();
 }
 
+function eliminarTestReaccion($id){
+    include("conexion.php");
+    $SQL="DELETE FROM test_reaccion WHERE idtest_reaccion=$id;";
+    $link->query($SQL);
+    $link->close();
+    return ["respuesta" => true];
+}
+
 
 ?>
