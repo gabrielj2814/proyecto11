@@ -2356,7 +2356,7 @@ function insertarFilaJugadoresTestOcularEditar(detallesTest=[]){
                 lista_id_filas.push(jugador.idfichaJugador);
                 lista_str_filas_jugadores.push(plantilla);
         }
-        contenedor_fila_tabla_formulario_test_ocular
+        // contenedor_fila_tabla_formulario_test_ocular
         if(lista_str_filas_jugadores.length!==0){
             let filas_join=lista_str_filas_jugadores.join("");
             $("#contenedor_fila_tabla_formulario_test_ocular").append(filas_join);
