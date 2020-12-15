@@ -2408,10 +2408,10 @@ function agregarJugadorNuevoAlTest(jugador){
 
 function mostrarModalEnviarDatosTest(){
     if(!window.datos_test[window.tipo_test].tipo_fomrulario){
-        $('#mensaje_agregar_DescargarBoleta').html('<h5 style="color:black;">¿Estás seguro que quieres agregar un nuevo test ocular?</h5><br><img src="../config/agregar_archivo.png">');
+        $('#mensaje_agregar_DescargarBoleta').html('<h5 style="color:black;">¿Estás seguro que quieres agregar un nuevo test reaccion?</h5><br><img src="../config/agregar_archivo.png">');
     }
     else{
-        $('#mensaje_agregar_DescargarBoleta').html('<h5 style="color:black;">¿Estás seguro que quieres editar este test ocular?</h5><br><img src="../config/agregar_archivo.png">');
+        $('#mensaje_agregar_DescargarBoleta').html('<h5 style="color:black;">¿Estás seguro que quieres editar este test reaccion?</h5><br><img src="../config/agregar_archivo.png">');
     }
     $("#contendor_botones_modal").empty();
     $("#contendor_botones_modal").html(
