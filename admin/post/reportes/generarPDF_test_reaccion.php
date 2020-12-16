@@ -115,8 +115,8 @@ $data.= '
   
   <div style="box-sizing: border-box;border: 0;float:right;padding-left:50px;height: 35px;background-color:#555;color:#fff;text-align:right;margin-left:10px;padding-right:5px;border-radius:5px;font-weight: bold;">'.$datos["promedio_4"].'</div>
   <div style="box-sizing: border-box;border: 0;float:right;padding-left:50px;height: 35px;background-color:#555;color:#fff;text-align:right;margin-left:10px;padding-right:5px;border-radius:5px;font-weight: bold;">'.$datos["promedio_3"].'</div>
-  <div style="box-sizing: border-box;border: 0;float:right;padding-left:50px;height: 35px;background-color:#555;color:#fff;text-align:right;margin-left:10px;padding-right:5px;border-radius:5px;font-weight: bold;">'.$datos["promedio_1"].'</div>
   <div style="box-sizing: border-box;border: 0;float:right;padding-left:50px;height: 35px;background-color:#555;color:#fff;text-align:right;margin-left:10px;padding-right:5px;border-radius:5px;font-weight: bold;">'.$datos["promedio_2"].'</div>
+  <div style="box-sizing: border-box;border: 0;float:right;padding-left:50px;height: 35px;background-color:#555;color:#fff;text-align:right;margin-left:10px;padding-right:5px;border-radius:5px;font-weight: bold;">'.$datos["promedio_1"].'</div>
   <div style="box-sizing: border-box;border: 0;float:right;font-weight: bold;color:#555;">PROMEDIO:</div>
   
   </div>
