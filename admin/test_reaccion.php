@@ -1281,7 +1281,7 @@ app.controller("controlador_1",['$scope',function($scope){
 
                                         <div style="box-sizing: border-box;border:0;width:60%;height: 75px;padding-top:21px;">
 
-                                            <div style="box-sizing: border-box;border:0;color:#fff;font-size:15px;font-weight: bold;text-align:center;margin-bottom:10px;">EVALUACIÓN VELOCIDAD OCULAR</div>
+                                            <div style="box-sizing: border-box;border:0;color:#fff;font-size:15px;font-weight: bold;text-align:center;margin-bottom:10px;">EVALUACIÓN TIMPO DE REACCIÓN </div>
                                             <div style="box-sizing: border-box;border:0;width:80%;height: 29px;color:#fff;margin-left:auto;margin-right:auto;">
                                                 <div style="box-sizing: border-box;border:0;width:60%;height: 29px;float:left;font-weight: bold;">
                                                     Fecha: <span id="fechaModalInfo" style="font-weight: normal;">xxxxxx</span>
@@ -1310,11 +1310,13 @@ app.controller("controlador_1",['$scope',function($scope){
                                             <thead>
                                             <tr style="box-sizing:border-box;border:0;width:100%;height:20px;background-color:#555;text-transform:uppercase;font-size:10px;color:#fff;font-weight: bold;">
                                                 <th  style="border:0;height:20px;line-height:20px;/*border-right:1px solid #111;*/text-align: center; max-width: 2px;" >
-                                                    RANK
+                                                    #
                                                 </th>
                                                 <th style="border:0;height:20px;line-height:20px;/*border-right:1px solid #111;*/text-align: center;max-width: 18px;" >JUGADOR</th>
-                                                <th style="border:0;height:20px;line-height:20px;/*border-right:1px solid #111;*/text-align: center;max-width: 10px;" >ERESULTADO</th>
-                                                <th style="border:0;height:20px;line-height:20px;/*border-right:1px solid #111;*/text-align: center;max-width: 10px;" >EV.ANTERIOR</th>
+                                                <th style="border:0;height:20px;line-height:20px;/*border-right:1px solid #111;*/text-align: center;max-width: 10px;" >1</th>
+                                                <th style="border:0;height:20px;line-height:20px;/*border-right:1px solid #111;*/text-align: center;max-width: 10px;" >2</th>
+                                                <th style="border:0;height:20px;line-height:20px;/*border-right:1px solid #111;*/text-align: center;max-width: 10px;" >3</th>
+                                                <th style="border:0;height:20px;line-height:20px;/*border-right:1px solid #111;*/text-align: center;max-width: 10px;" >4</th>
                                                 <th style="border:0;height:20px;line-height:20px;/*border-right:1px solid #111;*/max-width: 36px;    text-align: left;" >POSICIÓN</th>
                                             </tr>
                                                 
@@ -1349,7 +1351,7 @@ app.controller("controlador_1",['$scope',function($scope){
 
                                     <div style="box-sizing: border-box;border:0;width:100%;height:400px;">
 
-                                        <div style="box-sizing: border-box;border:0;width:50%;height:200px;float:left;">
+                                        <div style="box-sizing: border-box;border:0;width:100%;height:200px;float:left;">
                                     
                                             <figure class="highcharts-figure">
                                                 <div id="container"></div>
@@ -1357,47 +1359,6 @@ app.controller("controlador_1",['$scope',function($scope){
                                     
                                     
                                     
-                                        </div>
-                                        
-                                        
-                                        <div style="box-sizing: border-box;border:0;width:50%;height:200px;float:right;">
-
-                                        <div style="box-sizing: border-box;border:0;width:100%;height:100px;padding-top:10px;padding-bottom:10px;">
-                                            
-                                            <div style="box-sizing: border-box;border:0;float:left;height:80px;color:#555;line-height:80px;font-weight: bold;margin-left:15px;margin-right:15px;width: 88px;">
-                                                Mejor evaluado
-                                            </div>
-                                            <div id="velocidad_mejor_evaluador" style="box-sizing: border-box;border:0;float:left;width: 63px;height:80px;color:#555;line-height:80px;font-weight: bold;margin-right:15px;">
-                                                0 seg
-                                            </div>
-                                            <div id="nombre_mejor_evaluador" style="box-sizing: border-box;border:0;float:left;height:80px;color:#555;line-height:80px;margin-right:15px;">
-                                                nombre
-                                            </div>
-                                            <div style="box-sizing: border-box;border:0;background-color:#FFF;width:80px;height:80px;float:right;border-radius:100px;border:2px solid #555;overflow:hidden;">
-                                                <img id="img_foto_mejor_jugador" src="" alt="foto_jugador_mejor_tiempo" style="box-sizing: border-box;border:0;display:block;width:80px;height:80px;">
-                                            </div>
-                                        
-                                        </div>
-                                        
-                                        <div style="box-sizing: border-box;border:0;width:100%;height:100px;padding-top:10px;padding-bottom:10px;">
-                                            
-                                            <div style="box-sizing: border-box;border:0;float:left;height:80px;color:#555;line-height:80px;font-weight: bold;margin-left:15px;margin-right:15px;width: 88px;">
-                                                Peor evaluado
-                                            </div>
-                                            <div id="velocidad_peor_evaluador" style="box-sizing: border-box;border:0;float:left;width: 63px;height:80px;color:#555;line-height:80px;font-weight: bold;margin-right:15px;">
-                                                0 seg
-                                            </div>
-                                            <div id="nombre_peor_evaluador" style="box-sizing: border-box;border:0;float:left;height:80px;color:#555;line-height:80px;margin-right:15px;">
-                                                nombre
-                                            </div>
-                                            <div style="box-sizing: border-box;border:0;background-color:#FFF;width:80px;height:80px;float:right;border-radius:100px;border:2px solid #555;overflow:hidden;">
-                                                <img id="img_foto_peor_jugador" src="" alt="foto_jugador_peor_tiempo" style="box-sizing: border-box;border:0;display:block;width:80px;height:80px;">
-                                            </div>
-                                        
-                                        </div>
-
-                                        
-                                        
                                         </div>
                                 
                                 
@@ -1741,9 +1702,10 @@ var idtest_reaccion=null;
 
 async function cargarVentanaInicioTest(){
     await consultarAnoActual();
+    let mesNumero=obtenerMesNumero();
     window.tipo_test="reaccion";
     insertarOptionSelectFiltroTest();
-    $("#filtro_mes_test").val("01");
+    $("#filtro_mes_test").val(mesNumero);
     await consultarTests($("#filtro_ano_test").val(),$("#filtro_mes_test").val());
 }
 
@@ -2689,7 +2651,7 @@ function enviarDatosTest(){
     }
     
 
-    // obteniendo datos detallados del test
+    // obteniendo datos detalla      dos del test
     // obteniendo ids jugadores 
     for(let {id} of lista_ranking){
         datosFormulario.push({name:"array_idJugador[]",value:id});
@@ -2752,6 +2714,210 @@ function enviarDatosTest(){
 
 }
 
+function descargarPDF(id){
+    // alert(id);
+    $("#descargarPDF").modal("show");
+    $('#mensaje_agregar_descargarPDF').html('<h5><i class="icon-spinner icon-spin icon-large"></i> Generando PDF...</h5><br><img src="../config/agregar_archivo.png">');
+    $.ajax({
+        url: "post/reportes/generarPDF_test_reaccion.php",
+        type: "post",
+        cache: false,
+        data:[{name:"id",value:id}],
+        dataType:"json",
+        success:(respuesta) => {
+            if(respuesta != ''){
+                $('#mensaje_agregar_descargarPDF').html('<h5>PDF Generado Exitosamente...</h5><br><button type="submit" class="boton_informe_jugador" style="border-radius: 5px" id="boton_agregar_informe" ><a  class="btn_descargar" onClick="closeModal_pdf();" download href="reportes_pdf/'+respuesta+'">DESCARGAR PDF</a></button>');
+            }else{
+                $('#mensaje_agregar_descargarPDF').html('<h5>Error de conexión: los datos no se han podido insertar.</h5><br>');
+            }
+        },
+        error:(error)=>{
+            $('#mensaje_agregar_descargarPDF').html('<h5 style="color: #dc4e4e;"><i class="icon-warning-sign"></i> <b>ERROR:</b> compruebe conexión a internet.</h5>');
+        }, timeout: 15000 // sets timeout to 3 seconds
+    })
+}
+
+function mostrarModalInfoTest(indice){
+    // alert(indice);
+    let test=window.datos_test[window.tipo_test].lista_inicio_test[indice];
+    console.log(test);
+    let fechaEvaluacion=formatoFechaDetalle(test.fecha_evaluacion_test);
+    $("#fechaModalInfo").text(fechaEvaluacion);
+    $("#modalInicioTestInfo").modal("show");
+    
+    let listaNombreJugadores=insertarFilasTablaModalInfo(test.detalle_test);
+    // insertarDatosGraficoBar(test);
+    insertarGrafico(listaNombreJugadores);
+}
+
+function insertarFilasTablaModalInfo(listaDetallesTest){
+    $("#tabla_info").empty();
+    let listaNombreJugadores=[];
+    let tiempo_1=[];
+    let tiempo_2=[];
+    let tiempo_3=[];
+    let tiempo_4=[];
+    let contador=0;
+    let listaJugadoresDestallesTests=[];
+    for(let testDetalle of listaDetallesTest){
+        let jugador=testDetalle.infoJugador;
+        let nombreJugador=jugador.nombre+' '+jugador.apellido1+' '+jugador.apellido2;
+        let plantilla='\
+            <tr style="box-sizing:border-box;border:0;height:50px;color:#555;font-size:10px;">\
+                <th  id="numero_rank_tabla" style="border:0;height:50px;line-height:50px;/*border-right:1px solid #111;*/text-align: center; max-width: 10px;font-weight: bold;" >\
+                    '+(contador+1)+'\
+                </th>\
+                <th style="border:0;height:50px;line-height:50px;/*border-right:1px solid #111;*/text-align: center; max-width: 10px;font-weight: bold;" >\
+                    <div style="box-sizing:border-box;border:0;float:left;width:40px;height:40px;border:2px solid #555;border-radius:100px;overflow:hidden;">\
+                        <img style="box-sizing:border-box;display:block;width:40px;height:40px;" src="./foto_jugadores/'+jugador.idfichaJugador+'.png?idea='+new Date().getTime()+'" alt="foto_jugador_tabla">\
+                    </div>\
+                    <div style="box-sizing:border-box;border:0;float:left;height:40px;line-height:40px;margin-left:10px;text-transform:capitalize;">'+jugador.nombre+' '+jugador.apellido1+' '+jugador.apellido2+'</div>\
+                </th>\
+                <th style="border:0;height:50px;line-height:50px;/*border-right:1px solid #111;*/text-align: center;max-width: 10px;font-weight: normal;" >'+testDetalle.tiempo_1+' seg</th>\
+                <th style="border:0;height:50px;line-height:50px;/*border-right:1px solid #111;*/text-align: center;max-width: 10px;font-weight: normal;" >'+testDetalle.tiempo_2+' seg</th>\
+                <th style="border:0;height:50px;line-height:50px;/*border-right:1px solid #111;*/text-align: center;max-width: 10px;font-weight: normal;" >'+testDetalle.tiempo_3+' seg</th>\
+                <th style="border:0;height:50px;line-height:50px;/*border-right:1px solid #111;*/text-align: center;max-width: 10px;font-weight: normal;" >'+testDetalle.tiempo_4+' seg</th>\
+                <th style="border:0;height:50px;line-height:50px;/*border-right:1px solid #111;*/max-width: 10px;    text-align: left;font-weight: normal;" >'+jugador.texto_posicion+'</th>\
+            </tr>';
+        contador++;
+        tiempo_1.push(parseInt(testDetalle.tiempo_1));
+        tiempo_2.push(parseInt(testDetalle.tiempo_2));
+        tiempo_3.push(parseInt(testDetalle.tiempo_3));
+        tiempo_4.push(parseInt(testDetalle.tiempo_4));
+        listaNombreJugadores.push(nombreJugador);
+        listaJugadoresDestallesTests.push(plantilla);
+    }
+    let strFilaTabla=listaJugadoresDestallesTests.join("");
+    $("#tabla_info").append(strFilaTabla);
+    return [listaNombreJugadores,tiempo_1,tiempo_2,tiempo_3,tiempo_4];
+
+}
+
+
+function formatoFechaDetalle(fecha){
+    let lista_meses=[
+            "Enero",
+            "Febrero",
+            "Marzo",
+            "Abril",
+            "Mayo",
+            "Junio",
+            "Julio",
+            "Agosto",
+            "Septiembre",
+            "Octubre",
+            "Noviembre",
+            "Diciembre"
+        ] ; 
+
+        let dia_semana=[
+            "Domingo",
+            "Lunes",
+            "Martes",
+            "Miercoles",
+            "Jueves",
+            "Viernes",
+            "Sabado"
+        ] ; 
+        let ano=fecha.split("-")[0] ; 
+        let mes=fecha.split("-")[1] ; 
+        let dia=fecha.split("-")[2] ; 
+        let fechaDate=new Date() ; 
+        fechaDate.setDate(parseInt(dia)) ; 
+        fechaDate.setMonth(parseInt(mes)-1) ; 
+        fechaDate.setFullYear(parseInt(ano)) ; 
+
+        let fechaFormato=dia_semana[fechaDate.getDay()]+' '+fechaDate.getDate()+' de '+lista_meses[fechaDate.getMonth()]+' '+fechaDate.getFullYear() ; 
+        return fechaFormato;
+}  
+
+function obtenerMesNumero(){
+    let lista_meses=[
+            "01",
+            "02",
+            "03",
+            "04",
+            "05",
+            "06",
+            "07",
+            "08",
+            "09",
+            "10",
+            "11",
+            "12"
+        ] ; 
+        let fechaDate=new Date() ; 
+        return lista_meses[fechaDate.getMonth()];
+}
+
+function insertarGrafico(datos){
+    Highcharts.chart('container', {
+  chart: {
+    type: 'bar'
+  },
+  title: {
+    text: 'EVALUACIÓN DE LOS JUGADORES'
+  },
+  subtitle: {
+    text: ''
+  },
+  xAxis: {
+    categories: datos[0],
+    title: {
+      text: null
+    }
+  },
+  yAxis: {
+    min: 0,
+    title: {
+      text: '10 METROS',
+      align: 'high'
+    },
+    labels: {
+      overflow: 'justify'
+    }
+  },
+  tooltip: {
+    valueSuffix: ' seg'
+  },
+  plotOptions: {
+    bar: {
+      dataLabels: {
+        enabled: true
+      }
+    }
+  },
+  legend: {
+    layout: 'vertical',
+    align: 'right',
+    verticalAlign: 'top',
+    x: -40,
+    y: 80,
+    floating: true,
+    borderWidth: 1,
+    backgroundColor:
+      Highcharts.defaultOptions.legend.backgroundColor || '#FFFFFF',
+    shadow: true
+  },
+  credits: {
+    enabled: false
+  },
+  series: [{
+    name: 'Tiempo 1',
+    data: datos[1]
+  }, {
+    name: 'Tiempo 2',
+    data: datos[2]
+  }, {
+    name: 'Tiempo 3',
+    data: datos[3]
+  }, {
+    name: 'Tiempo 4',
+    data: datos[4]
+  }]
+});
+
+}
 
 
 

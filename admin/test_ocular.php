@@ -1313,7 +1313,7 @@ app.controller("controlador_1",['$scope',function($scope){
                                                     RANK
                                                 </th>
                                                 <th style="border:0;height:20px;line-height:20px;/*border-right:1px solid #111;*/text-align: center;max-width: 18px;" >JUGADOR</th>
-                                                <th style="border:0;height:20px;line-height:20px;/*border-right:1px solid #111;*/text-align: center;max-width: 10px;" >ERESULTADO</th>
+                                                <th style="border:0;height:20px;line-height:20px;/*border-right:1px solid #111;*/text-align: center;max-width: 10px;" >RESULTADO</th>
                                                 <th style="border:0;height:20px;line-height:20px;/*border-right:1px solid #111;*/text-align: center;max-width: 10px;" >EV.ANTERIOR</th>
                                                 <th style="border:0;height:20px;line-height:20px;/*border-right:1px solid #111;*/max-width: 36px;    text-align: left;" >POSICIÓN</th>
                                             </tr>
@@ -1948,9 +1948,10 @@ function botonVolverAInicio($botonVolver){
 
 async function cargarVentanaInicioTest(){
     await consultarAnoActual();
+    let mesNumero=obtenerMesNumero();
     window.tipo_test="ocular";
     insertarOptionSelectFiltroTestOcular();
-    $("#filtro_mes_test_ocular").val("01");
+    $("#filtro_mes_test_ocular").val(mesNumero);
     await consultarTestsOculares($("#filtro_ano_test_ocular").val(),$("#filtro_mes_test_ocular").val());
 }
 
@@ -2746,7 +2747,26 @@ function formatoFechaDetalle(fecha){
 
         let fechaFormato=dia_semana[fechaDate.getDay()]+' '+fechaDate.getDate()+' de '+lista_meses[fechaDate.getMonth()]+' '+fechaDate.getFullYear() ; 
         return fechaFormato;
-}   
+}  
+
+function obtenerMesNumero(){
+    let lista_meses=[
+            "01",
+            "02",
+            "03",
+            "04",
+            "05",
+            "06",
+            "07",
+            "08",
+            "09",
+            "10",
+            "11",
+            "12"
+        ] ; 
+        let fechaDate=new Date() ; 
+        return lista_meses[fechaDate.getMonth()];
+}
 
 </script>
 <script type="text/javascript" src="bootstrap-datetimepicker/js/bootstrap-datetimepicker.js" charset="UTF-8"></script>
