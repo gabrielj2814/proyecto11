@@ -2251,16 +2251,16 @@ function promedioTestFormulario(){
     let tiempo_3_total=0;
     let tiempo_4_total=0;
     for(let jugador of window.ranking_test_reaccion){
-        tiempo_1_total+=jugador.tiempo_1
-        tiempo_2_total+=jugador.tiempo_2
-        tiempo_3_total+=jugador.tiempo_3
-        tiempo_4_total+=jugador.tiempo_4
+        tiempo_1_total=tiempo_1_total+jugador.tiempo_1
+        tiempo_2_total=tiempo_2_total+jugador.tiempo_2
+        tiempo_3_total=tiempo_3_total+jugador.tiempo_3
+        tiempo_4_total=tiempo_4_total+jugador.tiempo_4
     }
     return {
-        tiempo_1:numeroDeJugadores/tiempo_1_total,
-        tiempo_2:numeroDeJugadores/tiempo_2_total,
-        tiempo_3:numeroDeJugadores/tiempo_3_total,
-        tiempo_4:numeroDeJugadores/tiempo_4_total
+        tiempo_1:tiempo_1_total/numeroDeJugadores,
+        tiempo_2:tiempo_2_total/numeroDeJugadores,
+        tiempo_3:tiempo_3_total/numeroDeJugadores,
+        tiempo_4:tiempo_4_total/numeroDeJugadores
     };
 
 }
