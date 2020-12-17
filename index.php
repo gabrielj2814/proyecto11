@@ -82,6 +82,12 @@ if(isset($GET_['cerrar_sesion'])){
     <div class="contenedores_wb">
       <a class="selectOne" style="margin-left:100px;" target="_BLANK" href="RELACIONES/test_reaccion.mwb">WORKBENCH</a><br /><!-- despues relacionar con modelo -->
     </div>
+    <div class="contenedores">
+      <a class="selectOne" href="admin/test_desiciones.php">TEST DESICIONES</a>
+    </div>
+    <div class="contenedores_wb">
+      <a class="selectOne" style="margin-left:100px;" target="_BLANK" href="RELACIONES/test_desiciones.mwb">WORKBENCH</a><br /><!-- despues relacionar con modelo -->
+    </div>
     
   </div><br />
 </center> 

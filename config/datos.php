@@ -177,4 +177,15 @@
     $menu_link['test_reaccion_jugador']                               = 'test_reaccion.php';
     ////////////////////// COMENTARIOS //////////////////////////
     $comentarios['test_reaccion_jugador']                             = 36;  
+    ////////////////////////// MODULO 15 - TEST DESICIONES //////////////////////////////
+    ////////////////////////////////////////////////////////////////
+    $menu_lateral['test']                                         = true;
+    $menu_lateral['test_desiciones_jugador']                            = true;
+    /////////////////////////// DEMO /////////////////////////////
+    $demo['test']                                                 = true;
+    $demo['test_desiciones_jugador']                                    = true;
+    ////////////////////////// URL //////////////////////////////
+    $menu_link['test_desiciones_jugador']                               = 'test_desiciones.php';
+    ////////////////////// COMENTARIOS //////////////////////////
+    $comentarios['test_desiciones_jugador']                             = 36;  
       
