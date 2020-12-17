@@ -1704,7 +1704,7 @@ async function cargarVentanaInicioTest(){
     window.tipo_test="decisiones";
     insertarOptionSelectFiltroTest();
     $("#filtro_mes_test").val(mesNumero);
-    // await consultarTests($("#filtro_ano_test").val(),$("#filtro_mes_test").val());
+    await consultarTests($("#filtro_ano_test").val(),$("#filtro_mes_test").val());
 }
 
 async function consultarAnoActual(){
@@ -1750,7 +1750,7 @@ async function consultarTests(ano="2020",mes="01"){
             var json=JSON.parse(respuesta);
             window.datos_test[window.tipo_test].lista_inicio_test=json.datos;
             console.log("listando test ->>>",window.datos_test[window.tipo_test].lista_inicio_test);
-            insertarFilaInicioTestOculares(window.datos_test[window.tipo_test].lista_inicio_test);
+            // insertarFilaInicioTestOculares(window.datos_test[window.tipo_test].lista_inicio_test);
         },error: function(){// will fire when timeout is reached
             // alert("errorXXXXX");
         }, timeout: 10000 // sets timeout to 3 seconds
@@ -1869,7 +1869,7 @@ async function volverInicioModuloTest($botonCerrarFormularioTest){
     $("#vista_test").show(500);
     insertarOptionSelectFiltroTest();
     $("#filtro_mes_test").val("01");
-    // await consultarTests($("#filtro_ano_test").val(),$("#filtro_mes_test").val());
+    await consultarTests($("#filtro_ano_test").val(),$("#filtro_mes_test").val());
 }
 
 

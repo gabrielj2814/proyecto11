@@ -20,9 +20,6 @@ function utf8_converter($array){
     return $array;
 }
 
-
-
-
 function consultarJugadoresSerie($serie,$sexo){
     include("conexion.php");
     $SQL="SELECT * FROM fichaJugador WHERE serieActual=$serie AND sexo=$sexo;";
@@ -46,7 +43,7 @@ function consultarTestMensual($ano,$mes){
     $result_test=$link->query($SQL);
     $test_data=[];
     while($row = mysqli_fetch_array($result_test)){
-		// $row["detalle_test"]=consultarDestalleTest($row["idtest_reaccion"]);
+		$row["detalle_test"]=consultarDestalleTest($row["idtestdecision"]);
         $test_data[]=utf8_converter($row);
     }
     $link->close();
@@ -216,6 +213,37 @@ function registrarDetallesTestDecision($idReaccion,$idJugador,$descision,$presic
     $id=$link->insert_id;
     $link->close();
 }
+
+function consultarDestalleTest($id){
+    include("conexion.php");
+    $SQL="SELECT * FROM detalle_test_desicion WHERE idtestdecision=$id";
+    $result_detalle_test=$link->query($SQL);
+    $test_data=[];
+    while($row = mysqli_fetch_array($result_detalle_test)){
+		$row["infoJugador"]=consultarJugadorTestDetalle($row["idfichaJugador"]);
+        $test_data[]=utf8_converter($row);
+    }
+    $link->close();
+    return (sizeof($test_data)>0)?$test_data:[];
+}
+
+function consultarJugadorTestDetalle($id){
+	include("conexion.php");
+    $SQL="SELECT * FROM fichaJugador WHERE idfichaJugador=$id";
+    $result_ficha_jugador=$link->query($SQL);
+    $jugadores_data=[];
+    while($row = mysqli_fetch_array($result_ficha_jugador)){
+        $posicon=calcular_posicion_jugador2($row["idfichaJugador"]);
+        $row["posicion"]=$posicon["codigo_posicion"];
+        $row["texto_posicion"]=$posicon["texto_posicion"];
+        if($row["estado"]!=="0"){
+            $jugadores_data[]=utf8_converter($row);
+        }
+    }
+    $link->close();
+    return (sizeof($jugadores_data)>0)?$jugadores_data[0]:[];
+}
+
 
 
 ?>
