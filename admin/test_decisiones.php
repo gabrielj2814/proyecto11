@@ -1567,7 +1567,7 @@ app.controller("controlador_1",['$scope',function($scope){
                             </div>
 
                             <div id="tabla_html_formulario_test" style="box-sizing:border-box;border:0;width:95%;margin-left:auto;margin-right:auto;margin-bottom:15px;">
-                                <div style="box-sizing:border-box;border:0;width:100%;height:30px;background-color:#555;border-top-left-radius: 5px;border-top-right-radius: 5px;">
+                                <div style="box-sizing:border-box;border:0;width:100%;height:30px;background-color:#555;border-top-left-radius: 5px;border-top-right-radius: 5px;text-transform:uppercase;">
                                     <div style="box-sizing:border-box;border:0;width:2%;height:30px;float:left;color:#fff;font-weight: 800;/*border-right:1px solid red;*/line-height: 30px;font-size: 12px;text-align:center">#</div>
                                     <div style="box-sizing:border-box;border:0;width:9%;height:30px;float:left;color:#fff;font-weight: 800;/*border-right:1px solid red;*/line-height: 30px;font-size: 12px;">POSICION</div>
 
