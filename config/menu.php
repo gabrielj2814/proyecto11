@@ -188,9 +188,9 @@
               }
               ?>
               <?php 
-              if($menu_lateral['test_desiciones_jugador']){
+              if($menu_lateral['test_decisiones_jugador']){
               ?>
-              <li><a href="<?php echo $menu_link['test_desiciones_jugador'];?>" onClick="colocar_icono_cargando(this)"><?php if($submenu_actual=='test_desiciones_jugador'){?><i class="icon-chevron-right" style="text-decoration: none;"></i><?php }?> <?php if(!$software_demo || ($software_demo && $demo['test_desiciones_jugador'])){?>test desiciones<?php }else{?><strike style="color:white;"><span>&nbsp;test reaccion&nbsp;</span></strike><?php }?></a></li>
+              <li><a href="<?php echo $menu_link['test_decisiones_jugador'];?>" onClick="colocar_icono_cargando(this)"><?php if($submenu_actual=='test_decisiones_jugador'){?><i class="icon-chevron-right" style="text-decoration: none;"></i><?php }?> <?php if(!$software_demo || ($software_demo && $demo['test_decisiones_jugador'])){?>test desiciones<?php }else{?><strike style="color:white;"><span>&nbsp;test reaccion&nbsp;</span></strike><?php }?></a></li>
 
               <?php
               }

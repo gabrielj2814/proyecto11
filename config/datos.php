@@ -180,12 +180,12 @@
     ////////////////////////// MODULO 15 - TEST DESICIONES //////////////////////////////
     ////////////////////////////////////////////////////////////////
     $menu_lateral['test']                                         = true;
-    $menu_lateral['test_desiciones_jugador']                            = true;
+    $menu_lateral['test_decisiones_jugador']                            = true;
     /////////////////////////// DEMO /////////////////////////////
     $demo['test']                                                 = true;
-    $demo['test_desiciones_jugador']                                    = true;
+    $demo['test_decisiones_jugador']                                    = true;
     ////////////////////////// URL //////////////////////////////
-    $menu_link['test_desiciones_jugador']                               = 'test_desiciones.php';
+    $menu_link['test_decisiones_jugador']                               = 'test_decisiones.php';
     ////////////////////// COMENTARIOS //////////////////////////
-    $comentarios['test_desiciones_jugador']                             = 36;  
+    $comentarios['test_decisiones_jugador']                             = 36;  
       

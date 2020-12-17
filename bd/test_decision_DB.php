@@ -42,16 +42,15 @@ function consultarJugadoresSerie($serie,$sexo){
 
 function consultarTestMensual($ano,$mes){
     include("conexion.php");
-    $SQL="SELECT * FROM test_reaccion WHERE fecha_evaluacion_test LIKE '%$ano-$mes%'";
+    $SQL="SELECT * FROM test_decision WHERE fecha_evaluacion_test LIKE '%$ano-$mes%'";
     $result_test=$link->query($SQL);
     $test_data=[];
     while($row = mysqli_fetch_array($result_test)){
-		$row["detalle_test"]=consultarDestalleTest($row["idtest_reaccion"]);
+		// $row["detalle_test"]=consultarDestalleTest($row["idtest_reaccion"]);
         $test_data[]=utf8_converter($row);
     }
     $link->close();
     return (sizeof($test_data)>0)?["respuesta" => true , "datos" => $test_data]:["respuesta" => false , "datos" => []];
-
 }
 
 function calcular_posicion_jugador2($id){
@@ -137,5 +136,86 @@ function calcular_posicion_jugador2($id){
 	return ["texto_posicion" => $jugador['posicionPrincipal'],"codigo_posicion" => $posicion];
     
 }
+
+function operacionTestDecision($POST){
+	if($POST["tipo_formulario"]==="false"){
+        return registrarTestDecision($POST);
+    }
+    // else{
+    //     return actualizarTestReaccion($POST);
+    // }
+}
+
+function registrarTestDecision($POST){
+	include("conexion.php");
+	$fecha=datetime_futbolJoven();
+	$SQL="INSERT INTO test_decision(
+		fecha_evaluacion_test,
+		observacion_test,
+		promedio_toma_desicion,
+		promedio_presicion,
+		promedio_menejo_presion,
+		promedio_reaccion,
+		promedio_adaptacion,
+		numero_jugadores_evaluados,
+		ano_test,
+		fecha_software,
+		nombre_usuario_software
+	)
+	VALUES(
+		'".$POST["fecha_evaluacion_test"]."',
+		'".$POST["observacion_test"]."',
+
+		'".$POST["promedio_toma_decision"]."',
+		'".$POST["promedio_presicion"]."',
+		'".$POST["promedio_menejo_presion"]."',
+		'".$POST["promedio_reaccion"]."',
+		'".$POST["promedio_adaptacion"]."',
+		
+		'".$POST["numeros_jugadores_evaluados_test"]."',
+		'".$POST["ano_test"]."',
+		'$fecha',
+		'".$POST["nombre_usuario_software"]."'
+	);";
+	// print($SQL);
+	$link->query($SQL);
+    $id=$link->insert_id;
+    $link->close();
+    return ($id!==0)?["respuesta" => true,"id" => $id]:["respuesta" => false,"id" => 0];
+}
+
+function registrarDetallesTestDecision($idReaccion,$idJugador,$descision,$presicion,$presion,$reaccion,$adaptacion,$nombre_usuario_software){
+	include("conexion.php");
+	$fecha=datetime_futbolJoven();
+	$SQL="INSERT INTO detalle_test_desicion(
+		idtestdecision,
+		idfichaJugador,
+
+		toma_desicion,
+		presicion,
+		manejo_presion,
+		reaccion,
+		adaptacion,
+
+		fecha_software,
+		nombre_usuario_software
+	)
+	VALUES(
+		".$idReaccion.",
+		".$idJugador.",
+		'".$descision."',
+		'".$presicion."',
+		'".$presion."',
+		'".$reaccion."',
+		'".$adaptacion."',
+		'".$fecha."',
+		'".$nombre_usuario_software."'
+	);";
+
+	$link->query($SQL);
+    $id=$link->insert_id;
+    $link->close();
+}
+
 
 ?>

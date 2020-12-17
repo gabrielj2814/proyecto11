@@ -7,9 +7,9 @@ if(!(isset($_SESSION["nombre_usuario_software"]))){
 }
 else{
     $menu_actual="test";
-    $submenu_actual="test_desiciones_jugador";
-    $seccion_comentarios = $comentarios['test_desiciones_jugador'];//mis cuotas
-    $demo_seccion = $demo['test_desiciones_jugador'];
+    $submenu_actual="test_decisiones_jugador";
+    $seccion_comentarios = $comentarios['test_decisiones_jugador'];//mis cuotas
+    $demo_seccion = $demo['test_decisiones_jugador'];
     $nombre_pestana_navegador='Test';
 
     $datetime_now = new DateTime();
@@ -27,7 +27,7 @@ else{
 <html lang="es"> 
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8"> 
-        <title><?php echo $nombre_pestana_navegador;?> | Desicion</title>
+        <title><?php echo $nombre_pestana_navegador;?> | Decision</title>
 
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="stylesheet" href="css/bootstrap.min.css" />
@@ -1474,7 +1474,7 @@ app.controller("controlador_1",['$scope',function($scope){
                         </div>
                         <!--    MODAL FORMULARIO TEST OCULAR FIN     -->
                          <!--    MODAL AGREGAR JUGADOR TEST OCULAR INICIO  modalFormularioTestOcular -->
-                         <div id="modalAgregarJugadorTestOcular" class="modal hide" style="border-radius:10px;">
+                         <div id="modalAgregarJugadorTest" class="modal hide" style="border-radius:10px;">
                                 <div class="modal-header" style="background-color: <?php echo $color_fondo; ?>; border-top-right-radius: 5px; border-top-left-radius: 5px;">
                                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                                     <center><h4 class="modal-title"><img src="img/logo3.png" style="height:30px; width:265px;"></h4></center>
@@ -1489,7 +1489,7 @@ app.controller("controlador_1",['$scope',function($scope){
                                                         <p class="ellipsis-text" style="font-weight: normal;">Serie Jugador</p>
                                                     </div>
                                                 </a>
-                                                <select style="width:50%; height: 30px;background:#fff;border:2px solid #001b73" class="" id="serie_test" name="serie_test" onchange="consultarJugadoresSerieAgregarTestOcular(this.value)">
+                                                <select style="width:50%; height: 30px;background:#fff;border:2px solid #001b73" class="" id="serie_test" name="serie_test" onchange="consultarJugadoresSerieAgregarTest(this.value)">
                                                     <option value="null">Seleccione</option>
                                                     <option value="99_1">Primer equipo masculino</option>
                                                     <option value="20_1">Sub 20</option>
@@ -1528,7 +1528,7 @@ app.controller("controlador_1",['$scope',function($scope){
                                     <center>
                                         <div id="contendor_botones_modal_AgregarJugador">
                                             <button type="button" class="btn btn-default boton_modal" onClick="cerrarModalAgregarJugadorTest()"  id="boton_cerrar_alerta" style="margin-right:20px; border-radius:5px;"><span class="icon"><i class="icon-remove"></i></span> No</button>
-                                            <button type="button" id="guardar" class="btn btn-default boton_modal " onClick="agregarJugadorTestOcular()" ng-click="desactivarBotonAgregarBoleta()" style="border-radius:5px;"><span class="icon"><i class="icon-ok"></i></span> Si</button>
+                                            <button type="button" id="guardar" class="btn btn-default boton_modal " onClick="agregarJugadorTest()" ng-click="desactivarBotonAgregarBoleta()" style="border-radius:5px;"><span class="icon"><i class="icon-ok"></i></span> Si</button>
                                         </div>
                                     </center>
                                     
@@ -1540,7 +1540,7 @@ app.controller("controlador_1",['$scope',function($scope){
                             <div style="box-sizing: border-box;border:0;width:100%;box-sizing: border-box;border:0;width:100%;height:200px;margin-left:auto;margin-right:auto;margin-bottom:15px;/*background-color:lime;*/padding-left:15px;padding-right:15px;">
                                 <img src="../config/logo_equipo.png" alt="logo equipo" style="box-sizing: border-box;border:0;width:20%;height:200px;float:left;"/>
                                 <div style="box-sizing: border-box;border:0;width:80%;height:200px;float:left;" >
-                                    <div style="box-sizing: border-box;border:0;color:#404040;font-size:13px;font-weight: 800;padding-left:27%;margin-bottom:15px;">TEST TIEMPO DE REACCIÓN</div>
+                                    <div style="box-sizing: border-box;border:0;color:#404040;font-size:13px;font-weight: 800;padding-left:27%;margin-bottom:15px;">TEST TOMA DE DECISIONES</div>
                                     
                                     <div style="margin-left:25%;width:26%;height: 30px;display:flex;margin-bottom:30px;">
                                         <a class="btn btn-md btn-primary green-a" style="width: 40%;height: 20px;background:#001b73">
@@ -1563,7 +1563,7 @@ app.controller("controlador_1",['$scope',function($scope){
                             <div style="box-sizing:border-box;border:0;color:#555;width:50%;font-size: 12px;margin-left:auto;margin-right:auto;text-align:center;font-weight: 800;">JUGADORES ACTIVOS</div>
                             
                             <div style="box-sizing:border-box;border:0;width:109px;margin-left:auto;margin-right:25px;margin-bottom:5px;">
-                                <button data-boton-abrir-formulario-test="ocular" class="boton-abrir-formulario" onClick="abrirModalAgregarJugadorTestOcular()"><b style="font-size:10px;"><i class="icon-plus"></i> Agregar jugador</b></button>
+                                <button data-boton-abrir-formulario-test="ocular" class="boton-abrir-formulario" onClick="abrirModalAgregarJugadorTest()"><b style="font-size:10px;"><i class="icon-plus"></i> Agregar jugador</b></button>
                             </div>
 
                             <div id="tabla_html_formulario_test" style="box-sizing:border-box;border:0;width:95%;margin-left:auto;margin-right:auto;margin-bottom:15px;">
@@ -1572,13 +1572,11 @@ app.controller("controlador_1",['$scope',function($scope){
                                     <div style="box-sizing:border-box;border:0;width:9%;height:30px;float:left;color:#fff;font-weight: 800;/*border-right:1px solid red;*/line-height: 30px;font-size: 12px;">POSICION</div>
 
                                     <div style="box-sizing:border-box;border:0;width:16%;height:30px;float:left;color:#fff;font-weight: 800;/*border-right:1px solid red;*/line-height: 30px;font-size: 12px;">NOMBRE</div>
-                                    <div style="box-sizing:border-box;border:0;width:8%;height:30px;float:left;color:#fff;font-weight: 800;/*border-right:1px solid red;*/line-height: 30px;font-size: 12px;text-align:center;">1</div>
-                                    <div style="box-sizing:border-box;border:0;width:8%;height:30px;float:left;color:#fff;font-weight: 800;/*border-right:1px solid red;*/line-height: 30px;font-size: 12px;text-align:center;">2</div>
-                                    <div style="box-sizing:border-box;border:0;width:8%;height:30px;float:left;color:#fff;font-weight: 800;/*border-right:1px solid red;*/line-height: 30px;font-size: 12px;text-align:center;">3</div>
-                                    <div style="box-sizing:border-box;border:0;width:8%;height:30px;float:left;color:#fff;font-weight: 800;/*border-right:1px solid red;*/line-height: 30px;font-size: 12px;text-align:center;">4</div>
-                                    <div style="box-sizing:border-box;border:0;width:8%;height:30px;float:left;color:#fff;font-weight: 800;/*border-right:1px solid red;*/line-height: 30px;font-size: 12px;text-align:center;">5</div>
-                                    <div style="box-sizing:border-box;border:0;width:8%;height:30px;float:left;color:#fff;font-weight: 800;/*border-right:1px solid red;*/line-height: 30px;font-size: 12px;text-align:center;">RANK</div>
-                                    <div style="box-sizing:border-box;border:0;width:20%;height:30px;float:left;color:#fff;font-weight: 800;/*border-right:1px solid red;*/line-height: 30px;font-size: 12px;text-align:center;"></div>
+                                    <div style="box-sizing:border-box;border:0;width:13.6%;height:30px;float:left;color:#fff;font-weight: 800;/*border-right:1px solid red;*/line-height: 30px;font-size: 12px;text-align:center;">Toma de decisiones</div>
+                                    <div style="box-sizing:border-box;border:0;width:13.6%;height:30px;float:left;color:#fff;font-weight: 800;/*border-right:1px solid red;*/line-height: 30px;font-size: 12px;text-align:center;">Precision</div>
+                                    <div style="box-sizing:border-box;border:0;width:13.6%;height:30px;float:left;color:#fff;font-weight: 800;/*border-right:1px solid red;*/line-height: 30px;font-size: 12px;text-align:center;">Manejo de la presion</div>
+                                    <div style="box-sizing:border-box;border:0;width:13.6%;height:30px;float:left;color:#fff;font-weight: 800;/*border-right:1px solid red;*/line-height: 30px;font-size: 12px;text-align:center;">Reaccion</div>
+                                    <div style="box-sizing:border-box;border:0;width:13.6%;height:30px;float:left;color:#fff;font-weight: 800;/*border-right:1px solid red;*/line-height: 30px;font-size: 12px;text-align:center;">Adaptabilidad</div>
                                     <div style="box-sizing:border-box;border:0;width:5%;height:30px;float:left;color:#fff;font-weight: 800;/*border-right:1px solid red;*/"></div>
                                 </div>
                                 <div id="contenedor_fila_tabla_formulario_test" style="box-sizing:border-box;border:0;width:100%;color:#555;">
@@ -1588,7 +1586,7 @@ app.controller("controlador_1",['$scope',function($scope){
                             </div>
                             <div style="box-sizing:border-box;border:0;width:490px;height:30px;margin-left:auto;margin-right:auto;margin-bottom:15px;">
                                 <span style="box-sizing:border-box;float:left;width:85px;height:30px;font-size:12px;color:#111;font-weight: 800;margin-right:15px;line-height:30px;">PROMEDIO</span>
-                                <div id="promedio_toma_desicion" style="box-sizing:border-box;float:left;width:70px;height:30px;background-color:#555;border:2px solid #acacac;text-align:right;font-size:12px;font-weight: 800;color:#fff;line-height:30px;padding-right:5px;border-radius:5px;">xxx</div>
+                                <div id="promedio_toma_decision" style="box-sizing:border-box;float:left;width:70px;height:30px;background-color:#555;border:2px solid #acacac;text-align:right;font-size:12px;font-weight: 800;color:#fff;line-height:30px;padding-right:5px;border-radius:5px;">xxx</div>
                                 <div id="promedio_presicion" style="box-sizing:border-box;float:left;width:70px;height:30px;background-color:#555;border:2px solid #acacac;text-align:right;font-size:12px;font-weight: 800;color:#fff;line-height:30px;padding-right:5px;border-radius:5px;margin-left: 10px;">xxx</div>
                                 <div id="promedio_menejo_presion" style="box-sizing:border-box;float:left;width:70px;height:30px;background-color:#555;border:2px solid #acacac;text-align:right;font-size:12px;font-weight: 800;color:#fff;line-height:30px;padding-right:5px;border-radius:5px;margin-left: 10px;">xxx</div>
                                 <div id="promedio_reaccion" style="box-sizing:border-box;float:left;width:70px;height:30px;background-color:#555;border:2px solid #acacac;text-align:right;font-size:12px;font-weight: 800;color:#fff;line-height:30px;padding-right:5px;border-radius:5px;margin-left: 10px;">xxx</div>
@@ -1667,7 +1665,7 @@ var datos_test={
 
 var ranking_test_cerabral=[];
 
-var ranking_test_desicion=[];
+var ranking_test_decision=[];
 /*
 id
 rank
@@ -1694,7 +1692,7 @@ var lista_posiciones=[
 
 var listaJugadores=[];
 
-var idtest_desicion=null;
+var idtest_decision=null;
 
 
 </script>
@@ -1711,7 +1709,7 @@ async function cargarVentanaInicioTest(){
 
 async function consultarAnoActual(){
     await $.ajax({
-        url: 'post/test_año_actual_test_desicion.php',
+        url: 'post/test_año_actual_test_decision.php',
         type: "post",
         data:[],
         success: function(respuesta) {
@@ -1742,7 +1740,7 @@ async function consultarTests(ano="2020",mes="01"){
     $("#contenedor_fila_tabla_inicio_test").empty();
     window.datos_test[window.tipo_test].lista_inicio_test=[];
     await $.ajax({
-        url: 'post/test_consultar_test_desicion_año_mes.php',
+        url: 'post/test_consultar_test_decision_año_mes.php',
         type: "post",
         data:[
             {name:"ano_test_oculares",value:ano},
@@ -1803,13 +1801,13 @@ function formularioTest(tipo=false,index=null){
 
 function formularioTestCrear(){
     console.log(window.datos_test[window.tipo_test])
-    window.idtest_desicion=null;
+    window.idtest_decision=null;
     window.datos_test[window.tipo_test].tipo_fomrulario=false;
-    window.ranking_test_desicion=[];
+    window.ranking_test_decision=[];
     window.datos_test[window.tipo_test].jugadores_test=[];
     fechaTestEvaluacion();
     $("#observacion_test").val("");
-    document.getElementById("promedio_toma_desicion").textContent="0.00";
+    document.getElementById("promedio_toma_decision").textContent="0.00";
     document.getElementById("promedio_presicion").textContent="0.00";
     document.getElementById("promedio_menejo_presion").textContent="0.00";
     document.getElementById("promedio_reaccion").textContent="0.00";
@@ -1818,8 +1816,8 @@ function formularioTestCrear(){
 
 // function formularioTestEditar(indice){
 //     let test=window.datos_test[window.tipo_test].lista_inicio_test[indice];
-//     window.idtest_desicion=test.idtest_desicion;
-//     window.ranking_test_desicion=[];
+//     window.idtest_decision=test.idtest_decision;
+//     window.ranking_test_decision=[];
 //     // console.log(test);
 //     window.datos_test[window.tipo_test].tipo_fomrulario=true;
 //     fechaTestEvaluacion();
@@ -1881,7 +1879,7 @@ async function consultarJugadoresSerie(valor){
     sexo=valor.split("_")[1];
     window.datos_test[window.tipo_test].jugadores_test=[];
     await $.ajax({
-        url: 'post/test_consultar_Jugadores_desicion.php',
+        url: 'post/test_consultar_Jugadores_decision.php',
         type: "post",
         data:[
             {name:"serie",value:serie},
@@ -1923,26 +1921,20 @@ function insertarFilaJugadoresTest(jugadores=[]){
                         </div>\
                         <div style="box-sizing:border-box;border:0;float:left;width:80%;height:30px;padding-left:5px;color:#555;font-weight: bold;line-height: 30px;text-transform: Capitalize" class="ellipsis-text">'+jugador.nombre+' '+jugador.apellido1+' '+jugador.apellido2+'</div>\
                     </div>\
-                    <div style="box-sizing:border-box;border:0;width:8%;height:30px;float:left;font-weight: bold;/*border-right:1px solid red;*/line-height: 30px;font-size: 11px;padding-left:5px;padding-right:5px;">\
-                        <input style="box-sizing:border-box;width:100%;height:100%;border:1px solid #acacac;" type="text" name="array_velocidad[]"  class="campo_velocidad" id="toma_desicion_'+jugador.idfichaJugador+'" data-id-jugador="'+jugador.idfichaJugador+'" onKeyup="sumarAlRankingTestOcular(this)"/>\
+                    <div style="box-sizing:border-box;border:0;width:13.6%;height:30px;float:left;font-weight: bold;/*border-right:1px solid red;*/line-height: 30px;font-size: 11px;padding-left:5px;padding-right:5px;">\
+                        <input style="box-sizing:border-box;width:100%;height:100%;border:1px solid #acacac;" type="text" name="array_velocidad[]"  class="campo_velocidad" id="toma_decision_'+jugador.idfichaJugador+'" data-id-jugador="'+jugador.idfichaJugador+'" onKeyup="sumarAlRankingTestOcular(this)"/>\
                     </div>\
-                    <div style="box-sizing:border-box;border:0;width:8%;height:30px;float:left;font-weight: bold;/*border-right:1px solid red;*/line-height: 30px;font-size: 11px;padding-left:5px;padding-right:5px;">\
+                    <div style="box-sizing:border-box;border:0;width:13.6%;height:30px;float:left;font-weight: bold;/*border-right:1px solid red;*/line-height: 30px;font-size: 11px;padding-left:5px;padding-right:5px;">\
                         <input style="box-sizing:border-box;width:100%;height:100%;border:1px solid #acacac;" type="text" name="array_velocidad[]"  class="campo_velocidad" id="presicion_'+jugador.idfichaJugador+'" data-id-jugador="'+jugador.idfichaJugador+'" onKeyup="sumarAlRankingTestOcular(this)"/>\
                     </div>\
-                    <div style="box-sizing:border-box;border:0;width:8%;height:30px;float:left;font-weight: bold;/*border-right:1px solid red;*/line-height: 30px;font-size: 11px;padding-left:5px;padding-right:5px;">\
+                    <div style="box-sizing:border-box;border:0;width:13.6%;height:30px;float:left;font-weight: bold;/*border-right:1px solid red;*/line-height: 30px;font-size: 11px;padding-left:5px;padding-right:5px;">\
                         <input style="box-sizing:border-box;width:100%;height:100%;border:1px solid #acacac;" type="text" name="array_velocidad[]"  class="campo_velocidad" id="manejo_presion_'+jugador.idfichaJugador+'" data-id-jugador="'+jugador.idfichaJugador+'" onKeyup="sumarAlRankingTestOcular(this)"/>\
                     </div>\
-                    <div style="box-sizing:border-box;border:0;width:8%;height:30px;float:left;font-weight: bold;/*border-right:1px solid red;*/line-height: 30px;font-size: 11px;padding-left:5px;padding-right:5px;">\
+                    <div style="box-sizing:border-box;border:0;width:13.6%;height:30px;float:left;font-weight: bold;/*border-right:1px solid red;*/line-height: 30px;font-size: 11px;padding-left:5px;padding-right:5px;">\
                         <input style="box-sizing:border-box;width:100%;height:100%;border:1px solid #acacac;" type="text" name="array_velocidad[]"  class="campo_velocidad" id="reaccion_'+jugador.idfichaJugador+'" data-id-jugador="'+jugador.idfichaJugador+'" onKeyup="sumarAlRankingTestOcular(this)"/>\
                     </div>\
-                    <div style="box-sizing:border-box;border:0;width:8%;height:30px;float:left;font-weight: bold;/*border-right:1px solid red;*/line-height: 30px;font-size: 11px;padding-left:5px;padding-right:5px;">\
+                    <div style="box-sizing:border-box;border:0;width:13.6%;height:30px;float:left;font-weight: bold;/*border-right:1px solid red;*/line-height: 30px;font-size: 11px;padding-left:5px;padding-right:5px;">\
                         <input style="box-sizing:border-box;width:100%;height:100%;border:1px solid #acacac;" type="text" name="array_velocidad[]"  class="campo_velocidad" id="adaptacion_'+jugador.idfichaJugador+'" data-id-jugador="'+jugador.idfichaJugador+'" onKeyup="sumarAlRankingTestOcular(this)"/>\
-                    </div>\
-                    <div style="box-sizing:border-box;border:0;width:8%;height:30px;float:left;font-weight: bold;/*border-right:1px solid red;*/line-height: 30px;font-size: 11px;text-align:center;">\
-                        <div id="ranking_test_formulario_'+jugador.idfichaJugador+'" style="box-sizing:border-box;border:0;width:100%;height:100%;line-height:30px;background-color:#f4f86f;font-weight: bold;">-</div>\
-                    </div>\
-                    <div style="box-sizing:border-box;border:0;width:20%;height:30px;float:left;font-weight: bold;/*border-right:1px solid red;*/line-height: 30px;font-size: 11px;padding-left:5px;padding-right:5px;">\
-                        <!-- <input style="box-sizing:border-box;width:100%;height:100%;border:1px solid #acacac;" type="text" name="array_comentario[]"  class="campo_comentario" id="comentario_test_'+jugador.idfichaJugador+'"/> -->\
                     </div>\
                     <div style="box-sizing:border-box;border:0;width:5%;height:30px;float:left;font-weight: bold;/*border-right:1px solid red;*/line-height: 30px;">\
                         <center>\
@@ -1974,6 +1966,420 @@ function obtenerInicialDelPosicion(posicion){
     else{
         return posicion;
     }
+
+}
+
+function sumarAlRankingTestOcular($inputVelocidad){
+    let id=$inputVelocidad.getAttribute("data-id-jugador");
+    if(window.ranking_test_decision.length===0){
+            window.ranking_test_decision.push({
+                id:$inputVelocidad.getAttribute("data-id-jugador"),
+                
+                rank:0,
+                // velocidad:(parseFloat($inputVelocidad.value)!=="")?parseFloat($inputVelocidad.value):"",
+                toma_decision:(document.getElementById("toma_decision_"+id).value!=="")?parseFloat(document.getElementById("toma_decision_"+id).value):0,
+                presicion:(document.getElementById("presicion_"+id).value!=="")?parseFloat(document.getElementById("presicion_"+id).value):0,
+                manejo_presion:(document.getElementById("manejo_presion_"+id).value!=="")?parseFloat(document.getElementById("manejo_presion_"+id).value):0,
+                reaccion:(document.getElementById("reaccion_"+id).value!=="")?parseFloat(document.getElementById("reaccion_"+id).value):0,
+                adaptacion:(document.getElementById("adaptacion_"+id).value!=="")?parseFloat(document.getElementById("adaptacion_"+id).value):0
+
+            });
+        }
+        else{
+            let posicion=0;
+            let econtrado=false;
+            for(let jugador of window.ranking_test_decision){
+                if(jugador.id===$inputVelocidad.getAttribute("data-id-jugador")){
+                        window.ranking_test_decision[posicion]={
+                        id:$inputVelocidad.getAttribute("data-id-jugador"),
+                        rank:0,
+                        // velocidad:(parseFloat($inputVelocidad.value)!=="")?parseFloat($inputVelocidad.value):"",
+                        toma_decision:(document.getElementById("toma_decision_"+id).value!=="")?parseFloat(document.getElementById("toma_decision_"+id).value):0,
+                        presicion:(document.getElementById("presicion_"+id).value!=="")?parseFloat(document.getElementById("presicion_"+id).value):0,
+                        manejo_presion:(document.getElementById("manejo_presion_"+id).value!=="")?parseFloat(document.getElementById("manejo_presion_"+id).value):0,
+                        reaccion:(document.getElementById("reaccion_"+id).value!=="")?parseFloat(document.getElementById("reaccion_"+id).value):0,
+                        adaptacion:(document.getElementById("adaptacion_"+id).value!=="")?parseFloat(document.getElementById("adaptacion_"+id).value):0
+                    }
+                    econtrado=true;
+                }
+                posicion++;
+            }
+            if(!econtrado){
+                window.ranking_test_decision.push({
+                    id:$inputVelocidad.getAttribute("data-id-jugador"),
+                    rank:0,
+                    // velocidad:(parseFloat($inputVelocidad.value)!=="")?parseFloat($inputVelocidad.value):"",
+                    toma_decision:(document.getElementById("toma_decision_"+id).value!=="")?parseFloat(document.getElementById("toma_decision_"+id).value):0,
+                    presicion:(document.getElementById("presicion_"+id).value!=="")?parseFloat(document.getElementById("presicion_"+id).value):0,
+                    manejo_presion:(document.getElementById("manejo_presion_"+id).value!=="")?parseFloat(document.getElementById("manejo_presion_"+id).value):0,
+                    reaccion:(document.getElementById("reaccion_"+id).value!=="")?parseFloat(document.getElementById("reaccion_"+id).value):0,
+                    adaptacion:(document.getElementById("adaptacion_"+id).value!=="")?parseFloat(document.getElementById("adaptacion_"+id).value):0
+                });
+            }
+        }
+        // console.log(window.ranking_test_decision);
+        for(let jugador of rankingOrdenTest()){
+            
+            console.log("ranking ->>>",jugador)
+            // document.getElementById("ranking_test_formulario_"+jugador.id).textContent=jugador.rank.toString();
+        }
+        let promedios=promedioTestFormulario();
+        document.getElementById("promedio_toma_decision").textContent=(promedios.toma_decision.toFixed(2).toString()==="Infinity")?"0.00":promedios.toma_decision.toFixed(2).toString();
+        document.getElementById("promedio_presicion").textContent=(promedios.presicion.toFixed(2).toString()==="Infinity")?"0.00":promedios.presicion.toFixed(2).toString();
+        document.getElementById("promedio_menejo_presion").textContent=(promedios.manejo_presion.toFixed(2).toString()==="Infinity")?"0.00":promedios.manejo_presion.toFixed(2).toString();
+        document.getElementById("promedio_reaccion").textContent=(promedios.reaccion.toFixed(2).toString()==="Infinity")?"0.00":promedios.reaccion.toFixed(2).toString();
+        document.getElementById("promedio_adaptacion").textContent=(promedios.adaptacion.toFixed(2).toString()==="Infinity")?"0.00":promedios.adaptacion.toFixed(2).toString();
+    
+    // validarCampoFormulario();
+}
+
+function rankingOrdenTest(){
+    // ordenar ranking de menor a mayor
+    let numero_ranking=1;
+    let total_jugadores=window.datos_test[window.tipo_test].jugadores_test.length;
+    let lista_jugadores =window.ranking_test_decision.slice();
+    let lista_ranking=[];
+    for(let contador=0;contador<window.datos_test[window.tipo_test].jugadores_test.length;contador++){
+        if(lista_jugadores.length===0){
+            break;
+        }
+        else{
+            let tmp={
+                id:0,
+                rank:0,
+                toma_decision:999999,
+                presicion:999999,
+                manejo_presion:999999,
+                reaccion:999999,
+                adaptacion:999999,
+            }
+            let posicion=0;
+            let posicion_eliminar=0;
+            for(let jugador of lista_jugadores){
+                let total_jugador=jugador.toma_decision+jugador.presicion+jugador.manejo_presion+jugador.reaccion+jugador.adaptacion;
+                let total_tmp=tmp.toma_decision+tmp.presicion+tmp.manejo_presion+tmp.reaccion+tmp.adaptacion;
+                if(total_jugador<=total_tmp){
+                    tmp=JSON.parse(JSON.stringify(jugador));
+                    posicion_eliminar=posicion;
+                }
+                posicion++;
+            }
+            tmp.rank=numero_ranking;
+            numero_ranking++;
+            lista_jugadores.splice(posicion_eliminar,1);
+            lista_ranking.push(tmp);
+        }
+    }
+    console.log("-->>>",lista_ranking);
+    return lista_ranking;
+}
+
+
+function promedioTestFormulario(){
+    let numeroDeJugadores=window.ranking_test_decision.length;
+    let toma_decision_total=0;
+    let presicion_total=0;
+    let manejo_presion_total=0;
+    let reaccion_total=0;
+    let adaptacion_total=0;
+    for(let jugador of window.ranking_test_decision){
+        toma_decision_total=toma_decision_total+jugador.toma_decision;
+        presicion_total=presicion_total+jugador.presicion;
+        manejo_presion_total=manejo_presion_total+jugador.manejo_presion;
+        reaccion_total=reaccion_total+jugador.reaccion;
+        adaptacion_total=adaptacion_total+jugador.adaptacion;
+    }
+    return {
+        toma_decision:toma_decision_total/numeroDeJugadores,
+        presicion:presicion_total/numeroDeJugadores,
+        manejo_presion:manejo_presion_total/numeroDeJugadores,
+        reaccion:reaccion_total/numeroDeJugadores,
+        adaptacion:adaptacion_total/numeroDeJugadores
+    };
+
+}
+
+function abrirModalAgregarJugadorTest(){
+    $("#modalAgregarJugadorTest").modal("show");
+}
+
+function cerrarModalAgregarJugadorTest(){
+    $("#modalAgregarJugadorTest").modal("hide");
+    $("#jugador_test").empty();
+    $("#contendor_jugadores_test").css("display","none");
+    $("#serie_test").val("null");
+}
+
+async function consultarJugadoresSerieAgregarTest(valor){
+    // consultar jugadores por la serie en base al tipo de test del formulario
+    if(valor!=="null"){
+        let serie=valor.split("_")[0],
+        sexo=valor.split("_")[1];
+        await $.ajax({
+            url: 'post/test_consultar_Jugadores_reaccion.php',
+            type: "post",
+            data:[
+                {name:"serie",value:serie},
+                {name:"sexo",value:sexo}
+            ],
+            success: function(respuesta) {
+                let json=JSON.parse(respuesta);
+                window.listaJugadores=JSON.parse(JSON.stringify(json.datos));
+                insertarJugadoresSelect(window.listaJugadores);
+                
+            },error: function(){// will fire when timeout is reached
+                // alert("errorXXXXX");
+            }, timeout: 10000 // sets timeout to 3 seconds
+        });
+    }
+    else{
+        $("#jugador_test").empty();
+        $("#contendor_jugadores_test").css("display","none");
+    }
+}
+
+function insertarJugadoresSelect(jugadores=[]){
+    $("#jugador_test").empty();
+    let listaJugadores=[{id:null,nombre:"Seleccione jugador"}];
+    if(jugadores.length>0){
+        for(let jugador of jugadores){
+            let nombre_jugador=jugador.nombre+" "+jugador.apellido1+" "+jugador.apellido2
+            listaJugadores.push({id:jugador.idfichaJugador,nombre:nombre_jugador});
+        }
+    }else{
+        listaJugadores[0].nombre="Sin Jugadores";
+    }
+    $("#contendor_jugadores_test").css("display","flex");
+    for(let optionJugador of listaJugadores){
+        $("#jugador_test").append("<option value='"+optionJugador.id+"'>"+optionJugador.nombre+"</option>");
+    }
+}
+
+function agregarJugadorTest(){
+    let jugadorSeleccionado=window.listaJugadores.filter(jugador => jugador.idfichaJugador===$("#jugador_test").val())[0];
+    agregarJugadorNuevoAlTest(jugadorSeleccionado);
+}
+
+function agregarJugadorNuevoAlTest(jugador){
+    let $indeces=document.querySelectorAll(".index_formulario_test");
+    let numero_fila=parseInt($indeces[$indeces.length-1].textContent)+1;
+    let plantilla='\
+        <div id="fila_formulario_test_'+jugador.idfichaJugador+'" class="panel_buscar" style="box-sizing:border-box;border:0;width:100%;height:34px;padding-top:2px;padding-bottom:2px;">\
+            <div class="index_formulario_test" style="box-sizing:border-box;border:0;width:2%;height:30px;float:left;font-weight: bold;/*border-right:1px solid red;*/line-height: 30px;font-size: 11px;text-align:center;">'+(numero_fila)+'</div>\
+            <div style="box-sizing:border-box;border:0;width:9%;height:30px;float:left;font-weight: bold;/*border-right:1px solid red;*/line-height: 30px;font-size: 11px;text-transform: Capitalize" class="ellipsis-text">\
+                <img src="flags/blank.gif" class="flag flag-'+jugador.nacionalidad1.toLowerCase()+'"/> '+obtenerInicialDelPosicion(window.lista_posiciones[parseInt(jugador.posicion)-1])+'\
+            </div>\
+            <div style="box-sizing:border-box;border:0;width:16%;height:30px;float:left;font-weight: bold;/*border-right:1px solid red;*/line-height: 30px;font-size: 11px;" >\
+                <div style="box-sizing:border-box;border:0;float:left;width:20%;height:30px;border-radius: 26px;overflow: hidden;border: 2px solid #555;" >\
+                    <img style="width:100%;height:32px" src="./foto_jugadores/'+jugador.idfichaJugador+'.png"/>\
+                </div>\
+                <div style="box-sizing:border-box;border:0;float:left;width:80%;height:30px;padding-left:5px;color:#555;font-weight: bold;line-height: 30px;text-transform: Capitalize" class="ellipsis-text">'+jugador.nombre+' '+jugador.apellido1+' '+jugador.apellido2+'</div>\
+            </div>\
+            <div style="box-sizing:border-box;border:0;width:13.6%;height:30px;float:left;font-weight: bold;/*border-right:1px solid red;*/line-height: 30px;font-size: 11px;padding-left:5px;padding-right:5px;">\
+                        <input style="box-sizing:border-box;width:100%;height:100%;border:1px solid #acacac;" type="text" name="array_velocidad[]"  class="campo_velocidad" id="toma_decision_'+jugador.idfichaJugador+'" data-id-jugador="'+jugador.idfichaJugador+'" onKeyup="sumarAlRankingTestOcular(this)"/>\
+                    </div>\
+                    <div style="box-sizing:border-box;border:0;width:13.6%;height:30px;float:left;font-weight: bold;/*border-right:1px solid red;*/line-height: 30px;font-size: 11px;padding-left:5px;padding-right:5px;">\
+                        <input style="box-sizing:border-box;width:100%;height:100%;border:1px solid #acacac;" type="text" name="array_velocidad[]"  class="campo_velocidad" id="presicion_'+jugador.idfichaJugador+'" data-id-jugador="'+jugador.idfichaJugador+'" onKeyup="sumarAlRankingTestOcular(this)"/>\
+                    </div>\
+                    <div style="box-sizing:border-box;border:0;width:13.6%;height:30px;float:left;font-weight: bold;/*border-right:1px solid red;*/line-height: 30px;font-size: 11px;padding-left:5px;padding-right:5px;">\
+                        <input style="box-sizing:border-box;width:100%;height:100%;border:1px solid #acacac;" type="text" name="array_velocidad[]"  class="campo_velocidad" id="manejo_presion_'+jugador.idfichaJugador+'" data-id-jugador="'+jugador.idfichaJugador+'" onKeyup="sumarAlRankingTestOcular(this)"/>\
+                    </div>\
+                    <div style="box-sizing:border-box;border:0;width:13.6%;height:30px;float:left;font-weight: bold;/*border-right:1px solid red;*/line-height: 30px;font-size: 11px;padding-left:5px;padding-right:5px;">\
+                        <input style="box-sizing:border-box;width:100%;height:100%;border:1px solid #acacac;" type="text" name="array_velocidad[]"  class="campo_velocidad" id="reaccion_'+jugador.idfichaJugador+'" data-id-jugador="'+jugador.idfichaJugador+'" onKeyup="sumarAlRankingTestOcular(this)"/>\
+                    </div>\
+                    <div style="box-sizing:border-box;border:0;width:13.6%;height:30px;float:left;font-weight: bold;/*border-right:1px solid red;*/line-height: 30px;font-size: 11px;padding-left:5px;padding-right:5px;">\
+                        <input style="box-sizing:border-box;width:100%;height:100%;border:1px solid #acacac;" type="text" name="array_velocidad[]"  class="campo_velocidad" id="adaptacion_'+jugador.idfichaJugador+'" data-id-jugador="'+jugador.idfichaJugador+'" onKeyup="sumarAlRankingTestOcular(this)"/>\
+                    </div>\
+            <div style="box-sizing:border-box;border:0;width:5%;height:30px;float:left;font-weight: bold;/*border-right:1px solid red;*/line-height: 30px;">\
+                <center>\
+                    <a class="boton_eliminar" id="'+jugador.idfichaJugador+'" onClick="eliminarFilaJugadorTest(this)">\
+                        <i class="icon-remove"></i>\
+                    </a>\
+                </center>\
+            </div>\
+        </div>';
+        $("#contenedor_fila_tabla_formulario_test").append(plantilla);
+        cerrarModalAgregarJugadorTest();
+}
+
+function eliminarFilaJugadorTest($boton){
+    // este codigo se encarga de eliminar los jugadores del test en el te encuentras
+    // actualiza el ranking
+    let id=$boton.id;
+    let $fila=document.getElementById("fila_formulario_test_"+id);
+    let $contenedorFilasTablaTest=document.getElementById("contenedor_fila_tabla_formulario_test");
+    let $contenedorIndex=$fila.children[0];
+    let numero_fila_removida=parseInt($contenedorIndex.textContent)
+
+    $contenedorFilasTablaTest.removeChild($fila);
+    let contador=0;
+    for(let jugador of window.datos_test[window.tipo_test].jugadores_test){
+        if(jugador.idfichaJugador===id){
+            window.datos_test[window.tipo_test].jugadores_test.splice(contador,1);
+        }
+        contador++;
+    }
+    let lista=window.ranking_test_decision;
+    let contador2=0;
+    for(let jugador of lista){
+        if(jugador.id===id){
+            lista.splice(contador2,1);
+        }
+        contador2++;
+    }
+    console.log("eliminando ->>>",lista);
+    let promedios=promedioTestFormulario();
+    document.getElementById("promedio_toma_decision").textContent=(promedios.toma_decision.toFixed(2).toString()==="Infinity")?"0.00":promedios.toma_decision.toFixed(2).toString();
+    document.getElementById("promedio_presicion").textContent=(promedios.presicion.toFixed(2).toString()==="Infinity")?"0.00":promedios.presicion.toFixed(2).toString();
+    document.getElementById("promedio_menejo_presion").textContent=(promedios.manejo_presion.toFixed(2).toString()==="Infinity")?"0.00":promedios.manejo_presion.toFixed(2).toString();
+    document.getElementById("promedio_reaccion").textContent=(promedios.reaccion.toFixed(2).toString()==="Infinity")?"0.00":promedios.reaccion.toFixed(2).toString();
+    document.getElementById("promedio_adaptacion").textContent=(promedios.adaptacion.toFixed(2).toString()==="Infinity")?"0.00":promedios.adaptacion.toFixed(2).toString();
+    reordenarListaFormularioTestOcular(numero_fila_removida);
+    // se encarga de actuaizar el ranking despues de eliminar a un jugador
+    // for(let jugador of rankingOrdenTest()){
+    //         // console.log("->>",jugador)
+    //         document.getElementById("ranking_test_formulario_"+jugador.id).textContent=jugador.rank.toString();
+    //     }
+    // validarCampoFormulario();
+}
+
+function reordenarListaFormularioTestOcular(numero){
+    $indicesTestOcularFormulario=document.querySelectorAll(".index_formulario_test");
+    for(let indice of $indicesTestOcularFormulario){
+        if(numero<parseInt(indice.textContent)){
+            indice.textContent=(parseInt(indice.textContent)-1).toString();
+        }
+    }
+}
+
+
+function mostrarModalEnviarDatosTest(){
+    if(!window.datos_test[window.tipo_test].tipo_fomrulario){
+        $('#mensaje_agregar_DescargarBoleta').html('<h5 style="color:black;">¿Estás seguro que quieres agregar un nuevo test decisiones?</h5><br><img src="../config/agregar_archivo.png">');
+    }
+    else{
+        $('#mensaje_agregar_DescargarBoleta').html('<h5 style="color:black;">¿Estás seguro que quieres editar este test decisiones?</h5><br><img src="../config/agregar_archivo.png">');
+    }
+    $("#contendor_botones_modal").empty();
+    $("#contendor_botones_modal").html(
+        '<button type="button" class="btn btn-default boton_modal" onClick="cerrarModalFormularioEnviarDatosTest()"  id="boton_cerrar_alerta" style="margin-right:20px; border-radius:5px;"><span class="icon"><i class="icon-remove"></i></span> No</button>'
+        +'<button type="button" id="guardar" class="btn btn-default boton_modal " onClick="enviarDatosTest()" ng-click="desactivarBotonAgregarBoleta()" style="border-radius:5px;"><span class="icon"><i class="icon-ok"></i></span> Si</button> ');
+    $("#modalFormularioTestOcular").modal("show");
+}
+
+function cerrarModalFormularioEnviarDatosTest(){
+    $("#modalFormularioTestOcular").modal("hide");
+}
+
+function enviarDatosTest(){
+    if(!window.datos_test[window.tipo_test].tipo_fomrulario){
+        
+		$('#mensaje_agregar_DescargarBoleta').html('<h5><i class="icon-spinner icon-spin icon-large"></i> Agregando test ...</h5><br><img src="../config/agregar_archivo.png">');
+	}else{
+        $('#mensaje_agregar_DescargarBoleta').html('<h5><i class="icon-spinner icon-spin icon-large"></i> Editando test ...</h5><br><img src="../config/agregar_archivo.png">');
+	}
+    let expresion_fecha=/-/g;
+    let datosFormulario=[];
+   
+
+    let lista_ranking=rankingOrdenTest();
+    // obteniendo los id de los jugadores wue no estan en el ranking en pocas palabras los
+    // que no tiene nigun tiempo
+    let listIdJugadoresFueraDelRank=[];
+    for(let jugador of window.datos_test[window.tipo_test].jugadores_test){
+        let estado=false;
+        let idJugador=null;
+        for(let {id} of lista_ranking){
+            if(jugador.idfichaJugador===id){
+                estado=true;
+            }
+        }
+        if(!estado){
+            listIdJugadoresFueraDelRank.push(jugador.idfichaJugador)
+        }
+    }
+
+    for(let idJugador of listIdJugadoresFueraDelRank){
+        lista_ranking.push({
+            id: idJugador,
+            rank: 0,
+            toma_decision:0,
+            presicion:0,
+            manejo_presion:0,
+            reaccion:0,
+            adaptacion:0
+        })
+    }
+
+    // for(let contador=0;contador<lista_ranking.length;contador++){
+    //     let total_tiempo=lista_ranking[contador].tiempo_1+lista_ranking[contador].tiempo_2+lista_ranking[contador].tiempo_3+lista_ranking[contador].tiempo_4;
+    //     if(total_tiempo===0) lista_ranking[contador].rank=0;
+    //     lista_ranking[contador].comentario=document.getElementById("comentario_test_"+lista_ranking[contador].id).value;
+    // }
+    
+
+    // obteniendo datos detalla      dos del test
+    // obteniendo ids jugadores 
+    for(let {id} of lista_ranking){
+        datosFormulario.push({name:"array_idJugador[]",value:id});
+    }
+    // obteniendo rank jugadores 
+    // for(let {rank} of lista_ranking){
+    //     datosFormulario.push({name:"array_ranking[]",value:rank});
+    // }
+    // obteniendo tiempo 1 jugadores 
+    for(let {toma_decision} of lista_ranking){
+        datosFormulario.push({name:"array_toma_decision[]",value:toma_decision});
+    }
+    // obteniendo tiempo 2 jugadores 
+    for(let {presicion} of lista_ranking){
+        datosFormulario.push({name:"array_presicion[]",value:presicion});
+    }
+    // obteniendo tiempo 3 jugadores 
+    for(let {manejo_presion} of lista_ranking){
+        datosFormulario.push({name:"array_manejo_presion[]",value:manejo_presion});
+    }
+    // obteniendo tiempo 4 jugadores 
+    for(let {reaccion} of lista_ranking){
+        datosFormulario.push({name:"array_reaccion[]",value:reaccion});
+    }
+    // obteniendo tiempo 4 jugadores 
+    for(let {adaptacion} of lista_ranking){
+        datosFormulario.push({name:"array_adaptacion[]",value:adaptacion});
+    }
+    // obteniendo comentario jugadores 
+
+     // Obteniendo datos generales test
+    datosFormulario.push({name:"tipo_formulario",value:window.datos_test[window.tipo_test].tipo_fomrulario});
+    datosFormulario.push({name:"idtest_decision",value: window.idtest_decision});
+    datosFormulario.push({name:"fecha_evaluacion_test",value:$("#fecha_evaluacion_test").val()});
+    datosFormulario.push({name:"ano_test",value:$("#fecha_evaluacion_test").val().split(expresion_fecha)[0]});
+    datosFormulario.push({name:"observacion_test",value:$("#observacion_test").val()});
+    datosFormulario.push({name:"nombre_usuario_software",value:window.nombre_usuario_software});
+    datosFormulario.push({name:"numeros_jugadores_evaluados_test",value:lista_ranking.length});
+    datosFormulario.push({name:"promedio_toma_decision",value:document.getElementById("promedio_toma_decision").textContent});
+    datosFormulario.push({name:"promedio_presicion",value:document.getElementById("promedio_presicion").textContent});
+    datosFormulario.push({name:"promedio_menejo_presion",value:document.getElementById("promedio_menejo_presion").textContent});
+    datosFormulario.push({name:"promedio_reaccion",value:document.getElementById("promedio_reaccion").textContent});
+    datosFormulario.push({name:"promedio_adaptacion",value:document.getElementById("promedio_adaptacion").textContent});
+    console.log(datosFormulario);
+
+    $.ajax({
+            url: "post/test_guardar_test_decision.php",
+            type: "post",
+            data:datosFormulario,
+            success: function(respuesta) {
+                var json=JSON.parse(respuesta);
+                // console.log(json);
+                $("#modalFormularioTestOcular").modal("hide");
+                $("#vista_test_formulario").hide(500);
+                $("#vista_test").show(500);
+                consultarTests($("#filtro_ano_test").val(),$("#filtro_mes_test").val());
+                
+            },error: function(){// will fire when timeout is reached
+                // $('#error_conexion').show();
+            }, timeout: 10000 // sets timeout to 3 seconds
+        });
 
 }
 

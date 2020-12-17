@@ -1,5 +1,5 @@
 <?PHP
-include("../../bd/test_desicion_DB.php");
+include("../../bd/test_decision_DB.php");
 $fecha=date_futbolJoven();
 $fecha_cortada=explode("-",$fecha);
 $respuesta=["ano_actual"=>$fecha_cortada[0]];
