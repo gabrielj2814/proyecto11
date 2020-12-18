@@ -190,7 +190,7 @@ function actualizarTestReaccion($POST){
 		promedio_toma_desicion='".$POST["promedio_toma_decision"]."',
 		promedio_presicion='".$POST["promedio_presicion"]."',
 		promedio_menejo_presion='".$POST["promedio_menejo_presion"]."',
-		promedio_reaccion='".$POST["promedio_reaccion"]."',,
+		promedio_reaccion='".$POST["promedio_reaccion"]."',
 		promedio_adaptacion='".$POST["promedio_adaptacion"]."',
 		numero_jugadores_evaluados='".$POST["numeros_jugadores_evaluados_test"]."',
 		ano_test='".$POST["ano_test"]."',
@@ -274,6 +274,7 @@ function eliminarTest($id){
 	$SQL="DELETE FROM test_decision WHERE idtestdecision=$id";
 	$link->query($SQL);
 	$link->close();
+	return ["estado" => true];
 	
 }
 
