@@ -138,9 +138,9 @@ function operacionTestDecision($POST){
 	if($POST["tipo_formulario"]==="false"){
         return registrarTestDecision($POST);
     }
-    // else{
-    //     return actualizarTestReaccion($POST);
-    // }
+    else{
+        return actualizarTestReaccion($POST);
+    }
 }
 
 function registrarTestDecision($POST){
@@ -179,6 +179,25 @@ function registrarTestDecision($POST){
     $id=$link->insert_id;
     $link->close();
     return ($id!==0)?["respuesta" => true,"id" => $id]:["respuesta" => false,"id" => 0];
+}
+
+function actualizarTestReaccion($POST){
+	include("conexion.php");
+	$fecha=datetime_futbolJoven();
+	$SQL="UPDATE test_decision SET 
+		fecha_evaluacion_test='".$POST["fecha_evaluacion_test"]."',
+		observacion_test='".$POST["observacion_test"]."',
+		promedio_toma_desicion='".$POST["promedio_toma_decision"]."',
+		promedio_presicion='".$POST["promedio_presicion"]."',
+		promedio_menejo_presion='".$POST["promedio_menejo_presion"]."',
+		promedio_reaccion='".$POST["promedio_reaccion"]."',,
+		promedio_adaptacion='".$POST["promedio_adaptacion"]."',
+		numero_jugadores_evaluados=,
+		ano_test=,
+		fecha_software=,
+		nombre_usuario_software=
+	
+		WHERE idtestdecision=  ";
 }
 
 function registrarDetallesTestDecision($idReaccion,$idJugador,$descision,$presicion,$presion,$reaccion,$adaptacion,$nombre_usuario_software){
@@ -242,6 +261,21 @@ function consultarJugadorTestDetalle($id){
     }
     $link->close();
     return (sizeof($jugadores_data)>0)?$jugadores_data[0]:[];
+}
+
+function eliminarTest($id){
+	include("conexion.php");
+	$SQL="DELETE FROM test_decision WHERE idtestdecision=$id";
+	$link->query($SQL);
+	$link->close();
+	
+}
+
+function eliminarDetalleTest($id){
+	include("conexion.php");
+	$SQL="DELETE FROM detalle_test_desicion WHERE idtestdecision=$id";
+	$link->query($SQL);
+	$link->close();
 }
 
 
