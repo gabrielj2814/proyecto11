@@ -1014,6 +1014,49 @@ else{
                         background: #f1f7ff;
                         }
                                             </style>
+                    <style>
+                        /* Tooltip container */
+                        .tooltip-customized {
+                            position: relative;
+                            display: inline-block;
+                        }
+
+                        /* Tooltip text */
+                        .tooltip-customized .tooltiptext {
+                        visibility: hidden;
+                        width: 120px;
+                        background-color: black;
+                        color: #fff;
+                        text-align: center;
+                        padding: 5px 5px;
+                        border-radius: 6px;
+                        
+                        /* Position the tooltip text - see examples below! */
+                        position: absolute;
+                        z-index: 1;
+
+                        /* /Top/ */
+                        bottom: 100%;
+                        left: 50%;
+                        margin-left: -60px; /* Use half of the width (120/2 = 60), to center the tooltip */  
+                        }
+
+                        /* Show the tooltip text when you mouse over the tooltip container */
+                        .tooltip-customized:hover .tooltiptext {
+                        visibility: visible;
+                        }
+
+                        .tooltip-customized .tooltiptext::after {
+                        content: " ";
+                        position: absolute;
+                        top: 100%; /* At the bottom of the tooltip */
+                        left: 50%;
+                        margin-left: -5px;
+                        border-width: 5px;
+                        border-style: solid;
+                        border-color: black transparent transparent transparent;
+                        }
+                    </style>
                     
                     <link rel="stylesheet" href="flags/flags.css" />
                     <link rel="stylesheet" href="flags/flags.min.css" />
@@ -1427,9 +1470,15 @@ app.controller("controlador_1",['$scope',function($scope){
                                     <div style="box-sizing:border-box;border:0;width:6%;height:30px;float:left;color:#fff;font-weight: 600;/*border-right:1px solid red;*/line-height: 30px;font-size: 12px;padding-left:5px;">Año</div>
                                     <div style="box-sizing:border-box;border:0;width:10%;height:30px;float:left;color:#fff;font-weight: 600;/*border-right:1px solid red;*/line-height: 30px;font-size: 12px;padding-left:5px;">N° informe</div>
                                     <div style="box-sizing:border-box;border:0;width:10%;height:30px;float:left;color:#fff;font-weight: 600;/*border-right:1px solid red;*/line-height: 30px;font-size: 12px;text-align:center">Evaluados</div>
-                                    <div style="box-sizing:border-box;border:0;width:9.6%;height:30px;float:left;color:#fff;font-weight: 600;/*border-right:1px solid red;*/text-align:center;line-height: 30px;font-size: 12px;padding-left:5px;">decisiones</div>
+                                    <div style="box-sizing:border-box;border:0;width:9.6%;height:30px;float:left;color:#fff;font-weight: 600;/*border-right:1px solid red;*/text-align:center;line-height: 30px;font-size: 12px;padding-left:5px;" class="tooltip-customized">
+                                        <span class="tooltiptext">toma de decisiones</span>
+                                        decisiones
+                                    </div>
                                     <div style="box-sizing:border-box;border:0;width:9.6%;height:30px;float:left;color:#fff;font-weight: 600;/*border-right:1px solid red;*/text-align:center;line-height: 30px;font-size: 12px;padding-left:5px;">Precisión</div>
-                                    <div style="box-sizing:border-box;border:0;width:9.6%;height:30px;float:left;color:#fff;font-weight: 600;/*border-right:1px solid red;*/text-align:center;line-height: 30px;font-size: 12px;padding-left:5px;">presión</div>
+                                    <div style="box-sizing:border-box;border:0;width:9.6%;height:30px;float:left;color:#fff;font-weight: 600;/*border-right:1px solid red;*/text-align:center;line-height: 30px;font-size: 12px;padding-left:5px;"  class="tooltip-customized">
+                                        <span class="tooltiptext">manejo de la presión</span>
+                                        presión
+                                    </div>
                                     <div style="box-sizing:border-box;border:0;width:9.6%;height:30px;float:left;color:#fff;font-weight: 600;/*border-right:1px solid red;*/text-align:center;line-height: 30px;font-size: 12px;padding-left:5px;">Reacción</div>
                                     <div style="box-sizing:border-box;border:0;width:9.6%;height:30px;float:left;color:#fff;font-weight: 600;/*border-right:1px solid red;*/text-align:center;line-height: 30px;font-size: 12px;padding-left:5px;">Adaptabilidad</div>
                                     <div style="box-sizing:border-box;border:0;width:4%;height:30px;float:left;color:#fff;font-weight: 600;/*border-right:1px solid red;*/line-height:30px;"></div>
@@ -1573,9 +1622,15 @@ app.controller("controlador_1",['$scope',function($scope){
                                     <div style="box-sizing:border-box;border:0;width:9%;height:30px;float:left;color:#fff;font-weight: 800;/*border-right:1px solid red;*/line-height: 30px;font-size: 12px;">POSICION</div>
 
                                     <div style="box-sizing:border-box;border:0;width:16%;height:30px;float:left;color:#fff;font-weight: 800;/*border-right:1px solid red;*/line-height: 30px;font-size: 12px;">NOMBRE</div>
-                                    <div style="box-sizing:border-box;border:0;width:13.6%;height:30px;float:left;color:#fff;font-weight: 800;/*border-right:1px solid red;*/line-height: 30px;font-size: 12px;text-align:center;">decisiones</div>
-                                    <div style="box-sizing:border-box;border:0;width:13.6%;height:30px;float:left;color:#fff;font-weight: 800;/*border-right:1px solid red;*/line-height: 30px;font-size: 12px;text-align:center;">Precision</div>
-                                    <div style="box-sizing:border-box;border:0;width:13.6%;height:30px;float:left;color:#fff;font-weight: 800;/*border-right:1px solid red;*/line-height: 30px;font-size: 12px;text-align:center;">presion</div>
+                                    <div style="box-sizing:border-box;border:0;width:13.6%;height:30px;float:left;color:#fff;font-weight: 800;/*border-right:1px solid red;*/line-height: 30px;font-size: 12px;text-align:center;" class="tooltip-customized">
+                                        <span class="tooltiptext">toma de decisiones</span>
+                                        decisiones
+                                    </div>
+                                    <div style="box-sizing:border-box;border:0;width:13.6%;height:30px;float:left;color:#fff;font-weight: 800;/*border-right:1px solid red;*/line-height: 30px;font-size: 12px;text-align:center;">Precisión</div>
+                                    <div style="box-sizing:border-box;border:0;width:13.6%;height:30px;float:left;color:#fff;font-weight: 800;/*border-right:1px solid red;*/line-height: 30px;font-size: 12px;text-align:center;" class="tooltip-customized">
+                                        <span class="tooltiptext">manejo de la presión</span>
+                                        presión
+                                    </div>
                                     <div style="box-sizing:border-box;border:0;width:13.6%;height:30px;float:left;color:#fff;font-weight: 800;/*border-right:1px solid red;*/line-height: 30px;font-size: 12px;text-align:center;">Reaccion</div>
                                     <div style="box-sizing:border-box;border:0;width:13.6%;height:30px;float:left;color:#fff;font-weight: 800;/*border-right:1px solid red;*/line-height: 30px;font-size: 12px;text-align:center;">Adaptabilidad</div>
                                     <div style="box-sizing:border-box;border:0;width:5%;height:30px;float:left;color:#fff;font-weight: 800;/*border-right:1px solid red;*/"></div>
