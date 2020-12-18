@@ -192,12 +192,18 @@ function actualizarTestReaccion($POST){
 		promedio_menejo_presion='".$POST["promedio_menejo_presion"]."',
 		promedio_reaccion='".$POST["promedio_reaccion"]."',,
 		promedio_adaptacion='".$POST["promedio_adaptacion"]."',
-		numero_jugadores_evaluados=,
-		ano_test=,
-		fecha_software=,
-		nombre_usuario_software=
+		numero_jugadores_evaluados='".$POST["numeros_jugadores_evaluados_test"]."',
+		ano_test='".$POST["ano_test"]."',
+		fecha_software='$fecha',
+		nombre_usuario_software='".$POST["nombre_usuario_software"]."'
 	
-		WHERE idtestdecision=  ";
+		WHERE idtestdecision=".$POST["idtest_decision"].";";
+		
+		$link->query($SQL);
+		$id=$POST["idtest_decision"];
+		$link->close();
+		eliminarDetalleTest($id);
+		return ($id!==0)?["respuesta" => true,"id" => $id]:["respuesta" => false,"id" => 0];
 }
 
 function registrarDetallesTestDecision($idReaccion,$idJugador,$descision,$presicion,$presion,$reaccion,$adaptacion,$nombre_usuario_software){
