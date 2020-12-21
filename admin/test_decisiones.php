@@ -2343,7 +2343,7 @@ function insertarJugadoresSelect(jugadores=[]){
     let listaJugadores=[{id:null,nombre:"Seleccione jugador"}];
     if(jugadores.length>0){
         for(let jugador of jugadores){
-            let nombre_jugador=jugador.nombre+" "+jugador.apellido1+" "+jugador.apellido2
+            let nombre_jugador=jugador.nombre+" "+jugador.apellido1+" "+jugador.apellido2;
             listaJugadores.push({id:jugador.idfichaJugador,nombre:nombre_jugador});
         }
     }else{
@@ -2361,7 +2361,22 @@ function agregarJugadorTest(){
 }
 
 function agregarJugadorNuevoAlTest(jugador){
-    let $indeces=document.querySelectorAll(".index_formulario_test");
+    console.log(window.datos_test[window.tipo_test]);
+    let estado=false;
+
+    for(let jugadorBusqueda of window.datos_test[window.tipo_test].jugadores_test){
+
+        if(jugador.idfichaJugador===jugadorBusqueda.idfichaJugador){
+            estado=true;
+
+        }
+
+
+    }
+
+    if(!estado){
+
+        let $indeces=document.querySelectorAll(".index_formulario_test");
     let numero_fila=parseInt($indeces[$indeces.length-1].textContent)+1;
     let plantilla='\
         <div id="fila_formulario_test_'+jugador.idfichaJugador+'" class="panel_buscar" style="box-sizing:border-box;border:0;width:100%;height:34px;padding-top:2px;padding-bottom:2px;">\
@@ -2398,8 +2413,17 @@ function agregarJugadorNuevoAlTest(jugador){
                 </center>\
             </div>\
         </div>';
+        window.datos_test[window.tipo_test].jugadores_test.push(jugador);
         $("#contenedor_fila_tabla_formulario_test").append(plantilla);
-        cerrarModalAgregarJugadorTest();
+        
+        
+    }
+    cerrarModalAgregarJugadorTest();
+
+
+
+
+    
 }
 
 function eliminarFilaJugadorTest($boton){
@@ -2409,7 +2433,7 @@ function eliminarFilaJugadorTest($boton){
     let $fila=document.getElementById("fila_formulario_test_"+id);
     let $contenedorFilasTablaTest=document.getElementById("contenedor_fila_tabla_formulario_test");
     let $contenedorIndex=$fila.children[0];
-    let numero_fila_removida=parseInt($contenedorIndex.textContent)
+    let numero_fila_removida=parseInt($contenedorIndex.textContent);
 
     $contenedorFilasTablaTest.removeChild($fila);
     let contador=0;
@@ -2495,7 +2519,7 @@ function enviarDatosTest(){
             }
         }
         if(!estado){
-            listIdJugadoresFueraDelRank.push(jugador.idfichaJugador)
+            listIdJugadoresFueraDelRank.push(jugador.idfichaJugador);
         }
     }
 
@@ -2508,7 +2532,7 @@ function enviarDatosTest(){
             manejo_presion:0,
             reaccion:0,
             adaptacion:0
-        })
+        });
     }
 
     // for(let contador=0;contador<lista_ranking.length;contador++){
