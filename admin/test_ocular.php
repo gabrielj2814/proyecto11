@@ -1868,8 +1868,8 @@ function validarCampoFormulario(){
     }
 }
 
-async function consultarAnoActual(){
-    await $.ajax({
+function consultarAnoActual(){
+    $.ajax({
         url: 'post/test_año_actual.php',
         type: "post",
         data:[],
@@ -1946,21 +1946,27 @@ function botonVolverAInicio($botonVolver){
 }
 
 
-async function cargarVentanaInicioTest(){
-    await consultarAnoActual();
+function cargarVentanaInicioTest(){
+    // alert("hlo")
+    consultarAnoActual();
     let mesNumero=obtenerMesNumero();
     window.tipo_test="ocular";
     insertarOptionSelectFiltroTestOcular();
     $("#filtro_mes_test_ocular").val(mesNumero);
-    await consultarTestsOculares($("#filtro_ano_test_ocular").val(),$("#filtro_mes_test_ocular").val());
+    setTimeout(() => {
+        // alert("hola")
+        consultarTestsOculares($("#filtro_ano_test_ocular").val(),$("#filtro_mes_test_ocular").val());
+        
+    },3000);
+
 }
 
-async function volverInicioModuloTest($botonCerrarFormularioTest){
+function volverInicioModuloTest($botonCerrarFormularioTest){
     $("#vista_test_formulario_ocular").hide(500);
     $("#vista_test_ocular").show(500);
     insertarOptionSelectFiltroTestOcular();
     $("#filtro_mes_test_ocular").val("01");
-    await consultarTestsOculares($("#filtro_ano_test_ocular").val(),$("#filtro_mes_test_ocular").val());
+    consultarTestsOculares($("#filtro_ano_test_ocular").val(),$("#filtro_mes_test_ocular").val());
 }
 
 function abrirFormularioTest(){
@@ -2008,12 +2014,12 @@ function formularioTestOcularEditar(indice){
 
 }
 
-async function consultarJugadoresSerie(valor){
+function consultarJugadoresSerie(valor){
     // consultar jugadores por la serie en base al tipo de test del formulario
     let serie=valor.split("_")[0],
     sexo=valor.split("_")[1];
     window.datos_test[window.tipo_test].jugadores_test=[];
-    await $.ajax({
+    $.ajax({
         url: 'post/test_consultar_Jugadores.php',
         type: "post",
         data:[
@@ -2154,12 +2160,12 @@ function agregarJugadorNuevoAlTestOcular(jugador){
 }
 
 
-async function consultarJugadoresSerieAgregarTestOcular(valor){
+function consultarJugadoresSerieAgregarTestOcular(valor){
     // consultar jugadores por la serie en base al tipo de test del formulario
     if(valor!=="null"){
         let serie=valor.split("_")[0],
         sexo=valor.split("_")[1];
-        await $.ajax({
+        $.ajax({
             url: 'post/test_consultar_Jugadores.php',
             type: "post",
             data:[
@@ -2218,10 +2224,10 @@ function fechaTestEvaluacionOcular(){
 }
 
 
-async function consultarTestsOculares(ano="2020",mes="01"){
+function consultarTestsOculares(ano="2020",mes="01"){
     $("#contenedor_fila_tabla_inicio_test_ocular").empty();
     window.datos_test[window.tipo_test].lista_inicio_test=[];
-    await $.ajax({
+    $.ajax({
         url: 'post/test_consultar_test_ocular_año_mes.php',
         type: "post",
         data:[
@@ -2239,8 +2245,8 @@ async function consultarTestsOculares(ano="2020",mes="01"){
     });
 }
 
-async function filtrarTestOcular (){
-    await consultarTestsOculares($("#filtro_ano_test_ocular").val(),$("#filtro_mes_test_ocular").val());
+function filtrarTestOcular (){
+    consultarTestsOculares($("#filtro_ano_test_ocular").val(),$("#filtro_mes_test_ocular").val());
 }
 
 function insertarFilaInicioTestOculares(tests=[]){
