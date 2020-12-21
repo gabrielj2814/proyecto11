@@ -1754,17 +1754,23 @@ var idtest_decision=null;
 </script>
 <script>
 
-async function cargarVentanaInicioTest(){
-    await consultarAnoActual();
+function cargarVentanaInicioTest(){
+    consultarAnoActual();
     let mesNumero=obtenerMesNumero();
     window.tipo_test="decisiones";
     insertarOptionSelectFiltroTest();
     $("#filtro_mes_test").val(mesNumero);
-    await consultarTests($("#filtro_ano_test").val(),$("#filtro_mes_test").val());
+    
+    setTimeout(() => {
+        // alert("hola")
+        consultarTests($("#filtro_ano_test").val(),$("#filtro_mes_test").val());
+        
+    },3000);
+    
 }
 
-async function consultarAnoActual(){
-    await $.ajax({
+function consultarAnoActual(){
+    $.ajax({
         url: 'post/test_año_actual_test_decision.php',
         type: "post",
         data:[],
@@ -1787,15 +1793,15 @@ function insertarOptionSelectFiltroTest(){
     document.getElementById("filtro_ano_test").innerHTML=str_list_option;
 }
 
-async function filtrarTest (){
-    await consultarTests($("#filtro_ano_test").val(),$("#filtro_mes_test").val());
+function filtrarTest (){
+    consultarTests($("#filtro_ano_test").val(),$("#filtro_mes_test").val());
 }
 
 
-async function consultarTests(ano="2020",mes="01"){
+function consultarTests(ano="2020",mes="01"){
     $("#contenedor_fila_tabla_inicio_test").empty();
     window.datos_test[window.tipo_test].lista_inicio_test=[];
-    await $.ajax({
+    $.ajax({
         url: 'post/test_consultar_test_decision_año_mes.php',
         type: "post",
         data:[
@@ -1973,7 +1979,7 @@ function insertarFilaJugadoresTestEditar(detallesTest=[]){
                 let jugador=detalle.infoJugador;
                 let plantilla='\
                     <div id="fila_formulario_test_ocular_'+jugador.idfichaJugador+'" class="panel_buscar" style="box-sizing:border-box;border:0;width:100%;height:34px;padding-top:2px;padding-bottom:2px;">\
-                        <div class="index_formulario_test_ocular" style="box-sizing:border-box;border:0;width:2%;height:30px;float:left;font-weight: bold;/*border-right:1px solid red;*/line-height: 30px;font-size: 11px;text-align:center;">'+(contador+1)+'</div>\
+                        <div class="index_formulario_test" style="box-sizing:border-box;border:0;width:2%;height:30px;float:left;font-weight: bold;/*border-right:1px solid red;*/line-height: 30px;font-size: 11px;text-align:center;">'+(contador+1)+'</div>\
                         <div style="box-sizing:border-box;border:0;width:9%;height:30px;float:left;font-weight: bold;/*border-right:1px solid red;*/line-height: 30px;font-size: 11px;text-transform: Capitalize" class="ellipsis-text">\
                             <img src="flags/blank.gif" class="flag flag-'+jugador.nacionalidad1.toLowerCase()+'"/> '+obtenerInicialDelPosicion(lista_posiciones[parseInt(jugador.posicion)-1])+'\
                         </div>\
@@ -2064,21 +2070,21 @@ function obtenerMesNumero(){
         return lista_meses[fechaDate.getMonth()];
 }
 
-async function volverInicioModuloTest($botonCerrarFormularioTest){
+function volverInicioModuloTest($botonCerrarFormularioTest){
     $("#vista_test_formulario").hide(500);
     $("#vista_test").show(500);
     insertarOptionSelectFiltroTest();
     $("#filtro_mes_test").val("01");
-    await consultarTests($("#filtro_ano_test").val(),$("#filtro_mes_test").val());
+    consultarTests($("#filtro_ano_test").val(),$("#filtro_mes_test").val());
 }
 
 
-async function consultarJugadoresSerie(valor){
+function consultarJugadoresSerie(valor){
     // consultar jugadores por la serie en base al tipo de test del formulario
     let serie=valor.split("_")[0],
     sexo=valor.split("_")[1];
     window.datos_test[window.tipo_test].jugadores_test=[];
-    await $.ajax({
+    $.ajax({
         url: 'post/test_consultar_Jugadores_decision.php',
         type: "post",
         data:[
@@ -2310,12 +2316,12 @@ function cerrarModalAgregarJugadorTest(){
     $("#serie_test").val("null");
 }
 
-async function consultarJugadoresSerieAgregarTest(valor){
+function consultarJugadoresSerieAgregarTest(valor){
     // consultar jugadores por la serie en base al tipo de test del formulario
     if(valor!=="null"){
         let serie=valor.split("_")[0],
         sexo=valor.split("_")[1];
-        await $.ajax({
+        $.ajax({
             url: 'post/test_consultar_Jugadores_reaccion.php',
             type: "post",
             data:[
@@ -2377,44 +2383,44 @@ function agregarJugadorNuevoAlTest(jugador){
     if(!estado){
 
         let $indeces=document.querySelectorAll(".index_formulario_test");
-    let numero_fila=parseInt($indeces[$indeces.length-1].textContent)+1;
-    let plantilla='\
-        <div id="fila_formulario_test_'+jugador.idfichaJugador+'" class="panel_buscar" style="box-sizing:border-box;border:0;width:100%;height:34px;padding-top:2px;padding-bottom:2px;">\
-            <div class="index_formulario_test" style="box-sizing:border-box;border:0;width:2%;height:30px;float:left;font-weight: bold;/*border-right:1px solid red;*/line-height: 30px;font-size: 11px;text-align:center;">'+(numero_fila)+'</div>\
-            <div style="box-sizing:border-box;border:0;width:9%;height:30px;float:left;font-weight: bold;/*border-right:1px solid red;*/line-height: 30px;font-size: 11px;text-transform: Capitalize" class="ellipsis-text">\
-                <img src="flags/blank.gif" class="flag flag-'+jugador.nacionalidad1.toLowerCase()+'"/> '+obtenerInicialDelPosicion(window.lista_posiciones[parseInt(jugador.posicion)-1])+'\
-            </div>\
-            <div style="box-sizing:border-box;border:0;width:16%;height:30px;float:left;font-weight: bold;/*border-right:1px solid red;*/line-height: 30px;font-size: 11px;" >\
-                <div style="box-sizing:border-box;border:0;float:left;width:20%;height:30px;border-radius: 26px;overflow: hidden;border: 2px solid #555;" >\
-                    <img style="width:100%;height:32px" src="./foto_jugadores/'+jugador.idfichaJugador+'.png"/>\
+        let numero_fila=parseInt($indeces[$indeces.length-1].textContent)+1;
+        let plantilla='\
+            <div id="fila_formulario_test_'+jugador.idfichaJugador+'" class="panel_buscar" style="box-sizing:border-box;border:0;width:100%;height:34px;padding-top:2px;padding-bottom:2px;">\
+                <div class="index_formulario_test" style="box-sizing:border-box;border:0;width:2%;height:30px;float:left;font-weight: bold;/*border-right:1px solid red;*/line-height: 30px;font-size: 11px;text-align:center;">'+(numero_fila)+'</div>\
+                <div style="box-sizing:border-box;border:0;width:9%;height:30px;float:left;font-weight: bold;/*border-right:1px solid red;*/line-height: 30px;font-size: 11px;text-transform: Capitalize" class="ellipsis-text">\
+                    <img src="flags/blank.gif" class="flag flag-'+jugador.nacionalidad1.toLowerCase()+'"/> '+obtenerInicialDelPosicion(window.lista_posiciones[parseInt(jugador.posicion)-1])+'\
                 </div>\
-                <div style="box-sizing:border-box;border:0;float:left;width:80%;height:30px;padding-left:5px;color:#555;font-weight: bold;line-height: 30px;text-transform: Capitalize" class="ellipsis-text">'+jugador.nombre+' '+jugador.apellido1+' '+jugador.apellido2+'</div>\
-            </div>\
-            <div style="box-sizing:border-box;border:0;width:13.6%;height:30px;float:left;font-weight: bold;/*border-right:1px solid red;*/line-height: 30px;font-size: 11px;padding-left:5px;padding-right:5px;">\
-                        <input style="box-sizing:border-box;width:100%;height:100%;border:1px solid #acacac;" type="text" name="array_velocidad[]"  class="campo_velocidad" id="toma_decision_'+jugador.idfichaJugador+'" data-id-jugador="'+jugador.idfichaJugador+'" onKeyup="sumarAlRankingTestOcular(this)"/>\
+                <div style="box-sizing:border-box;border:0;width:16%;height:30px;float:left;font-weight: bold;/*border-right:1px solid red;*/line-height: 30px;font-size: 11px;" >\
+                    <div style="box-sizing:border-box;border:0;float:left;width:20%;height:30px;border-radius: 26px;overflow: hidden;border: 2px solid #555;" >\
+                        <img style="width:100%;height:32px" src="./foto_jugadores/'+jugador.idfichaJugador+'.png"/>\
                     </div>\
-                    <div style="box-sizing:border-box;border:0;width:13.6%;height:30px;float:left;font-weight: bold;/*border-right:1px solid red;*/line-height: 30px;font-size: 11px;padding-left:5px;padding-right:5px;">\
-                        <input style="box-sizing:border-box;width:100%;height:100%;border:1px solid #acacac;" type="text" name="array_velocidad[]"  class="campo_velocidad" id="presicion_'+jugador.idfichaJugador+'" data-id-jugador="'+jugador.idfichaJugador+'" onKeyup="sumarAlRankingTestOcular(this)"/>\
-                    </div>\
-                    <div style="box-sizing:border-box;border:0;width:13.6%;height:30px;float:left;font-weight: bold;/*border-right:1px solid red;*/line-height: 30px;font-size: 11px;padding-left:5px;padding-right:5px;">\
-                        <input style="box-sizing:border-box;width:100%;height:100%;border:1px solid #acacac;" type="text" name="array_velocidad[]"  class="campo_velocidad" id="manejo_presion_'+jugador.idfichaJugador+'" data-id-jugador="'+jugador.idfichaJugador+'" onKeyup="sumarAlRankingTestOcular(this)"/>\
-                    </div>\
-                    <div style="box-sizing:border-box;border:0;width:13.6%;height:30px;float:left;font-weight: bold;/*border-right:1px solid red;*/line-height: 30px;font-size: 11px;padding-left:5px;padding-right:5px;">\
-                        <input style="box-sizing:border-box;width:100%;height:100%;border:1px solid #acacac;" type="text" name="array_velocidad[]"  class="campo_velocidad" id="reaccion_'+jugador.idfichaJugador+'" data-id-jugador="'+jugador.idfichaJugador+'" onKeyup="sumarAlRankingTestOcular(this)"/>\
-                    </div>\
-                    <div style="box-sizing:border-box;border:0;width:13.6%;height:30px;float:left;font-weight: bold;/*border-right:1px solid red;*/line-height: 30px;font-size: 11px;padding-left:5px;padding-right:5px;">\
-                        <input style="box-sizing:border-box;width:100%;height:100%;border:1px solid #acacac;" type="text" name="array_velocidad[]"  class="campo_velocidad" id="adaptacion_'+jugador.idfichaJugador+'" data-id-jugador="'+jugador.idfichaJugador+'" onKeyup="sumarAlRankingTestOcular(this)"/>\
-                    </div>\
-            <div style="box-sizing:border-box;border:0;width:5%;height:30px;float:left;font-weight: bold;/*border-right:1px solid red;*/line-height: 30px;">\
-                <center>\
-                    <a class="boton_eliminar" id="'+jugador.idfichaJugador+'" onClick="eliminarFilaJugadorTest(this)">\
-                        <i class="icon-remove"></i>\
-                    </a>\
-                </center>\
-            </div>\
-        </div>';
-        window.datos_test[window.tipo_test].jugadores_test.push(jugador);
-        $("#contenedor_fila_tabla_formulario_test").append(plantilla);
+                    <div style="box-sizing:border-box;border:0;float:left;width:80%;height:30px;padding-left:5px;color:#555;font-weight: bold;line-height: 30px;text-transform: Capitalize" class="ellipsis-text">'+jugador.nombre+' '+jugador.apellido1+' '+jugador.apellido2+'</div>\
+                </div>\
+                <div style="box-sizing:border-box;border:0;width:13.6%;height:30px;float:left;font-weight: bold;/*border-right:1px solid red;*/line-height: 30px;font-size: 11px;padding-left:5px;padding-right:5px;">\
+                            <input style="box-sizing:border-box;width:100%;height:100%;border:1px solid #acacac;" type="text" name="array_velocidad[]"  class="campo_velocidad" id="toma_decision_'+jugador.idfichaJugador+'" data-id-jugador="'+jugador.idfichaJugador+'" onKeyup="sumarAlRankingTestOcular(this)"/>\
+                        </div>\
+                        <div style="box-sizing:border-box;border:0;width:13.6%;height:30px;float:left;font-weight: bold;/*border-right:1px solid red;*/line-height: 30px;font-size: 11px;padding-left:5px;padding-right:5px;">\
+                            <input style="box-sizing:border-box;width:100%;height:100%;border:1px solid #acacac;" type="text" name="array_velocidad[]"  class="campo_velocidad" id="presicion_'+jugador.idfichaJugador+'" data-id-jugador="'+jugador.idfichaJugador+'" onKeyup="sumarAlRankingTestOcular(this)"/>\
+                        </div>\
+                        <div style="box-sizing:border-box;border:0;width:13.6%;height:30px;float:left;font-weight: bold;/*border-right:1px solid red;*/line-height: 30px;font-size: 11px;padding-left:5px;padding-right:5px;">\
+                            <input style="box-sizing:border-box;width:100%;height:100%;border:1px solid #acacac;" type="text" name="array_velocidad[]"  class="campo_velocidad" id="manejo_presion_'+jugador.idfichaJugador+'" data-id-jugador="'+jugador.idfichaJugador+'" onKeyup="sumarAlRankingTestOcular(this)"/>\
+                        </div>\
+                        <div style="box-sizing:border-box;border:0;width:13.6%;height:30px;float:left;font-weight: bold;/*border-right:1px solid red;*/line-height: 30px;font-size: 11px;padding-left:5px;padding-right:5px;">\
+                            <input style="box-sizing:border-box;width:100%;height:100%;border:1px solid #acacac;" type="text" name="array_velocidad[]"  class="campo_velocidad" id="reaccion_'+jugador.idfichaJugador+'" data-id-jugador="'+jugador.idfichaJugador+'" onKeyup="sumarAlRankingTestOcular(this)"/>\
+                        </div>\
+                        <div style="box-sizing:border-box;border:0;width:13.6%;height:30px;float:left;font-weight: bold;/*border-right:1px solid red;*/line-height: 30px;font-size: 11px;padding-left:5px;padding-right:5px;">\
+                            <input style="box-sizing:border-box;width:100%;height:100%;border:1px solid #acacac;" type="text" name="array_velocidad[]"  class="campo_velocidad" id="adaptacion_'+jugador.idfichaJugador+'" data-id-jugador="'+jugador.idfichaJugador+'" onKeyup="sumarAlRankingTestOcular(this)"/>\
+                        </div>\
+                <div style="box-sizing:border-box;border:0;width:5%;height:30px;float:left;font-weight: bold;/*border-right:1px solid red;*/line-height: 30px;">\
+                    <center>\
+                        <a class="boton_eliminar" id="'+jugador.idfichaJugador+'" onClick="eliminarFilaJugadorTest(this)">\
+                            <i class="icon-remove"></i>\
+                        </a>\
+                    </center>\
+                </div>\
+            </div>';
+            window.datos_test[window.tipo_test].jugadores_test.push(jugador);
+            $("#contenedor_fila_tabla_formulario_test").append(plantilla);
         
         
     }

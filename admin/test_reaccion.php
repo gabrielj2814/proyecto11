@@ -1700,17 +1700,22 @@ var idtest_reaccion=null;
 </script>
 <script>
 
-async function cargarVentanaInicioTest(){
-    await consultarAnoActual();
+function cargarVentanaInicioTest(){
+    consultarAnoActual();
     let mesNumero=obtenerMesNumero();
     window.tipo_test="reaccion";
     insertarOptionSelectFiltroTest();
     $("#filtro_mes_test").val(mesNumero);
-    await consultarTests($("#filtro_ano_test").val(),$("#filtro_mes_test").val());
+    
+    setTimeout(() => {
+        // alert("hola")
+        consultarTests($("#filtro_ano_test").val(),$("#filtro_mes_test").val());
+        
+    },3000);
 }
 
-async function consultarAnoActual(){
-    await $.ajax({
+function consultarAnoActual(){
+    $.ajax({
         url: 'post/test_año_actual_test_reaccion.php',
         type: "post",
         data:[],
@@ -1733,15 +1738,15 @@ function insertarOptionSelectFiltroTest(){
     document.getElementById("filtro_ano_test").innerHTML=str_list_option;
 }
 
-async function filtrarTest (){
-    await consultarTests($("#filtro_ano_test").val(),$("#filtro_mes_test").val());
+function filtrarTest (){
+    consultarTests($("#filtro_ano_test").val(),$("#filtro_mes_test").val());
 }
 
 
-async function consultarTests(ano="2020",mes="01"){
+function consultarTests(ano="2020",mes="01"){
     $("#contenedor_fila_tabla_inicio_test").empty();
     window.datos_test[window.tipo_test].lista_inicio_test=[];
-    await $.ajax({
+    $.ajax({
         url: 'post/test_consultar_test_reaccion_año_mes.php',
         type: "post",
         data:[
@@ -2024,20 +2029,20 @@ function insertarFilaJugadoresTestOcularEditar(detallesTest=[]){
 }
 
 
-async function volverInicioModuloTest($botonCerrarFormularioTest){
+function volverInicioModuloTest($botonCerrarFormularioTest){
     $("#vista_test_formulario").hide(500);
     $("#vista_test").show(500);
     insertarOptionSelectFiltroTest();
     $("#filtro_mes_test").val("01");
-    await consultarTests($("#filtro_ano_test").val(),$("#filtro_mes_test").val());
+    consultarTests($("#filtro_ano_test").val(),$("#filtro_mes_test").val());
 }
 
-async function consultarJugadoresSerie(valor){
+function consultarJugadoresSerie(valor){
     // consultar jugadores por la serie en base al tipo de test del formulario
     let serie=valor.split("_")[0],
     sexo=valor.split("_")[1];
     window.datos_test[window.tipo_test].jugadores_test=[];
-    await $.ajax({
+    $.ajax({
         url: 'post/test_consultar_Jugadores_reaccion.php',
         type: "post",
         data:[
@@ -2511,12 +2516,12 @@ function cerrarModalAgregarJugadorTest(){
     $("#serie_test").val("null");
 }
 
-async function consultarJugadoresSerieAgregarTestOcular(valor){
+function consultarJugadoresSerieAgregarTestOcular(valor){
     // consultar jugadores por la serie en base al tipo de test del formulario
     if(valor!=="null"){
         let serie=valor.split("_")[0],
         sexo=valor.split("_")[1];
-        await $.ajax({
+        $.ajax({
             url: 'post/test_consultar_Jugadores_reaccion.php',
             type: "post",
             data:[
