@@ -1966,13 +1966,13 @@ async function volverInicioModuloTest($botonCerrarFormularioTest){
 function abrirFormularioTest(){
     $("#vista_test_ocular").hide(500);
     $("#vista_test_formulario_ocular").show(500);
-    formularioTestOcular()
+    formularioTestOcular();
 }
 
 function abrirFormularioTestEditar(indice){
     $("#vista_test_ocular").hide(500);
     $("#vista_test_formulario_ocular").show(500);
-    formularioTestOcular(true,indice)
+    formularioTestOcular(true,indice);
 }
 
 function formularioTestOcular(tipo=false,index=null){
@@ -2187,7 +2187,7 @@ function insertarJugadoresSelect(jugadores=[]){
     let listaJugadores=[{id:null,nombre:"Seleccione jugador"}];
     if(jugadores.length>0){
         for(let jugador of jugadores){
-            let nombre_jugador=jugador.nombre+" "+jugador.apellido1+" "+jugador.apellido2
+            let nombre_jugador=jugador.nombre+" "+jugador.apellido1+" "+jugador.apellido2;
             listaJugadores.push({id:jugador.idfichaJugador,nombre:nombre_jugador});
         }
     }else{
@@ -2305,7 +2305,7 @@ function insertarFilaInicioTestOculares(tests=[]){
                 </div>\
             </div>';
             lista_test_ocular.push(str_fila_registro);
-            contador++
+            contador++;
         }
         let string_list_option_join=lista_test_ocular.join("");
         $("#contenedor_fila_tabla_inicio_test_ocular").append(string_list_option_join);
@@ -2322,7 +2322,7 @@ function insertarFilaInicioTestOculares(tests=[]){
 
 
 function insertarFilaJugadoresTestOcular(jugadores=[]){
-    let lista_str_filas_jugadores=[]
+    let lista_str_filas_jugadores=[];
     $("#contenedor_fila_tabla_formulario_test_ocular").empty();
     if(jugadores.length>0){
         let contador=0;
@@ -2433,7 +2433,7 @@ function eliminarFilaJugadorTest($boton){
     let $fila=document.getElementById("fila_formulario_test_ocular_"+id);
     let $contenedorFilasTablaTest=document.getElementById("contenedor_fila_tabla_formulario_test_ocular");
     let $contenedorIndex=$fila.children[0];
-    let numero_fila_removida=parseInt($contenedorIndex.textContent)
+    let numero_fila_removida=parseInt($contenedorIndex.textContent);
 
     $contenedorFilasTablaTest.removeChild($fila);
     let contador=0;
@@ -2502,7 +2502,7 @@ function enviarDatosTestOcular(){
             }
         }
         if(!estado){
-            listIdJugadoresFueraDelRank.push(jugador.idfichaJugador)
+            listIdJugadoresFueraDelRank.push(jugador.idfichaJugador);
         }
     }
 
@@ -2513,7 +2513,7 @@ function enviarDatosTestOcular(){
             rank: 0,
             velocidad:0,
             comentario:0
-        })
+        });
     }
 
     for(let contador=0;contador<lista_ranking.length;contador++){
@@ -2684,7 +2684,7 @@ function compararResultados(tmp,numero_ranking,lista_ranking){
     if(numero_ranking>1){
         for(let jugadoresRanking of lista_ranking){
             if(jugadoresRanking.velocidad===tmp.velocidad){
-                tmp.rank=jugadoresRanking.rank
+                tmp.rank=jugadoresRanking.rank;
             }
         }
     }

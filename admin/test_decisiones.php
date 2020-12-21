@@ -1854,7 +1854,7 @@ function insertarFilaInicioTest(tests=[]){
                 </div>\
             </div>';
             lista_test.push(str_fila_registro);
-            contador++
+            contador++;
         }
         let string_list_option_join=lista_test.join("");
         $("#contenedor_fila_tabla_inicio_test").append(string_list_option_join);
@@ -1933,7 +1933,7 @@ function formularioTest(tipo=false,index=null){
 }
 
 function formularioTestCrear(){
-    console.log(window.datos_test[window.tipo_test])
+    // console.log(window.datos_test[window.tipo_test]);
     window.idtest_decision=null;
     window.datos_test[window.tipo_test].tipo_fomrulario=false;
     window.ranking_test_decision=[];
@@ -2104,7 +2104,7 @@ async function consultarJugadoresSerie(valor){
 }
 
 function insertarFilaJugadoresTest(jugadores=[]){
-    let lista_str_filas_jugadores=[]
+    let lista_str_filas_jugadores=[];
     $("#contenedor_fila_tabla_formulario_test").empty();
     if(jugadores.length>0){
         let contador=0;
@@ -2220,7 +2220,7 @@ function sumarAlRankingTestOcular($inputVelocidad){
         // console.log(window.ranking_test_decision);
         for(let jugador of rankingOrdenTest()){
             
-            console.log("ranking ->>>",jugador)
+            console.log("ranking ->>>",jugador);
             // document.getElementById("ranking_test_formulario_"+jugador.id).textContent=jugador.rank.toString();
         }
         let promedios=promedioTestFormulario();

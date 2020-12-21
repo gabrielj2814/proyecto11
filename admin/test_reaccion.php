@@ -1799,7 +1799,7 @@ function insertarFilaInicioTestOculares(tests=[]){
                 </div>\
             </div>';
             lista_test_ocular.push(str_fila_registro);
-            contador++
+            contador++;
         }
         let string_list_option_join=lista_test_ocular.join("");
         $("#contenedor_fila_tabla_inicio_test").append(string_list_option_join);
@@ -2063,7 +2063,7 @@ async function consultarJugadoresSerie(valor){
 }
 
 function insertarFilaJugadoresTestOcular(jugadores=[]){
-    let lista_str_filas_jugadores=[]
+    let lista_str_filas_jugadores=[];
     $("#contenedor_fila_tabla_formulario_test").empty();
     if(jugadores.length>0){
         let contador=0;
@@ -2251,10 +2251,10 @@ function promedioTestFormulario(){
     let tiempo_3_total=0;
     let tiempo_4_total=0;
     for(let jugador of window.ranking_test_reaccion){
-        tiempo_1_total=tiempo_1_total+jugador.tiempo_1
-        tiempo_2_total=tiempo_2_total+jugador.tiempo_2
-        tiempo_3_total=tiempo_3_total+jugador.tiempo_3
-        tiempo_4_total=tiempo_4_total+jugador.tiempo_4
+        tiempo_1_total=tiempo_1_total+jugador.tiempo_1;
+        tiempo_2_total=tiempo_2_total+jugador.tiempo_2;
+        tiempo_3_total=tiempo_3_total+jugador.tiempo_3;
+        tiempo_4_total=tiempo_4_total+jugador.tiempo_4;
     }
     return {
         tiempo_1:tiempo_1_total/numeroDeJugadores,
@@ -2316,7 +2316,7 @@ function compararResultados(tmp,numero_ranking,lista_ranking){
             let total_jugador=jugadoresRanking.tiempo_1+jugadoresRanking.tiempo_2+jugadoresRanking.tiempo_3+jugadoresRanking.tiempo_4;
             let total_tmp=tmp.tiempo_1+tmp.tiempo_2+tmp.tiempo_3+tmp.tiempo_4;
             if(total_tmp===total_jugador){
-                tmp.rank=jugadoresRanking.rank
+                tmp.rank=jugadoresRanking.rank;
             }
         }
     }
@@ -2334,7 +2334,7 @@ function eliminarFilaJugadorTest($boton){
     let $fila=document.getElementById("fila_formulario_test_"+id);
     let $contenedorFilasTablaTest=document.getElementById("contenedor_fila_tabla_formulario_test");
     let $contenedorIndex=$fila.children[0];
-    let numero_fila_removida=parseInt($contenedorIndex.textContent)
+    let numero_fila_removida=parseInt($contenedorIndex.textContent);
 
     $contenedorFilasTablaTest.removeChild($fila);
     let contador=0;
@@ -2545,7 +2545,7 @@ function insertarJugadoresSelect(jugadores=[]){
     let listaJugadores=[{id:null,nombre:"Seleccione jugador"}];
     if(jugadores.length>0){
         for(let jugador of jugadores){
-            let nombre_jugador=jugador.nombre+" "+jugador.apellido1+" "+jugador.apellido2
+            let nombre_jugador=jugador.nombre+" "+jugador.apellido1+" "+jugador.apellido2;
             listaJugadores.push({id:jugador.idfichaJugador,nombre:nombre_jugador});
         }
     }else{
@@ -2669,7 +2669,7 @@ function enviarDatosTest(){
             }
         }
         if(!estado){
-            listIdJugadoresFueraDelRank.push(jugador.idfichaJugador)
+            listIdJugadoresFueraDelRank.push(jugador.idfichaJugador);
         }
     }
 
@@ -2682,7 +2682,7 @@ function enviarDatosTest(){
             tiempo_2: 0,
             tiempo_3: 0,
             tiempo_4: 0
-        })
+        });
     }
 
     for(let contador=0;contador<lista_ranking.length;contador++){
