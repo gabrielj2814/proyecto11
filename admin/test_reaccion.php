@@ -2662,6 +2662,7 @@ function enviarDatosTest(){
    
 
     let lista_ranking=rankingOrdenTest();
+    // console.log(lista_ranking);
     // obteniendo los id de los jugadores wue no estan en el ranking en pocas palabras los
     // que no tiene nigun tiempo
     let listIdJugadoresFueraDelRank=[];
@@ -2674,9 +2675,12 @@ function enviarDatosTest(){
             }
         }
         if(!estado){
+            alert(jugador.idfichaJugador)
             listIdJugadoresFueraDelRank.push(jugador.idfichaJugador);
         }
     }
+
+    
 
     for(let idJugador of listIdJugadoresFueraDelRank){
         lista_ranking.push({
@@ -2690,12 +2694,22 @@ function enviarDatosTest(){
         });
     }
 
+    console.log(lista_ranking);
+
     for(let contador=0;contador<lista_ranking.length;contador++){
         let total_tiempo=lista_ranking[contador].tiempo_1+lista_ranking[contador].tiempo_2+lista_ranking[contador].tiempo_3+lista_ranking[contador].tiempo_4;
         if(total_tiempo===0) lista_ranking[contador].rank=0;
         lista_ranking[contador].comentario=document.getElementById("comentario_test_"+lista_ranking[contador].id).value;
     }
-    
+    console.log(lista_ranking);
+
+    if(lista_ranking[0].rank===0){
+        for(let contador=0;contador<lista_ranking.length;contador++){
+            if(lista_ranking[contador].rank!==0){
+                lista_ranking[contador].rank=lista_ranking[contador].rank-1;
+            }
+        }
+    }
 
     // obteniendo datos detalla      dos del test
     // obteniendo ids jugadores 
