@@ -37,7 +37,7 @@ for($contador=0;$contador<sizeof($datos["detalles_test_ocular"]);$contador++){
       <div  style="box-sizing:border-box;border:0;float:left;height:40px;line-height:25px;/*border-right:1px solid #111;*/width: 10%;" >'.$edad.' Años</div>
       <div  style="box-sizing:border-box;border:0;float:left;height:40px;line-height:25px;/*border-right:1px solid #111;*/width: 10%;" >'.$listaPies[$jugador["pieHabil"]].'</div>
       <div  style="box-sizing:border-box;border:0;float:left;height:40px;line-height:25px;/*border-right:1px solid #111;*/width: 12%;" >'.$detalleTestJugador["velocidad_detalle_test_ocular"].' seg</div>
-      <div  style="box-sizing:border-box;border:0;float:left;height:40px;line-height:25px;/*border-right:1px solid #111;*/width: 10%;background-color:#f4f86f;text-align: center;" >'.$detalleTestJugador["ranking_detalle_test_ocular"].'</div>
+      <div  style="box-sizing:border-box;border:0;float:left;height:40px;line-height:25px;/*border-right:1px solid #111;*/width: 10%;background-color:#f4f86f;text-align: center;" >'.(($detalleTestJugador["ranking_detalle_test_ocular"]==="0")?"-":$detalleTestJugador["ranking_detalle_test_ocular"]).'</div>
       <div  style="box-sizing:border-box;border:0;float:left;height:40px;line-height:25px;/*border-right:1px solid #111;*/width: 22%;padding-left:10px;" >'.(($detalleTestJugador["comentario_detalle_test_ocular"]===NULL)?" sin comentario ":$detalleTestJugador["comentario_detalle_test_ocular"]).'</div>
   </div>
   ';

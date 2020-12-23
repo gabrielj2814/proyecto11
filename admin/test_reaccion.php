@@ -2123,71 +2123,6 @@ function insertarFilaJugadoresTestOcular(jugadores=[]){
 }
 
 function sumarAlRankingTestOcular($inputVelocidad){
-    // calcular ranking y calcular promedio velocidad
-    // let exprexion=/[0-9]||[0-9]{1,1}.[0-9]{1,1}/g;
-    // let exprexion=/[a-zA-z]/;
-    // if($inputVelocidad.value!=="" && !exprexion.test($inputVelocidad.value)){
-    //     if(window.ranking_test_reaccion.length===0){
-    //         window.ranking_test_reaccion.push({
-    //             id:$inputVelocidad.getAttribute("data-id-jugador"),
-    //             rank:0,
-    //             // velocidad:(parseFloat($inputVelocidad.value)!=="")?parseFloat($inputVelocidad.value):"",
-    //             tiempo_1:(parseFloat(document.getElementById("tiempo_1_"+$inputVelocidad.getAttribute("data-id-jugador")).value)!=="")?parseFloat(document.getElementById("tiempo_1_"+$inputVelocidad.getAttribute("data-id-jugador")).value):0,
-    //             tiempo_2:(parseFloat(document.getElementById("tiempo_2_"+$inputVelocidad.getAttribute("data-id-jugador")).value)!=="")?parseFloat(document.getElementById("tiempo_2_"+$inputVelocidad.getAttribute("data-id-jugador")).value):0,
-    //             tiempo_3:(parseFloat(document.getElementById("tiempo_3_"+$inputVelocidad.getAttribute("data-id-jugador")).value)!=="")?parseFloat(document.getElementById("tiempo_3_"+$inputVelocidad.getAttribute("data-id-jugador")).value):0,
-    //             tiempo_4:(parseFloat(document.getElementById("tiempo_4_"+$inputVelocidad.getAttribute("data-id-jugador")).value)!=="")?parseFloat(document.getElementById("tiempo_4_"+$inputVelocidad.getAttribute("data-id-jugador")).value):0,
-
-    //             comentario:""
-    //         });
-    //     }
-    //     else{
-    //         let posicion=0;
-    //         let econtrado=false;
-    //         for(let jugador of window.ranking_test_reaccion){
-    //             if(jugador.id===$inputVelocidad.getAttribute("data-id-jugador")){
-    //                     window.ranking_test_reaccion[posicion]={
-    //                     id:$inputVelocidad.getAttribute("data-id-jugador"),
-    //                     rank:0,
-    //                     // velocidad:(parseFloat($inputVelocidad.value)!=="")?parseFloat($inputVelocidad.value):"",
-    //                     tiempo_1:(parseFloat(document.getElementById("tiempo_1_"+$inputVelocidad.getAttribute("data-id-jugador")).value)!=="")?parseFloat(document.getElementById("tiempo_1_"+$inputVelocidad.getAttribute("data-id-jugador")).value):0,
-    //                     tiempo_2:(parseFloat(document.getElementById("tiempo_2_"+$inputVelocidad.getAttribute("data-id-jugador")).value)!=="")?parseFloat(document.getElementById("tiempo_2_"+$inputVelocidad.getAttribute("data-id-jugador")).value):0,
-    //                     tiempo_3:(parseFloat(document.getElementById("tiempo_3_"+$inputVelocidad.getAttribute("data-id-jugador")).value)!=="")?parseFloat(document.getElementById("tiempo_3_"+$inputVelocidad.getAttribute("data-id-jugador")).value):0,
-    //                     tiempo_4:(parseFloat(document.getElementById("tiempo_4_"+$inputVelocidad.getAttribute("data-id-jugador")).value)!=="")?parseFloat(document.getElementById("tiempo_4_"+$inputVelocidad.getAttribute("data-id-jugador")).value):0,
-    //                     comentario:""
-    //                 }
-    //                 econtrado=true;
-    //             }
-    //             posicion++;
-    //         }
-    //         if(!econtrado){
-    //             window.ranking_test_reaccion.push({
-    //                 id:$inputVelocidad.getAttribute("data-id-jugador"),
-    //                 rank:0,
-    //                 // velocidad:(parseFloat($inputVelocidad.value)!=="")?parseFloat($inputVelocidad.value):"",
-    //                 tiempo_1:(parseFloat(document.getElementById("tiempo_1_"+$inputVelocidad.getAttribute("data-id-jugador")).value)!=="")?parseFloat(document.getElementById("tiempo_1_"+$inputVelocidad.getAttribute("data-id-jugador")).value):0,
-    //                 tiempo_2:(parseFloat(document.getElementById("tiempo_2_"+$inputVelocidad.getAttribute("data-id-jugador")).value)!=="")?parseFloat(document.getElementById("tiempo_2_"+$inputVelocidad.getAttribute("data-id-jugador")).value):0,
-    //                 tiempo_3:(parseFloat(document.getElementById("tiempo_3_"+$inputVelocidad.getAttribute("data-id-jugador")).value)!=="")?parseFloat(document.getElementById("tiempo_3_"+$inputVelocidad.getAttribute("data-id-jugador")).value):0,
-    //                 tiempo_4:(parseFloat(document.getElementById("tiempo_4_"+$inputVelocidad.getAttribute("data-id-jugador")).value)!=="")?parseFloat(document.getElementById("tiempo_4_"+$inputVelocidad.getAttribute("data-id-jugador")).value):0,
-    //                 comentario:""
-    //             });
-    //         }
-    //     }
-    //     console.log(window.ranking_test_reaccion);
-    //     for(let jugador of rankingOrdenTest()){
-    //         // console.log("->>",jugador)
-    //         document.getElementById("ranking_test_formulario_"+jugador.id).textContent=jugador.rank.toString();
-    //     }
-    //     let promedios=promedioTestFormulario();
-    //     document.getElementById("promedio_1_test").textContent=(promedios.tiempo_1.toFixed(2).toString()==="Infinity")?"0.00":promedios.tiempo_1.toFixed(2).toString();
-    // }
-    // else{
-    //     for(let jugador of window.ranking_test_reaccion){
-    //             if(jugador.id===$inputVelocidad.getAttribute("data-id-jugador")){
-    //                 document.getElementById("ranking_test_formulario_"+$inputVelocidad.getAttribute("data-id-jugador")).textContent="-";
-    //             }
-    //         }
-    //         document.getElementById("promedio_1_test").textContent="";
-    // }
     let id=$inputVelocidad.getAttribute("data-id-jugador");
     if(window.ranking_test_reaccion.length===0){
             window.ranking_test_reaccion.push({
@@ -2236,9 +2171,21 @@ function sumarAlRankingTestOcular($inputVelocidad){
             }
         }
         // console.log(window.ranking_test_reaccion);
+        let estado_ranking=false;
         for(let jugador of rankingOrdenTest()){
-            // console.log("->>",jugador)
-            document.getElementById("ranking_test_formulario_"+jugador.id).textContent=jugador.rank.toString();
+            if(jugador.tiempo_1+jugador.tiempo_2+jugador.tiempo_3+jugador.tiempo_4===0){
+                document.getElementById("ranking_test_formulario_"+jugador.id).textContent="-";
+                estado_ranking=true;
+            }
+            else{
+                if(estado_ranking){
+                    jugador.rank=jugador.rank-1;
+                    document.getElementById("ranking_test_formulario_"+jugador.id).textContent=jugador.rank.toString();
+                }
+                else{
+                    document.getElementById("ranking_test_formulario_"+jugador.id).textContent=jugador.rank.toString();
+                }
+            }
         }
         let promedios=promedioTestFormulario();
         document.getElementById("promedio_1_test").textContent=(promedios.tiempo_1.toFixed(2).toString()==="Infinity")?"0.00":promedios.tiempo_1.toFixed(2).toString();
@@ -2679,8 +2626,6 @@ function enviarDatosTest(){
             listIdJugadoresFueraDelRank.push(jugador.idfichaJugador);
         }
     }
-
-    
 
     for(let idJugador of listIdJugadoresFueraDelRank){
         lista_ranking.push({
