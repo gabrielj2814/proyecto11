@@ -2768,31 +2768,8 @@ function sumarAlRankingTestOcular($inputVelocidad){
     else{
         $inputVelocidad.value="";
         let id=$inputVelocidad.getAttribute("data-id-jugador");
-    let exprexion=/[a-zA-z]/;
-    if(window.ranking_test_ocular.length===0){
-            window.ranking_test_ocular.push({
-                id:$inputVelocidad.getAttribute("data-id-jugador"),
-                rank:0,
-                velocidad:(document.getElementById("velocidad_"+id).value!="")?parseFloat(document.getElementById("velocidad_"+id).value):0,
-                comentario:""
-            });
-        }
-        else{
-            let posicion=0;
-            let econtrado=false;
-            for(let jugador of window.ranking_test_ocular){
-                if(jugador.id===$inputVelocidad.getAttribute("data-id-jugador")){
-                        window.ranking_test_ocular[posicion]={
-                        id:$inputVelocidad.getAttribute("data-id-jugador"),
-                        rank:0,
-                        velocidad:(document.getElementById("velocidad_"+id).value!="")?parseFloat(document.getElementById("velocidad_"+id).value):0,
-                        comentario:""
-                    }
-                    econtrado=true;
-                }
-                posicion++;
-            }
-            if(!econtrado){
+        let exprexion=/[a-zA-z]/;
+        if(window.ranking_test_ocular.length===0){
                 window.ranking_test_ocular.push({
                     id:$inputVelocidad.getAttribute("data-id-jugador"),
                     rank:0,
@@ -2800,26 +2777,49 @@ function sumarAlRankingTestOcular($inputVelocidad){
                     comentario:""
                 });
             }
-        }
-        let estado_ranking=false;
-        for(let jugador of rankingOrdenTestOcular()){
-            // console.log("->>",jugador)
-            if(jugador.velocidad===0){
-                document.getElementById("ranking_test_ocular_formulario_"+jugador.id).textContent="-";
-                estado_ranking=true;
-            }
             else{
-                if(estado_ranking){
-                    jugador.rank=jugador.rank-1;
-                    document.getElementById("ranking_test_ocular_formulario_"+jugador.id).textContent=jugador.rank.toString();
+                let posicion=0;
+                let econtrado=false;
+                for(let jugador of window.ranking_test_ocular){
+                    if(jugador.id===$inputVelocidad.getAttribute("data-id-jugador")){
+                            window.ranking_test_ocular[posicion]={
+                            id:$inputVelocidad.getAttribute("data-id-jugador"),
+                            rank:0,
+                            velocidad:(document.getElementById("velocidad_"+id).value!="")?parseFloat(document.getElementById("velocidad_"+id).value):0,
+                            comentario:""
+                        }
+                        econtrado=true;
+                    }
+                    posicion++;
+                }
+                if(!econtrado){
+                    window.ranking_test_ocular.push({
+                        id:$inputVelocidad.getAttribute("data-id-jugador"),
+                        rank:0,
+                        velocidad:(document.getElementById("velocidad_"+id).value!="")?parseFloat(document.getElementById("velocidad_"+id).value):0,
+                        comentario:""
+                    });
+                }
+            }
+            let estado_ranking=false;
+            for(let jugador of rankingOrdenTestOcular()){
+                // console.log("->>",jugador)
+                if(jugador.velocidad===0){
+                    document.getElementById("ranking_test_ocular_formulario_"+jugador.id).textContent="-";
+                    estado_ranking=true;
                 }
                 else{
-                    document.getElementById("ranking_test_ocular_formulario_"+jugador.id).textContent=jugador.rank.toString();
+                    if(estado_ranking){
+                        jugador.rank=jugador.rank-1;
+                        document.getElementById("ranking_test_ocular_formulario_"+jugador.id).textContent=jugador.rank.toString();
+                    }
+                    else{
+                        document.getElementById("ranking_test_ocular_formulario_"+jugador.id).textContent=jugador.rank.toString();
+                    }
                 }
             }
-        }
-        // alert(promedioTestOcularFormulario().toFixed(2).toString());
-        document.getElementById("promedio_test_ocular").textContent=promedioTestOcularFormulario().toFixed(2).toString();
+            // alert(promedioTestOcularFormulario().toFixed(2).toString());
+            document.getElementById("promedio_test_ocular").textContent=promedioTestOcularFormulario().toFixed(2).toString();
     }
 }
 

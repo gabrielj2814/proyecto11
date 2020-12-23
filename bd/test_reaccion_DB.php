@@ -22,7 +22,7 @@ function utf8_converter($array){
 
 function consultarJugadoresSerie($serie,$sexo){
     include("conexion.php");
-    $SQL="SELECT * FROM fichaJugador WHERE serieActual=$serie AND sexo=$sexo;";
+    $SQL="SELECT * FROM fichaJugador WHERE serieActual=$serie AND sexo=$sexo ORDER BY fichaJugador.nombre ASC;";
     $result_ficha_jugador=$link->query($SQL);
     $jugadores_data=[];
     while($row = mysqli_fetch_array($result_ficha_jugador)){

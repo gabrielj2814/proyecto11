@@ -20,32 +20,40 @@ $listaPies=[
 
 for($contador=0;$contador<sizeof($datos["detalle_test"]);$contador++){
   $detalleTestJugador=$datos["detalle_test"][$contador];
-  $jugador=$detalleTestJugador["infoJugador"];
-  $cumpleanos = new DateTime($jugador["fechaNacimiento"]);
-  $hoy = new DateTime();
-  $annos = $hoy->diff($cumpleanos);
-  $edad=$annos->y;
-  $plantilla='
-  <div id="filaBodyTable" style="box-sizing:border-box;border:0;width:90%;height:40px;margin-left:auto;margin-right:auto;background-color:#fff;font-size:13px;color:#555;margin-bottom:1px;">
-      <div  style="box-sizing:border-box;border:0;float:left;height:40px;line-height:25px;/*border-right:1px solid #111;*/text-align: center; width: 2%;" >'.($contador+1).'</div>
-      <div  style="box-sizing:border-box;border:0;float:left;height:40px;line-height:25px;/*border-right:1px solid #111;*/text-align: center;width: 13%;" ><img src="../../flags/blank.gif" class="flag flag-'.strtolower($jugador["nacionalidad1"]).'"/> '.$jugador["texto_posicion"].'</div>
-      <div  style="box-sizing:border-box;border:0;float:left;height:40px;line-height:25px;/*border-right:1px solid #111;*/width: 20%;" >
-      
-        <div style="box-sizing:border-box;border:0;float:left;margin-left:5px;overflow:hidden;width:30px;height:30px;border:2px solid #555;border-radius:15px;margin-top:5px;margin-bottom:5px;">
-          <img src="../../foto_jugadores/'.$jugador["idfichaJugador"].'.png" style="box-sizing:border-box;border:0;display:block;width:30px;height:30px;"/>
+  if($detalleTestJugador["ranking"]!=="0"){
+
+    $jugador=$detalleTestJugador["infoJugador"];
+    $cumpleanos = new DateTime($jugador["fechaNacimiento"]);
+    $hoy = new DateTime();
+    $annos = $hoy->diff($cumpleanos);
+    $edad=$annos->y;
+    $nombreJugador=$jugador["nombre"].' '.$jugador["apellido1"].' '.$jugador["apellido2"];
+    if( strlen( $nombreJugador ) >= 20 ) {
+      $nombreJugador = substr($my_string, 0, 15) . '...';
+    }
+    $plantilla='
+    <div id="filaBodyTable" style="box-sizing:border-box;border:0;width:90%;height:40px;margin-left:auto;margin-right:auto;background-color:#fff;font-size:13px;color:#555;margin-bottom:1px;">
+        <div  style="box-sizing:border-box;border:0;float:left;height:40px;line-height:25px;/*border-right:1px solid #111;*/text-align: center; width: 2%;" >'.($contador+1).'</div>
+        <div  style="box-sizing:border-box;border:0;float:left;height:40px;line-height:25px;/*border-right:1px solid #111;*/width: 13%;" ><img src="../../flags/blank.gif" class="flag flag-'.strtolower($jugador["nacionalidad1"]).'"/> '.$jugador["texto_posicion"].'</div>
+        <div  style="box-sizing:border-box;border:0;float:left;height:40px;line-height:25px;/*border-right:1px solid #111;*/width: 20%;" >
+        
+          <div style="box-sizing:border-box;border:0;float:left;margin-left:5px;overflow:hidden;width:30px;height:30px;border:2px solid #555;border-radius:15px;margin-top:5px;margin-bottom:5px;">
+            <img src="../../foto_jugadores/'.$jugador["idfichaJugador"].'.png" style="box-sizing:border-box;border:0;display:block;width:30px;height:30px;"/>
+          </div>
+          <span style="box-sizing:border-box;border:0;margin-left:47px;">'.$nombreJugador.'</span>
+        
         </div>
-        <span style="box-sizing:border-box;border:0;margin-left:47px;">'.$jugador["nombre"].' '.$jugador["apellido1"].' '.$jugador["apellido2"].'</span>
-      
-      </div>
-      <div  style="box-sizing:border-box;border:0;float:left;height:40px;line-height:25px;/*border-right:1px solid #111;*/width: 8%;" >'.$detalleTestJugador["tiempo_1"].' seg</div>
-      <div  style="box-sizing:border-box;border:0;float:left;height:40px;line-height:25px;/*border-right:1px solid #111;*/width: 8%;" >'.$detalleTestJugador["tiempo_2"].' seg</div>
-      <div  style="box-sizing:border-box;border:0;float:left;height:40px;line-height:25px;/*border-right:1px solid #111;*/width: 8%;" >'.$detalleTestJugador["tiempo_3"].' seg</div>
-      <div  style="box-sizing:border-box;border:0;float:left;height:40px;line-height:25px;/*border-right:1px solid #111;*/width: 8%;" >'.$detalleTestJugador["tiempo_4"].' seg</div>
-      <div  style="box-sizing:border-box;border:0;float:left;height:40px;line-height:25px;/*border-right:1px solid #111;*/width: 10%;background-color:#f4f86f;text-align: center;" >'.(($detalleTestJugador["ranking"]==="0")?"-":$detalleTestJugador["ranking"]).'</div>
-      <div  style="box-sizing:border-box;border:0;float:left;height:40px;line-height:25px;/*border-right:1px solid #111;*/width: 23%;padding-left:10px;" >'.(($detalleTestJugador["comentario"]==="null")?" sin comentario ":$detalleTestJugador["comentario"]).'</div>
-  </div>
-  ';
-  $listaFilaTabla.=$plantilla;
+        <div  style="box-sizing:border-box;border:0;float:left;height:40px;line-height:25px;/*border-right:1px solid #111;*/width: 8%;" >'.$detalleTestJugador["tiempo_1"].' seg</div>
+        <div  style="box-sizing:border-box;border:0;float:left;height:40px;line-height:25px;/*border-right:1px solid #111;*/width: 8%;" >'.$detalleTestJugador["tiempo_2"].' seg</div>
+        <div  style="box-sizing:border-box;border:0;float:left;height:40px;line-height:25px;/*border-right:1px solid #111;*/width: 8%;" >'.$detalleTestJugador["tiempo_3"].' seg</div>
+        <div  style="box-sizing:border-box;border:0;float:left;height:40px;line-height:25px;/*border-right:1px solid #111;*/width: 8%;" >'.$detalleTestJugador["tiempo_4"].' seg</div>
+        <div  style="box-sizing:border-box;border:0;float:left;height:40px;line-height:25px;/*border-right:1px solid #111;*/width: 10%;background-color:#f4f86f;text-align: center;" >'.(($detalleTestJugador["ranking"]==="0")?"-":$detalleTestJugador["ranking"]).'</div>
+        <div  style="box-sizing:border-box;border:0;float:left;height:40px;line-height:25px;/*border-right:1px solid #111;*/width: 23%;padding-left:10px;" >'.(($detalleTestJugador["comentario"]==="null")?" sin comentario ":$detalleTestJugador["comentario"]).'</div>
+    </div>
+    ';
+    $listaFilaTabla.=$plantilla;
+
+  }
 }
 
 
@@ -57,7 +65,7 @@ $data.= '
     <div style="box-sizing:border-box;border:0;width:50%;height:150px;margin-left:auto;margin-right:auto;">
 
       <div style="display:block;box-sizing:border-box;border:0;width:150px;height:150px;float:left;">
-        <img src="../../../config/logo_equipo.png" style="display:block;box-sizing:border-box;border:0;width:150px;height:150px;">
+        <img src="../../../config/logo_equipo.png" style="display:block;box-sizing:border-box;border:0;width:130px;height:130px;">
       </div>
       <div style="display:block;box-sizing:border-box;border:0;width:375px;height:150px;float:left;text-align:center;color:#555;font-weight: bold;">
           <div style="font-size:35px;margin-top:15px;">TEST DE REACCIÓN</div>
