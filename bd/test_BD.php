@@ -44,7 +44,7 @@ function obtenerTotaltestMensuales(){
 
 function consultarJugadoresSerie($serie,$sexo){
     include("conexion.php");
-    $SQL="SELECT * FROM fichaJugador WHERE serieActual=$serie AND sexo=$sexo;";
+    $SQL="SELECT * FROM fichaJugador WHERE serieActual=$serie AND sexo=$sexo ORDER BY fichaJugador.nombre ASC";
     $result_ficha_jugador=$link->query($SQL);
     $jugadores_data=[];
     while($row = mysqli_fetch_array($result_ficha_jugador)){
@@ -214,7 +214,7 @@ function consultarDetallesTestOcular($idTestOcular){
 
 function consultarJugadorDetalleTestOcular($idFichaJugador){
     include("conexion.php");
-    $SQL="SELECT * FROM fichaJugador WHERE idfichaJugador=$idFichaJugador;";
+    $SQL="SELECT * FROM fichaJugador WHERE idfichaJugador=$idFichaJugador ";
     $result_ficha_jugador=$link->query($SQL);
     $jugadores_data=[];
     while($row = mysqli_fetch_array($result_ficha_jugador)){
@@ -251,7 +251,7 @@ function calcular_posicion_jugador2($id){
 	$jugador['delanteroCentro'] = 0;	//24,25,26,28,29   
 	$jugador['posicionPrincipal'] = '';	//24,25,26,28,29
 	include("conexion.php");
-	$resultado = $link->query("SELECT posicion, numero_posicion FROM posicionCancha WHERE idfichaJugador like ".$id." ORDER BY posicionCancha.numero_posicion DESC");
+	$resultado = $link->query("SELECT posicion, numero_posicion FROM posicionCancha WHERE idfichaJugador like ".$id." ORDER BY posicionCancha.numero_posicion ASC");
 	$posicion="";
 	while($row = mysqli_fetch_array($resultado)){
 		$posicion=$row['posicion'];

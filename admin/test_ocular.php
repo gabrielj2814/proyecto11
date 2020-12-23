@@ -1418,6 +1418,11 @@ app.controller("controlador_1",['$scope',function($scope){
                         </div>
                         <div style="box-sizing: border-box;border:0;width:90%;height:15px;margin-left:auto;margin-right:auto;background-color:#0b3b99 ;margin-bottom:60px;"></div>
                         <!-- <h1>VITSA OCULAR</h1> -->
+                        <div style="margin:0px; height:20px;margin-left: auto;margin-right: auto;width: 141px;">
+                                <img src="img/cargando_buscar.gif" id="cargando_buscar" style=" display:none;">
+                                <span style="color:#dc4e4e; display:none;" id="error_conexion"><b>Error:</b> conexión a internet deficiente.</span>
+                                <span style="color:#28b779; display:none;" id="sin_resultados">Busqueda sin resultados.</span>
+                        </div>
                         <div style="box-sizing:border-box;border:0;width:109px;margin-left:auto;margin-right:25px;margin-bottom:15px;">
                             <button data-boton-abrir-formulario-test="ocular" class="boton-abrir-formulario" onClick="abrirFormularioTest()"><b style="font-size:10px;"><i class="icon-plus"></i> Agregar informe</b></button>
                         </div>
@@ -1792,13 +1797,20 @@ function mostrarModalInfoTest(indice){
     console.log(test);
     console.log(testAnterior);
     let fechaEvaluacion=formatoFechaDetalle(test.fecha_evaluacuion_test_ocular);
-    
+    let nombreJugadorMejorTiempo=test.info_jugador_mejor_tiempo.nombre+" "+test.info_jugador_mejor_tiempo.apellido1+" "+test.info_jugador_mejor_tiempo.apellido2;
+    let nombreJugadorPeorTiempo=test.info_jugador_peor_tiempo.nombre+" "+test.info_jugador_peor_tiempo.apellido1+" "+test.info_jugador_peor_tiempo.apellido2;
+    if(nombreJugadorPeorTiempo.length>=20){
+        nombreJugadorPeorTiempo=nombreJugadorPeorTiempo.substring(0,20)+"...";
+    }
+    if(nombreJugadorMejorTiempo.length>=20){
+        nombreJugadorMejorTiempo=nombreJugadorMejorTiempo.substring(0,20)+"...";
+    }
     $("#fechaModalInfo").text(fechaEvaluacion);
     $("#img_foto_mejor_jugador").attr("src","./foto_jugadores/"+test.id_jugador_mejor_tiempo_test_ocular+".png");
-    $("#nombre_mejor_evaluador").text(test.info_jugador_mejor_tiempo.nombre+" "+test.info_jugador_mejor_tiempo.apellido1+" "+test.info_jugador_mejor_tiempo.apellido1);
+    $("#nombre_mejor_evaluador").text(nombreJugadorMejorTiempo);
     $("#velocidad_mejor_evaluador").text(test.mejor_tiempo_test_ocular+" seg");
     $("#img_foto_peor_jugador").attr("src","./foto_jugadores/"+test.id_jugador_peor_tiempo_test_ocular+".png");
-    $("#nombre_peor_evaluador").text(test.info_jugador_peor_tiempo.nombre+" "+test.info_jugador_peor_tiempo.apellido1+" "+test.info_jugador_peor_tiempo.apellido1);
+    $("#nombre_peor_evaluador").text(nombreJugadorPeorTiempo);
     $("#velocidad_peor_evaluador").text(test.peor_tiempo_test_ocular+" seg");
     $("#modalInicioTestOcularInfo").modal("show");
     let listaDetallesTest=[];
@@ -1807,7 +1819,6 @@ function mostrarModalInfoTest(indice){
     }
     else{
         listaDetallesTest=[...test.detalles_test_ocular];
-
     }
     console.log(listaDetallesTest);
     insertarFilasTablaModalInfo(listaDetallesTest);
@@ -1818,23 +1829,25 @@ function insertarFilasTablaModalInfo(listaDetallesTest){
     $("#tabla_info").empty();
     let listaJugadoresDestallesTests=[];
     for(let testDetalle of listaDetallesTest){
-        let jugador=testDetalle.jugador_info;
-        let plantilla='\
-            <tr style="box-sizing:border-box;border:0;height:50px;color:#555;font-size:10px;">\
-                <th  id="numero_rank_tabla" style="border:0;height:50px;line-height:50px;/*border-right:1px solid #111;*/text-align: center; max-width: 10px;font-weight: bold;" >\
-                    '+testDetalle.ranking_detalle_test_ocular+'\
-                </th>\
-                <th style="border:0;height:50px;line-height:50px;/*border-right:1px solid #111;*/text-align: center; max-width: 10px;font-weight: bold;" >\
-                    <div style="box-sizing:border-box;border:0;float:left;width:40px;height:40px;border:2px solid #555;border-radius:100px;overflow:hidden;">\
-                        <img style="box-sizing:border-box;display:block;width:40px;height:40px;" src="./foto_jugadores/'+jugador.idfichaJugador+'.png" alt="foto_jugador_tabla">\
-                    </div>\
-                    <div style="box-sizing:border-box;border:0;float:left;height:40px;line-height:40px;margin-left:10px;">'+jugador.nombre+' '+jugador.apellido1+' '+jugador.apellido2+'</div>\
-                </th>\
-                <th style="border:0;height:50px;line-height:50px;/*border-right:1px solid #111;*/text-align: center;max-width: 10px;font-weight: normal;" >'+testDetalle.velocidad_detalle_test_ocular+' seg</th>\
-                <th style="border:0;height:50px;line-height:50px;/*border-right:1px solid #111;*/text-align: center;max-width: 10px;font-weight: normal;" >'+testDetalle.idtest_ocular+'</th>\
-                <th style="border:0;height:50px;line-height:50px;/*border-right:1px solid #111;*/max-width: 10px;    text-align: left;font-weight: normal;" >'+jugador.texto_posicion+'</th>\
-            </tr>';
-        listaJugadoresDestallesTests.push(plantilla);
+        if(testDetalle.ranking_detalle_test_ocular!=="0"){
+            let jugador=testDetalle.jugador_info;
+            let plantilla='\
+                <tr style="box-sizing:border-box;border:0;height:50px;color:#555;font-size:10px;">\
+                    <th  id="numero_rank_tabla" style="border:0;height:50px;line-height:50px;/*border-right:1px solid #111;*/text-align: center; max-width: 10px;font-weight: bold;" >\
+                        '+testDetalle.ranking_detalle_test_ocular+'\
+                    </th>\
+                    <th style="border:0;height:50px;line-height:50px;/*border-right:1px solid #111;*/text-align: center; max-width: 10px;font-weight: bold;" >\
+                        <div style="box-sizing:border-box;border:0;float:left;width:40px;height:40px;border:2px solid #555;border-radius:100px;overflow:hidden;">\
+                            <img style="box-sizing:border-box;display:block;width:40px;height:40px;" src="./foto_jugadores/'+jugador.idfichaJugador+'.png" alt="foto_jugador_tabla">\
+                        </div>\
+                        <div style="box-sizing:border-box;border:0;float:left;height:40px;line-height:40px;margin-left:10px;">'+jugador.nombre+' '+jugador.apellido1+' '+jugador.apellido2+'</div>\
+                    </th>\
+                    <th style="border:0;height:50px;line-height:50px;/*border-right:1px solid #111;*/text-align: center;max-width: 10px;font-weight: normal;" >'+testDetalle.velocidad_detalle_test_ocular+' seg</th>\
+                    <th style="border:0;height:50px;line-height:50px;/*border-right:1px solid #111;*/text-align: center;max-width: 10px;font-weight: normal;" >'+testDetalle.idtest_ocular+'</th>\
+                    <th style="border:0;height:50px;line-height:50px;/*border-right:1px solid #111;*/max-width: 10px;    text-align: left;font-weight: normal;" >'+jugador.texto_posicion+'</th>\
+                </tr>';
+            listaJugadoresDestallesTests.push(plantilla);
+        }
     }
     let strFilaTabla=listaJugadoresDestallesTests.join("");
     $("#tabla_info").append(strFilaTabla);
@@ -1948,6 +1961,7 @@ function botonVolverAInicio($botonVolver){
 
 function cargarVentanaInicioTest(){
     // alert("hlo")
+    $('#cargando_buscar').show();
     consultarAnoActual();
     let mesNumero=obtenerMesNumero();
     window.tipo_test="ocular";
@@ -1962,6 +1976,7 @@ function cargarVentanaInicioTest(){
 }
 
 function volverInicioModuloTest($botonCerrarFormularioTest){
+    $("#cargando_buscar").show();
     $("#vista_test_formulario_ocular").hide(500);
     $("#vista_test_ocular").show(500);
     insertarOptionSelectFiltroTestOcular();
@@ -2237,10 +2252,13 @@ function consultarTestsOculares(ano="2020",mes="01"){
         success: function(respuesta) {
             var json=JSON.parse(respuesta);
             window.datos_test[window.tipo_test].lista_inicio_test=json.datos;
+            $('#cargando_buscar').hide();
+            $("#error_conexion").hide();
             // console.log("listando test oculares",window.datos_test[window.tipo_test].lista_inicio_test);
             insertarFilaInicioTestOculares(window.datos_test[window.tipo_test].lista_inicio_test);
         },error: function(){// will fire when timeout is reached
             // alert("errorXXXXX");
+            $("#error_conexion").show();
         }, timeout: 10000 // sets timeout to 3 seconds
     });
 }
@@ -2251,6 +2269,7 @@ function filtrarTestOcular (){
 
 function insertarFilaInicioTestOculares(tests=[]){
     if(tests.length!==0){
+        $("#sin_resultados").hide();
         let lista_test_ocular=[];
         let contador=0;
         for(let test of tests){
@@ -2318,6 +2337,7 @@ function insertarFilaInicioTestOculares(tests=[]){
 
     }
     else{
+        $("#sin_resultados").show();
         let str_fila_registro='<div class="panel_buscar" style="box-sizing:border-box;border:0;width:100%;height:34px;padding-top:2px;padding-bottom:2px;text-align:center;font-weight: 800;font-size:12px;line-height:30px;">Sin Test</div>';
         $("#contenedor_fila_tabla_inicio_test_ocular").append(str_fila_registro);
     }
@@ -2612,6 +2632,7 @@ function enviarDatosTestOcular(){
         datosFormulario.push({name:"array_comentario[]",value:comentario});
     }
     let jugadorMejorTiempo=buscarJugadorConMejorTiempo(lista_ranking);
+    let jugadorPeorTiempo=buscarJugadorConPeorTiempo(lista_ranking);
     // Obteniendo datos generales test
     datosFormulario.push({name:"tipo_formulario",value:window.datos_test[window.tipo_test].tipo_fomrulario});
     datosFormulario.push({name:"idtest_ocular",value: window.idtest_ocular});
@@ -2622,8 +2643,8 @@ function enviarDatosTestOcular(){
     datosFormulario.push({name:"numeros_jugadores_evaluados_test_ocular",value:lista_ranking.length});
     datosFormulario.push({name:"id_jugador_mejor_tiempo_test_ocular",value:jugadorMejorTiempo.id});
     datosFormulario.push({name:"mejor_tiempo_test_ocular",value:jugadorMejorTiempo.velocidad});
-    datosFormulario.push({name:"id_jugador_peor_tiempo_test_ocular",value:lista_ranking[lista_ranking.length-1].id});
-    datosFormulario.push({name:"peor_tiempo_test_ocular",value:lista_ranking[lista_ranking.length-1].velocidad});
+    datosFormulario.push({name:"id_jugador_peor_tiempo_test_ocular",value:jugadorPeorTiempo.id});
+    datosFormulario.push({name:"peor_tiempo_test_ocular",value:jugadorPeorTiempo.velocidad});
     datosFormulario.push({name:"media_test_ocular",value:document.getElementById("promedio_test_ocular").textContent});
 
     console.log(datosFormulario);
@@ -2635,6 +2656,7 @@ function enviarDatosTestOcular(){
                 var json=JSON.parse(respuesta);
                 // console.log(json)
                 // console.log(json);
+               
                 $("#modalFormularioTestOcular").modal("hide");
                 $("#vista_test_formulario_ocular").hide(500);
                 $("#vista_test_ocular").show(500);
@@ -2660,6 +2682,19 @@ function buscarJugadorConMejorTiempo(lista_ranking){
 
 }
 
+function buscarJugadorConPeorTiempo(lista_ranking){
+
+    let jugador=null;
+    for(let contador=lista_ranking.length-1;contador!==0;contador--){
+        if(lista_ranking[contador].rank!==0){
+            jugador=lista_ranking[contador];
+            break;
+        }
+    }
+    return jugador;
+
+}
+
 function promedioTestOcularFormulario(){
     let numeroDeJugadores=window.ranking_test_ocular.length;
     let totalVelocidadJugadores=0;
@@ -2673,7 +2708,10 @@ function promedioTestOcularFormulario(){
 function sumarAlRankingTestOcular($inputVelocidad){
     // calcular ranking y calcular promedio velocidad
     // let exprexion=/[0-9]||[0-9]{1,1}.[0-9]{1,1}/g;
-    let id=$inputVelocidad.getAttribute("data-id-jugador");
+    let expresion=/^[0-9]+([.]|[,])?([0-9]+)?$/g;
+    if(expresion.test($inputVelocidad.value)){
+        // alert("si")
+        let id=$inputVelocidad.getAttribute("data-id-jugador");
     let exprexion=/[a-zA-z]/;
     if(window.ranking_test_ocular.length===0){
             window.ranking_test_ocular.push({
@@ -2726,6 +2764,63 @@ function sumarAlRankingTestOcular($inputVelocidad){
         }
         // alert(promedioTestOcularFormulario().toFixed(2).toString());
         document.getElementById("promedio_test_ocular").textContent=promedioTestOcularFormulario().toFixed(2).toString();
+    }
+    else{
+        $inputVelocidad.value="";
+        let id=$inputVelocidad.getAttribute("data-id-jugador");
+    let exprexion=/[a-zA-z]/;
+    if(window.ranking_test_ocular.length===0){
+            window.ranking_test_ocular.push({
+                id:$inputVelocidad.getAttribute("data-id-jugador"),
+                rank:0,
+                velocidad:(document.getElementById("velocidad_"+id).value!="")?parseFloat(document.getElementById("velocidad_"+id).value):0,
+                comentario:""
+            });
+        }
+        else{
+            let posicion=0;
+            let econtrado=false;
+            for(let jugador of window.ranking_test_ocular){
+                if(jugador.id===$inputVelocidad.getAttribute("data-id-jugador")){
+                        window.ranking_test_ocular[posicion]={
+                        id:$inputVelocidad.getAttribute("data-id-jugador"),
+                        rank:0,
+                        velocidad:(document.getElementById("velocidad_"+id).value!="")?parseFloat(document.getElementById("velocidad_"+id).value):0,
+                        comentario:""
+                    }
+                    econtrado=true;
+                }
+                posicion++;
+            }
+            if(!econtrado){
+                window.ranking_test_ocular.push({
+                    id:$inputVelocidad.getAttribute("data-id-jugador"),
+                    rank:0,
+                    velocidad:(document.getElementById("velocidad_"+id).value!="")?parseFloat(document.getElementById("velocidad_"+id).value):0,
+                    comentario:""
+                });
+            }
+        }
+        let estado_ranking=false;
+        for(let jugador of rankingOrdenTestOcular()){
+            // console.log("->>",jugador)
+            if(jugador.velocidad===0){
+                document.getElementById("ranking_test_ocular_formulario_"+jugador.id).textContent="-";
+                estado_ranking=true;
+            }
+            else{
+                if(estado_ranking){
+                    jugador.rank=jugador.rank-1;
+                    document.getElementById("ranking_test_ocular_formulario_"+jugador.id).textContent=jugador.rank.toString();
+                }
+                else{
+                    document.getElementById("ranking_test_ocular_formulario_"+jugador.id).textContent=jugador.rank.toString();
+                }
+            }
+        }
+        // alert(promedioTestOcularFormulario().toFixed(2).toString());
+        document.getElementById("promedio_test_ocular").textContent=promedioTestOcularFormulario().toFixed(2).toString();
+    }
 }
 
 function rankingOrdenTestOcular(){
@@ -2974,14 +3069,17 @@ function insertarDatosGraficoBar(test){
     // Create the chart
     let datosGrafico=[];
     for(let detalle of test.detalles_test_ocular){
-        let jugador=detalle.jugador_info;
-        let nombreJugador=jugador.nombre+" "+jugador.apellido1+" "+jugador.apellido2;
+        if(detalle.ranking_detalle_test_ocular!=="0"){
+                let jugador=detalle.jugador_info;
+            let nombreJugador=jugador.nombre+" "+jugador.apellido1+" "+jugador.apellido2;
+           
 
-        datosGrafico.push({
-            name: nombreJugador,
-            y: parseFloat(detalle.velocidad_detalle_test_ocular),
-            drilldown: nombreJugador
-        })
+            datosGrafico.push({
+                name: nombreJugador,
+                y: parseFloat(detalle.velocidad_detalle_test_ocular),
+                drilldown: nombreJugador
+            })
+        }
     }
 
     Highcharts.chart('container', {
@@ -3019,6 +3117,9 @@ function insertarDatosGraficoBar(test){
             format: '{point.y:.1f} seg.'
         }
         }
+    },
+    credits: {
+        enabled: false
     },
 
     tooltip: {

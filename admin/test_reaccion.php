@@ -2882,6 +2882,9 @@ function insertarGrafico(datos){
       overflow: 'justify'
     }
   },
+  credits: {
+        enabled: false
+    },
   tooltip: {
     valueSuffix: ' seg'
   },
