@@ -2683,7 +2683,7 @@ function insertarGrafico(datos){
         text: 'EVALUACIÓN DE LOS JUGADORES'
     },
     subtitle: {
-        text: ''
+    text: 'TEST DE DECISIONES'
     },
     xAxis: {
         categories: datos[0],
@@ -2694,7 +2694,7 @@ function insertarGrafico(datos){
     yAxis: {
         min: 0,
         title: {
-        text: '10 METROS',
+        text: 'TEST DE DECISIONES',
         align: 'high'
         },
         labels: {

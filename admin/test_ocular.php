@@ -2992,7 +2992,7 @@ function insertarDatosGraficoBar(test){
         text: 'EVALUACIÓN DE LOS JUGADORES'
     },
     subtitle: {
-        text: 'TEST DE VELOCIDAD 10 METROS'
+        text: 'TEST DE VELOCIDAD'
     },
     accessibility: {
         announceNewData: {
@@ -3004,7 +3004,7 @@ function insertarDatosGraficoBar(test){
     },
     yAxis: {
         title: {
-        text: 'TEST DE VELOCIDAD 10 METROS seg.'
+        text: 'TEST DE VELOCIDAD seg.'
         }
 
     },
