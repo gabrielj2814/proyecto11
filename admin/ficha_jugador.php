@@ -3766,10 +3766,10 @@ var estadoBorrarBuffer=true;
 </script>
 <script>
 
-async function consultarEquiposClub(){
+function consultarEquiposClub(){
     window.lista_club_paises=[];
     var url = "post/consumirEquiposClub.php";
-    await $.ajax({
+    $.ajax({
             url:url,
             type:'POST',
             contentType:false,
@@ -6274,10 +6274,13 @@ function enviarDatosEditarPrestamo(id){
 <script type="text/javascript" src="bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.es.js" charset="UTF-8"></script>
 <script>
     
-    mostrar_al_cargar_pagina();
+    
     consultar_ano_actual();
     consultarEquiposClub();
-    consultarFichaJugadores();
+    setTimeout(() => {
+        mostrar_al_cargar_pagina();
+        consultarFichaJugadores();
+    },2000);
     // console.clear();
     $(document).on('click', '.option', function(e) { //
         e.stopPropagation();
