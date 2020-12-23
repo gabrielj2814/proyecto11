@@ -2676,72 +2676,72 @@ function insertarFilasTablaModalInfo(listaDetallesTest){
 
 function insertarGrafico(datos){
     Highcharts.chart('container', {
-  chart: {
-    type: 'bar'
-  },
-  title: {
-    text: 'EVALUACIÓN DE LOS JUGADORES'
-  },
-  subtitle: {
-    text: ''
-  },
-  xAxis: {
-    categories: datos[0],
-    title: {
-      text: null
-    }
-  },
-  yAxis: {
-    min: 0,
-    title: {
-      text: '10 METROS',
-      align: 'high'
+    chart: {
+        type: 'bar'
     },
-    labels: {
-      overflow: 'justify'
-    }
-  },
-  tooltip: {
-    valueSuffix: ' seg'
-  },
-  plotOptions: {
-    bar: {
-      dataLabels: {
-        enabled: true
-      }
-    }
-  },
-  legend: {
-    layout: 'vertical',
-    align: 'right',
-    verticalAlign: 'top',
-    x: -40,
-    y: 80,
-    floating: true,
-    borderWidth: 1,
-    backgroundColor:
-      Highcharts.defaultOptions.legend.backgroundColor || '#FFFFFF',
-    shadow: true
-  },
-  credits: {
-    enabled: false
-  },
-  series: [{
-    name: 'Toma de decisiones',
-    data: datos[1]
-  }, {
-    name: 'Precision',
-    data: datos[2]
-  }, {
-    name: 'Manejo de presión',
-    data: datos[3]
-  }, {
-    name: 'Reacción',
-    data: datos[4]
-  }, {
-    name: 'Adaptabilidad',
-    data: datos[5]
-  }]
+    title: {
+        text: 'EVALUACIÓN DE LOS JUGADORES'
+    },
+    subtitle: {
+        text: ''
+    },
+    xAxis: {
+        categories: datos[0],
+        title: {
+        text: null
+        }
+    },
+    yAxis: {
+        min: 0,
+        title: {
+        text: '10 METROS',
+        align: 'high'
+        },
+        labels: {
+        overflow: 'justify'
+        }
+    },
+    tooltip: {
+        valueSuffix: ' seg'
+    },
+    plotOptions: {
+        bar: {
+        dataLabels: {
+            enabled: true
+        }
+        }
+    },
+    legend: {
+        layout: 'vertical',
+        align: 'right',
+        verticalAlign: 'top',
+        x: -40,
+        y: 80,
+        floating: true,
+        borderWidth: 1,
+        backgroundColor:
+        Highcharts.defaultOptions.legend.backgroundColor || '#FFFFFF',
+        shadow: true
+    },
+    credits: {
+        enabled: false
+    },
+    series: [{
+        name: 'Toma de decisiones',
+        data: datos[1]
+    }, {
+        name: 'Precision',
+        data: datos[2]
+    }, {
+        name: 'Manejo de presión',
+        data: datos[3]
+    }, {
+        name: 'Reacción',
+        data: datos[4]
+    }, {
+        name: 'Adaptabilidad',
+        data: datos[5]
+    }]
 });
 
 }
@@ -2783,19 +2783,28 @@ function formatoFechaDetalle(fecha){
         return fechaFormato;
 } 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+function descargarPDF(id){
+    // alert(id);
+    $("#descargarPDF").modal("show");
+    $('#mensaje_agregar_descargarPDF').html('<h5><i class="icon-spinner icon-spin icon-large"></i> Generando PDF...</h5><br><img src="../config/agregar_archivo.png">');
+    $.ajax({
+        url: "post/reportes/generarPDF_test_decisiones.php",
+        type: "post",
+        cache: false,
+        data:[{name:"id",value:id}],
+        dataType:"json",
+        success:(respuesta) => {
+            if(respuesta != ''){
+                $('#mensaje_agregar_descargarPDF').html('<h5>PDF Generado Exitosamente...</h5><br><button type="submit" class="boton_informe_jugador" style="border-radius: 5px" id="boton_agregar_informe" ><a  class="btn_descargar" onClick="closeModal_pdf();" download href="reportes_pdf/'+respuesta+'">DESCARGAR PDF</a></button>');
+            }else{
+                $('#mensaje_agregar_descargarPDF').html('<h5>Error de conexión: los datos no se han podido insertar.</h5><br>');
+            }
+        },
+        error:(error)=>{
+            $('#mensaje_agregar_descargarPDF').html('<h5 style="color: #dc4e4e;"><i class="icon-warning-sign"></i> <b>ERROR:</b> compruebe conexión a internet.</h5>');
+        }, timeout: 15000 // sets timeout to 3 seconds
+    })
+}
 
 </script>
 <script type="text/javascript" src="bootstrap-datetimepicker/js/bootstrap-datetimepicker.js" charset="UTF-8"></script>

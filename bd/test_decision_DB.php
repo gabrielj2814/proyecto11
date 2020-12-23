@@ -285,6 +285,19 @@ function eliminarDetalleTest($id){
 	$link->close();
 }
 
+function consultarTestReaccion($id){
+	include("conexion.php");
+    $SQL="SELECT * FROM test_decision WHERE idtestdecision=$id;";
+    $result_test=$link->query($SQL);
+    $test_data=[];
+    while($row = mysqli_fetch_array($result_test)){
+		$row["detalle_test"]=consultarDestalleTest($row["idtestdecision"]);
+        $test_data[]=utf8_converter($row);
+    }
+    $link->close();
+    return (sizeof($test_data)>0)?$test_data[0]:[];
+}
+
 
 
 ?>
