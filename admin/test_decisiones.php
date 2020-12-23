@@ -1356,10 +1356,11 @@ app.controller("controlador_1",['$scope',function($scope){
                                                     #
                                                 </th>
                                                 <th style="border:0;height:20px;line-height:20px;/*border-right:1px solid #111;*/text-align: center;max-width: 18px;" >JUGADOR</th>
-                                                <th style="border:0;height:20px;line-height:20px;/*border-right:1px solid #111;*/text-align: center;max-width: 10px;" >1</th>
-                                                <th style="border:0;height:20px;line-height:20px;/*border-right:1px solid #111;*/text-align: center;max-width: 10px;" >2</th>
-                                                <th style="border:0;height:20px;line-height:20px;/*border-right:1px solid #111;*/text-align: center;max-width: 10px;" >3</th>
-                                                <th style="border:0;height:20px;line-height:20px;/*border-right:1px solid #111;*/text-align: center;max-width: 10px;" >4</th>
+                                                <th style="border:0;height:20px;line-height:20px;/*border-right:1px solid #111;*/text-align: center;max-width: 10px;" >DECISIONES</th>
+                                                <th style="border:0;height:20px;line-height:20px;/*border-right:1px solid #111;*/text-align: center;max-width: 10px;" >PRESICIÓN</th>
+                                                <th style="border:0;height:20px;line-height:20px;/*border-right:1px solid #111;*/text-align: center;max-width: 10px;" >PRESIÓN</th>
+                                                <th style="border:0;height:20px;line-height:20px;/*border-right:1px solid #111;*/text-align: center;max-width: 10px;" >REACCIÓN</th>
+                                                <th style="border:0;height:20px;line-height:20px;/*border-right:1px solid #111;*/text-align: center;max-width: 17px;" >ADAPTABILIDAD</th>
                                                 <th style="border:0;height:20px;line-height:20px;/*border-right:1px solid #111;*/max-width: 36px;    text-align: left;" >POSICIÓN</th>
                                             </tr>
                                                 
@@ -1472,12 +1473,12 @@ app.controller("controlador_1",['$scope',function($scope){
                                     <div style="box-sizing:border-box;border:0;width:10%;height:30px;float:left;color:#fff;font-weight: 600;/*border-right:1px solid red;*/line-height: 30px;font-size: 12px;text-align:center">Evaluados</div>
                                     <div style="box-sizing:border-box;border:0;width:9.6%;height:30px;float:left;color:#fff;font-weight: 600;/*border-right:1px solid red;*/text-align:center;line-height: 30px;font-size: 12px;padding-left:5px;" class="tooltip-customized">
                                         <span class="tooltiptext">toma de decisiones</span>
-                                        decisiones
+                                        Decisiones
                                     </div>
                                     <div style="box-sizing:border-box;border:0;width:9.6%;height:30px;float:left;color:#fff;font-weight: 600;/*border-right:1px solid red;*/text-align:center;line-height: 30px;font-size: 12px;padding-left:5px;">Precisión</div>
                                     <div style="box-sizing:border-box;border:0;width:9.6%;height:30px;float:left;color:#fff;font-weight: 600;/*border-right:1px solid red;*/text-align:center;line-height: 30px;font-size: 12px;padding-left:5px;"  class="tooltip-customized">
                                         <span class="tooltiptext">manejo de la presión</span>
-                                        presión
+                                        Presión
                                     </div>
                                     <div style="box-sizing:border-box;border:0;width:9.6%;height:30px;float:left;color:#fff;font-weight: 600;/*border-right:1px solid red;*/text-align:center;line-height: 30px;font-size: 12px;padding-left:5px;">Reacción</div>
                                     <div style="box-sizing:border-box;border:0;width:9.6%;height:30px;float:left;color:#fff;font-weight: 600;/*border-right:1px solid red;*/text-align:center;line-height: 30px;font-size: 12px;padding-left:5px;">Adaptabilidad</div>
@@ -2614,7 +2615,173 @@ function enviarDatosTest(){
 }
 
 
+function mostrarModalInfoTest(indice){
+    // alert(indice);
+    let test=window.datos_test[window.tipo_test].lista_inicio_test[indice];
+    console.log(test);
+    let fechaEvaluacion=formatoFechaDetalle(test.fecha_evaluacion_test);
+    $("#fechaModalInfo").text(fechaEvaluacion);
+    $("#modalInicioTestInfo").modal("show");
+    
+    let listaNombreJugadores=insertarFilasTablaModalInfo(test.detalle_test);
+    // // insertarDatosGraficoBar(test);
+    insertarGrafico(listaNombreJugadores);
+}
 
+function insertarFilasTablaModalInfo(listaDetallesTest){
+    $("#tabla_info").empty();
+    let listaNombreJugadores=[];
+    let decisiones=[];
+    let precision=[];
+    let presion=[];
+    let reaccion=[];
+    let adaptacion=[];
+    let contador=0;
+    let listaJugadoresDestallesTests=[];
+    for(let testDetalle of listaDetallesTest){
+        let jugador=testDetalle.infoJugador;
+        let nombreJugador=jugador.nombre+' '+jugador.apellido1+' '+jugador.apellido2;
+        let plantilla='\
+            <tr style="box-sizing:border-box;border:0;height:50px;color:#555;font-size:10px;">\
+                <th  id="numero_rank_tabla" style="border:0;height:50px;line-height:50px;/*border-right:1px solid #111;*/text-align: center; max-width: 10px;font-weight: bold;" >\
+                    '+(contador+1)+'\
+                </th>\
+                <th style="border:0;height:50px;line-height:50px;/*border-right:1px solid #111;*/text-align: center; max-width: 10px;font-weight: bold;" >\
+                    <div style="box-sizing:border-box;border:0;float:left;width:40px;height:40px;border:2px solid #555;border-radius:100px;overflow:hidden;">\
+                        <img style="box-sizing:border-box;display:block;width:40px;height:40px;" src="./foto_jugadores/'+jugador.idfichaJugador+'.png?idea='+new Date().getTime()+'" alt="foto_jugador_tabla">\
+                    </div>\
+                    <div style="box-sizing:border-box;border:0;float:left;height:40px;line-height:40px;margin-left:10px;text-transform:capitalize;">'+jugador.nombre+' '+jugador.apellido1+' '+jugador.apellido2+'</div>\
+                </th>\
+                <th style="border:0;height:50px;line-height:50px;/*border-right:1px solid #111;*/text-align: center;max-width: 10px;font-weight: normal;" >'+testDetalle.toma_desicion+' seg</th>\
+                <th style="border:0;height:50px;line-height:50px;/*border-right:1px solid #111;*/text-align: center;max-width: 10px;font-weight: normal;" >'+testDetalle.presicion+' seg</th>\
+                <th style="border:0;height:50px;line-height:50px;/*border-right:1px solid #111;*/text-align: center;max-width: 10px;font-weight: normal;" >'+testDetalle.manejo_presion+' seg</th>\
+                <th style="border:0;height:50px;line-height:50px;/*border-right:1px solid #111;*/text-align: center;max-width: 10px;font-weight: normal;" >'+testDetalle.reaccion+' seg</th>\
+                <th style="border:0;height:50px;line-height:50px;/*border-right:1px solid #111;*/text-align: center;max-width: 10px;font-weight: normal;" >'+testDetalle.adaptacion+' seg</th>\
+                <th style="border:0;height:50px;line-height:50px;/*border-right:1px solid #111;*/max-width: 10px;    text-align: left;font-weight: normal;" >'+jugador.texto_posicion+'</th>\
+            </tr>';
+        contador++;
+        decisiones.push(parseInt(testDetalle.toma_desicion));
+        precision.push(parseInt(testDetalle.presicion));
+        presion.push(parseInt(testDetalle.manejo_presion));
+        reaccion.push(parseInt(testDetalle.reaccion));
+        adaptacion.push(parseInt(testDetalle.adaptacion));
+        listaNombreJugadores.push(nombreJugador);
+        listaJugadoresDestallesTests.push(plantilla);
+    }
+    let strFilaTabla=listaJugadoresDestallesTests.join("");
+    $("#tabla_info").append(strFilaTabla);
+    return [listaNombreJugadores,decisiones,precision,presion,reaccion,adaptacion];
+
+}
+
+function insertarGrafico(datos){
+    Highcharts.chart('container', {
+  chart: {
+    type: 'bar'
+  },
+  title: {
+    text: 'EVALUACIÓN DE LOS JUGADORES'
+  },
+  subtitle: {
+    text: ''
+  },
+  xAxis: {
+    categories: datos[0],
+    title: {
+      text: null
+    }
+  },
+  yAxis: {
+    min: 0,
+    title: {
+      text: '10 METROS',
+      align: 'high'
+    },
+    labels: {
+      overflow: 'justify'
+    }
+  },
+  tooltip: {
+    valueSuffix: ' seg'
+  },
+  plotOptions: {
+    bar: {
+      dataLabels: {
+        enabled: true
+      }
+    }
+  },
+  legend: {
+    layout: 'vertical',
+    align: 'right',
+    verticalAlign: 'top',
+    x: -40,
+    y: 80,
+    floating: true,
+    borderWidth: 1,
+    backgroundColor:
+      Highcharts.defaultOptions.legend.backgroundColor || '#FFFFFF',
+    shadow: true
+  },
+  credits: {
+    enabled: false
+  },
+  series: [{
+    name: 'Toma de decisiones',
+    data: datos[1]
+  }, {
+    name: 'Precision',
+    data: datos[2]
+  }, {
+    name: 'Manejo de presión',
+    data: datos[3]
+  }, {
+    name: 'Reacción',
+    data: datos[4]
+  }, {
+    name: 'Adaptabilidad',
+    data: datos[5]
+  }]
+});
+
+}
+
+function formatoFechaDetalle(fecha){
+    let lista_meses=[
+            "Enero",
+            "Febrero",
+            "Marzo",
+            "Abril",
+            "Mayo",
+            "Junio",
+            "Julio",
+            "Agosto",
+            "Septiembre",
+            "Octubre",
+            "Noviembre",
+            "Diciembre"
+        ] ; 
+
+        let dia_semana=[
+            "Domingo",
+            "Lunes",
+            "Martes",
+            "Miercoles",
+            "Jueves",
+            "Viernes",
+            "Sabado"
+        ] ; 
+        let ano=fecha.split("-")[0] ; 
+        let mes=fecha.split("-")[1] ; 
+        let dia=fecha.split("-")[2] ; 
+        let fechaDate=new Date() ; 
+        fechaDate.setDate(parseInt(dia)) ; 
+        fechaDate.setMonth(parseInt(mes)-1) ; 
+        fechaDate.setFullYear(parseInt(ano)) ; 
+
+        let fechaFormato=dia_semana[fechaDate.getDay()]+' '+fechaDate.getDate()+' de '+lista_meses[fechaDate.getMonth()]+' '+fechaDate.getFullYear() ; 
+        return fechaFormato;
+} 
 
 
 
