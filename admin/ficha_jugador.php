@@ -5538,7 +5538,7 @@ function insetarDatosTablaHtml(jugadores){
             let prestamo_str=estadoPrestamoJugador(jugador);
 
             
-
+            // alert(jugador.posicion);
             fila='\
             <div class="fila_serie_jugador"  style="box-sizing:border-box;border:0;width:100%;height:32px;cursor:pointer;padding-top: 1px;padding-bottom: 1px;font-size:11px;">\
                 <div onClick="mostrarInfoFichaJugador('+jugador.idfichaJugador+')" style="box-sizing:border-box;border:0;width:2%;height:30px;float:left;color:#555;line-height: 30px;text-align:center;">'+(contador+1)+'</div>\
