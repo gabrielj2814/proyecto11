@@ -1423,6 +1423,11 @@ app.controller("controlador_1",['$scope',function($scope){
                         </div>
                         <div style="box-sizing: border-box;border:0;width:90%;height:15px;margin-left:auto;margin-right:auto;background-color:#0b3b99 ;margin-bottom:60px;"></div>
                         <!-- <h1>VITSA OCULAR</h1> -->
+                        <div style="margin:0px; height:20px;margin-left: auto;margin-right: auto;width: 141px;">
+                                <img src="img/cargando_buscar.gif" id="cargando_buscar" style=" display:none;">
+                                <span style="color:#dc4e4e; display:none;" id="error_conexion"><b>Error:</b> conexión a internet deficiente.</span>
+                                <span style="color:#28b779; display:none;" id="sin_resultados">Busqueda sin resultados.</span>
+                        </div>
                         <div style="box-sizing:border-box;border:0;width:109px;margin-left:auto;margin-right:25px;margin-bottom:15px;">
                             <button data-boton-abrir-formulario-test="ocular" class="boton-abrir-formulario" onClick="abrirFormularioTest()"><b style="font-size:10px;"><i class="icon-plus"></i> Agregar informe</b></button>
                         </div>
@@ -1760,6 +1765,7 @@ function cargarVentanaInicioTest(){
     let mesNumero=obtenerMesNumero();
     window.tipo_test="decisiones";
     insertarOptionSelectFiltroTest();
+    $("#cargando_buscar").show();
     $("#filtro_mes_test").val(mesNumero);
     
     setTimeout(() => {
@@ -1802,6 +1808,7 @@ function filtrarTest (){
 function consultarTests(ano="2020",mes="01"){
     $("#contenedor_fila_tabla_inicio_test").empty();
     window.datos_test[window.tipo_test].lista_inicio_test=[];
+    $("#cargando_buscar").show();
     $.ajax({
         url: 'post/test_consultar_test_decision_año_mes.php',
         type: "post",
@@ -1811,11 +1818,13 @@ function consultarTests(ano="2020",mes="01"){
         ],
         success: function(respuesta) {
             var json=JSON.parse(respuesta);
+            $("#cargando_buscar").hide();
             window.datos_test[window.tipo_test].lista_inicio_test=json.datos;
             console.log("listando test ->>>",window.datos_test[window.tipo_test].lista_inicio_test);
             insertarFilaInicioTest(window.datos_test[window.tipo_test].lista_inicio_test);
         },error: function(){// will fire when timeout is reached
             // alert("errorXXXXX");
+            $("#error_conexion").show();
         }, timeout: 10000 // sets timeout to 3 seconds
     });
 }
@@ -1825,7 +1834,7 @@ function insertarFilaInicioTest(tests=[]){
         let lista_test=[];
         let contador=0;
         for(let test of tests){
-
+            $("#sin_resultados").hide();
             let str_fila_registro='\
             <div class="panel_buscar" style="box-sizing:border-box;border:0;width:100%;height:30px;padding-top:2px;padding-bottom:2px;">\
                 <div onClick="mostrarModalInfoTest('+contador+')" style="box-sizing:border-box;border:0;width:2%;height:26px;float:left;color:#555;font-weight: 600;/*border-right:1px solid red;*/line-height: 26px;font-size: 11px;padding-left:5px;text-align:center">'+(contador+1)+'</div>\
@@ -1868,6 +1877,7 @@ function insertarFilaInicioTest(tests=[]){
 
     }
     else{
+        $("#sin_resultados").show();
         let str_fila_registro='<div class="panel_buscar" style="box-sizing:border-box;border:0;width:100%;height:34px;padding-top:2px;padding-bottom:2px;text-align:center;font-weight: 800;font-size:12px;line-height:30px;">Sin Test</div>';
         $("#contenedor_fila_tabla_inicio_test").append(str_fila_registro);
     }
@@ -2177,7 +2187,10 @@ function obtenerInicialDelPosicion(posicion){
 }
 
 function sumarAlRankingTestOcular($inputVelocidad){
-    let id=$inputVelocidad.getAttribute("data-id-jugador");
+    let expresion=/^[0-9]+([.]|[,])?([0-9]+)?$/g;
+    if(expresion.test($inputVelocidad.value)){
+
+        let id=$inputVelocidad.getAttribute("data-id-jugador");
     if(window.ranking_test_decision.length===0){
             window.ranking_test_decision.push({
                 id:$inputVelocidad.getAttribute("data-id-jugador"),
@@ -2236,6 +2249,72 @@ function sumarAlRankingTestOcular($inputVelocidad){
         document.getElementById("promedio_menejo_presion").textContent=(promedios.manejo_presion.toFixed(2).toString()==="Infinity")?"0.00":promedios.manejo_presion.toFixed(2).toString();
         document.getElementById("promedio_reaccion").textContent=(promedios.reaccion.toFixed(2).toString()==="Infinity")?"0.00":promedios.reaccion.toFixed(2).toString();
         document.getElementById("promedio_adaptacion").textContent=(promedios.adaptacion.toFixed(2).toString()==="Infinity")?"0.00":promedios.adaptacion.toFixed(2).toString();
+    
+
+    }
+    else{
+        $inputVelocidad.value="";
+        let id=$inputVelocidad.getAttribute("data-id-jugador");
+    if(window.ranking_test_decision.length===0){
+            window.ranking_test_decision.push({
+                id:$inputVelocidad.getAttribute("data-id-jugador"),
+                
+                rank:0,
+                // velocidad:(parseFloat($inputVelocidad.value)!=="")?parseFloat($inputVelocidad.value):"",
+                toma_decision:(document.getElementById("toma_decision_"+id).value!=="")?parseFloat(document.getElementById("toma_decision_"+id).value):0,
+                presicion:(document.getElementById("presicion_"+id).value!=="")?parseFloat(document.getElementById("presicion_"+id).value):0,
+                manejo_presion:(document.getElementById("manejo_presion_"+id).value!=="")?parseFloat(document.getElementById("manejo_presion_"+id).value):0,
+                reaccion:(document.getElementById("reaccion_"+id).value!=="")?parseFloat(document.getElementById("reaccion_"+id).value):0,
+                adaptacion:(document.getElementById("adaptacion_"+id).value!=="")?parseFloat(document.getElementById("adaptacion_"+id).value):0
+
+            });
+        }
+        else{
+            let posicion=0;
+            let econtrado=false;
+            for(let jugador of window.ranking_test_decision){
+                if(jugador.id===$inputVelocidad.getAttribute("data-id-jugador")){
+                        window.ranking_test_decision[posicion]={
+                        id:$inputVelocidad.getAttribute("data-id-jugador"),
+                        rank:0,
+                        // velocidad:(parseFloat($inputVelocidad.value)!=="")?parseFloat($inputVelocidad.value):"",
+                        toma_decision:(document.getElementById("toma_decision_"+id).value!=="")?parseFloat(document.getElementById("toma_decision_"+id).value):0,
+                        presicion:(document.getElementById("presicion_"+id).value!=="")?parseFloat(document.getElementById("presicion_"+id).value):0,
+                        manejo_presion:(document.getElementById("manejo_presion_"+id).value!=="")?parseFloat(document.getElementById("manejo_presion_"+id).value):0,
+                        reaccion:(document.getElementById("reaccion_"+id).value!=="")?parseFloat(document.getElementById("reaccion_"+id).value):0,
+                        adaptacion:(document.getElementById("adaptacion_"+id).value!=="")?parseFloat(document.getElementById("adaptacion_"+id).value):0
+                    }
+                    econtrado=true;
+                }
+                posicion++;
+            }
+            if(!econtrado){
+                window.ranking_test_decision.push({
+                    id:$inputVelocidad.getAttribute("data-id-jugador"),
+                    rank:0,
+                    // velocidad:(parseFloat($inputVelocidad.value)!=="")?parseFloat($inputVelocidad.value):"",
+                    toma_decision:(document.getElementById("toma_decision_"+id).value!=="")?parseFloat(document.getElementById("toma_decision_"+id).value):0,
+                    presicion:(document.getElementById("presicion_"+id).value!=="")?parseFloat(document.getElementById("presicion_"+id).value):0,
+                    manejo_presion:(document.getElementById("manejo_presion_"+id).value!=="")?parseFloat(document.getElementById("manejo_presion_"+id).value):0,
+                    reaccion:(document.getElementById("reaccion_"+id).value!=="")?parseFloat(document.getElementById("reaccion_"+id).value):0,
+                    adaptacion:(document.getElementById("adaptacion_"+id).value!=="")?parseFloat(document.getElementById("adaptacion_"+id).value):0
+                });
+            }
+        }
+        // console.log(window.ranking_test_decision);
+        for(let jugador of rankingOrdenTest()){
+            
+            console.log("ranking ->>>",jugador);
+            // document.getElementById("ranking_test_formulario_"+jugador.id).textContent=jugador.rank.toString();
+        }
+        let promedios=promedioTestFormulario();
+        document.getElementById("promedio_toma_decision").textContent=(promedios.toma_decision.toFixed(2).toString()==="Infinity")?"0.00":promedios.toma_decision.toFixed(2).toString();
+        document.getElementById("promedio_presicion").textContent=(promedios.presicion.toFixed(2).toString()==="Infinity")?"0.00":promedios.presicion.toFixed(2).toString();
+        document.getElementById("promedio_menejo_presion").textContent=(promedios.manejo_presion.toFixed(2).toString()==="Infinity")?"0.00":promedios.manejo_presion.toFixed(2).toString();
+        document.getElementById("promedio_reaccion").textContent=(promedios.reaccion.toFixed(2).toString()==="Infinity")?"0.00":promedios.reaccion.toFixed(2).toString();
+        document.getElementById("promedio_adaptacion").textContent=(promedios.adaptacion.toFixed(2).toString()==="Infinity")?"0.00":promedios.adaptacion.toFixed(2).toString();
+    
+    }
     
     // validarCampoFormulario();
 }
@@ -2639,34 +2718,47 @@ function insertarFilasTablaModalInfo(listaDetallesTest){
     let contador=0;
     let listaJugadoresDestallesTests=[];
     for(let testDetalle of listaDetallesTest){
-        let jugador=testDetalle.infoJugador;
-        let nombreJugador=jugador.nombre+' '+jugador.apellido1+' '+jugador.apellido2;
-        let plantilla='\
-            <tr style="box-sizing:border-box;border:0;height:50px;color:#555;font-size:10px;">\
-                <th  id="numero_rank_tabla" style="border:0;height:50px;line-height:50px;/*border-right:1px solid #111;*/text-align: center; max-width: 10px;font-weight: bold;" >\
-                    '+(contador+1)+'\
-                </th>\
-                <th style="border:0;height:50px;line-height:50px;/*border-right:1px solid #111;*/text-align: center; max-width: 10px;font-weight: bold;" >\
-                    <div style="box-sizing:border-box;border:0;float:left;width:40px;height:40px;border:2px solid #555;border-radius:100px;overflow:hidden;">\
-                        <img style="box-sizing:border-box;display:block;width:40px;height:40px;" src="./foto_jugadores/'+jugador.idfichaJugador+'.png?idea='+new Date().getTime()+'" alt="foto_jugador_tabla">\
-                    </div>\
-                    <div style="box-sizing:border-box;border:0;float:left;height:40px;line-height:40px;margin-left:10px;text-transform:capitalize;">'+jugador.nombre+' '+jugador.apellido1+' '+jugador.apellido2+'</div>\
-                </th>\
-                <th style="border:0;height:50px;line-height:50px;/*border-right:1px solid #111;*/text-align: center;max-width: 10px;font-weight: normal;" >'+testDetalle.toma_desicion+' seg</th>\
-                <th style="border:0;height:50px;line-height:50px;/*border-right:1px solid #111;*/text-align: center;max-width: 10px;font-weight: normal;" >'+testDetalle.presicion+' seg</th>\
-                <th style="border:0;height:50px;line-height:50px;/*border-right:1px solid #111;*/text-align: center;max-width: 10px;font-weight: normal;" >'+testDetalle.manejo_presion+' seg</th>\
-                <th style="border:0;height:50px;line-height:50px;/*border-right:1px solid #111;*/text-align: center;max-width: 10px;font-weight: normal;" >'+testDetalle.reaccion+' seg</th>\
-                <th style="border:0;height:50px;line-height:50px;/*border-right:1px solid #111;*/text-align: center;max-width: 10px;font-weight: normal;" >'+testDetalle.adaptacion+' seg</th>\
-                <th style="border:0;height:50px;line-height:50px;/*border-right:1px solid #111;*/max-width: 10px;    text-align: left;font-weight: normal;" >'+jugador.texto_posicion+'</th>\
-            </tr>';
-        contador++;
-        decisiones.push(parseInt(testDetalle.toma_desicion));
-        precision.push(parseInt(testDetalle.presicion));
-        presion.push(parseInt(testDetalle.manejo_presion));
-        reaccion.push(parseInt(testDetalle.reaccion));
-        adaptacion.push(parseInt(testDetalle.adaptacion));
-        listaNombreJugadores.push(nombreJugador);
-        listaJugadoresDestallesTests.push(plantilla);
+        let total=parseInt(testDetalle.toma_desicion)+parseInt(testDetalle.presicion)+parseInt(testDetalle.manejo_presion)+parseInt(testDetalle.reaccion)+parseInt(testDetalle.adaptacion);
+
+
+        if(total!==0){
+
+
+            let jugador=testDetalle.infoJugador;
+            let nombreJugador=jugador.nombre+' '+jugador.apellido1+' '+jugador.apellido2;
+            let nombre=jugador.nombre+' '+jugador.apellido1+' '+jugador.apellido2;
+            if(nombre.length>=20){
+                nombre=nombre.substring(0,15)+"...";
+            }
+            let plantilla='\
+                <tr style="box-sizing:border-box;border:0;height:50px;color:#555;font-size:10px;">\
+                    <th  id="numero_rank_tabla" style="border:0;height:50px;line-height:50px;/*border-right:1px solid #111;*/text-align: center; max-width: 10px;font-weight: bold;" >\
+                        '+(contador+1)+'\
+                    </th>\
+                    <th style="border:0;height:50px;line-height:50px;/*border-right:1px solid #111;*/text-align: center; max-width: 10px;font-weight: bold;" >\
+                        <div style="box-sizing:border-box;border:0;float:left;width:40px;height:40px;border:2px solid #555;border-radius:100px;overflow:hidden;">\
+                            <img style="box-sizing:border-box;display:block;width:40px;height:40px;" src="./foto_jugadores/'+jugador.idfichaJugador+'.png?idea='+new Date().getTime()+'" alt="foto_jugador_tabla">\
+                        </div>\
+                        <div style="box-sizing:border-box;border:0;float:left;height:40px;line-height:40px;margin-left:10px;text-transform:capitalize;">'+nombre+'</div>\
+                    </th>\
+                    <th style="border:0;height:50px;line-height:50px;/*border-right:1px solid #111;*/text-align: center;max-width: 10px;font-weight: normal;" >'+((testDetalle.toma_desicion!=="0")?testDetalle.toma_desicion+" seg":"")+'</th>\
+                    <th style="border:0;height:50px;line-height:50px;/*border-right:1px solid #111;*/text-align: center;max-width: 10px;font-weight: normal;" >'+((testDetalle.presicion!=="0")?testDetalle.presicion+" seg":"")+'</th>\
+                    <th style="border:0;height:50px;line-height:50px;/*border-right:1px solid #111;*/text-align: center;max-width: 10px;font-weight: normal;" >'+((testDetalle.manejo_presion!=="0")?testDetalle.manejo_presion+" seg":"")+'</th>\
+                    <th style="border:0;height:50px;line-height:50px;/*border-right:1px solid #111;*/text-align: center;max-width: 10px;font-weight: normal;" >'+((testDetalle.reaccion!=="0")?testDetalle.reaccion+" seg":"")+'</th>\
+                    <th style="border:0;height:50px;line-height:50px;/*border-right:1px solid #111;*/text-align: center;max-width: 10px;font-weight: normal;" >'+((testDetalle.adaptacion!=="0")?testDetalle.adaptacion+" seg":"")+'</th>\
+                    <th style="border:0;height:50px;line-height:50px;/*border-right:1px solid #111;*/max-width: 10px;    text-align: left;font-weight: normal;" >'+jugador.texto_posicion+'</th>\
+                </tr>';
+            contador++;
+            decisiones.push(parseInt(testDetalle.toma_desicion));
+            precision.push(parseInt(testDetalle.presicion));
+            presion.push(parseInt(testDetalle.manejo_presion));
+            reaccion.push(parseInt(testDetalle.reaccion));
+            adaptacion.push(parseInt(testDetalle.adaptacion));
+            listaNombreJugadores.push(nombreJugador);
+            listaJugadoresDestallesTests.push(plantilla);
+
+
+        }
     }
     let strFilaTabla=listaJugadoresDestallesTests.join("");
     $("#tabla_info").append(strFilaTabla);

@@ -2864,6 +2864,10 @@ function insertarFilasTablaModalInfo(listaDetallesTest){
 
             let jugador=testDetalle.infoJugador;
             let nombreJugador=jugador.nombre+' '+jugador.apellido1+' '+jugador.apellido2;
+            let nombre=jugador.nombre+' '+jugador.apellido1+' '+jugador.apellido2;
+            if(nombre.length>=20){
+                nombre=nombre.substring(0,15)+"...";
+            }
             let plantilla='\
                 <tr style="box-sizing:border-box;border:0;height:50px;color:#555;font-size:10px;">\
                     <th  id="numero_rank_tabla" style="border:0;height:50px;line-height:50px;/*border-right:1px solid #111;*/text-align: center; max-width: 10px;font-weight: bold;" >\
@@ -2873,12 +2877,12 @@ function insertarFilasTablaModalInfo(listaDetallesTest){
                         <div style="box-sizing:border-box;border:0;float:left;width:40px;height:40px;border:2px solid #555;border-radius:100px;overflow:hidden;">\
                             <img style="box-sizing:border-box;display:block;width:40px;height:40px;" src="./foto_jugadores/'+jugador.idfichaJugador+'.png?idea='+new Date().getTime()+'" alt="foto_jugador_tabla">\
                         </div>\
-                        <div style="box-sizing:border-box;border:0;float:left;height:40px;line-height:40px;margin-left:10px;text-transform:capitalize;">'+jugador.nombre+' '+jugador.apellido1+' '+jugador.apellido2+'</div>\
+                        <div style="box-sizing:border-box;border:0;float:left;height:40px;line-height:40px;margin-left:10px;text-transform:capitalize;">'+nombre+'</div>\
                     </th>\
-                    <th style="border:0;height:50px;line-height:50px;/*border-right:1px solid #111;*/text-align: center;max-width: 10px;font-weight: normal;" >'+testDetalle.tiempo_1+' seg</th>\
-                    <th style="border:0;height:50px;line-height:50px;/*border-right:1px solid #111;*/text-align: center;max-width: 10px;font-weight: normal;" >'+testDetalle.tiempo_2+' seg</th>\
-                    <th style="border:0;height:50px;line-height:50px;/*border-right:1px solid #111;*/text-align: center;max-width: 10px;font-weight: normal;" >'+testDetalle.tiempo_3+' seg</th>\
-                    <th style="border:0;height:50px;line-height:50px;/*border-right:1px solid #111;*/text-align: center;max-width: 10px;font-weight: normal;" >'+testDetalle.tiempo_4+' seg</th>\
+                    <th style="border:0;height:50px;line-height:50px;/*border-right:1px solid #111;*/text-align: center;max-width: 10px;font-weight: normal;" >'+((testDetalle.tiempo_1!=="0")?testDetalle.tiempo_1+" seg":"")+'</th>\
+                    <th style="border:0;height:50px;line-height:50px;/*border-right:1px solid #111;*/text-align: center;max-width: 10px;font-weight: normal;" >'+((testDetalle.tiempo_2!=="0")?testDetalle.tiempo_2+" seg":"")+'</th>\
+                    <th style="border:0;height:50px;line-height:50px;/*border-right:1px solid #111;*/text-align: center;max-width: 10px;font-weight: normal;" >'+((testDetalle.tiempo_3!=="0")?testDetalle.tiempo_3+" seg":"")+'</th>\
+                    <th style="border:0;height:50px;line-height:50px;/*border-right:1px solid #111;*/text-align: center;max-width: 10px;font-weight: normal;" >'+((testDetalle.tiempo_4!=="0")?testDetalle.tiempo_4+" seg":"")+'</th>\
                     <th style="border:0;height:50px;line-height:50px;/*border-right:1px solid #111;*/max-width: 10px;    text-align: left;font-weight: normal;" >'+jugador.texto_posicion+'</th>\
                 </tr>';
             contador++;

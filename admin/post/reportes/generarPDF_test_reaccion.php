@@ -43,10 +43,10 @@ for($contador=0;$contador<sizeof($datos["detalle_test"]);$contador++){
           <span style="box-sizing:border-box;border:0;margin-left:47px;">'.$nombreJugador.'</span>
         
         </div>
-        <div  style="box-sizing:border-box;border:0;float:left;height:40px;line-height:25px;/*border-right:1px solid #111;*/width: 8%;" >'.$detalleTestJugador["tiempo_1"].' seg</div>
-        <div  style="box-sizing:border-box;border:0;float:left;height:40px;line-height:25px;/*border-right:1px solid #111;*/width: 8%;" >'.$detalleTestJugador["tiempo_2"].' seg</div>
-        <div  style="box-sizing:border-box;border:0;float:left;height:40px;line-height:25px;/*border-right:1px solid #111;*/width: 8%;" >'.$detalleTestJugador["tiempo_3"].' seg</div>
-        <div  style="box-sizing:border-box;border:0;float:left;height:40px;line-height:25px;/*border-right:1px solid #111;*/width: 8%;" >'.$detalleTestJugador["tiempo_4"].' seg</div>
+        <div  style="box-sizing:border-box;border:0;float:left;height:40px;line-height:25px;/*border-right:1px solid #111;*/width: 8%;" >'.(($detalleTestJugador["tiempo_1"]!=="0")?$detalleTestJugador["tiempo_1"]." seg":"").'</div>
+        <div  style="box-sizing:border-box;border:0;float:left;height:40px;line-height:25px;/*border-right:1px solid #111;*/width: 8%;" >'.(($detalleTestJugador["tiempo_2"]!=="0")?$detalleTestJugador["tiempo_2"]." seg":"").'</div>
+        <div  style="box-sizing:border-box;border:0;float:left;height:40px;line-height:25px;/*border-right:1px solid #111;*/width: 8%;" >'.(($detalleTestJugador["tiempo_3"]!=="0")?$detalleTestJugador["tiempo_3"]." seg":"").'</div>
+        <div  style="box-sizing:border-box;border:0;float:left;height:40px;line-height:25px;/*border-right:1px solid #111;*/width: 8%;" >'.(($detalleTestJugador["tiempo_4"]!=="0")?$detalleTestJugador["tiempo_4"]." seg":"").'</div>
         <div  style="box-sizing:border-box;border:0;float:left;height:40px;line-height:25px;/*border-right:1px solid #111;*/width: 10%;background-color:#f4f86f;text-align: center;" >'.(($detalleTestJugador["ranking"]==="0")?"-":$detalleTestJugador["ranking"]).'</div>
         <div  style="box-sizing:border-box;border:0;float:left;height:40px;line-height:25px;/*border-right:1px solid #111;*/width: 23%;padding-left:10px;" >'.(($detalleTestJugador["comentario"]==="null")?" sin comentario ":$detalleTestJugador["comentario"]).'</div>
     </div>
