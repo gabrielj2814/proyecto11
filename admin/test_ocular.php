@@ -1832,7 +1832,7 @@ function insertarFilasTablaModalInfo(listaDetallesTest){
         if(testDetalle.ranking_detalle_test_ocular!=="0"){
             let jugador=testDetalle.jugador_info;
             let nombre=jugador.nombre+' '+jugador.apellido1+' '+jugador.apellido2;
-            if(nombre.length>=20){
+            if(nombre.length>=15){
                 nombre=nombre.substring(0,15)+"...";
             }
             let plantilla='\

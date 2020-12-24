@@ -2865,7 +2865,7 @@ function insertarFilasTablaModalInfo(listaDetallesTest){
             let jugador=testDetalle.infoJugador;
             let nombreJugador=jugador.nombre+' '+jugador.apellido1+' '+jugador.apellido2;
             let nombre=jugador.nombre+' '+jugador.apellido1+' '+jugador.apellido2;
-            if(nombre.length>=20){
+            if(nombre.length>=15){
                 nombre=nombre.substring(0,15)+"...";
             }
             let plantilla='\
