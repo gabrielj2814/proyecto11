@@ -4661,7 +4661,7 @@ function tablaDeportiva(atencion_diaria){
     }
 }
 
-async function descargarPDF(posicion){
+function descargarPDF(posicion){
     let atencion_diaria=window.busqueda_respuesta_servidor[posicion];
     
     let lista_meses=[
@@ -5187,7 +5187,7 @@ async function descargarPDF(posicion){
     })
 }
 
-async function descargarListaPDF(){
+function descargarListaPDF(){
     let lista_meses=[
         "Enero",
         "Febrero",
@@ -5735,7 +5735,7 @@ function mostrarModalFormulario(){
 
 var atencion_diaria_jugador=[];
 
-async function mostrarModalFormularioEditar(posicion){
+function mostrarModalFormularioEditar(posicion){
     window.atencion_diaria_jugador=[];
     window.index_array_atencion_diaria=posicion;
     window.id_informe=true;
@@ -5772,26 +5772,28 @@ async function mostrarModalFormularioEditar(posicion){
     let serie=atencion_diaria.serieActual+"_"+atencion_diaria.sexo;
     let serie_2=atencion_diaria.serieActual;
     $("#serie_jugador").val(serie);
-    await consultarJugadoreXSeries(serie);
-    $("#serie_jugador").prop("disabled",true);
-    $("#jugador").prop("disabled",true);
+        consultarJugadoreXSeries(serie);
+        setTimeout(() => {
+            $("#serie_jugador").prop("disabled",true);
+            $("#jugador").prop("disabled",true);
 
-    let codigo_jugador=atencion_diaria.idfichaJugador+"_"+atencion_diaria.idclub;
-    $("#jugador").val(codigo_jugador);
+            let codigo_jugador=atencion_diaria.idfichaJugador+"_"+atencion_diaria.idclub;
+            $("#jugador").val(codigo_jugador);
 
-    $("#component_atencion_diaria_inicio").hide();
-    $("#component_atencion_diaria_formulario").show();
-    
-    mostrarJugadorEditar(atencion_diaria,serie_2);
+            $("#component_atencion_diaria_inicio").hide();
+            $("#component_atencion_diaria_formulario").show();
+            
+            mostrarJugadorEditar(atencion_diaria,serie_2);
+        },100);
 }
 
-async function consultarJugadoreXSeries(serie_select){
+function consultarJugadoreXSeries(serie_select){
     $("#jugador").empty();
     if(serie_select!=="0"){
         const serie=serie_select.split("_")[0];
         const sexo=serie_select.split("_")[1];
         let datos=[{name:"serie",value:serie},{name:"sexo",value:sexo}];
-        await $.ajax({
+        $.ajax({
                 url: "post/atencion_diaria_federacion_consultar_jugador.php",
                 type: "post",
                 data:datos,
@@ -5905,6 +5907,7 @@ function mostrarDatosformularioSesionReadaptador(atencion_diaria){
     $("#idinforme_medico").empty() ; 
     $("#idinforme_medico").append("<option value='0'>Seleccione</option>") ; 
     let lista_option_dignostico=[] ; 
+    // console.log("->>>", atencion_diaria.informes_medicos)
     for(let contador4=0;contador4<atencion_diaria.informes_medicos.length;contador4++){
         let inform_medico=atencion_diaria.informes_medicos[contador4] ; 
         let option="<option value='"+inform_medico.idinforme_medico+"'>"+inform_medico.diagnostico+"</option>" ; 
@@ -6553,8 +6556,8 @@ function mostrarTipoDeFormulario(tipo){
     }
 }
 
-async function formularioNuevaAtencion(tipo){
-    await consultarContextosIncidentes() ; 
+function formularioNuevaAtencion(tipo){
+    consultarContextosIncidentes() ; 
     $("#contexto_incidente_formulario").empty() ; 
     window.zonas_frt=[] ; 
     window.zonas_bck=[] ; 
@@ -6634,9 +6637,9 @@ function formularioControlMedico(tipo){
         },1000)
     }
 }
-async function formularioSesionReadaptador(tipo){
+function formularioSesionReadaptador(tipo){
     // alert("formulario sesion readaptador");
-    await consultarTrabajoReadaptador() ; 
+    consultarTrabajoReadaptador() ; 
     $("#contenedor_flex_segmento_izquierdo_formulario").css("align-content","flex-start") ; 
     $("#contenedor_flex_segmento_izquierdo_formulario").append(html_atencion_sesion_readaptador.parte_2) ; 
     $("#segmento_inferior_formulario").html(html_atencion_sesion_readaptador.parte_1) ; 
@@ -6676,9 +6679,9 @@ async function formularioSesionReadaptador(tipo){
     }
 }
 
-async function formularioNuevoIncidente(tipo){
-    await consultarTratamientos() ;
-    await consultarContextosIncidentes() ;  
+function formularioNuevoIncidente(tipo){
+    consultarTratamientos() ;
+    consultarContextosIncidentes() ;  
     $("#contexto_incidente_formulario").empty() ; 
     window.zonas_frt=[] ; 
     window.zonas_bck=[] ; 
@@ -6719,10 +6722,10 @@ async function formularioNuevoIncidente(tipo){
     
 }
 
-async function formularioControl(tipo){
-    await consultarTratamientos() ; 
+function formularioControl(tipo){
+    consultarTratamientos() ; 
     // await consultarTrabajoReadaptador() ; 
-    await consultarContextosIncidentes() ; 
+    consultarContextosIncidentes() ; 
     
     // porcentaje_recuperacion
     $("#contenedor_flex_segmento_izquierdo_formulario").css("align-content","flex-start") ; 
